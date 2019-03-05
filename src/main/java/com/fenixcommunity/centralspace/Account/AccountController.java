@@ -11,11 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/account")
 public class AccountController {
 
+    private final AccountRepository accountRepository;
+
     @Autowired
-    AccountRepository accountRepository;
+    public AccountController(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
     // zobacz inne narzedzia jpa repo
     // Optional
 

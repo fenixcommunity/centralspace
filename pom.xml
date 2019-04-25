@@ -2,24 +2,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!--<parent>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
-        <!--<version>2.1.2.RELEASE</version>-->
-        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-    <!--</parent>-->
+
     <!--<parent>-->
         <!--<groupId>com.fenixcommunity.settings</groupId>-->
         <!--<artifactId>parent</artifactId>-->
         <!--<version>0.0.1-SNAPSHOT</version>-->
     <!--</parent>-->
-    <groupId>com.fenixcommunity</groupId>
-    <artifactId>centralspace</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
 
-    <name>centralspace</name>
-    <description>Demo project for Spring Boot</description>
+    <groupId>com.fenixcommunity.centralspace</groupId>
+    <artifactId>centralspace-parent</artifactId>
+    <name>Fenix Community Centralspace</name>
+    <description>Fenix Community Centralspace</description>
+    <version>0.0.1-SNAPSHOT</version>
+    <!--<packaging>jar</packaging>-->
+    <packaging>pom</packaging>
+
+    <!--<scm>-->
+        <!--<connection>scm:git:ssh://git@git.lumesse.top/cc/communication-center.git</connection>-->
+        <!--<tag>HEAD</tag>-->
+    <!--</scm>-->
 
     <!--reszta properties w parent spring, ze wzgledu na zewn. parent moga byc komplikacje-->
     <properties>
@@ -28,25 +29,50 @@
         <java.version>1.8</java.version>
     </properties>
 
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>maven-central</id>-->
+            <!--<url>http://central.maven.org/maven2/</url>-->
+            <!--<layout>default</layout>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
     <!--dodaj takze liste z version dla dependency-->
     <modules>
-        <!--<module>moduleexample</module>-->
+        <module>centralspace-domain</module>
+        <module>centralspace-app</module>
     </modules>
 
     <!--external parent-->
     <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.1.2.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
+        <dependency>
+            <groupId>com.fenixcommunity.centralspace</groupId>
+            <artifactId>centralspace-domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--utilities-->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-devtools</artifactId>-->
+        <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
+
+        <!-- SPRING DEPENDENCIES -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>2.1.2.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -56,25 +82,21 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
 
-        <!--utilities-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-devtools</artifactId>-->
-        <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
+        <!-- PERSISTENCE DEPENDENCIES -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- UTILITIES DEPENDENCIES -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -82,7 +104,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--test-->
+        <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -96,22 +118,25 @@
         </dependency>
 
     </dependencies>
+    </dependencyManagement>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>8</source>
+                        <target>8</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

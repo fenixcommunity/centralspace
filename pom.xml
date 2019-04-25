@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!--<parent>-->
         <!--<groupId>com.fenixcommunity.settings</groupId>-->
         <!--<artifactId>parent</artifactId>-->
-        <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--<version>1.0-SNAPSHOT</version>-->
     <!--</parent>-->
 
     <groupId>com.fenixcommunity.centralspace</groupId>
     <artifactId>centralspace-parent</artifactId>
     <name>Fenix Community Centralspace</name>
     <description>Fenix Community Centralspace</description>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <!--<packaging>jar</packaging>-->
     <packaging>pom</packaging>
 
@@ -27,6 +28,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <!--<version.compiler.plugin>3.6.0</version.compiler.plugin>-->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
     </properties>
 
     <!--<repositories>-->
@@ -44,13 +49,43 @@
     </modules>
 
     <!--external parent-->
+    <!--<dependencyManagement>-->
+        <!--<dependencies>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-dependencies</artifactId>-->
+                <!--<version>2.1.2.RELEASE</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+        <!--</dependencies>-->
+    <!--</dependencyManagement>-->
     <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
     <dependencies>
-        <dependency>
-            <groupId>com.fenixcommunity.centralspace</groupId>
-            <artifactId>centralspace-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.fenixcommunity.centralspace</groupId>-->
+            <!--<artifactId>centralspace-domain</artifactId>-->
+            <!--<version>${project.version}</version>-->
+            <!--<type>jar</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.fenixcommunity.centralspace</groupId>-->
+            <!--<artifactId>centralspace-app</artifactId>-->
+            <!--<version>${project.version}</version>-->
+            <!--<type>jar</type>-->
+        <!--</dependency>-->
 
         <!--utilities-->
         <!--<dependency>-->
@@ -62,33 +97,21 @@
         <!-- SPRING DEPENDENCIES -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>2.1.2.RELEASE</version>
-            <type>pom</type>
-            <scope>import</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <!--<version>1.5.20.RELEASE</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-core</artifactId>-->
+        <!--</dependency>-->
 
         <!-- PERSISTENCE DEPENDENCIES -->
         <dependency>
@@ -118,7 +141,6 @@
         </dependency>
 
     </dependencies>
-    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -126,6 +148,19 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <mainClass>com.fenixcommunity.centralspace.CentralspaceApplication</mainClass>
+                        <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+                        <!-- this is necessary as we're not using the Boot parent -->
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -135,6 +170,20 @@
                         <target>8</target>
                     </configuration>
                 </plugin>
+                <!--<plugin>-->
+                    <!--<groupId>org.apache.maven.plugins</groupId>-->
+                    <!--<artifactId>maven-clean-plugin</artifactId>-->
+                    <!--&lt;!&ndash;<version>${version.clean.plugin}</version>&ndash;&gt;-->
+                <!--</plugin>-->
+                <!--<plugin>-->
+                    <!--<groupId>org.apache.maven.plugins</groupId>-->
+                    <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                    <!--&lt;!&ndash;<version>${version.compiler.plugin}</version>&ndash;&gt;-->
+                    <!--<configuration>-->
+                        <!--<source>${maven.compiler.source}</source>-->
+                        <!--<target>${maven.compiler.target}</target>-->
+                    <!--</configuration>-->
+                <!--</plugin>-->
             </plugins>
         </pluginManagement>
     </build>

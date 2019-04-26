@@ -33,6 +33,7 @@
     <modules>
         <module>centralspace-domain</module>
         <module>centralspace-app</module>
+        <module>centralspace-utilities</module>
     </modules>
 
     <dependencyManagement>
@@ -41,6 +42,11 @@
             <dependency>
                 <groupId>com.fenixcommunity.centralspace</groupId>
                 <artifactId>centralspace-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fenixcommunity.centralspace</groupId>
+                <artifactId>centralspace-utilities</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -129,7 +135,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <mainClass>com.fenixcommunity.centralspace.CentralspaceApplication</mainClass>
+                        <mainClass>com.fenixcommunity.centralspace.app.CentralspaceApplication</mainClass>
                     </configuration>
                 </plugin>
             </plugins>

@@ -1,7 +1,8 @@
 package com.fenixcommunity.centralspace.service;
 
-import com.fenixcommunity.centralspace.Account.Account;
-import com.fenixcommunity.centralspace.Account.AccountRepository;
+
+import com.fenixcommunity.centralspace.model.account.Account;
+import com.fenixcommunity.centralspace.repository.AccountRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

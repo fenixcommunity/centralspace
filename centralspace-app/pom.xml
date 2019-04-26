@@ -12,40 +12,30 @@
     </parent>
 
     <artifactId>centralspace-app</artifactId>
-    <!--<version>1.0-SNAPSHOT</version>-->
     <name>Centralspace App</name>
     <packaging>jar</packaging>
 
     <dependencies>
-    <!--internal-->
+        <!-- MODULES DEPENDENCIES -->
         <dependency>
             <groupId>com.fenixcommunity.centralspace</groupId>
             <artifactId>centralspace-domain</artifactId>
-            <type>jar</type>
-            <scope>provided</scope>
+        </dependency>
+
+        <!-- SPRING DEPENDENCIES -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
         </dependency>
     </dependencies>
-
-    <!--<build>-->
-        <!--<plugins>-->
-            <!--&lt;!&ndash; Builds spring app &ndash;&gt;-->
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-                <!--&lt;!&ndash;<version>${spring.boot.dependencies.version}</version>&ndash;&gt;-->
-                <!--<configuration>-->
-                    <!--<mainClass>com.fenixcommunity.centralspace.CentralspaceApplication</mainClass>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>repackage</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
 
 </project>
 

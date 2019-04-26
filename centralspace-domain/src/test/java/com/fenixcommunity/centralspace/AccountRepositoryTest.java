@@ -2,7 +2,6 @@ package com.fenixcommunity.centralspace;
 
 import com.fenixcommunity.centralspace.model.account.Account;
 import com.fenixcommunity.centralspace.repository.AccountRepository;
-import com.fenixcommunity.centralspace.model.account.AccountService;
 import com.fenixcommunity.centralspace.model.password.Password;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -19,7 +18,7 @@ public class AccountRepositoryTest {
 
     //TODO nie powinno bazowac na prawdziwych danych
 //    @InjectMocks
-    private AccountService accountService;
+//    private AccountService accountService;
 
 //    @Mock
     private AccountRepository accountRepository;

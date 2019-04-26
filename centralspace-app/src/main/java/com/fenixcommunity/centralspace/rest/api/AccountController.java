@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.rest.api;
 
 import com.fenixcommunity.centralspace.exception.rest.ResourceNotFoundException;
 import com.fenixcommunity.centralspace.model.account.Account;
+import com.fenixcommunity.centralspace.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.rest.api;
 
-import com.fenixcommunity.centralspace.Password.Password;
-import com.fenixcommunity.centralspace.Password.PasswordRepository;
+import com.fenixcommunity.centralspace.model.password.Password;
+import com.fenixcommunity.centralspace.repository.PasswordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

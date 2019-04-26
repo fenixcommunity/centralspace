@@ -1,9 +1,9 @@
 package com.fenixcommunity.centralspace;
 
-import com.fenixcommunity.centralspace.Account.Account;
-import com.fenixcommunity.centralspace.Account.AccountRepository;
+import com.fenixcommunity.centralspace.model.account.Account;
+import com.fenixcommunity.centralspace.model.password.Password;
+import com.fenixcommunity.centralspace.repository.AccountRepository;
 import com.fenixcommunity.centralspace.service.AccountService;
-import com.fenixcommunity.centralspace.Password.Password;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

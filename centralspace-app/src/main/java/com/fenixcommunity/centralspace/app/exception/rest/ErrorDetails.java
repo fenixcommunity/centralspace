@@ -11,6 +11,4 @@ class ErrorDetails {
     private ZonedDateTime timestamp;
     private String message;
     private String details;
-
-    // builder
 }

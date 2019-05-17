@@ -23,4 +23,6 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(ZonedDateTime.now(),ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    //todo @ControllerAdvice -> public class RestErrorHandler
 }

@@ -6,7 +6,7 @@ com\fenixcommunity\centralspace\domain\model\password\PasswordType$2.class
 com\fenixcommunity\centralspace\domain\utils\converter\ZonedDateTimeJpaConverter.class
 com\fenixcommunity\centralspace\domain\repository\PasswordRepository.class
 com\fenixcommunity\centralspace\domain\model\role\RoleType.class
-com\fenixcommunity\centralspace\domain\utils\LombokExample.class
+com\fenixcommunity\centralspace\domain\core\AccountEntityListener.class
 com\fenixcommunity\centralspace\domain\model\account\Account.class
 com\fenixcommunity\centralspace\domain\utils\converter\UppercaseConverter.class
 com\fenixcommunity\centralspace\domain\repository\AccountRepository.class

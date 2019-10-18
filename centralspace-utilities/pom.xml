@@ -15,5 +15,12 @@
     <name>Centralspace Utilities</name>
     <packaging>jar</packaging>
 
+    <!-- SPRING DEPENDENCIES -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

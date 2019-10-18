@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 public class AccountRepositoryTest {
 
     //TODO nie powinno bazowac na prawdziwych danych
+    // dodaj bliblioteke Mokującą bazę danych
 
 //    @Mock
     private AccountRepository accountRepository;

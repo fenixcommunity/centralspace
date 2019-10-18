@@ -1,9 +1,27 @@
 package com.fenixcommunity.centralspace.app.utils.browser;
 
 public enum BrowserType {
-    FIREFOX("firefox"), FIREFOX_PROXY("firefoxproxy"), FIREFOX_CHROME("firefoxchrome"), GOOGLECHROME("googlechrome"), SAFARI("safari"), OPERA("opera"), OPERA_BLINK("operablink"),
-    EDGE("microsoftedge"), IEXPLORE("iexplore"), IEXPLORE_PROXY("iexploreproxy"), SAFARI_PROXY("safariproxy"), CHROME("chrome"), KONQUEROR("konqueror"),
-    MOCK("mock"), IE_HTA("iehta"), ANDROID("android"), HTMLUNIT("htmlunit"), IE("internetexplorer"), IPHONE("iPhone"), IPAD("iPad"), PHANTOMJS("phantomjs"),
+    FIREFOX("firefox"),
+    FIREFOX_PROXY("firefoxproxy"),
+    FIREFOX_CHROME("firefoxchrome"),
+    GOOGLECHROME("googlechrome"),
+    SAFARI("safari"),
+    OPERA("opera"),
+    OPERA_BLINK("operablink"),
+    EDGE("microsoftedge"),
+    IEXPLORE("iexplore"),
+    IEXPLORE_PROXY("iexploreproxy"),
+    SAFARI_PROXY("safariproxy"),
+    CHROME("chrome"),
+    KONQUEROR("konqueror"),
+    MOCK("mock"),
+    IE_HTA("iehta"),
+    ANDROID("android"),
+    HTMLUNIT("htmlunit"),
+    IE("internetexplorer"),
+    IPHONE("iPhone"),
+    IPAD("iPad"),
+    PHANTOMJS("phantomjs"),
     UNKNOWN("unknown");
 
     String description;

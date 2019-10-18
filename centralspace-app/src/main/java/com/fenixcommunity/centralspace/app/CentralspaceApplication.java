@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication()
 @ComponentScan({"com.fenixcommunity.centralspace.app"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model"})
 @EnableJpaRepositories({"com.fenixcommunity.centralspace.domain.repository"})

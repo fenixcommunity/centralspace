@@ -36,12 +36,11 @@ public enum RegisterType {
             JsonNode node = jsonParser.getCodec().readTree(jsonParser);
             String enumJson =  node.asText();
             return RegisterType.valueOf(enumJson.toUpperCase());
-            //todo co jak zle?
+            //todo co jak zle? obsluga bledu
         }
     }
 
     public static class RegisterTypeSerializer extends StdSerializer {
-
         public RegisterTypeSerializer() {
             super(RegisterType.class);
         }
@@ -61,8 +60,5 @@ public enum RegisterType {
             generator.writeEndObject();
         }
     }
-
-
-
 
 }

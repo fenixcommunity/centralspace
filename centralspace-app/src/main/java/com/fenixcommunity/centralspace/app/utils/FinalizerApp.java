@@ -3,9 +3,11 @@ package com.fenixcommunity.centralspace.app.utils;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
+@ComponentScan({"com.fenixcommunity.centralspace.app"})
 public class FinalizerApp implements ExitCodeGenerator {
     private static final int EXIT_CODE = 42;
     private static final int EXCEPTION_CODE = 1;

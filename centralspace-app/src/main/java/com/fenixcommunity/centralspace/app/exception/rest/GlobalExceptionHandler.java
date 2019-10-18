@@ -11,18 +11,17 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        // request ma duzo innych opcji
-        ErrorDetails errorDetails = new ErrorDetails(ZonedDateTime.now(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(ZonedDateTime.now(),ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+        // request ma duzo innych opcji
+        ErrorDetails errorDetails = new ErrorDetails(ZonedDateTime.now(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
     //todo @ControllerAdvice -> public class RestErrorHandler
 }

@@ -27,6 +27,7 @@ public class PasswordController {
                 .password(parameter)
                 .build();
         passwordRepository.save(password);
+        //TODO statusy do enum lub obiektu import static javax.ws.rs.core.Response.Status.ACCEPTED, BAD_REQUEST;
         return "success";
     }
 

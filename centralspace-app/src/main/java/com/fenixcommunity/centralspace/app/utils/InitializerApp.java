@@ -8,6 +8,6 @@ public class InitializerApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("InitializerApp init");
+        System.out.println("Fenix community application has been launched");
     }
 }

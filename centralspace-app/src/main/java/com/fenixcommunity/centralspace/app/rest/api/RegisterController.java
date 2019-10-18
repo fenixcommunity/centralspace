@@ -24,7 +24,8 @@ class RegisterController {
                                                                @NotNull @PathVariable("id") Long registerId,
                                                                @RequestHeader HttpHeaders headers) {
         log.info(registerProcess.cookies.getBrowserType().name());
-        RestRegisterResponse payload = buildRegisterResponse("info");
+        RestRegisterResponse payload = buildRegisterResponse(headers.toString());
+//   TODO     tutaj serwis z obserwatorem wysylajacego maila do administracji. Globalny serwis informujacy o zmianie
         return new ResponseEntity<>(payload, HttpStatus.OK);
     }
     //todo regex

@@ -1,14 +1,7 @@
-package com.fenixcommunity.centralspace.app.rest.api;
-//import com.fenixcommunity.centralspace.Account.Account;
-//import org.springframework.http.HttpEntity;
-//import org.springframework.http.HttpHeaders;
-//import org.springframework.http.HttpMethod;
-//import org.springframework.http.MediaType;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.client.RestTemplate;
+package com.fenixcommunity.centralspace.app.rest;
 
+public class AccountRestClientTest {
 
-public class AccountRestClient {
 
     private static final String GET_USERS_ENDPOINT_URL = "http://localhost:8080/accounts";
     private static final String GET_USER_ENDPOINT_URL = "http://localhost:8080/account/{id}";
@@ -68,5 +61,4 @@ public class AccountRestClient {
 //
 //        restTemplate.delete(DELETE_USER_ENDPOINT_URL, parameters);
 //    }
-
 }

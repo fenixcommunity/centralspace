@@ -9,5 +9,6 @@ public class RestFilledRegisterForm extends ResourceSupport {
     public String firstName;
     public String lastName;
     public String email;
+    //TODO opakuj EMAIL
     public String registerURL;
 }

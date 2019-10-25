@@ -26,14 +26,14 @@ public class PasswordController {
     }
 
     //TODO
-    @Autowired
-    private ValidatorFactory factory;
+//    @Autowired
+//    private ValidatorFactory factory;
 
     @RequestMapping("/passwordexample")
     public String writeParameter(@RequestParam(value = "parameter") String parameter) {
-        Validator validator = factory.getInstance(PASSWORD_HIGH);
-        validator.isValid(parameter);
-        validator.validateWithException(parameter);
+//        Validator validator = factory.getInstance(PASSWORD_HIGH);
+//        validator.isValid(parameter);
+//        validator.validateWithException(parameter);
 
         Password password = Password.builder()
                 .password(parameter)

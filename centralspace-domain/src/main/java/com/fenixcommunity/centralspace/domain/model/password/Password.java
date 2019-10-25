@@ -31,7 +31,7 @@ public class Password extends AbstractBaseEntity implements Serializable {
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    @Convert(converter = CryptoJpaConverter.class)
+//    @Convert(converter = CryptoJpaConverter.class)
     @Column(name = "password", nullable = false)
     private String password;
 

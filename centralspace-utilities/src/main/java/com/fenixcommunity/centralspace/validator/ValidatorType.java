@@ -1,5 +1,5 @@
 package com.fenixcommunity.centralspace.validator;
 
 public enum ValidatorType {
-    PASSWORD
+    ASSERT,PASSWORD_LOW,PASSWORD_HIGH
 }

@@ -18,6 +18,10 @@ import java.io.Serializable;
 @Data @Builder @EqualsAndHashCode(callSuper = true)
 public class Password extends AbstractBaseEntity implements Serializable {
 
+    //TODO         return Optional.ofNullable(isoCountryCode)
+    //             Optional.of(nowa wartosc gdy damy geta optional);
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)

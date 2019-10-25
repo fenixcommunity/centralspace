@@ -16,6 +16,12 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- MODULES DEPENDENCIES -->
+        <dependency>
+            <groupId>com.fenixcommunity.centralspace</groupId>
+            <artifactId>centralspace-utilities</artifactId>
+        </dependency>
+
         <!-- SPRING DEPENDENCIES -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

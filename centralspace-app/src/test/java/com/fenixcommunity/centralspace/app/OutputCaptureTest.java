@@ -1,7 +1,6 @@
 package com.fenixcommunity.centralspace.app;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.boot.test.rule.OutputCapture;
@@ -15,6 +14,6 @@ public class OutputCaptureTest {
     public void shouldShowStringConsoleOutput() {
         final String consoleString = "shouldShowStringConsoleOutput";
         System.out.println(consoleString);
-        assertThat(capture.toString(), containsString(consoleString));
+        assertThat(capture.toString()).contains(consoleString);
     }
 }

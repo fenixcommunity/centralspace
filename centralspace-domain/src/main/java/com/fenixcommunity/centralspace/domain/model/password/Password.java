@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.domain.model.password;
 
 import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
+
 import com.fenixcommunity.centralspace.domain.utils.converter.CryptoJpaConverter;
 import lombok.*;
 
@@ -31,7 +32,7 @@ public class Password extends AbstractBaseEntity implements Serializable {
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
-//    @Convert(converter = CryptoJpaConverter.class)
+    @Convert(converter = CryptoJpaConverter.class)
     @Column(name = "password", nullable = false)
     private String password;
 

@@ -16,7 +16,6 @@ import java.util.Map;
 @RequestMapping("/account")
 public class AccountController {
 
-
     private final AccountRepository accountRepository;
 
     @Autowired
@@ -33,7 +32,7 @@ public class AccountController {
 
     @GetMapping("/accounts")
     public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+        return (List<Account>) accountRepository.findAll();
     }
 
     @GetMapping("/account/{id}")

@@ -13,7 +13,6 @@ com\fenixcommunity\centralspace\domain\repository\AccountRepository.class
 com\fenixcommunity\centralspace\domain\model\account\Account$AccountBuilder.class
 com\fenixcommunity\centralspace\domain\model\AbstractBaseEntity.class
 com\fenixcommunity\centralspace\domain\config\DomainConfig.class
-com\fenixcommunity\centralspace\domain\repository\sss.class
 com\fenixcommunity\centralspace\domain\model\password\Password$PasswordBuilder.class
 com\fenixcommunity\centralspace\domain\utils\converter\CryptoJpaConverter.class
 com\fenixcommunity\centralspace\domain\model\password\PasswordType$1.class

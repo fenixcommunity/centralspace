@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fenixcommunity.centralspace.app.utils.browser.BrowserType;
 import org.springframework.hateoas.ResourceSupport;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 //TODO to działa?
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -14,7 +14,7 @@ public class RestCookies extends ResourceSupport {
 
     @JsonIgnore
     public BrowserType getBrowserType() {
-        return (!isNotEmpty(browserInfo)) ?
+        return (isEmpty(browserInfo)) ?
                 BrowserType.identifyBrowser(browserInfo) : BrowserType.UNKNOWN;
     }
 }

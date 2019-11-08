@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.utills.validator;
 public interface Validator {
     //TODO java8 // default
     boolean isValid(Object object);
+
     //    boolean isValidWithMessage(Object object, String message);
     boolean isValidAll(Object... obj);
 

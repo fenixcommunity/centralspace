@@ -2,11 +2,22 @@ package com.fenixcommunity.centralspace.domain.model.password;
 
 import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
-
 import com.fenixcommunity.centralspace.domain.utils.converter.CryptoJpaConverter;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 //immutable objects, like @Value

@@ -24,6 +24,13 @@
         <dependency>
             <groupId>com.fenixcommunity.centralspace</groupId>
             <artifactId>centralspace-utilities</artifactId>
+            <!-- Project-X -> Project-Y -->
+            <!--            <exclusions>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>com.fenixcommunity</groupId>-->
+            <!--                    <artifactId>xxx</artifactId>-->
+            <!--                </exclusion>-->
+            <!--            </exclusions>-->
         </dependency>
 
         <!-- SPRING DEPENDENCIES -->

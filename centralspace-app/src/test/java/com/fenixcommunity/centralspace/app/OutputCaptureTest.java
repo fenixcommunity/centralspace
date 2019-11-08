@@ -1,9 +1,10 @@
 package com.fenixcommunity.centralspace.app;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.boot.test.rule.OutputCapture;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OutputCaptureTest {
 

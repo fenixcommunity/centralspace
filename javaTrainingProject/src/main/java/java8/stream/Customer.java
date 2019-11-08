@@ -1,7 +1,5 @@
 package java8.stream;
 
-import java.util.*;
-
 public class Customer {
 
     private int id;
@@ -74,7 +72,7 @@ public class Customer {
     public static List<Customer> getAllEmps() {
         List<Customer> customers = new ArrayList<>();
         Customer e1 = new Customer(1, "MAX", 100L, "BOSS");
-        List<Integer> list = new ArrayList<>(Arrays.asList(12,31));
+        List<Integer> list = new ArrayList<>(Arrays.asList(12, 31));
         e1.setNumbers(list);
         customers.add(e1);
         Customer e2 = new Customer(2, "KAMIL", 200L, "HR");
@@ -85,14 +83,14 @@ public class Customer {
         List<Address> list2 = new ArrayList<>(Arrays.asList(new Address("BBB"), new Address("AAA")));
         e4.setAddress(list2);
         customers.add(e4);
-        
+
         return customers;
     }
 
     public static Map<Customer, Long> getAllEmpsMap() {
         Map<Customer, Long> customers = new HashMap<>();
         Customer e1 = new Customer(1, "MAX", 100L, "BOSS");
-        List<Integer> list = new ArrayList<>(Arrays.asList(12,31));
+        List<Integer> list = new ArrayList<>(Arrays.asList(12, 31));
         e1.setNumbers(list);
         customers.put(e1, 1L);
         Customer e2 = new Customer(2, "KAMIL", 200L, "HR");

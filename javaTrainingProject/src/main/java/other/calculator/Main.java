@@ -1,7 +1,5 @@
 package other.calculator;
 
-import java.io.*;
-import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -22,7 +20,7 @@ public class Main {
         // wynik ((10 + 2) * 3) = 36
         output.close();
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 //            reader.lines().forEach(System.out::println);
 //            jak damy to, to strumien bedzie pusty bo daliśmy ForEach, gdy damy filter to bedzie ok
             // reader.lines()  to stream na Readerze

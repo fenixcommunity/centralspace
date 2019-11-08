@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.utills.common;
+package com.fenixcommunity.centralspace.utills.common.test;
 
 public class Var {
     public static final Long ID = 1L;

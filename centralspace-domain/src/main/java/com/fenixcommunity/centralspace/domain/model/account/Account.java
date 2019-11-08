@@ -4,9 +4,21 @@ import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.password.Password;
 import com.fenixcommunity.centralspace.domain.utils.converter.UppercaseConverter;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 
@@ -17,7 +29,7 @@ import java.util.List;
 @Data @Builder @EqualsAndHashCode(callSuper = true) @ToString()
 public class Account extends AbstractBaseEntity {
 
-//  TODO  AuditingEntityListener co to?
+    //  TODO  AuditingEntityListener co to?
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -34,8 +46,5 @@ public class Account extends AbstractBaseEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Password> passwords;
-
-
-
 
 }

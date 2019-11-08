@@ -3,6 +3,7 @@ package other.calculator;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.*;
 

@@ -37,6 +37,6 @@ public class AccountEntityListener {
 
     @PostRemove
     public void afterRemove(Account account) {
-        System.out.println("Removed account with id = " + account.getId() );
+        System.out.println("Removed account with id = " + account.getId());
     }
 }

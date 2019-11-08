@@ -4,7 +4,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
-public class UppercaseConverter implements AttributeConverter<String,String> {
+public class UppercaseConverter implements AttributeConverter<String, String> {
     @Override
     public String convertToDatabaseColumn(String attribute) {
         return attribute == null ? null : attribute.toUpperCase();

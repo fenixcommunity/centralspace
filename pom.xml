@@ -12,13 +12,13 @@
 
     <!--<scm> tag optional -->
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>fenixcommunity-public-releases</id>-->
-<!--            <name>General releases repository</name>-->
-<!--            <url>http://xxx</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>fenixcommunity-public-releases</id>-->
+    <!--            <name>General releases repository</name>-->
+    <!--            <url>http://xxx</url>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,8 +36,7 @@
         <postgresql.version>42.2.5</postgresql.version>
         <lombok.version>1.18.4</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
-        <junit-jupiter.version>5.4.2</junit-jupiter.version>
-        <hamcrest.version>1.3</hamcrest.version>
+        <junit-jupiter-api.version>5.5.2</junit-jupiter-api.version>
         <h2database.version>1.4.199</h2database.version>
         <javassist.version>3.23.1-GA</javassist.version>
     </properties>
@@ -110,28 +109,6 @@
                 <groupId>org.springframework.hateoas</groupId>
                 <artifactId>spring-hateoas</artifactId>
                 <version>${spring.hateoas.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-core</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-aop</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-beans</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-context</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <!-- PERSISTENCE DEPENDENCIES -->
@@ -139,6 +116,14 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+
+            <!-- TEST DEPENDENCIES -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2database.version}</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>
@@ -160,7 +145,6 @@
         </dependency>
 
         <!-- TEST DEPENDENCIES -->
-        <!--      todo usunac? jest jupiter  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -169,18 +153,10 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter.version}</version>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter-api.version}</version>
             <scope>test</scope>
         </dependency>
-<!--      todo usunac?  -->
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>${hamcrest.version}</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <!-- update Hibernate dependency on Javassist for Java 11 compatibility -->
             <groupId>org.javassist</groupId>
@@ -188,45 +164,12 @@
             <version>${javassist.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.postgresql</groupId>-->
+        <!--            <artifactId>postgresql</artifactId>-->
+        <!--            <version>${postgresql.version}</version>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>org.postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--            <version>${postgresql.version}</version>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring-boot-data.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.8.Final</version>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.0</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -262,11 +205,6 @@
             </plugin>
         </plugins>
 
-<!--        <testResources>-->
-<!--            <testResource>-->
-<!--                <directory>src/main/webapp</directory>-->
-<!--            </testResource>-->
-<!--        </testResources>-->
     </build>
 
 </project>

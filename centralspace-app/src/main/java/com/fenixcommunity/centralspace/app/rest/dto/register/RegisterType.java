@@ -34,7 +34,7 @@ public enum RegisterType {
         @Override
         public RegisterType deserialize(JsonParser jsonParser, DeserializationContext dc) throws IOException {
             JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-            String enumJson =  node.asText();
+            String enumJson = node.asText();
             return RegisterType.valueOf(enumJson.toUpperCase());
             //todo co jak zle? obsluga bledu
         }

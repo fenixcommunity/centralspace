@@ -3,8 +3,6 @@ package java8.stream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.function.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -56,6 +54,7 @@ public class Other {
                 .collect(Collectors.toList());
 
     }
+
     static void objectMethods() {
         Stream.generate(Math::random)
                 .limit(5)
@@ -66,13 +65,13 @@ public class Other {
 
         list.stream().skip(2).limit(3).findFirst().ifPresent(out::println);
 
-        list.stream().sorted((c1,c2) -> c1.getName().compareTo(c2.getName())).findFirst().ifPresent(out::println);
+        list.stream().sorted((c1, c2) -> c1.getName().compareTo(c2.getName())).findFirst().ifPresent(out::println);
         //albo
         list.stream().sorted(Comparator.comparing(Customer::getName)).findFirst().ifPresent(out::println);
 
         boolean allEven = list.stream().allMatch(i -> i.getSalary() > 2);
-        boolean oneEven = list.stream().anyMatch(i -> i.getSalary()  > 2);
-        boolean noneMultipleOfThree = list.stream().noneMatch(i -> i.getSalary()  > 2);
+        boolean oneEven = list.stream().anyMatch(i -> i.getSalary() > 2);
+        boolean noneMultipleOfThree = list.stream().noneMatch(i -> i.getSalary() > 2);
 
         Optional<List<Integer>> optionalIntegers = list.subList(0, 2).stream().
                 filter(c -> c.getName().equals("MAX")).map(Customer::getNumbers).findFirst();
@@ -223,7 +222,7 @@ public class Other {
 
         Optional<Long> o = map.entrySet()
                 .stream()
-                .filter( e -> e.getKey().getName().contains("PI"))
+                .filter(e -> e.getKey().getName().contains("PI"))
                 .map(Map.Entry::getValue)
                 .findFirst();
 

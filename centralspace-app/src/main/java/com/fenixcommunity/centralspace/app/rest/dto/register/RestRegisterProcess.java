@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.dto.register;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fenixcommunity.centralspace.app.rest.dto.config.RestCookies;
 import org.springframework.hateoas.ResourceSupport;
 

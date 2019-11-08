@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>centralspace-parent</artifactId>
         <groupId>com.fenixcommunity.centralspace</groupId>
+        <artifactId>centralspace-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -18,8 +18,8 @@
     <!-- SPRING DEPENDENCIES -->
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 

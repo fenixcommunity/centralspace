@@ -21,14 +21,14 @@ public class ValidatorFactory {
         Validator validator = null;
         if (type == ValidatorType.ASSERT) {
             validator = new AssertValidator();
-        } else if(type == ValidatorType.PASSWORD_LOW) {
+        } else if (type == ValidatorType.PASSWORD_LOW) {
             validator = PasswordValidator.lowValidator();
         } else if (type == ValidatorType.PASSWORD_HIGH) {
             validator = PasswordValidator.highValidator();
         }
 
         if (validator != null) {
-            registerValidator(type,validator);
+            registerValidator(type, validator);
         }
 
         return validator;

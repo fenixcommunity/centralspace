@@ -22,7 +22,6 @@
             <artifactId>centralspace-utilities</artifactId>
         </dependency>
 
-
         <!-- SPRING DEPENDENCIES -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,6 +37,13 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
+        </dependency>
+
+        <!-- TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

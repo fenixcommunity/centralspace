@@ -13,14 +13,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.fenixcommunity.centralspace.utills.common.Var.EMAIL;
-import static com.fenixcommunity.centralspace.utills.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utills.common.test.Var.EMAIL;
+import static com.fenixcommunity.centralspace.utills.common.test.Var.LOGIN;
 
 
-@RunWith( SpringRunner.class )
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@TestPropertySource(locations = { "classpath:application.properties" })
-@ContextConfiguration(classes=DomainConfig.class)
+@TestPropertySource(locations = {"classpath:application.properties"})
+@ContextConfiguration(classes = DomainConfig.class)
 //@AutoConfigureTestDatabase(replace = NONE)
 public class AccountRepositoryTest {
     //todo SpringExtension  + https://github.com/antkorwin/junit5-integration-test-utils#postgresql
@@ -30,7 +30,6 @@ public class AccountRepositoryTest {
 
     @Autowired
     private AccountRepository repository;
-
 
     @Test
     public void test4() {

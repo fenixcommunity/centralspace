@@ -17,7 +17,7 @@ public class PasswordValidator implements Validator {
     private Level level = Level.HIGH;
     private Pattern pattern;
 
-//TODO test i co dać do Validatora?
+    //TODO test i co dać do Validatora?
     private PasswordValidator() {
     }
 
@@ -62,7 +62,7 @@ public class PasswordValidator implements Validator {
         }
     }
 
-    private boolean isValid(String arg){
-        return  pattern.matcher(arg).find();
+    private boolean isValid(String arg) {
+        return pattern.matcher(arg).find();
     }
 }

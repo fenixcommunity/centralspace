@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -29,7 +30,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
     static {
         properties = new Properties();
         try {
-            properties.load(CryptoJpaConverter.class.getClassLoader().getResourceAsStream(security_file));
+            properties.load(Objects.requireNonNull(CryptoJpaConverter.class.getClassLoader().getResourceAsStream(security_file)));
         } catch (IOException e) {
             log.log(Level.SEVERE, "Could not load properties file 'security.properties' using unsecure encryption key.");
             throw new CryptoJpaConverterException("Unsuccessful loading the properties to converter");

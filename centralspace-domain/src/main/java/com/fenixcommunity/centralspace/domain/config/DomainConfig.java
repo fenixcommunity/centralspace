@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaAuditing // uwzględnia @PrePersist, @PreRemove
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core",
-                "com.fenixcommunity.centralspace.domain.utils"})
+        "com.fenixcommunity.centralspace.domain.utils"})
 @EnableJpaRepositories({"com.fenixcommunity.centralspace.domain.repository"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model"})
 public class DomainConfig {

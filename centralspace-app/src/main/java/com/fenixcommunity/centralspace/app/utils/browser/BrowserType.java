@@ -29,7 +29,8 @@ public enum BrowserType {
     BrowserType(String description) {
         this.description = description;
     }
-//todo browserInfo searching
+
+    //todo browserInfo searching
     public static BrowserType identifyBrowser(String browserInfo) {
         switch (browserInfo) {
             case "firefox":

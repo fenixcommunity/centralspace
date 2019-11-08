@@ -1,5 +1,6 @@
 
 package other.calculator;
+
 import java.math.BigDecimal;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -11,7 +12,7 @@ public enum Operation {
     MULTIPLY(BigDecimal::multiply),
     DIVIDE(BigDecimal::divide);
 
-//    @FunctionalInterface
+    //    @FunctionalInterface
 //    public interface BinaryOperator<T> extends BiFunction<T,T,T> {
     private final BinaryOperator<BigDecimal> command;
 

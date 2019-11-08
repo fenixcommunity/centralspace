@@ -1,6 +1,9 @@
 package com.fenixcommunity.centralspace.app.utils;
 
-import org.springframework.boot.*;
+import org.springframework.boot.ExitCodeEvent;
+import org.springframework.boot.ExitCodeExceptionMapper;
+import org.springframework.boot.ExitCodeGenerator;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

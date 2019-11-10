@@ -19,8 +19,8 @@ public class ValidatorFactory {
 
     private Validator initValidator(ValidatorType type) {
         Validator validator = null;
-        if (type == ValidatorType.ASSERT) {
-            validator = new AssertValidator();
+        if (type == ValidatorType.NOT_NULL) {
+            validator = new NotNullValidator();
         } else if (type == ValidatorType.PASSWORD_LOW) {
             validator = PasswordValidator.lowValidator();
         } else if (type == ValidatorType.PASSWORD_HIGH) {
@@ -40,10 +40,15 @@ public class ValidatorFactory {
 
     public Validator getInstance(ValidatorType type) {
 //TODO        usun Assert   / Level level
-        Assert.notNull(type, "ValidatorType cannot be null");
+        boolean df = true;
+        validateInstanceExist(type);
         Validator validator = cache.get(type);
         return validator == null ? initValidator(type) : validator;
+    }
 
+    //to test
+    public void validateInstanceExist(ValidatorType type) {
+        Assert.notNull(type, "ValidatorType cannot be null");
     }
 
 }

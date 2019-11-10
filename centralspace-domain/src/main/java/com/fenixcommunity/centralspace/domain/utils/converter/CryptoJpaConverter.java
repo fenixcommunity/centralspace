@@ -32,8 +32,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
         try {
             properties.load(Objects.requireNonNull(CryptoJpaConverter.class.getClassLoader().getResourceAsStream(security_file)));
         } catch (IOException e) {
-            log.log(Level.SEVERE, "Could not load properties file 'security.properties' using unsecure encryption key.");
-            throw new CryptoJpaConverterException("Unsuccessful loading the properties to converter");
+            log.log(Level.SEVERE, "Unsuccessful loading the properties to converter", e);
         }
         ALGORITHM = (String) properties.get(algorithm_property_key);
         KEY = ((String) properties.get(secret_property_key)).getBytes();
@@ -52,8 +51,8 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
             final String encrypted = new String(Base64.encode(c
                     .doFinal(ccData.getBytes())), StandardCharsets.UTF_8);
             return encrypted;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Exception e) {
+            throw new CryptoJpaConverterException("Encrypt process has been failed", e);
         }
     }
 
@@ -72,7 +71,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
                     .decode(dbData.getBytes(StandardCharsets.UTF_8))));
             return decrypted;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new CryptoJpaConverterException("Decrypt process has been failed", e);
         }
     }
 }

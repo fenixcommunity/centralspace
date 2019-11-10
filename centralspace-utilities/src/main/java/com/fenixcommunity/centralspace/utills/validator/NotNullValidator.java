@@ -5,7 +5,7 @@ import org.springframework.util.Assert;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class AssertValidator implements Validator {
+public class NotNullValidator implements Validator {
 
     @Override
     public boolean isValid(Object object) {

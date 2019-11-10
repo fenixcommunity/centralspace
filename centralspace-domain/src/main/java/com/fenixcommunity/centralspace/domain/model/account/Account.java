@@ -26,7 +26,10 @@ import java.util.List;
 @EntityListeners(AccountEntityListener.class)
 @Table(name = "account")
 //@NoArgsConstructor @AllArgsConstructor(access= AccessLevel.PUBLIC)
-@Data @Builder @EqualsAndHashCode(callSuper = true) @ToString()
+@Data
+@Builder
+@EqualsAndHashCode(callSuper = true)
+@ToString()
 public class Account extends AbstractBaseEntity {
 
     //  TODO  AuditingEntityListener co to?

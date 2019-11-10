@@ -1,8 +1,8 @@
-package com.fenixcommunity.centralspace.utills.validator;
+package com.fenixcommunity.centralspace.utilities.validator;
 
 
-import com.fenixcommunity.centralspace.utills.common.Level;
-import com.fenixcommunity.centralspace.utills.exception.validator.PasswordValidatorException;
+import com.fenixcommunity.centralspace.utilities.common.Level;
+import com.fenixcommunity.centralspace.utilities.exception.validator.PasswordValidatorException;
 
 import java.util.Objects;
 import java.util.regex.Pattern;

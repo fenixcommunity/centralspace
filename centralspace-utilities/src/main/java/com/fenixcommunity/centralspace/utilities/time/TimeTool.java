@@ -1,8 +1,8 @@
-package com.fenixcommunity.centralspace.utills.time;
+package com.fenixcommunity.centralspace.utilities.time;
 
-import com.fenixcommunity.centralspace.utills.validator.Validator;
-import com.fenixcommunity.centralspace.utills.validator.ValidatorFactory;
-import com.fenixcommunity.centralspace.utills.validator.ValidatorType;
+import com.fenixcommunity.centralspace.utilities.validator.Validator;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorType;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

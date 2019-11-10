@@ -21,6 +21,11 @@
             <groupId>com.fenixcommunity.centralspace</groupId>
             <artifactId>centralspace-utilities</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fenixcommunity.centralspace</groupId>
+            <artifactId>centralspace-testtools</artifactId>
+            <type>pom</type>
+        </dependency>
 
         <!-- SPRING DEPENDENCIES -->
         <dependency>
@@ -36,14 +41,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
-
-        <!-- TEST DEPENDENCIES -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

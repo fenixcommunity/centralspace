@@ -8,15 +8,22 @@
         <groupId>com.fenixcommunity.centralspace</groupId>
         <artifactId>centralspace-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-
 
     <artifactId>centralspace-utilities</artifactId>
     <name>Centralspace Utilities</name>
     <packaging>jar</packaging>
 
-    <!-- SPRING DEPENDENCIES -->
     <dependencies>
+        <!-- MODULES DEPENDENCIES -->
+        <dependency>
+            <groupId>com.fenixcommunity.centralspace</groupId>
+            <artifactId>centralspace-testtools</artifactId>
+            <type>pom</type>
+        </dependency>
+
+        <!-- SPRING DEPENDENCIES -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

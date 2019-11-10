@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.utills.validator;
+package com.fenixcommunity.centralspace.utilities.validator;
 
 public interface Validator {
     //TODO java8 // default

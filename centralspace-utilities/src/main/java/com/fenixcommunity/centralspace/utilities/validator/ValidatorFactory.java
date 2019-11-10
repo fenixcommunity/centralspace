@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.utills.validator;
+package com.fenixcommunity.centralspace.utilities.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;

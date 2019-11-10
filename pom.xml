@@ -32,16 +32,9 @@
         <spring-core.version>5.2.0.RELEASE</spring-core.version>
         <spring-security.version>5.1.2.RELEASE</spring-security.version>
         <spring.hateoas.version>0.25.0.RELEASE</spring.hateoas.version>
-        <spring-boot-test.version>2.1.7.RELEASE</spring-boot-test.version>
         <postgresql.version>42.2.5</postgresql.version>
-        <h2database.version>1.4.199</h2database.version>
         <lombok.version>1.18.4</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
-        <junit-jupiter.version>5.5.2</junit-jupiter.version>
-        <junit-jupiter-api.version>${junit-jupiter.version}</junit-jupiter-api.version>
-        <junit-jupiter-params.version>${junit-jupiter.version}</junit-jupiter-params.version>
-        <junit-jupiter-engine>${junit-jupiter.version}</junit-jupiter-engine>
-        <junit-jupiter-mockito>2.23.4</junit-jupiter-mockito>
         <javassist.version>3.23.1-GA</javassist.version>
     </properties>
 
@@ -49,6 +42,7 @@
         <module>centralspace-domain</module>
         <module>centralspace-app</module>
         <module>centralspace-utilities</module>
+        <module>centralspace-testtools</module>
     </modules>
 
     <dependencyManagement>
@@ -122,18 +116,9 @@
                 <version>${postgresql.version}</version>
             </dependency>
 
-            <!-- TEST DEPENDENCIES -->
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2database.version}</version>
-                <scope>test</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
-    <!--add to all child-->
     <dependencies>
         <!-- UTILITIES DEPENDENCIES -->
         <dependency>
@@ -147,53 +132,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons.version}</version>
         </dependency>
-
-        <!-- TEST DEPENDENCIES -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot-test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter-api.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit-jupiter-params.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter-engine}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${junit-jupiter-mockito}</version>
-            <scope>test</scope>
-        </dependency>
-
-
         <dependency>
             <!-- update Hibernate dependency on Javassist for Java 11 compatibility -->
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>${javassist.version}</version>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.postgresql</groupId>-->
-        <!--            <artifactId>postgresql</artifactId>-->
-        <!--            <version>${postgresql.version}</version>-->
-        <!--        </dependency>-->
-
     </dependencies>
 
     <build>
@@ -226,17 +170,6 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.0.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
 

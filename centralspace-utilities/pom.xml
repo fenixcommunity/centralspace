@@ -16,13 +16,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- MODULES DEPENDENCIES -->
-        <dependency>
-            <groupId>com.fenixcommunity.centralspace</groupId>
-            <artifactId>centralspace-testtools</artifactId>
-            <type>pom</type>
-        </dependency>
-
         <!-- SPRING DEPENDENCIES -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

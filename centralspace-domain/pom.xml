@@ -21,11 +21,6 @@
             <groupId>com.fenixcommunity.centralspace</groupId>
             <artifactId>centralspace-utilities</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fenixcommunity.centralspace</groupId>
-            <artifactId>centralspace-testtools</artifactId>
-            <type>pom</type>
-        </dependency>
 
         <!-- SPRING DEPENDENCIES -->
         <dependency>

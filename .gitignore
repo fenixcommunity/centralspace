@@ -24,5 +24,6 @@
 /.nb-gradle/
 /build/
 
-security.properties
+//TODO!!! remove comment if prod
+### *.properties ###
 

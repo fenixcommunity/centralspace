@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = {"classpath:domain.properties"})

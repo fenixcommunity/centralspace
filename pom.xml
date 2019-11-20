@@ -30,6 +30,8 @@
         <spring-boot-web.version>2.1.3.RELEASE</spring-boot-web.version>
         <spring-boot-data.version>2.1.3.RELEASE</spring-boot-data.version>
         <spring-boot-tomcat.version>2.1.3.RELEASE</spring-boot-tomcat.version>
+        <spring-boot-mail.version>2.2.0.RELEASE</spring-boot-mail.version>
+        <spring-context-support.version>5.0.1.RELEASE</spring-context-support.version>
         <spring-core.version>5.2.0.RELEASE</spring-core.version>
         <spring-security.version>5.1.2.RELEASE</spring-security.version>
         <spring.hateoas.version>0.25.0.RELEASE</spring.hateoas.version>
@@ -101,6 +103,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-tomcat</artifactId>
                 <version>${spring-boot-tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>${spring-boot-mail.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring-context-support.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>

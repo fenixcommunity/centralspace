@@ -3,9 +3,11 @@ package com.fenixcommunity.centralspace.domain.model.password;
 import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
 import com.fenixcommunity.centralspace.domain.utils.converter.CryptoJpaConverter;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -26,8 +28,8 @@ import java.io.Serializable;
 //@Setter(value = AccessLevel.PACKAGE)
 @Entity
 @Table(name = "password")
-//@Getter @Setter
-@Data @Builder @EqualsAndHashCode(callSuper = true)
+@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Password extends AbstractBaseEntity implements Serializable {
 
     //TODO         return Optional.ofNullable(isoCountryCode)

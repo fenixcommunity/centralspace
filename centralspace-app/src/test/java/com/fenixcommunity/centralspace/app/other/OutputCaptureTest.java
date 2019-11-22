@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app;
+package com.fenixcommunity.centralspace.app.other;
 
 import org.junit.Rule;
 import org.junit.Test;

@@ -38,7 +38,7 @@ class RegisterController {
 
     private RestRegisterResponse buildRegisterResponse(String info) {
         RestRegisterResponse response = new RestRegisterResponse(info, "linkredirection", RegisterType.STANDARD);
-        // ...
+        //todo ...
         return response;
     }
 

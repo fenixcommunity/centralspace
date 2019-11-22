@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.utilities.validator;
 
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import com.fenixcommunity.centralspace.utills.common.test.Var;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,20 +26,26 @@ import java.time.ZonedDateTime;
 import java.util.EnumSet;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 
 @DisplayName("Test to check PasswordValidator")
 @ExtendWith(MockitoExtension.class)
 public class PasswordValidatorTest {
 
-    @Spy
+    @InjectMocks
     private ValidatorFactory validatorFactory;
+
+    @Spy
+    private ValidatorFactory validatorFactorySpy;
 
     @InjectMocks
     private TimeTool timeTool;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         timeTool = new TimeTool(validatorFactory);
     }
@@ -124,9 +130,9 @@ public class PasswordValidatorTest {
 
     @Test
     public void shouldDoNothing_ExampleAndLambdaInvocation() {
-        doNothing().when(validatorFactory).validateInstanceExist(null);
+        doNothing().when(validatorFactorySpy).validateInstanceExist(null);
         assertThrows(NullPointerException.class, () -> {
-            validatorFactory.getInstance(null);
+            validatorFactorySpy.getInstance(null);
         });
         // would work fine
         // doReturn("test").when(myClass).anotherMethodInClass();

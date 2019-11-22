@@ -6,6 +6,9 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Log
 @Service
 public class AccountService {
@@ -17,7 +20,24 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account createAccount(Account account) {
+    public Account save(Account account) {
         return accountRepository.save(account);
+    }
+
+    public void delete(Account account) {
+        accountRepository.delete(account);
+    }
+
+    public void deleteById(Long id) {
+        accountRepository.deleteById(id);
+    }
+
+    public Optional<Account> findById(Long id) {
+        //TODO of null co zrobic?
+        return accountRepository.findById(id);
+    }
+
+    public List<Account> findAll() {
+        return (List<Account>) accountRepository.findAll();
     }
 }

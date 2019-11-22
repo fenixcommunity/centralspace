@@ -1,9 +1,13 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.exception.rest.ResourceNotFoundException;
+import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
-import com.fenixcommunity.centralspace.domain.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,69 +16,91 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
+import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+// todo swagger/postman
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-
-    private final AccountRepository accountRepository;
+    //todo ResourceSupport when empty body and links, Resource when body and links,
+    private final AccountService accountService;
 
     @Autowired
-    public AccountController(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
-    // zobacz inne narzedzia jpa repo
+
+    //todo zobacz inne narzedzia jpa repo
     // Optional
 
-    @RequestMapping("/writeparameter")
-    public String writeParameter(@RequestParam(value = "parameter", defaultValue = "unknown") String parameter) {
-        return parameter;
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+        Account account = findById(id);
+        AccountDto accountDto = mapToDto(account, HIGH);
+        accountDto.add(linkTo(methodOn(AccountController.class).confirmMessage(id.toString())).withSelfRel());
+        return ResponseEntity.ok(accountDto);
     }
 
-    @GetMapping("/accounts")
-    public List<Account> getAllAccounts() {
-        return (List<Account>) accountRepository.findAll();
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Account>> getAll() {
+        List<Account> accounts = accountService.findAll();
+        return ResponseEntity.ok(accounts);
     }
 
-    @GetMapping("/account/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
-        Account account = findAccountById(id);
-        return ResponseEntity.ok().body(account);
-    }
-
-    @PostMapping("/account")
-    public Account createAccount(@Valid @RequestBody Account account) {
-        return accountRepository.save(account);
-    }
-
-    @PutMapping("/account/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable(name = "id") Long id, @Valid @RequestBody Account requestAccount) throws ResourceNotFoundException {
-        Account account = findAccountById(id);
-
-        account.setLogin(requestAccount.getLogin());
-        final Account updatedAccount = accountRepository.save(account);
-        return ResponseEntity.ok(updatedAccount);
-    }
-
-    @DeleteMapping("/account/{id}")
-    public Map<String, Boolean> deleteAccount(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
-        Account account = findAccountById(id);
-
-        accountRepository.delete(account);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
+    @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResourceSupport create(@Valid @RequestBody AccountDto accountDto) {
+        Account createdAccount = mapToJpa(accountDto);
+        Long generatedId = accountService.save(createdAccount).getId();
+        ResourceSupport response = new ResourceSupport();
+        response.add(linkTo(methodOn(AccountController.class).confirmMessage(generatedId.toString())).withSelfRel());
         return response;
     }
 
-    private Account findAccountById(Long id) throws ResourceNotFoundException {
-        return accountRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + id));
+    //    todo RestErrorHandler apply
+    @PutMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResourceSupport update(@PathVariable(name = "id") Long id, @Valid @RequestBody Account requestAccount) throws ResourceNotFoundException {
+        Account account = findById(id);
+        //todo account exist
+        final Account updatedAccount = accountService.save(requestAccount);
+        ResourceSupport response = new ResourceSupport();
+        response.add(linkTo(methodOn(AccountController.class).confirmMessage(updatedAccount.getId().toString())).withSelfRel());
+        //todo ResponseEntity vs ResourceSupport
+        return response;
+    }
+
+    //todo https://www.baeldung.com/spring-response-entity
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity delete(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+        return accountService.findById(id).map(
+                a -> {
+                    accountService.deleteById(id);
+                    return ResponseEntity.noContent().build();
+                }).orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
+    }
+
+    @GetMapping("/confirm")
+    public ResponseEntity<String> confirmMessage(@PathVariable(value = "id") String id) {
+        return ResponseEntity.ok(id);
+    }
+
+    private Account findById(Long id) throws ResourceNotFoundException {
+        return accountService.findById(id)
+//                .map(a-> AccountMapper::mapToDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }
 }

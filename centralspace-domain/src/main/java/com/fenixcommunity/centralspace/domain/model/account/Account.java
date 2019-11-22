@@ -4,9 +4,11 @@ import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.password.Password;
 import com.fenixcommunity.centralspace.domain.utils.converter.UppercaseConverter;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
@@ -25,11 +27,8 @@ import java.util.List;
 @Entity
 @EntityListeners(AccountEntityListener.class)
 @Table(name = "account")
-//@NoArgsConstructor @AllArgsConstructor(access= AccessLevel.PUBLIC)
-@Data
-@Builder
-@EqualsAndHashCode(callSuper = true)
-@ToString()
+@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true) @ToString()
 public class Account extends AbstractBaseEntity {
 
     //  TODO  AuditingEntityListener co to?

@@ -1,5 +1,4 @@
-package com.fenixcommunity.centralspace.domain.config;
-
+package com.fenixcommunity.centralspace.domain.configuration;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,16 +12,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.fenixcommunity.centralspace.domain.utils"})
 @EnableJpaRepositories({"com.fenixcommunity.centralspace.domain.repository"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model"})
-public class DomainConfig {
-
-//    @Bean(name = "dataSource")      // 3
-//    @Primary
-//    @ConfigurationProperties(prefix = "spring.datasource")
-//    public DataSource mysqlDataSource() {
-//        return DataSourceBuilder.create().build();
-//    }
-
+public class DomainConfigForTest {
 }
-
-
-

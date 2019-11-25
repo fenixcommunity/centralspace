@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.domain.utils.converter;
 
-import com.fenixcommunity.centralspace.utills.common.test.Var;
+import com.fenixcommunity.centralspace.utilities.common.Var;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;

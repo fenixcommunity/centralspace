@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app;
 
-import com.fenixcommunity.centralspace.app.config.CentralspaceApplicationConfig;
+import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

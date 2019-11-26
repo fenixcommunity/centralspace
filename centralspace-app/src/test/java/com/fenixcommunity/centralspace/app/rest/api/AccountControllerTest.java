@@ -23,12 +23,12 @@ import java.util.Optional;
 
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
+import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static com.fenixcommunity.centralspace.utilities.rest.RestTool.removeLinks;
-import static com.fenixcommunity.centralspace.utills.common.test.Var.COOKIE_SESSION;
-import static com.fenixcommunity.centralspace.utills.common.test.Var.EMAIL;
-import static com.fenixcommunity.centralspace.utills.common.test.Var.HEADER_SESSION;
-import static com.fenixcommunity.centralspace.utills.common.test.Var.ID;
-import static com.fenixcommunity.centralspace.utills.common.test.Var.LOGIN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -88,9 +88,10 @@ public class AccountControllerTest {
 
         ).andReturn().getResponse();
         String responseContent = removeLinks(response.getContentAsString());
+        String accountJson = jacksonTester.write(mapToDto(account, HIGH)).getJson();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertTrue(jacksonTester.write(mapToDto(account, HIGH)).getJson().contains(responseContent));
+        assertTrue(removeLinks(accountJson).contains(responseContent));
     }
 
     @Test

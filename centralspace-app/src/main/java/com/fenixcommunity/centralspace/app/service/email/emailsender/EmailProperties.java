@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.emailsender;
+package com.fenixcommunity.centralspace.app.service.email.emailsender;
 
 import lombok.Getter;
 import lombok.Setter;

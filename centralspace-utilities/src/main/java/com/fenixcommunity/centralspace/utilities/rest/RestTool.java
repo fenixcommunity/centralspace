@@ -5,9 +5,11 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public class RestTool {
 
     public static String removeLinks(String content) {
+        String result = content;
         if (isNotEmpty(content)) {
-            return content.replaceAll(",*\"links\":\\[(.*?)]", "");
+            result = result.replaceAll(",*\"_links\":\\{(.*?)}}", "");
+            result =  result.replaceAll(",*\"links\":\\[(.*?)]", "");
         }
-        return content;
+        return result;
     }
 }

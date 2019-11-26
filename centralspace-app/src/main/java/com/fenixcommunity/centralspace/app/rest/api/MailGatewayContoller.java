@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import com.fenixcommunity.centralspace.app.service.emailsender.EmailService;
+import com.fenixcommunity.centralspace.app.service.email.emailsender.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

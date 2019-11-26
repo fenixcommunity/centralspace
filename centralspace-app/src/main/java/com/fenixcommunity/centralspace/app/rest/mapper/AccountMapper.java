@@ -12,12 +12,11 @@ public class AccountMapper {
         AccountDto rest = new AccountDto();
         if (Level.HIGH.equals(level)) {
             if (!isNull(account.getId())) {
-                rest.accountId = account.getId().toString();
+                rest.id = account.getId().toString();
             }
         }
         rest.login = account.getLogin();
         rest.email = account.getEmail();
-
         return rest;
     }
 

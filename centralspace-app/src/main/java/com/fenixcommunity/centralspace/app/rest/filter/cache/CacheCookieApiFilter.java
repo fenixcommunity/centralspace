@@ -12,7 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.fenixcommunity.centralspace.utills.common.test.Var.COOKIE_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
 
 @Log
 public class CacheCookieApiFilter implements Filter {

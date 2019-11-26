@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.emailsender;
+package com.fenixcommunity.centralspace.app.service.email.emailsender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

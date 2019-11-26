@@ -5,7 +5,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +25,14 @@ import java.util.List;
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 // todo swagger/postman
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    //todo ResourceSupport when empty body and links, Resource when body and links,
+    //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;
 
     @Autowired
@@ -61,10 +61,10 @@ public class AccountController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResourceSupport create(@Valid @RequestBody AccountDto accountDto) {
+    public RepresentationModel create(@Valid @RequestBody AccountDto accountDto) {
         Account createdAccount = mapToJpa(accountDto);
         Long generatedId = accountService.save(createdAccount).getId();
-        ResourceSupport response = new ResourceSupport();
+        RepresentationModel response = new RepresentationModel();
         response.add(linkTo(methodOn(AccountController.class).confirmMessage(generatedId.toString())).withSelfRel());
         return response;
     }
@@ -72,13 +72,12 @@ public class AccountController {
     //    todo RestErrorHandler apply
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResourceSupport update(@PathVariable(name = "id") Long id, @Valid @RequestBody Account requestAccount) throws ResourceNotFoundException {
+    public RepresentationModel update(@PathVariable(name = "id") Long id, @Valid @RequestBody Account requestAccount) throws ResourceNotFoundException {
         Account account = findById(id);
         //todo account exist
         final Account updatedAccount = accountService.save(requestAccount);
-        ResourceSupport response = new ResourceSupport();
+        RepresentationModel response = new RepresentationModel();
         response.add(linkTo(methodOn(AccountController.class).confirmMessage(updatedAccount.getId().toString())).withSelfRel());
-        //todo ResponseEntity vs ResourceSupport
         return response;
     }
 

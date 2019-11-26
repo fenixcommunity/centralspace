@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.fenixcommunity.centralspace.utills.common.test.Var.HEADER_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
 
 @Log
 public class HeaderApiFilter implements Filter {

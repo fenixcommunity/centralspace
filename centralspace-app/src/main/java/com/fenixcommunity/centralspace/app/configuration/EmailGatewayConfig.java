@@ -1,10 +1,13 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
-import com.fenixcommunity.centralspace.app.service.emailsender.EmailProperties;
-import com.fenixcommunity.centralspace.app.service.emailsender.EmailService;
-import com.fenixcommunity.centralspace.app.service.emailsender.SchedulerService;
+
+import com.fenixcommunity.centralspace.app.service.email.emailsender.EmailProperties;
+import com.fenixcommunity.centralspace.app.service.email.emailsender.EmailService;
+import com.fenixcommunity.centralspace.app.service.email.scheduler.SchedulerService;
+import com.fenixcommunity.centralspace.app.service.email.scheduler.SchedulerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -16,6 +19,7 @@ import java.util.Properties;
 @Configuration
 @EnableScheduling
 @EnableAsync
+@ComponentScan({"com.fenixcommunity.centralspace.app.service.email"})
 public class EmailGatewayConfig {
 
     @Autowired
@@ -33,7 +37,7 @@ public class EmailGatewayConfig {
 
     @Bean
     public SchedulerService getAdvService() {
-        return new SchedulerService();
+        return new SchedulerServiceImpl();
     }
 
     @Bean
@@ -44,7 +48,7 @@ public class EmailGatewayConfig {
         mailSender.setPort(emailProperties.getPort());
         mailSender.setUsername(emailProperties.getUsername());
         mailSender.setPassword(emailProperties.getPassword());
-
+// how to check connection -> telnet smtp.gmail.com 587
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");

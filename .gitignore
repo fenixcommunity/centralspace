@@ -26,4 +26,5 @@
 
 //TODO!!! remove comment if prod
 ### *.properties ###
+*.lst
 

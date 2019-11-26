@@ -11,4 +11,7 @@ public class Var {
     public static final String PASSWORD_LOW = "password1";
     public static final String HEADER_SESSION = "CENTRALSPACE-APP-HEADER-SESSION";
     public static final String COOKIE_SESSION = "CENTRALSPACE-APP-COOKIE-SESSION";
+    public static final String DOMAIN_ID = "K343kdndnwok&kerfj02kJNNodo^#kfj87439Kf83";
+    public static final String DOMAIN_URL = "www.fenixcommunity.pl";
+    public static final String DOT = ".";
 }

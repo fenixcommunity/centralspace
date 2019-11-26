@@ -12,7 +12,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     private EmailService emailService;
 
 
-    @Scheduled(fixedDelay = 250 * 1000)
+    @Scheduled(fixedDelay = 60 * 60 * 1000)
     public void mailReminder() {
         emailService.sendEmail("A","m7.kaminski@gmail.com","mail", "mail2");
     }

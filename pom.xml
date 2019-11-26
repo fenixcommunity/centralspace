@@ -40,6 +40,7 @@
         <!-- UTILITIES DEPENDENCIES -->
         <lombok.version>1.18.4</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
+        <google-guava.version>28.0-jre</google-guava.version>
         <javassist.version>3.23.1-GA</javassist.version>
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
@@ -158,6 +159,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google-guava.version}</version>
         </dependency>
         <dependency>
             <!-- update Hibernate dependency on Javassist for Java 11 compatibility -->

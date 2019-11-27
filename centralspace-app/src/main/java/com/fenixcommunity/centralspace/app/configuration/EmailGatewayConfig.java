@@ -64,7 +64,7 @@ public class EmailGatewayConfig {
 
         return mailSender;
     }
-
+//todo MailContentBuilder
     @Bean("registrationSimpleMailMessage")
     public MailMessageTemplate getRegistrationMailTemplate() {
         MailMessageTemplate message = new RegistrationSimpleMailMessage();

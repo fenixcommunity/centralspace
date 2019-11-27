@@ -1,30 +1,42 @@
 package com.fenixcommunity.centralspace.app.utils.email.template;
 
-import org.springframework.mail.MailParseException;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import java.util.Date;
 
 //TODO 27.11.2019 what about getters?
-public interface MailMessageTemplate {
-    void setFrom(String from) throws MailParseException;
 
-    void setReplyTo(String replyTo) throws MailParseException;
+public abstract class MailMessageTemplate {
 
-    void setTo(String to) throws MailParseException;
+    @Nullable @Getter
+    protected String from;
+    @Nullable @Getter
+    protected String[] to;
 
-    void setTo(String... to) throws MailParseException;
+    @Nullable @Getter
+    protected String subject;
+    @Nullable @Getter
+    protected String text;
 
-    void setCc(String cc) throws MailParseException;
+    @Getter @Setter
+    protected String replyTo;
 
-    void setCc(String... cc) throws MailParseException;
+    @Getter @Setter
+    protected String[] cc;
 
-    void setBcc(String bcc) throws MailParseException;
+    @Getter @Setter
+    protected String[] bcc;
 
-    void setBcc(String... bcc) throws MailParseException;
+    @Getter @Setter
+    protected Date sentDate;
 
-    void setSentDate(Date sentDate) throws MailParseException;
+    public abstract void setFrom(@Nullable String from);
 
-    void setSubject(String subject) throws MailParseException;
+    public abstract void setTo(@Nullable String[] to);
 
-    void setText(String text) throws MailParseException;
+    public abstract void setSubject(@Nullable String subject);
+
+    public abstract void setText(@Nullable String text);
 }

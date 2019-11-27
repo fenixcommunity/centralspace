@@ -48,8 +48,9 @@
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <junit-jupiter-api.version>${junit-jupiter.version}</junit-jupiter-api.version>
         <junit-jupiter-params.version>${junit-jupiter.version}</junit-jupiter-params.version>
-        <junit-jupiter-engine>${junit-jupiter.version}</junit-jupiter-engine>
-        <junit-jupiter-mockito>2.23.4</junit-jupiter-mockito>
+        <junit-jupiter-engine.version>${junit-jupiter.version}</junit-jupiter-engine.version>
+        <junit-jupiter-mockito.version>2.23.4</junit-jupiter-mockito.version>
+        <greenmail.version>1.5.7</greenmail.version>
     </properties>
 
     <modules>
@@ -143,7 +144,12 @@
                 <version>${h2database.version}</version>
                 <scope>test</scope>
             </dependency>
-
+            <dependency>
+                <groupId>com.icegreen</groupId>
+                <artifactId>greenmail-spring</artifactId>
+                <version>${greenmail.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -159,11 +165,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${google-guava.version}</version>
         </dependency>
         <dependency>
             <!-- update Hibernate dependency on Javassist for Java 11 compatibility -->
@@ -193,13 +194,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter-engine}</version>
+            <version>${junit-jupiter-engine.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${junit-jupiter-mockito}</version>
+            <version>${junit-jupiter-mockito.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

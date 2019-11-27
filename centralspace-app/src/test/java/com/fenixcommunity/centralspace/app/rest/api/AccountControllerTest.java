@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
@@ -13,25 +14,21 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static com.fenixcommunity.centralspace.utilities.rest.RestTool.removeLinks;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -56,6 +53,10 @@ public class AccountControllerTest {
 
     @MockBean
     private AccountService accountService;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private ZonedDateTime dateTime;
 
     private static final String BASE_ACCOUNT_URL = "/account/";
     private static final String BASE_PASSWORD_URL = "/password/";

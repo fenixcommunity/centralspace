@@ -58,7 +58,15 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
+        <!-- TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail-spring</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+
 
 </project>
 

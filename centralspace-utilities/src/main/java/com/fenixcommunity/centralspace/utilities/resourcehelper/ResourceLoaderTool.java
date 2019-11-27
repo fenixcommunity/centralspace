@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.utilities.resourcehelper;
 
-import com.google.common.net.MediaType;
+import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -17,6 +17,6 @@ public class ResourceLoaderTool {
 
     public Resource loadResourceByName(String fileName, MediaType type) {
         //todo validator
-       return resourceLoader.getResource("classpath:"+ fileName + DOT + type.subtype());
+       return resourceLoader.getResource("classpath:"+ fileName + DOT + type.getSubtype());
     }
 }

@@ -3,10 +3,9 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import com.fenixcommunity.centralspace.app.service.email.emailsender.EmailService;
 import com.fenixcommunity.centralspace.app.utils.email.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
-import com.google.common.net.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.mail.MailMessage;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +33,7 @@ public class MailGatewayController {
     public void sendEmail(@RequestParam(value = "message", defaultValue = "empty message") String  message) {
         emailService.sendEmail(
                 "A","m7.kaminski@gmail.com","mail", message);
-        AttachmentResource attachment = new AttachmentResource("attachment", MediaType.PDF);
+        AttachmentResource attachment = new AttachmentResource("attachment", MediaType.APPLICATION_PDF);
         // todo add exception
         try {
             emailService.sendMessageWithAttachment(

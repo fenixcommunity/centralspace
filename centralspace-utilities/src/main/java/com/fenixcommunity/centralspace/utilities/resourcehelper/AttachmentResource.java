@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.utilities.resourcehelper;
 
-import com.google.common.net.MediaType;
+import org.springframework.http.MediaType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

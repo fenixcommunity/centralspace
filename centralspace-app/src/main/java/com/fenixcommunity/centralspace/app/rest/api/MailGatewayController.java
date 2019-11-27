@@ -1,9 +1,12 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.email.emailsender.EmailService;
+import com.fenixcommunity.centralspace.app.utils.email.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
 import com.google.common.net.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.MailMessage;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +17,18 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/mail")
-public class MailGatewayContoller {
+public class MailGatewayController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    @Qualifier("basicSimpleMailMessage")
+    private MailMessageTemplate basicSimpleMailMessage;
+
+    @Autowired
+    @Qualifier("registrationSimpleMailMessage")
+    private MailMessageTemplate registrationMailTemplate;
 
     @GetMapping("/send")
     public void sendEmail(@RequestParam(value = "message", defaultValue = "empty message") String  message) {

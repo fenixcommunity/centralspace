@@ -1,40 +1,104 @@
 package com.fenixcommunity.centralspace.app.service.email.emailsender;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.icegreen.greenmail.util.GreenMail;
+import com.icegreen.greenmail.util.ServerSetup;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.util.Properties;
+
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {
+        MailClient.class,
+        JavaMailSenderImpl.class,
+        ResourceLoaderTool.class})
+@TestPropertySource(locations = {"classpath:services.properties"})
 @SpringBootTest
+//todo  what is it? @ActiveProfiles("email")
 class MailClientTest {
 
     private GreenMail smtpServer;
-
-    @Autowired
     private MailClient mailClient;
 
-    //todo fill
+    @Value("${emailgateway.port}")
+    private int port;
 
-    @BeforeAll
-    public void setUp() throws Exception {
-        smtpServer = new GreenMail(new ServerSetup(25, null, "smtp"));
+    @Value("${emailgateway.protocol}")
+    private String protocol;
+
+    @Value("${emailgateway.username}")
+    private String username;
+
+    @Value("${emailgateway.password}")
+    private String password;
+
+    @Value("${emailgateway.usermail}")
+    private String usermail;
+
+    @BeforeEach
+     void setUp() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setPort(port);
+        mailSender.setProtocol(protocol);
+        mailSender.setUsername(username);
+        mailSender.setPassword(password);
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.smtp.auth", "true");
+        mailClient = new MailClient(mailSender);
+
+        ServerSetup setup = new ServerSetup(port, null, protocol);
+        smtpServer = new GreenMail(setup);
+        smtpServer.setUser(usermail, username, password);
         smtpServer.start();
     }
 
-    @AfterAll
-    public void tearDown() throws Exception {
+    @AfterEach
+    void tearDown() {
         smtpServer.stop();
     }
 
     @Test
-    void sendEmail() {
+    void shouldSendMail() throws MessagingException, IOException {
+        //given
+        //when
+        mailClient.sendEmail(EMAIL_FROM, EMAIL_TO, SUBJECT, MESSAGE);
+        smtpServer.waitForIncomingEmail(5000, 1);
+        //then
+        Message[] messages = smtpServer.getReceivedMessages();
+        assertEquals(1, messages.length);
+        Message message = messages[0];
+        String content = (String) message.getContent();
+        String subject = message.getSubject();
+        String emailFrom = message.getFrom()[0].toString();
+        String replyTo = message.getReplyTo()[0].toString();
+
+        assertTrue(content.contains(MESSAGE));
+        assertEquals(SUBJECT, subject);
+        assertEquals(EMAIL_FROM, emailFrom);
+        assertEquals(EMAIL_REPLY_TO, replyTo);
     }
 
     @Test
-    void sendMessageWithAttachment() {
+    void shouldSeendMailWithAttachment(){
+        //todo fill
+        //given
+        //when
+        //then
     }
 }

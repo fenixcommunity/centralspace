@@ -10,6 +10,6 @@ public interface EmailService {
     void sendEmail(
             String fromAddress, String toAddress, String subject, String body);
 
-    void sendMessageWithAttachment(
+    void sendMailWithAttachment(
             String fromAddress, String toAddress, String subject, String body, AttachmentResource attachment) throws MessagingException, IOException;
 }

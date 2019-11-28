@@ -36,7 +36,7 @@ public class MailGatewayController {
         AttachmentResource attachment = new AttachmentResource("attachment", MediaType.APPLICATION_PDF);
         // todo add exception
         try {
-            emailService.sendMessageWithAttachment(
+            emailService.sendMailWithAttachment(
                     "B","m7.kaminski@gmail.com","mail with attachment", message, attachment);
         } catch (MessagingException e) {
             e.printStackTrace();

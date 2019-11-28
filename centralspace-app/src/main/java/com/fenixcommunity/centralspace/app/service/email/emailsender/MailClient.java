@@ -17,11 +17,15 @@ import java.io.File;
 @Service
 public class MailClient implements EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Autowired
     private ResourceLoaderTool resourceLoaderTool;
+
+    @Autowired
+    public MailClient(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Override
     public void sendEmail(
@@ -42,7 +46,7 @@ public class MailClient implements EmailService {
     }
 
     @Override
-    public void sendMessageWithAttachment(
+    public void sendMailWithAttachment(
             String fromAddress, String toAddress, String subject, String body, AttachmentResource attachment) {
 
         MimeMessagePreparator messagePreparator = mimeMessage -> {

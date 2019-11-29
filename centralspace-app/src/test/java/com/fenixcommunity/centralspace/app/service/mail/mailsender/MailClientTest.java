@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.thymeleaf.TemplateEngine;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -54,13 +55,15 @@ class MailClientTest {
     @BeforeEach
      void setUp() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        TemplateEngine templateEngine = new TemplateEngine();
+
         mailSender.setPort(port);
         mailSender.setProtocol(protocol);
         mailSender.setUsername(username);
         mailSender.setPassword(password);
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
-        mailClient = new MailClient(mailSender);
+        mailClient = new MailClient(mailSender, templateEngine);
 
         ServerSetup setup = new ServerSetup(port, null, protocol);
         smtpServer = new GreenMail(setup);

@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
+import com.fenixcommunity.centralspace.utilities.common.Var;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,21 +11,28 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.io.File;
+
+import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
 
 //TODO CZY WSZEDZIE IMPL?
 @Service
 public class MailClient implements MailService {
 
     private final JavaMailSender mailSender;
+    private final TemplateEngine templateEngine;
 
     @Autowired
     private ResourceLoaderTool resourceLoaderTool;
 
     @Autowired
-    public MailClient(JavaMailSender mailSender) {
+    public MailClient(JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
     }
 
     @Override
@@ -49,11 +57,19 @@ public class MailClient implements MailService {
     public void sendMailWithAttachment(
             String fromAddress, String toAddress, String subject, String body, AttachmentResource attachment) {
 
+        Context mailTemplateContext = new Context();
+        mailTemplateContext.setVariable("header", "headerMax");
+        mailTemplateContext.setVariable("title", SUBJECT);
+        mailTemplateContext.setVariable("description", MESSAGE);
+
+        String htmlBody = templateEngine.process("template", mailTemplateContext);
+
+
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setTo(toAddress);
             helper.setSubject(subject);
-            helper.setText(body);
+            helper.setText(htmlBody, true);
             helper.setFrom(fromAddress);
 
             Resource resource = resourceLoaderTool.loadResourceByName(attachment.getFileName(), attachment.getFileType());

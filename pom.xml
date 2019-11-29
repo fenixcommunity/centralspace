@@ -31,6 +31,7 @@
         <spring-boot-data.version>2.2.0.RELEASE</spring-boot-data.version>
         <spring-boot-tomcat.version>2.2.0.RELEASE</spring-boot-tomcat.version>
         <spring-boot-mail.version>2.2.0.RELEASE</spring-boot-mail.version>
+        <spring-boot-thymeleaf.version>2.2.0.RELEASE</spring-boot-thymeleaf.version>
         <spring-context-support.version>5.2.0.RELEASE</spring-context-support.version>
         <spring-core.version>5.2.0.RELEASE</spring-core.version>
         <spring-security.version>5.2.0.RELEASE</spring-security.version>
@@ -154,6 +155,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${spring-boot-thymeleaf.version}</version>
+        </dependency>
         <!-- UTILITIES DEPENDENCIES -->
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.email.emailsender;
+package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
 import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
@@ -15,7 +15,7 @@ import java.io.File;
 
 //TODO CZY WSZEDZIE IMPL?
 @Service
-public class MailClient implements EmailService {
+public class MailClient implements MailService {
 
     private final JavaMailSender mailSender;
 
@@ -28,7 +28,7 @@ public class MailClient implements EmailService {
     }
 
     @Override
-    public void sendEmail(
+    public void sendMail(
             String fromAddress, String toAddress, String subject, String body) {
         // it is also more complicated mail services
         SimpleMailMessage message = new SimpleMailMessage();

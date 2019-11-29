@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 
 @RunWith(SpringRunner.class)
@@ -33,7 +33,7 @@ public class AccountRepositoryTest {
     public void test4() {
         Account account = Account.builder()
                 .login(LOGIN)
-                .email(EMAIL).build();
+                .mail(MAIL).build();
         testEntityManager.persist(account);
         testEntityManager.flush();
 
@@ -44,7 +44,7 @@ public class AccountRepositoryTest {
     public void test5() {
         Account account = Account.builder()
                 .login(LOGIN)
-                .email(EMAIL).build();
+                .mail(MAIL).build();
         testEntityManager.persist(account);
         testEntityManager.flush();
 

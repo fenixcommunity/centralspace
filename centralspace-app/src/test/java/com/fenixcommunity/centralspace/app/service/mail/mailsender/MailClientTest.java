@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.email.emailsender;
+package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.icegreen.greenmail.util.GreenMail;
@@ -30,25 +30,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         ResourceLoaderTool.class})
 @TestPropertySource(locations = {"classpath:services.properties"})
 @SpringBootTest
-//todo  what is it? @ActiveProfiles("email")
+//todo  what is it? @ActiveProfiles("mail")
 class MailClientTest {
 
     private GreenMail smtpServer;
     private MailClient mailClient;
 
-    @Value("${emailgateway.port}")
+    @Value("${mailgateway.port}")
     private int port;
 
-    @Value("${emailgateway.protocol}")
+    @Value("${mailgateway.protocol}")
     private String protocol;
 
-    @Value("${emailgateway.username}")
+    @Value("${mailgateway.username}")
     private String username;
 
-    @Value("${emailgateway.password}")
+    @Value("${mailgateway.password}")
     private String password;
 
-    @Value("${emailgateway.usermail}")
+    @Value("${mailgateway.usermail}")
     private String usermail;
 
     @BeforeEach
@@ -77,7 +77,7 @@ class MailClientTest {
     void shouldSendMail() throws MessagingException, IOException {
         //given
         //when
-        mailClient.sendEmail(EMAIL_FROM, EMAIL_TO, SUBJECT, MESSAGE);
+        mailClient.sendMail(EMAIL_FROM, EMAIL_TO, SUBJECT, MESSAGE);
         smtpServer.waitForIncomingEmail(5000, 1);
         //then
         Message[] messages = smtpServer.getReceivedMessages();

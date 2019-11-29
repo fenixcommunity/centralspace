@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.utils.email;
+package com.fenixcommunity.centralspace.app.utils.mail;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,10 +10,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Component
-@ConfigurationProperties(prefix = "emailgateway")
+@ConfigurationProperties(prefix = "mailgateway")
 @PropertySource("classpath:services.properties")
 @Getter @Setter
-public class EmailProperties {
+public class MailProperties {
 
     private String host;
     @Min(25)

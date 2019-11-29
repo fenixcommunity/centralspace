@@ -42,8 +42,8 @@ public class Account extends AbstractBaseEntity {
     private String login;
 
     //TODO walidacja i opakowac
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "mail", nullable = false)
+    private String mail;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)

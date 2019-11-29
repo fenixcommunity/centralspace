@@ -16,13 +16,13 @@ public class AccountMapper {
             }
         }
         rest.login = account.getLogin();
-        rest.email = account.getEmail();
+        rest.mail = account.getMail();
         return rest;
     }
 
     public static Account mapToJpa(AccountDto rest) {
         return Account.builder()
                 .login(rest.login)
-                .email(rest.email).build();
+                .mail(rest.mail).build();
     }
 }

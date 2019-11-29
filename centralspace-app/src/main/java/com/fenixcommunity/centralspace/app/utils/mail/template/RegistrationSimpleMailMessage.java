@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.utils.email.template;
+package com.fenixcommunity.centralspace.app.utils.mail.template;
 
 public class RegistrationSimpleMailMessage extends MailMessageTemplate {
 

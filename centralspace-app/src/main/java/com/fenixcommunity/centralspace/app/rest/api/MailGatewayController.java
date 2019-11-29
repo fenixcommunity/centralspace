@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import com.fenixcommunity.centralspace.app.service.email.emailsender.EmailService;
-import com.fenixcommunity.centralspace.app.utils.email.template.MailMessageTemplate;
+import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailService;
+import com.fenixcommunity.centralspace.app.utils.mail.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class MailGatewayController {
 
     @Autowired
-    private EmailService emailService;
+    private MailService mailService;
 
     @Autowired
     @Qualifier("basicSimpleMailMessage")
@@ -31,12 +31,12 @@ public class MailGatewayController {
 
     @GetMapping("/send")
     public void sendEmail(@RequestParam(value = "message", defaultValue = "empty message") String  message) {
-        emailService.sendEmail(
+        mailService.sendMail(
                 "A","m7.kaminski@gmail.com","mail", message);
         AttachmentResource attachment = new AttachmentResource("attachment", MediaType.APPLICATION_PDF);
         // todo add exception
         try {
-            emailService.sendMailWithAttachment(
+            mailService.sendMailWithAttachment(
                     "B","m7.kaminski@gmail.com","mail with attachment", message, attachment);
         } catch (MessagingException e) {
             e.printStackTrace();

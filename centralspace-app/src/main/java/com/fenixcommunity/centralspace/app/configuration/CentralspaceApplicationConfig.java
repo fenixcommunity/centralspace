@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 @ComponentScan({"com.fenixcommunity.centralspace.app"})
 @Import({DomainConfig.class,
         UtilitiesConfig.class,
-        EmailGatewayConfig.class,
+        MailGatewayConfig.class,
         FilterApiConfig.class})
 @SpringBootApplication
 public class CentralspaceApplicationConfig {

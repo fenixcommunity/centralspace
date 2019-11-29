@@ -12,7 +12,7 @@ public class RestFilledRegisterForm extends RepresentationModel {
 
     public String firstName;
     public String lastName;
-    public String email;
+    public String mail;
     //TODO opakuj EMAIL
     public String registerURL;
 

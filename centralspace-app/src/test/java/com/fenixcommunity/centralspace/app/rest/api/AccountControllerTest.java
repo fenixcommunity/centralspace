@@ -74,7 +74,7 @@ public class AccountControllerTest {
         account = Account.builder()
                 .id(ID)
                 .login(LOGIN)
-                .email(EMAIL)
+                .mail(MAIL)
                 .passwords(Collections.singletonList(null))
                 .build();
         when(accountService.findById(ID)).thenReturn(Optional.of(account));

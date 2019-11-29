@@ -1,14 +1,14 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
 
-import com.fenixcommunity.centralspace.app.utils.email.EmailProperties;
-import com.fenixcommunity.centralspace.app.service.email.scheduler.SchedulerService;
-import com.fenixcommunity.centralspace.app.service.email.scheduler.SchedulerServiceImpl;
-import com.fenixcommunity.centralspace.app.utils.email.MailContent;
-import com.fenixcommunity.centralspace.app.utils.email.MailRegistrationContent;
-import com.fenixcommunity.centralspace.app.utils.email.template.BasicSimpleMailMessage;
-import com.fenixcommunity.centralspace.app.utils.email.template.MailMessageTemplate;
-import com.fenixcommunity.centralspace.app.utils.email.template.RegistrationSimpleMailMessage;
+import com.fenixcommunity.centralspace.app.utils.mail.MailProperties;
+import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerService;
+import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceImpl;
+import com.fenixcommunity.centralspace.app.utils.mail.MailContent;
+import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContent;
+import com.fenixcommunity.centralspace.app.utils.mail.template.BasicSimpleMailMessage;
+import com.fenixcommunity.centralspace.app.utils.mail.template.MailMessageTemplate;
+import com.fenixcommunity.centralspace.app.utils.mail.template.RegistrationSimpleMailMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -27,12 +27,12 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
 @Configuration
 @EnableScheduling
 @EnableAsync
-@ComponentScan({"com.fenixcommunity.centralspace.app.service.email"})
-@EnableConfigurationProperties(EmailProperties.class)
-public class EmailGatewayConfig {
+@ComponentScan({"com.fenixcommunity.centralspace.app.service.mail"})
+@EnableConfigurationProperties(MailProperties.class)
+public class MailGatewayConfig {
 
     @Autowired
-    private EmailProperties emailProperties;
+    private MailProperties mailProperties;
 //    todo we can use also
 //    @Autowired
 //    private Environment env;
@@ -50,11 +50,11 @@ public class EmailGatewayConfig {
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
-        mailSender.setHost(emailProperties.getHost());
-        mailSender.setPort(emailProperties.getPort());
-        mailSender.setProtocol(emailProperties.getProtocol());
-        mailSender.setUsername(emailProperties.getUsername());
-        mailSender.setPassword(emailProperties.getPassword());
+        mailSender.setHost(mailProperties.getHost());
+        mailSender.setPort(mailProperties.getPort());
+        mailSender.setProtocol(mailProperties.getProtocol());
+        mailSender.setUsername(mailProperties.getUsername());
+        mailSender.setPassword(mailProperties.getPassword());
 // how to check connection -> telnet smtp.gmail.com 587
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
@@ -70,7 +70,7 @@ public class EmailGatewayConfig {
         MailMessageTemplate message = new RegistrationSimpleMailMessage();
 
         StringBuilder textBody = new StringBuilder("This is the registration token to open your new account:\n%s\n");
-        MailContent mailConfigTemplate = emailProperties.getContent();
+        MailContent mailConfigTemplate = mailProperties.getContent();
         textBody.append(mailConfigTemplate.getDomain());
         textBody.append(LINE);
         MailRegistrationContent mailRegistrationTemplate = mailConfigTemplate.getRegistrationContent();
@@ -85,7 +85,7 @@ public class EmailGatewayConfig {
         MailMessageTemplate message = new BasicSimpleMailMessage();
 
         StringBuilder textBody = new StringBuilder();
-        MailContent mailConfigTemplate = emailProperties.getContent();
+        MailContent mailConfigTemplate = mailProperties.getContent();
         textBody.append(mailConfigTemplate.getDomain());
 
         message.setText(textBody.toString());

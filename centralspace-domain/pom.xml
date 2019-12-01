@@ -31,6 +31,10 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <!-- PERSISTENCE DEPENDENCIES -->
         <dependency>
             <groupId>org.postgresql</groupId>

@@ -26,16 +26,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        MailClient.class,
+        MailServiceBean.class,
         JavaMailSenderImpl.class,
         ResourceLoaderTool.class})
 @TestPropertySource(locations = {"classpath:services.properties"})
 @SpringBootTest
 //todo  what is it? @ActiveProfiles("mail")
-class MailClientTest {
+class MailServiceBeanTest {
 
     private GreenMail smtpServer;
-    private MailClient mailClient;
+    private MailServiceBean mailServiceBean;
 
     @Value("${mailgateway.port}")
     private int port;
@@ -63,7 +63,7 @@ class MailClientTest {
         mailSender.setPassword(password);
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
-        mailClient = new MailClient(mailSender, templateEngine);
+        mailServiceBean = new MailServiceBean(mailSender, templateEngine);
 
         ServerSetup setup = new ServerSetup(port, null, protocol);
         smtpServer = new GreenMail(setup);
@@ -80,7 +80,7 @@ class MailClientTest {
     void shouldSendMail() throws MessagingException, IOException {
         //given
         //when
-        mailClient.sendMail(EMAIL_FROM, EMAIL_TO, SUBJECT, MESSAGE);
+        mailServiceBean.sendMail(EMAIL_FROM, EMAIL_TO, SUBJECT, MESSAGE);
         smtpServer.waitForIncomingEmail(5000, 1);
         //then
         Message[] messages = smtpServer.getReceivedMessages();

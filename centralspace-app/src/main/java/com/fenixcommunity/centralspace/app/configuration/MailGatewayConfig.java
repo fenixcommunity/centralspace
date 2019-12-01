@@ -1,9 +1,9 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
 
-import com.fenixcommunity.centralspace.app.utils.mail.MailProperties;
+import com.fenixcommunity.centralspace.app.configuration.properties.MailProperties;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerService;
-import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceImpl;
+import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceBean;
 import com.fenixcommunity.centralspace.app.utils.mail.MailContent;
 import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContent;
 import com.fenixcommunity.centralspace.app.utils.mail.template.BasicSimpleMailMessage;
@@ -43,7 +43,7 @@ public class MailGatewayConfig {
 
     @Bean
     public SchedulerService getAdvService() {
-        return new SchedulerServiceImpl();
+        return new SchedulerServiceBean();
     }
 
     @Bean

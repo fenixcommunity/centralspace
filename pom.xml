@@ -41,6 +41,7 @@
         <!-- UTILITIES DEPENDENCIES -->
         <lombok.version>1.18.4</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
+        <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.0-jre</google-guava.version>
         <javassist.version>3.23.1-GA</javassist.version>
         <!-- TEST DEPENDENCIES -->
@@ -132,6 +133,11 @@
                 <artifactId>spring-boot-starter-hateoas</artifactId>
                 <version>${spring.hateoas.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                <version>${spring-boot-thymeleaf.version}</version>
+            </dependency>
             <!-- PERSISTENCE DEPENDENCIES -->
             <dependency>
                 <groupId>org.postgresql</groupId>
@@ -155,11 +161,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>${spring-boot-thymeleaf.version}</version>
-        </dependency>
         <!-- UTILITIES DEPENDENCIES -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -171,6 +172,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <!-- update Hibernate dependency on Javassist for Java 11 compatibility -->

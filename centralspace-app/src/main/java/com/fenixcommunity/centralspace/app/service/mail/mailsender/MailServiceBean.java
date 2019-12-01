@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
-import com.fenixcommunity.centralspace.utilities.common.Var;
+import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
 
 //TODO CZY WSZEDZIE IMPL?
 @Service
-public class MailClient implements MailService {
+public class MailServiceBean implements MailService {
 
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
@@ -29,8 +29,11 @@ public class MailClient implements MailService {
     @Autowired
     private ResourceLoaderTool resourceLoaderTool;
 
+    @Autowired(required = false)
+    private ResourceProperties resourceProperties;
+
     @Autowired
-    public MailClient(JavaMailSender mailSender, TemplateEngine templateEngine) {
+    public MailServiceBean(JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
     }
@@ -58,12 +61,11 @@ public class MailClient implements MailService {
             String fromAddress, String toAddress, String subject, String body, AttachmentResource attachment) {
 
         Context mailTemplateContext = new Context();
-        mailTemplateContext.setVariable("header", "headerMax");
+        mailTemplateContext.setVariable("imageUrl", resourceProperties.getImageUrl());
         mailTemplateContext.setVariable("title", SUBJECT);
         mailTemplateContext.setVariable("description", MESSAGE);
 
         String htmlBody = templateEngine.process("template", mailTemplateContext);
-
 
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -72,7 +74,7 @@ public class MailClient implements MailService {
             helper.setText(htmlBody, true);
             helper.setFrom(fromAddress);
 
-            Resource resource = resourceLoaderTool.loadResourceByName(attachment.getFileName(), attachment.getFileType());
+            Resource resource = resourceLoaderTool.loadResourceByNameAndType(attachment.getFileName(), attachment.getFileType());
             if (resource.exists()) {
                 File file = resource.getFile();
                 helper.addAttachment("Attachment", file);

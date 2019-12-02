@@ -6,14 +6,16 @@ import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServi
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceBean;
 import com.fenixcommunity.centralspace.app.utils.mail.MailContent;
 import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContent;
-import com.fenixcommunity.centralspace.app.utils.mail.template.BasicSimpleMailMessage;
+import com.fenixcommunity.centralspace.app.utils.mail.template.BasicMailMessage;
 import com.fenixcommunity.centralspace.app.utils.mail.template.MailMessageTemplate;
-import com.fenixcommunity.centralspace.app.utils.mail.template.RegistrationSimpleMailMessage;
+import com.fenixcommunity.centralspace.app.utils.mail.template.RegistrationMailMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -42,12 +44,12 @@ public class MailGatewayConfig {
 //    int port;
 
     @Bean
-    public SchedulerService getAdvService() {
+    public SchedulerService getSchedulerService() {
         return new SchedulerServiceBean();
     }
 
     @Bean
-    public JavaMailSender javaMailSender() {
+    public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
         mailSender.setHost(mailProperties.getHost());
@@ -64,10 +66,12 @@ public class MailGatewayConfig {
 
         return mailSender;
     }
-//todo MailContentBuilder
+
+    //todo MailContentBuilder
     @Bean("registrationSimpleMailMessage")
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public MailMessageTemplate getRegistrationMailTemplate() {
-        MailMessageTemplate message = new RegistrationSimpleMailMessage();
+        MailMessageTemplate message = new RegistrationMailMessage();
 
         StringBuilder textBody = new StringBuilder("This is the registration token to open your new account:\n%s\n");
         MailContent mailConfigTemplate = mailProperties.getContent();
@@ -80,14 +84,15 @@ public class MailGatewayConfig {
         return message;
     }
 
-    @Bean("basicSimpleMailMessage")
+    @Bean("basicMailMessage")
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public MailMessageTemplate getBasicMailTemplate() {
-        MailMessageTemplate message = new BasicSimpleMailMessage();
+        MailMessageTemplate message = new BasicMailMessage();
 
         StringBuilder textBody = new StringBuilder();
         MailContent mailConfigTemplate = mailProperties.getContent();
         textBody.append(mailConfigTemplate.getDomain());
-
+//todo html body
         message.setText(textBody.toString());
         return message;
     }

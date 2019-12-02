@@ -12,7 +12,8 @@ import javax.persistence.PreUpdate;
 import java.time.ZonedDateTime;
 
 @MappedSuperclass
-@Getter @Setter
+@Getter
+@Setter
 public abstract class AbstractBaseEntity {
     // Store always in UTC
     // Read from database (stored in UTC) and return with the system default.

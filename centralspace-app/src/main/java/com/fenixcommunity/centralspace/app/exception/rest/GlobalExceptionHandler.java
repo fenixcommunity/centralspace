@@ -23,5 +23,12 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(ZonedDateTime.now(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
+
+    //todo test
+    @ExceptionHandler(ServiceFailedException.class)
+    public ResponseEntity<?> internalServerException(ServiceFailedException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(ZonedDateTime.now(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     //todo @ControllerAdvice -> public class RestErrorHandler
 }

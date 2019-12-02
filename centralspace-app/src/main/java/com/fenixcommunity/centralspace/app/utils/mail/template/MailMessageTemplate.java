@@ -10,27 +10,38 @@ import java.util.Date;
 
 public abstract class MailMessageTemplate {
 
-    @Nullable @Getter
+    @Nullable
+    @Getter
     protected String from;
-    @Nullable @Getter
+    @Nullable
+    @Getter
     protected String[] to;
 
-    @Nullable @Getter
+    @Nullable
+    @Getter
     protected String subject;
-    @Nullable @Getter
+    @Nullable
+    @Getter
     protected String text;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     protected String replyTo;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     protected String[] cc;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     protected String[] bcc;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     protected Date sentDate;
+
+    @Getter
+    protected boolean htmlBody = false;
 
     public abstract void setFrom(@Nullable String from);
 
@@ -39,4 +50,6 @@ public abstract class MailMessageTemplate {
     public abstract void setSubject(@Nullable String subject);
 
     public abstract void setText(@Nullable String text);
+
+    public abstract void setHtmlBody(boolean isHtmlBody);
 }

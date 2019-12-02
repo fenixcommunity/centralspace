@@ -4,9 +4,10 @@ import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContent;
 import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContentConverter;
 import org.junit.jupiter.api.Test;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_URL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_ID;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_URL;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MailRegistrationContentConverterTest {
 

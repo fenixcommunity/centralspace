@@ -5,10 +5,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 
 
@@ -19,14 +17,17 @@ public class ResourceLoaderTool {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public Resource loadResourceByNameAndType(String fileName, MediaType type) {
+    public Resource loadResourceFile(ResourceApp resource) {
         //todo validator
-        String subtype = type.getSubtype();
-       return resourceLoader.getResource("classpath:" + SLASH + fileName + DOT + subtype);
+        String subtype = resource.getFileType().getSubtype();
+        StringBuilder fullPath = new StringBuilder("classpath:static/")
+                .append(subtype)
+                .append(SLASH)
+                .append(resource.getFullName());
+        return resourceLoader.getResource(fullPath.toString());
     }
 
-    public Resource loadResourceByFullName(String fileName) {
-        //todo validator
-        return resourceLoader.getResource("classpath:"+ fileName);
+    public Resource loadResourceByPath(String filePath) {
+        return resourceLoader.getResource("classpath:" + filePath);
     }
 }

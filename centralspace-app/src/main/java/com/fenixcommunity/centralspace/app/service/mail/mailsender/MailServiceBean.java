@@ -1,23 +1,19 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
+import com.fenixcommunity.centralspace.app.utils.mail.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceApp;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import java.io.File;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
-import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
 
 //TODO CZY WSZEDZIE IMPL?
 @Service
@@ -33,58 +29,70 @@ public class MailServiceBean implements MailService {
     private ResourceProperties resourceProperties;
 
     @Autowired
+    @Qualifier("basicMailMessage")
+    private MailMessageTemplate basicMailMessage;
+
+    @Autowired
+    @Qualifier("registrationSimpleMailMessage")
+    private MailMessageTemplate registrationMailTemplate;
+
+    @Autowired
     public MailServiceBean(JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
     }
 
     @Override
-    public void sendMail(
-            String fromAddress, String toAddress, String subject, String body) {
-        // it is also more complicated mail services
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setFrom(fromAddress);
-        message.setTo(toAddress);
-        message.setSubject(subject);
-        message.setText(body);
-
-        try {
-            mailSender.send(message);
-        } catch (MailException e) {
-            //todo handle it
-        }
+    public void sendBasicMail() throws MailException {
+        basicMailMessage.setText(getBasicHtmlBody());
+        basicMailMessage.setHtmlBody(true);
+        sendBasicMail(basicMailMessage);
     }
 
     @Override
-    public void sendMailWithAttachment(
-            String fromAddress, String toAddress, String subject, String body, AttachmentResource attachment) {
+    public void sendRegistrationMailWithAttachment() throws MailException {
+        ResourceApp attachment = getRegistrationAttachment();
+        sendMailWithAttachment(registrationMailTemplate, attachment);
+    }
 
-        Context mailTemplateContext = new Context();
-        mailTemplateContext.setVariable("imageUrl", resourceProperties.getImageUrl());
-        mailTemplateContext.setVariable("title", SUBJECT);
-        mailTemplateContext.setVariable("description", MESSAGE);
-
-        String htmlBody = templateEngine.process("template", mailTemplateContext);
-
+    private void sendBasicMail(MailMessageTemplate mailContent) throws MailException {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setTo(toAddress);
-            helper.setSubject(subject);
-            helper.setText(htmlBody, true);
-            helper.setFrom(fromAddress);
+            helper.setTo(mailContent.getTo());
+            helper.setSubject(mailContent.getSubject());
+            helper.setText(mailContent.getText(), mailContent.isHtmlBody());
+            helper.setFrom(mailContent.getFrom());
+        };
 
-            Resource resource = resourceLoaderTool.loadResourceByNameAndType(attachment.getFileName(), attachment.getFileType());
-            if (resource.exists()) {
-                File file = resource.getFile();
-                helper.addAttachment("Attachment", file);
+        mailSender.send(messagePreparator);
+    }
+
+    private void sendMailWithAttachment(MailMessageTemplate mailContent, ResourceApp attachment) throws MailException {
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            helper.setTo(mailContent.getTo());
+            helper.setSubject(mailContent.getSubject());
+            helper.setText(mailContent.getText(), mailContent.isHtmlBody());
+            helper.setFrom(mailContent.getFrom());
+
+            if (attachment.fileExists()) {
+                helper.addAttachment("Attachment", attachment.getContent().getFile());
             }
         };
 
-        try {
-            mailSender.send(messagePreparator);
-        } catch (MailException e) {
-            //todo handle it x2
-        }
+        mailSender.send(messagePreparator);
+    }
+
+    private ResourceApp getRegistrationAttachment() {
+        ResourceApp attachment = ResourceApp.resourceByNameAndType("attachment", MediaType.APPLICATION_PDF);
+        attachment.setContent(resourceLoaderTool.loadResourceFile(attachment));
+        return attachment;
+    }
+
+    //todo Mail creator
+    private String getBasicHtmlBody() {
+        Context mailTemplateContext = new Context();
+        mailTemplateContext.setVariable("imageUrl", resourceProperties.getImageUrl());
+        return templateEngine.process("template", mailTemplateContext);
     }
 }

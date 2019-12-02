@@ -55,6 +55,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Account>> getAll() {
         List<Account> accounts = accountService.findAll();
+        //todo AccountDto
         return ResponseEntity.ok(accounts);
     }
 

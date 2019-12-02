@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.utils.mail.template;
 
-public class RegistrationSimpleMailMessage extends MailMessageTemplate {
+public class RegistrationMailMessage extends MailMessageTemplate {
 
     @Override
     public void setFrom(String from) {
@@ -20,5 +20,10 @@ public class RegistrationSimpleMailMessage extends MailMessageTemplate {
     @Override
     public void setText(String text) {
         super.text = text;
+    }
+
+    @Override
+    public void setHtmlBody(boolean isHtmlBody) {
+        super.htmlBody = isHtmlBody;
     }
 }

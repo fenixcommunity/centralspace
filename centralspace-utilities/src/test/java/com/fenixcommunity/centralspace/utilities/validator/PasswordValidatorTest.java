@@ -1,10 +1,9 @@
 package com.fenixcommunity.centralspace.utilities.validator;
 
 
+import com.fenixcommunity.centralspace.utilities.common.Var;
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import org.junit.jupiter.api.BeforeEach;
-import com.fenixcommunity.centralspace.utilities.common.Var;
-import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -15,7 +15,7 @@ public class Var {
     public static final String DOMAIN_URL = "www.fenixcommunity.pl";
     public static final String DOT = ".";
     public static final String SLASH = "/";
-    public static final String LINE  ="\n";
+    public static final String LINE = "\n";
     public static final String EMAIL_FROM = "hermes.delivery.noreply@gmail.com";
     public static final String EMAIL_REPLY_TO = "hermes.delivery.noreply@gmail.com";
     public static final String EMAIL_TO = "max3112@o2.com";

@@ -13,7 +13,8 @@ import javax.validation.constraints.Min;
 @Component
 @ConfigurationProperties(prefix = "mailgateway")
 @PropertySource("classpath:services.properties")
-@Getter @Setter
+@Getter
+@Setter
 public class MailProperties {
 
     private String host;

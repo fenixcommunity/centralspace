@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
+import com.fenixcommunity.centralspace.app.utils.mail.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -20,7 +22,11 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.Properties;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_FROM;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_REPLY_TO;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_TO;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,6 +42,9 @@ class MailServiceBeanTest {
 
     private GreenMail smtpServer;
     private MailServiceBean mailServiceBean;
+
+    @InjectMocks
+    private MailMessageTemplate mailTemplate;
 
     @Value("${mailgateway.port}")
     private int port;
@@ -53,9 +62,10 @@ class MailServiceBeanTest {
     private String usermail;
 
     @BeforeEach
-     void setUp() {
+    void setUp() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         TemplateEngine templateEngine = new TemplateEngine();
+        setUpTemplate();
 
         mailSender.setPort(port);
         mailSender.setProtocol(protocol);
@@ -71,6 +81,13 @@ class MailServiceBeanTest {
         smtpServer.start();
     }
 
+    void setUpTemplate() {
+        mailTemplate.setFrom(EMAIL_FROM);
+        mailTemplate.setTo(new String[]{EMAIL_TO});
+        mailTemplate.setSubject(SUBJECT);
+        mailTemplate.setText(MESSAGE);
+    }
+
     @AfterEach
     void tearDown() {
         smtpServer.stop();
@@ -80,7 +97,7 @@ class MailServiceBeanTest {
     void shouldSendMail() throws MessagingException, IOException {
         //given
         //when
-        mailServiceBean.sendMail(EMAIL_FROM, EMAIL_TO, SUBJECT, MESSAGE);
+        mailServiceBean.sendBasicMail();
         smtpServer.waitForIncomingEmail(5000, 1);
         //then
         Message[] messages = smtpServer.getReceivedMessages();
@@ -98,7 +115,7 @@ class MailServiceBeanTest {
     }
 
     @Test
-    void shouldSeendMailWithAttachment(){
+    void shouldSeendMailWithAttachment() {
         //todo fill
         //given
         //when

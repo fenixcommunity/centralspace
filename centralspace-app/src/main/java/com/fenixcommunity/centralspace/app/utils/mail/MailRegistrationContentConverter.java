@@ -17,7 +17,7 @@ public class MailRegistrationContentConverter implements Converter<String, MailR
         if (isNotEmpty(fullUrl)) {
             String[] allData = fullUrl.split("\\?domain=");
             if (allData.length == 2) {
-                String[] paramData =  allData[1].split("&token=");
+                String[] paramData = allData[1].split("&token=");
                 if (paramData.length == 2) {
                     instance = new MailRegistrationContent(fullUrl, allData[0], paramData[0]);
                 }

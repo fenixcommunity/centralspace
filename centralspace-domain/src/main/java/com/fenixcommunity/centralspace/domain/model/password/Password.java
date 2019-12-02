@@ -28,7 +28,10 @@ import java.io.Serializable;
 //@Setter(value = AccessLevel.PACKAGE)
 @Entity
 @Table(name = "password")
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Password extends AbstractBaseEntity implements Serializable {
 

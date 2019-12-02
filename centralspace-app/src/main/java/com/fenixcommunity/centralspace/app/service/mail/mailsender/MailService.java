@@ -1,15 +1,10 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
-import com.fenixcommunity.centralspace.utilities.resourcehelper.AttachmentResource;
-
-import javax.mail.MessagingException;
-import java.io.IOException;
+import org.springframework.mail.MailException;
 
 public interface MailService {
 
-    void sendMail(
-            String fromAddress, String toAddress, String subject, String body);
+    void sendBasicMail() throws MailException;
 
-    void sendMailWithAttachment(
-            String fromAddress, String toAddress, String subject, String body, AttachmentResource attachment) throws MessagingException, IOException;
+    void sendRegistrationMailWithAttachment() throws MailException;
 }

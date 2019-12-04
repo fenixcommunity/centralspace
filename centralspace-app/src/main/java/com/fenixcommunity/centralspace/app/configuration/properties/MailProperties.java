@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.configuration.properties;
 
-import com.fenixcommunity.centralspace.app.utils.mail.MailContent;
+import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

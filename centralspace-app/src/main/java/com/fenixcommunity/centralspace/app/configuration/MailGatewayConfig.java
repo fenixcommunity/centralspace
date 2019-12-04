@@ -4,18 +4,18 @@ package com.fenixcommunity.centralspace.app.configuration;
 import com.fenixcommunity.centralspace.app.configuration.properties.MailProperties;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerService;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceBean;
-import com.fenixcommunity.centralspace.app.utils.mail.MailContent;
-import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContent;
-import com.fenixcommunity.centralspace.app.utils.mail.template.BasicMailMessage;
-import com.fenixcommunity.centralspace.app.utils.mail.template.MailMessageTemplate;
-import com.fenixcommunity.centralspace.app.utils.mail.template.RegistrationMailMessage;
+import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
+import com.fenixcommunity.centralspace.utilities.mail.properties.MailRegistrationContent;
+import com.fenixcommunity.centralspace.utilities.mail.template.BasicMailMessage;
+import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
+import com.fenixcommunity.centralspace.utilities.mail.template.RegistrationMailMessage;
+import com.fenixcommunity.centralspace.utilities.validator.Validator;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -23,7 +23,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Properties;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
 
 //todo useless? EnableScheduling EnableAsync
 @Configuration
@@ -35,6 +36,9 @@ public class MailGatewayConfig {
 
     @Autowired
     private MailProperties mailProperties;
+
+    @Autowired
+    private ValidatorFactory validatorFactory;
 //    todo we can use also
 //    @Autowired
 //    private Environment env;
@@ -67,12 +71,12 @@ public class MailGatewayConfig {
         return mailSender;
     }
 
-    //todo MailContentBuilder
-    @Bean("registrationSimpleMailMessage")
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public MailMessageTemplate getRegistrationMailTemplate() {
-        MailMessageTemplate message = new RegistrationMailMessage();
+//    @Autowired
+//    private ObjectFactory<RegistrationMailMessage> mailMessageObjectFactory;
 
+    //todo MailContentBuilder
+    @Bean("registrationMailMessage")
+    public MailMessageTemplate getRegistrationMailTemplate() {
         StringBuilder textBody = new StringBuilder("This is the registration token to open your new account:\n%s\n");
         MailContent mailConfigTemplate = mailProperties.getContent();
         textBody.append(mailConfigTemplate.getDomain());
@@ -80,20 +84,36 @@ public class MailGatewayConfig {
         MailRegistrationContent mailRegistrationTemplate = mailConfigTemplate.getRegistrationContent();
         textBody.append(mailRegistrationTemplate.getFullUrl());
 
-        message.setText(textBody.toString());
-        return message;
+        MailMessageTemplate mailTemplate = RegistrationMailMessage.builder()
+                .from(mailConfigTemplate.getEmailFrom())
+                .subject(REGISTRATION_MAIL)
+                .body(textBody.toString())
+                .build();
+
+        validateMailTemplate(mailTemplate);
+
+        return mailTemplate;
     }
 
     @Bean("basicMailMessage")
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public MailMessageTemplate getBasicMailTemplate() {
-        MailMessageTemplate message = new BasicMailMessage();
-
         StringBuilder textBody = new StringBuilder();
         MailContent mailConfigTemplate = mailProperties.getContent();
         textBody.append(mailConfigTemplate.getDomain());
 //todo html body
-        message.setText(textBody.toString());
-        return message;
+        MailMessageTemplate mailTemplate = BasicMailMessage.builder()
+                .from(mailConfigTemplate.getEmailFrom())
+                .subject(BASIC_MAIL)
+                .body(textBody.toString())
+                .build();
+
+        validateMailTemplate(mailTemplate);
+
+        return mailTemplate;
+    }
+
+    private void validateMailTemplate(MailMessageTemplate template) {
+        Validator validator = validatorFactory.getInstance(MAIL);
+        validator.validateWithException(template);
     }
 }

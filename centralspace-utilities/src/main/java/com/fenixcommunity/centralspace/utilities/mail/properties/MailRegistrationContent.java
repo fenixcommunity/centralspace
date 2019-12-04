@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.utils.mail;
+package com.fenixcommunity.centralspace.utilities.mail.properties;
 
 import lombok.Getter;
 import lombok.Setter;

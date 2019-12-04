@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.utils.converter;
+package com.fenixcommunity.centralspace.domain.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

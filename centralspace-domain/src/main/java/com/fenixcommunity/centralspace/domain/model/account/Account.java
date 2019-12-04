@@ -1,9 +1,9 @@
 package com.fenixcommunity.centralspace.domain.model.account;
 
+import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
 import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.password.Password;
-import com.fenixcommunity.centralspace.domain.utils.converter.UppercaseConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

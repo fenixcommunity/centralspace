@@ -2,7 +2,7 @@ package com.fenixcommunity.centralspace.app.rest.dto.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fenixcommunity.centralspace.app.utils.browser.BrowserType;
+import com.fenixcommunity.centralspace.utilities.web.browser.BrowserType;
 import org.springframework.hateoas.RepresentationModel;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;

@@ -1,9 +1,12 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
-import com.fenixcommunity.centralspace.app.utils.mail.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceApp;
+import com.fenixcommunity.centralspace.utilities.mail.MailBuilder;
+import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.validator.Validator;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -15,17 +18,24 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
+
 //TODO CZY WSZEDZIE IMPL?
 @Service
 public class MailServiceBean implements MailService {
 
     private final JavaMailSender mailSender;
-    private final TemplateEngine templateEngine;
+    //todo constuctor all or autowired?
+    @Autowired
+    private TemplateEngine templateEngine;
+
+    @Autowired
+    private ValidatorFactory validatorFactory;
 
     @Autowired
     private ResourceLoaderTool resourceLoaderTool;
 
-    @Autowired(required = false)
+    @Autowired
     private ResourceProperties resourceProperties;
 
     @Autowired
@@ -33,47 +43,55 @@ public class MailServiceBean implements MailService {
     private MailMessageTemplate basicMailMessage;
 
     @Autowired
-    @Qualifier("registrationSimpleMailMessage")
-    private MailMessageTemplate registrationMailTemplate;
+    @Qualifier("registrationMailMessage")
+    private MailMessageTemplate registrationMailMessage;
 
     @Autowired
-    public MailServiceBean(JavaMailSender mailSender, TemplateEngine templateEngine) {
+    public MailServiceBean(JavaMailSender mailSender) {
         this.mailSender = mailSender;
-        this.templateEngine = templateEngine;
     }
 
     @Override
-    public void sendBasicMail() throws MailException {
-        basicMailMessage.setText(getBasicHtmlBody());
-        basicMailMessage.setHtmlBody(true);
-        sendBasicMail(basicMailMessage);
+    public void sendBasicMail(String to) throws MailException {
+        MailBuilder mailBuilder = new MailBuilder(basicMailMessage);
+        mailBuilder.addTo(to);
+//        mailBuilder.setHtmlBody(true);
+        if (mailBuilder.isHtmlBody()) {
+            mailBuilder.setBody(getBasicHtmlBody());
+        }
+        sendBasicMail(mailBuilder);
     }
 
     @Override
-    public void sendRegistrationMailWithAttachment() throws MailException {
-        ResourceApp attachment = getRegistrationAttachment();
-        sendMailWithAttachment(registrationMailTemplate, attachment);
+    public void sendRegistrationMailWithAttachment(String to) throws MailException {
+        MailBuilder mailBuilder = new MailBuilder(registrationMailMessage);
+        mailBuilder.addTo(to);
+        InternalResource attachment = getRegistrationAttachment();
+        sendMailWithAttachment(mailBuilder, attachment);
     }
 
-    private void sendBasicMail(MailMessageTemplate mailContent) throws MailException {
+    private void sendBasicMail(MailBuilder mailBuilder) throws MailException {
+        validateMailContent(mailBuilder);
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setTo(mailContent.getTo());
-            helper.setSubject(mailContent.getSubject());
-            helper.setText(mailContent.getText(), mailContent.isHtmlBody());
-            helper.setFrom(mailContent.getFrom());
+            helper.setTo(mailBuilder.getToArray());
+            helper.setSubject(mailBuilder.getSubject());
+            helper.setText(mailBuilder.getBody(), mailBuilder.isHtmlBody());
+            helper.setFrom(mailBuilder.getFrom());
+
         };
 
         mailSender.send(messagePreparator);
     }
 
-    private void sendMailWithAttachment(MailMessageTemplate mailContent, ResourceApp attachment) throws MailException {
+    private void sendMailWithAttachment(MailBuilder mailBuilder, InternalResource attachment) throws MailException {
+        validateMailContent(mailBuilder);
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setTo(mailContent.getTo());
-            helper.setSubject(mailContent.getSubject());
-            helper.setText(mailContent.getText(), mailContent.isHtmlBody());
-            helper.setFrom(mailContent.getFrom());
+            helper.setTo(mailBuilder.getToArray());
+            helper.setSubject(mailBuilder.getSubject());
+            helper.setText(mailBuilder.getBody(), mailBuilder.isHtmlBody());
+            helper.setFrom(mailBuilder.getFrom());
 
             if (attachment.fileExists()) {
                 helper.addAttachment("Attachment", attachment.getContent().getFile());
@@ -83,8 +101,8 @@ public class MailServiceBean implements MailService {
         mailSender.send(messagePreparator);
     }
 
-    private ResourceApp getRegistrationAttachment() {
-        ResourceApp attachment = ResourceApp.resourceByNameAndType("attachment", MediaType.APPLICATION_PDF);
+    private InternalResource getRegistrationAttachment() {
+        InternalResource attachment = InternalResource.resourceByNameAndType("attachment", MediaType.APPLICATION_PDF);
         attachment.setContent(resourceLoaderTool.loadResourceFile(attachment));
         return attachment;
     }
@@ -94,5 +112,10 @@ public class MailServiceBean implements MailService {
         Context mailTemplateContext = new Context();
         mailTemplateContext.setVariable("imageUrl", resourceProperties.getImageUrl());
         return templateEngine.process("template", mailTemplateContext);
+    }
+
+    private void validateMailContent(MailBuilder mailBuilder) {
+        Validator validator = validatorFactory.getInstance(MAIL);
+        validator.validateWithException(mailBuilder);
     }
 }

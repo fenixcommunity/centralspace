@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.utils.mail;
+package com.fenixcommunity.centralspace.utilities.mail.properties;
 
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.core.convert.converter.Converter;

@@ -17,7 +17,7 @@ public class ResourceLoaderTool {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public Resource loadResourceFile(ResourceApp resource) {
+    public Resource loadResourceFile(InternalResource resource) {
         //todo validator
         String subtype = resource.getFileType().getSubtype();
         StringBuilder fullPath = new StringBuilder("classpath:static/")

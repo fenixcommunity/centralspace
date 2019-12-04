@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.utils.converter;
+package com.fenixcommunity.centralspace.domain.converter;
 
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;

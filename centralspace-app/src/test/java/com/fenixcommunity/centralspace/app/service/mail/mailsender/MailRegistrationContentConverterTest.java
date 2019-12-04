@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
-import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContent;
-import com.fenixcommunity.centralspace.app.utils.mail.MailRegistrationContentConverter;
+import com.fenixcommunity.centralspace.utilities.mail.properties.MailRegistrationContent;
+import com.fenixcommunity.centralspace.utilities.mail.properties.MailRegistrationContentConverter;
 import org.junit.jupiter.api.Test;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_ID;

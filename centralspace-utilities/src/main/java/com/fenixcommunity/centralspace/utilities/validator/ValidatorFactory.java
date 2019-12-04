@@ -25,6 +25,8 @@ public class ValidatorFactory {
             validator = PasswordValidator.lowValidator();
         } else if (type == ValidatorType.PASSWORD_HIGH) {
             validator = PasswordValidator.highValidator();
+        } else if (type == ValidatorType.MAIL) {
+            validator = new MailValidator();
         }
 
         if (validator != null) {
@@ -40,7 +42,6 @@ public class ValidatorFactory {
 
     public Validator getInstance(ValidatorType type) {
 //TODO        usun Assert   / Level level
-        boolean df = true;
         validateInstanceExist(type);
         Validator validator = cache.get(type);
         return validator == null ? initValidator(type) : validator;

@@ -12,8 +12,8 @@ public class SchedulerServiceBean implements SchedulerService {
 
 
     //    @Scheduled(fixedDelay = 60 * 60 * 1000)
-    public void mailReminder() {
-        mailService.sendBasicMail();
+    public void mailReminder(String to) {
+        mailService.sendBasicMail(to);
     }
 
 }

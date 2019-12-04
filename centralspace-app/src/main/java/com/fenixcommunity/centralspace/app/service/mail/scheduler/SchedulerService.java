@@ -1,5 +1,5 @@
 package com.fenixcommunity.centralspace.app.service.mail.scheduler;
 
 public interface SchedulerService {
-    void mailReminder();
+    void mailReminder(String to);
 }

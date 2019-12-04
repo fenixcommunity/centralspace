@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.utils.browser;
+package com.fenixcommunity.centralspace.utilities.web.browser;
 
 public enum BrowserType {
     FIREFOX("firefox"),

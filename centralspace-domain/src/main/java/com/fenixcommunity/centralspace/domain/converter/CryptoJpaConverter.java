@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.utils.converter;
+package com.fenixcommunity.centralspace.domain.converter;
 
 import com.fenixcommunity.centralspace.domain.exception.cenverter.CryptoJpaConverterException;
 import lombok.extern.java.Log;

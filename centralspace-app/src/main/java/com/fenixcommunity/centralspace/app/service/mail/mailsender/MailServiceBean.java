@@ -107,7 +107,6 @@ public class MailServiceBean implements MailService {
         return attachment;
     }
 
-    //todo Mail creator
     private String getBasicHtmlBody() {
         Context mailTemplateContext = new Context();
         mailTemplateContext.setVariable("imageUrl", resourceProperties.getImageUrl());

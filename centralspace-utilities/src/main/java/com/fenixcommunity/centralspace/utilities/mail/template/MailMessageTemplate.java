@@ -5,8 +5,6 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
 //TODO 27.11.2019 what about getters?
 
 @Getter
@@ -17,12 +15,13 @@ public abstract class MailMessageTemplate {
     protected String from;
     @NotBlank
     protected String subject;
-    @NotBlank
-    protected String body;
     protected String replyTo;
     protected boolean htmlBody = false;
 
-    public boolean isTemplateReady() {
-        return isNotEmpty(from) && isNotEmpty(subject) && isNotEmpty(body);
-    }
+    public abstract boolean isTemplateReady();
+
+    public abstract void buildMailBodyFromProperties(Object obj);
+
+    public abstract String getMailBody();
+
 }

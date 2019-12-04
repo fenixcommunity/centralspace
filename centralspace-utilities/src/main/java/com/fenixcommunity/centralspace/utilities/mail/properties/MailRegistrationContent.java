@@ -9,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class MailRegistrationContent {
 
+    public static final String ACCOUNT_TOKEN = "account_token";
+
     public MailRegistrationContent(@NotBlank String fullUrl, @NotBlank String url, @NotBlank String domainId) {
         this.fullUrl = fullUrl;
         this.url = url;

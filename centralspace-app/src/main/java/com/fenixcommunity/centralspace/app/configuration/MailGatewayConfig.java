@@ -77,18 +77,13 @@ public class MailGatewayConfig {
     //todo MailContentBuilder
     @Bean("registrationMailMessage")
     public MailMessageTemplate getRegistrationMailTemplate() {
-        StringBuilder textBody = new StringBuilder("This is the registration token to open your new account:\n%s\n");
         MailContent mailConfigTemplate = mailProperties.getContent();
-        textBody.append(mailConfigTemplate.getDomain());
-        textBody.append(LINE);
         MailRegistrationContent mailRegistrationTemplate = mailConfigTemplate.getRegistrationContent();
-        textBody.append(mailRegistrationTemplate.getFullUrl());
-
         MailMessageTemplate mailTemplate = RegistrationMailMessage.builder()
                 .from(mailConfigTemplate.getEmailFrom())
                 .subject(REGISTRATION_MAIL)
-                .body(textBody.toString())
                 .build();
+        mailTemplate.buildMailBodyFromProperties(mailRegistrationTemplate);
 
         validateMailTemplate(mailTemplate);
 
@@ -97,15 +92,12 @@ public class MailGatewayConfig {
 
     @Bean("basicMailMessage")
     public MailMessageTemplate getBasicMailTemplate() {
-        StringBuilder textBody = new StringBuilder();
         MailContent mailConfigTemplate = mailProperties.getContent();
-        textBody.append(mailConfigTemplate.getDomain());
-//todo html body
         MailMessageTemplate mailTemplate = BasicMailMessage.builder()
                 .from(mailConfigTemplate.getEmailFrom())
                 .subject(BASIC_MAIL)
-                .body(textBody.toString())
                 .build();
+        mailTemplate.buildMailBodyFromProperties(mailConfigTemplate);
 
         validateMailTemplate(mailTemplate);
 

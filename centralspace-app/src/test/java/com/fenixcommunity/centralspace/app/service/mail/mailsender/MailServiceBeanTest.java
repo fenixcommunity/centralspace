@@ -114,13 +114,13 @@ class MailServiceBeanTest {
 
     private void setUpBasicMailTemplate() {
         when(basicMailMessage.getFrom()).thenReturn(EMAIL_FROM);
-        when(basicMailMessage.getBody()).thenReturn(MESSAGE);
+        when(basicMailMessage.getMailBody()).thenReturn(MESSAGE);
         when(basicMailMessage.getSubject()).thenReturn(SUBJECT);
     }
 
     private void setUpRegistrationMailTemplate() {
         when(registrationMailMessage.getFrom()).thenReturn(EMAIL_FROM);
-        when(registrationMailMessage.getBody()).thenReturn(MESSAGE);
+        when(registrationMailMessage.getMailBody()).thenReturn(MESSAGE);
         when(registrationMailMessage.getSubject()).thenReturn(SUBJECT);
     }
 

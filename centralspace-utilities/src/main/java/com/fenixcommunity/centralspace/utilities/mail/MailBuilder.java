@@ -18,7 +18,7 @@ public class MailBuilder {
 
     public MailBuilder(MailMessageTemplate template) {
         from = template.getFrom();
-        body = template.getBody();
+        body = template.getMailBody();
         subject = template.getSubject();
     }
 

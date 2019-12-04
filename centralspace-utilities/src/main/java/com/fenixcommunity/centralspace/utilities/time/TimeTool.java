@@ -3,13 +3,13 @@ package com.fenixcommunity.centralspace.utilities.time;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorType;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 
-@Log
+@Log4j2
 @Component
 public class TimeTool {
 

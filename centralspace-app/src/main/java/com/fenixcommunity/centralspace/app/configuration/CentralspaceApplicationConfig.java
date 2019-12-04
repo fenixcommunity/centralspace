@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Import;
 @Import({DomainConfig.class,
         UtilitiesConfig.class,
         MailGatewayConfig.class,
-        FilterApiConfig.class})
+        FilterApiConfig.class,
+        AopConfiguration.class})
 @SpringBootApplication
 public class CentralspaceApplicationConfig {
 }

@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.filter;
 
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import static java.lang.String.format;
 
-@Log
+@Log4j2
 public class RequestResponseLoggingFilter implements Filter {
 
     @Override

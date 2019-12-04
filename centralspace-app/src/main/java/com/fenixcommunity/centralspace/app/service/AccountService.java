@@ -2,14 +2,14 @@ package com.fenixcommunity.centralspace.app.service;
 
 import com.fenixcommunity.centralspace.domain.model.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.AccountRepository;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Log
+@Log4j2
 @Service
 public class AccountService {
 

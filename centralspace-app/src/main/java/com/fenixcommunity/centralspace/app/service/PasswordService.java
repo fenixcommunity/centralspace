@@ -2,13 +2,13 @@ package com.fenixcommunity.centralspace.app.service;
 
 import com.fenixcommunity.centralspace.domain.model.password.Password;
 import com.fenixcommunity.centralspace.domain.repository.PasswordRepository;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Log
+@Log4j2
 @Service
 public class PasswordService {
 

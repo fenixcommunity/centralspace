@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.filter;
 
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
 
-@Log
+@Log4j2
 public class HeaderApiFilter implements Filter {
 
     @Override

@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.domain.converter;
 
 import com.fenixcommunity.centralspace.domain.exception.cenverter.CryptoJpaConverterException;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.codec.Base64;
 
 import javax.crypto.Cipher;
@@ -14,10 +14,11 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.logging.Level;
+
+import static com.fenixcommunity.centralspace.utilities.logger.MarkersVar.GENERAL_USER;
 
 @Converter
-@Log
+@Log4j2
 public class CryptoJpaConverter implements AttributeConverter<String, String> {
 
     private static String ALGORITHM;
@@ -32,7 +33,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
         try {
             properties.load(Objects.requireNonNull(CryptoJpaConverter.class.getClassLoader().getResourceAsStream(security_file)));
         } catch (IOException e) {
-            log.log(Level.SEVERE, "Unsuccessful loading the properties to converter", e);
+            log.error(GENERAL_USER, "Unsuccessful loading the properties to converter", e);
         }
         ALGORITHM = (String) properties.get(algorithm_property_key);
         KEY = ((String) properties.get(secret_property_key)).getBytes();

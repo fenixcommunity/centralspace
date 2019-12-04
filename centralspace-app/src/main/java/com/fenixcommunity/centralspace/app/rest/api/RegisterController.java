@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import com.fenixcommunity.centralspace.app.rest.dto.register.RegisterType;
 import com.fenixcommunity.centralspace.app.rest.dto.register.RestRegisterProcess;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.RestRegisterResponse;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/register")
-@Log
+@Log4j2
 class RegisterController {
 
     @PostMapping(value = "/submit/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
@@ -34,7 +34,6 @@ class RegisterController {
         return new ResponseEntity<>(payload, HttpStatus.OK);
     }
     //todo regex
-    //todo @LogParameter
 
     private RestRegisterResponse buildRegisterResponse(String info) {
         RestRegisterResponse response = new RestRegisterResponse(info, "linkredirection", RegisterType.STANDARD);

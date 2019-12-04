@@ -23,7 +23,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Properties;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.BASIC_MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.REGISTRATION_MAIL;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
 
 //todo useless? EnableScheduling EnableAsync

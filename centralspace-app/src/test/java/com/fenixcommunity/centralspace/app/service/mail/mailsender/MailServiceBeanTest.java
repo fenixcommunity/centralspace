@@ -2,7 +2,6 @@ package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
 import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
@@ -19,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.thymeleaf.TemplateEngine;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -29,19 +27,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_FROM;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_TO;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         MailServiceBean.class,
         JavaMailSenderImpl.class,
-        ResourceLoaderTool.class,
-        TemplateEngine.class,
         ValidatorFactory.class
 })
-@TestPropertySource(locations = {"classpath:services.properties"})
+@TestPropertySource(locations = {"classpath:mail-gateway.properties"})
 @SpringBootTest
 //todo  what is it? @ActiveProfiles("mail")
 class MailServiceBeanTest {

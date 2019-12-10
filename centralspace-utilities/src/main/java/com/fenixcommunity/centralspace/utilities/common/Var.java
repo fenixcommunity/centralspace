@@ -18,6 +18,7 @@ public class Var {
     public static final String LINE = "\n";
     public static final String SPACE = " ";
     public static final String OR = "||";
+    public static final String UTF_8 = "UTF-8";
     //MAIL
     public static final String EMAIL_FROM = "hermes.delivery.noreply@gmail.com";
     public static final String EMAIL_REPLY_TO = "hermes.delivery.noreply@gmail.com";

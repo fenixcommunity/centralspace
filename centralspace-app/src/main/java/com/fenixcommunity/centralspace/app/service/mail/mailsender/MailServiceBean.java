@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
-import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
+import com.fenixcommunity.centralspace.app.service.document.DocumentService;
 import com.fenixcommunity.centralspace.utilities.mail.MailBuilder;
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
@@ -15,19 +15,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
+import static com.fenixcommunity.centralspace.app.service.document.DocumentConverterStrategyType.THYMELEAF;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
 
 //TODO CZY WSZEDZIE IMPL?
 @Service
 public class MailServiceBean implements MailService {
 
+    public static final String TEMPLATE_BASIC_MAIL = "template_basic_mail";
     private final JavaMailSender mailSender;
-    //todo constuctor all or autowired?
-    @Autowired
-    private TemplateEngine templateEngine;
 
     @Autowired
     private ValidatorFactory validatorFactory;
@@ -36,7 +33,7 @@ public class MailServiceBean implements MailService {
     private ResourceLoaderTool resourceLoaderTool;
 
     @Autowired
-    private ResourceProperties resourceProperties;
+    private DocumentService documentService;
 
     @Autowired
     @Qualifier("basicMailMessage")
@@ -57,7 +54,7 @@ public class MailServiceBean implements MailService {
         mailBuilder.addTo(to);
 //        mailBuilder.setHtmlBody(true);
         if (mailBuilder.isHtmlBody()) {
-            mailBuilder.setBody(getBasicHtmlBody());
+            mailBuilder.setBody(documentService.getHtmlBody(TEMPLATE_BASIC_MAIL, THYMELEAF));
         }
         sendBasicMail(mailBuilder);
     }
@@ -105,12 +102,6 @@ public class MailServiceBean implements MailService {
         InternalResource attachment = InternalResource.resourceByNameAndType("attachment", MediaType.APPLICATION_PDF);
         attachment.setContent(resourceLoaderTool.loadResourceFile(attachment));
         return attachment;
-    }
-
-    private String getBasicHtmlBody() {
-        Context mailTemplateContext = new Context();
-        mailTemplateContext.setVariable("imageUrl", resourceProperties.getImageUrl());
-        return templateEngine.process("template", mailTemplateContext);
     }
 
     private void validateMailContent(MailBuilder mailBuilder) {

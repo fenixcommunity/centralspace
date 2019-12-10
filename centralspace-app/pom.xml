@@ -60,6 +60,16 @@
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
         </dependency>
+        <!-- UTILITIES DEPENDENCIES -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>html2pdf</artifactId>
+        </dependency>
+
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>com.icegreen</groupId>

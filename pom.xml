@@ -44,6 +44,8 @@
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>
         <javassist.version>3.23.1-GA</javassist.version>
+        <itextpdf-html2pdf.version>2.1.4</itextpdf-html2pdf.version>
+        <itextpdf-itextpdf.version>5.5.13</itextpdf-itextpdf.version>
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
         <spring-boot-test.version>2.2.0.RELEASE</spring-boot-test.version>
@@ -143,6 +145,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-boot-thymeleaf.version}</version>
+            </dependency>
+            <!-- UTILITIES DEPENDENCIES -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>itextpdf</artifactId>
+                <version>${itextpdf-itextpdf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>html2pdf</artifactId>
+                <version>${itextpdf-html2pdf.version}</version>
             </dependency>
             <!-- PERSISTENCE DEPENDENCIES -->
             <dependency>

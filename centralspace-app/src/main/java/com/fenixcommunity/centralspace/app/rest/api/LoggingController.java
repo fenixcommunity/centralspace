@@ -1,24 +1,23 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/logger")
+@Log4j2
 public class LoggingController {
 
-    Logger logger = LoggerFactory.getLogger(LoggingController.class);
 
     @GetMapping("/")
     public String run() {
-        logger.trace("TRACE Message");
-        logger.debug("DEBUG Message");
-        logger.info("INFO Message");
-        logger.warn("WARN Message");
-        logger.error("ERROR Message");
+        log.trace("TRACE Message");
+        log.debug("DEBUG Message");
+        log.info("INFO Message");
+        log.warn("WARN Message");
+        log.error("ERROR Message");
 
         return "DONE";
     }

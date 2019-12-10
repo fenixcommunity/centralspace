@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<!--todo example  <img th:src="${imageUrl} + '1.png'"/>-->
+<html xmlns:th="http://www.thymeleaf.org">
 <html xmlns="http://www.w3.org/1999/xhtml"
 >
 <head>
@@ -173,7 +172,7 @@
                                         <a href="#" tabindex="-1" target="_blank"> <img align="center" alt="Logo"
                                                                                         border="0"
                                                                                         class="center autowidth"
-                                                                                        src="${imageUrl}creativepencil.png"
+                                                                                        th:src="${imageUrl} + 'creativepencil.png'"
                                                                                         style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; width: 100%; max-width: 320px; display: block;"
                                                                                         title="Logo" width="320"/></a>
                                         <div style="font-size:1px;line-height:5px"> </div>
@@ -223,7 +222,7 @@
                                         <![endif]-->
                                         <div style="font-size:1px;line-height:15px"> </div>
                                         <img align="center" alt="I'm an image" border="0" class="center fixedwidth"
-                                             src="${imageUrl}Higher_plans.png"
+                                             th:src="${imageUrl} + 'Higher_plans.png'"
                                              style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 552px; display: block;"
                                              title="I'm an image" width="552"/>
                                         <!--[if mso]></td></tr></table><![endif]-->
@@ -427,7 +426,7 @@
                                                 <td style="" align="center"><![endif]--><img align="center" alt="Image"
                                                                                              border="0"
                                                                                              class="center autowidth fullwidth"
-                                                                                             src="${imageUrl}Top.png"
+                                                                                             th:src="${imageUrl} + 'Top.png'"
                                                                                              style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 650px; display: block;"
                                                                                              title="Image" width="650"/>
                                         <!--[if mso]></td></tr></table><![endif]-->
@@ -563,7 +562,7 @@
                                         <![endif]-->
                                         <div style="font-size:1px;line-height:15px"> </div>
                                         <img align="right" alt="Image" border="0" class="right autowidth fullwidth"
-                                             src="${imageUrl}1.png"
+                                             th:src="${imageUrl} + '1.png'"
                                              style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 285px; float: none; display: block;"
                                              title="Image" width="285"/>
                                         <!--[if mso]></td></tr></table><![endif]-->
@@ -799,7 +798,7 @@
                                             <tr style="line-height:0px">
                                                 <td style="padding-right: 50px;padding-left: 25px;" align="left">
                                         <![endif]--><img alt="Image" border="0" class="left autowidth fullwidth"
-                                                         src="${imageUrl}2.png"
+                                                         th:src="${imageUrl} + '2.png'"
                                                          style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 210px; display: block;"
                                                          title="Image" width="210"/>
                                         <div style="font-size:1px;line-height:5px"> </div>
@@ -939,7 +938,7 @@
                                         <![endif]-->
                                         <div style="font-size:1px;line-height:5px"> </div>
                                         <img align="center" alt="Image" border="0" class="center autowidth fullwidth"
-                                             src="${imageUrl}3.png"
+                                             th:src="${imageUrl} + '3.png'"
                                              style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 265px; display: block;"
                                              title="Image" width="265"/>
                                         <!--[if mso]></td></tr></table><![endif]-->
@@ -1154,7 +1153,7 @@
                                             <tr style="line-height:0px">
                                                 <td style="padding-right: 10px;padding-left: 0px;" align="right">
                                         <![endif]--><img align="right" alt="Image" border="0" class="right fixedwidth"
-                                                         src="${imageUrl}enterprise_pack.png"
+                                                         th:src="${imageUrl} + 'enterprise_pack.png'"
                                                          style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 162px; float: none; display: block;"
                                                          title="Image" width="162"/>
                                         <!--[if mso]></td></tr></table><![endif]-->
@@ -1338,7 +1337,7 @@
                                             <tr style="line-height:0px">
                                                 <td style="padding-right: 0px;padding-left: 0px;" align="center">
                                         <![endif]--><img align="center" alt="Image" border="0"
-                                                         class="center autowidth fullwidth" src="${imageUrl}Btm_blu.png"
+                                                         class="center autowidth fullwidth" th:src="${imageUrl} + 'Btm_blu.png'"
                                                          style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 650px; display: block;"
                                                          title="Image" width="650"/>
                                         <!--[if mso]></td></tr></table><![endif]-->
@@ -1385,7 +1384,7 @@
                                             <tr style="line-height:0px">
                                                 <td style="padding-right: 0px;padding-left: 0px;" align="center">
                                         <![endif]--><img align="center" alt="Image" border="0" class="center autowidth"
-                                                         src="${imageUrl}Icon_logo_animate.gif"
+                                                         th:src="${imageUrl} + 'Icon_logo_animate.gif"
                                                          style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 99px; display: block;"
                                                          title="Image" width="99"/>
                                         <!--[if mso]></td></tr></table><![endif]-->
@@ -1423,21 +1422,21 @@
                                                             valign="top"><a href="https://www.facebook.com/"
                                                                             target="_blank"><img alt="Facebook"
                                                                                                  height="32"
-                                                                                                 src="${imageUrl}facebook@2x.png"
+                                                                                                 th:src="${imageUrl} + 'facebook@2x.png'"
                                                                                                  style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
                                                                                                  title="Facebook"
                                                                                                  width="32"/></a></td>
                                                         <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;"
                                                             valign="top"><a href="https://twitter.com/" target="_blank"><img
                                                                 alt="Twitter" height="32"
-                                                                src="${imageUrl}twitter@2x.png"
+                                                                th:src="${imageUrl} + 'twitter@2x.png'"
                                                                 style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
                                                                 title="Twitter" width="32"/></a></td>
                                                         <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;"
                                                             valign="top"><a href="https://instagram.com/"
                                                                             target="_blank"><img alt="Instagram"
                                                                                                  height="32"
-                                                                                                 src="${imageUrl}instagram@2x.png"
+                                                                                                 th:src="${imageUrl} + 'instagram@2x.png'"
                                                                                                  style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
                                                                                                  title="Instagram"
                                                                                                  width="32"/></a></td>
@@ -1445,7 +1444,7 @@
                                                             valign="top"><a href="https://www.linkedin.com/"
                                                                             target="_blank"><img alt="LinkedIn"
                                                                                                  height="32"
-                                                                                                 src="${imageUrl}linkedin@2x.png"
+                                                                                                 th:src="${imageUrl} + 'linkedin@2x.png'"
                                                                                                  style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
                                                                                                  title="LinkedIn"
                                                                                                  width="32"/></a></td>

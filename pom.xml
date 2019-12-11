@@ -44,8 +44,11 @@
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>
         <javassist.version>3.23.1-GA</javassist.version>
-        <itextpdf-html2pdf.version>2.1.4</itextpdf-html2pdf.version>
+        <!-- RESOURCE CONVERTER DEPENDENCIES -->
+        <pdfbox-tools.version>2.0.17</pdfbox-tools.version>
+        <pdf2dom.version>1.7</pdf2dom.version>
         <itextpdf-itextpdf.version>5.5.13</itextpdf-itextpdf.version>
+        <itextpdf-html2pdf.version>2.1.4</itextpdf-html2pdf.version>
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
         <spring-boot-test.version>2.2.0.RELEASE</spring-boot-test.version>
@@ -146,7 +149,17 @@
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-boot-thymeleaf.version}</version>
             </dependency>
-            <!-- UTILITIES DEPENDENCIES -->
+            <!-- RESOURCE CONVERTER DEPENDENCIES -->
+            <dependency>
+                <groupId>org.apache.pdfbox</groupId>
+                <artifactId>pdfbox-tools</artifactId>
+                <version>${pdfbox-tools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.cssbox</groupId>
+                <artifactId>pdf2dom</artifactId>
+                <version>${pdf2dom.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.itextpdf</groupId>
                 <artifactId>itextpdf</artifactId>

@@ -14,9 +14,6 @@ public final class InternalResource {
     //todo more than like instead extend class
 
 
-    private InternalResource() {
-    }
-
     public InternalResource resourceByFullName(String fullName) {
         InternalResource resource = new InternalResource();
         String[] splitedName = fullName.split(".");

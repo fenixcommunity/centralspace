@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.fenixcommunity.centralspace.app.service.document.DocumentConverterStrategyType.THYMELEAF;
+import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlToPdfConverterStrategyType.THYMELEAF;
 
 @RestController
 @RequestMapping("/doc")

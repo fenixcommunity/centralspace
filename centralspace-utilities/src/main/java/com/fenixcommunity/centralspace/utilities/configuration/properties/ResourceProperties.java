@@ -17,4 +17,6 @@ public class ResourceProperties {
 
     @NotBlank
     private String imageUrl;
+    @NotBlank
+    private String convertedPdfPath;
 }

@@ -1,6 +1,8 @@
-package com.fenixcommunity.centralspace.app.service.document;
+package com.fenixcommunity.centralspace.app.service.document.converter;
 
+import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.itextpdf.html2pdf.HtmlConverter;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.thymeleaf.TemplateEngine;
@@ -11,51 +13,31 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 
 @Log4j2
-public class ThymeleafDocumentConverter implements DocumentConverterStrategy {
+@AllArgsConstructor
+public class ThymeleafDocumentConverter implements HtmlToPdfConverterStrategy {
 
-    private final TemplateEngine templateEngine;
     private String fileName;
     private Map<String,String> thymeleafVariables;
 
-    private static final String services_properties = "services.properties";
-    private static final String CONVERTED_PDF_PATH = "convertedPdf.path";
-    private Properties properties;
-
-
-    public ThymeleafDocumentConverter(String fileName, Map<String, String> thymeleafVariables, TemplateEngine templateEngine) {
-        this.fileName = fileName;
-        this.thymeleafVariables = thymeleafVariables;
-        this.templateEngine = templateEngine;
-        initProperties();
-
-    }
-
-    private void initProperties() {
-        properties = new Properties();
-        try {
-            properties.load(Objects.requireNonNull(ThymeleafDocumentConverter.class.getClassLoader().getResourceAsStream(services_properties)));
-        } catch (IOException e) {
-            log.error( "Unsuccessful loading the properties to ThymeleafDocumentConverter", e);
-        }
-    }
+    private final TemplateEngine templateEngine;
+    private final ResourceLoaderTool resource;
 
     @Override
     public void convertHtmlToPdf() {
         String htmlContent = getHtmlBody();
         try {
-            String convertedPdfPath = properties.getProperty(CONVERTED_PDF_PATH) + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
+            String convertedPdfPath = resource.getResourceProperties().getConvertedPdfPath() + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
             OutputStream fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(convertedPdfPath)), false);
             HtmlConverter.convertToPdf(htmlContent, fileStream);
             fileStream.close();
         }  catch (IOException e) {
-            log.error("ConvertToPdf error", e);
+            log.error("convertHtmlToPdf error", e);
         }
     }
 

@@ -60,7 +60,7 @@
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
         </dependency>
-        <!-- UTILITIES DEPENDENCIES -->
+        <!-- RESOURCE CONVERTER DEPENDENCIES -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
@@ -69,7 +69,14 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>html2pdf</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox-tools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.cssbox</groupId>
+            <artifactId>pdf2dom</artifactId>
+        </dependency>
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>com.icegreen</groupId>

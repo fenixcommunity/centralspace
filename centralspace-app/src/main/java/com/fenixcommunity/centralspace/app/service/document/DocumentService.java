@@ -1,12 +1,19 @@
 package com.fenixcommunity.centralspace.app.service.document;
 
-import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
+import com.fenixcommunity.centralspace.app.service.document.converter.HtmlToPdfConverterStrategyType;
+import com.fenixcommunity.centralspace.app.service.document.converter.HtmlToPdfConverterStrategy;
+import com.fenixcommunity.centralspace.app.service.document.converter.ResourceConverterBean;
+import com.fenixcommunity.centralspace.app.service.document.converter.ThymeleafDocumentConverter;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
-import static com.fenixcommunity.centralspace.app.service.document.DocumentConverterStrategyType.THYMELEAF;
+import java.util.Map;
+
+import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlToPdfConverterStrategyType.STANDARD;
+import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlToPdfConverterStrategyType.THYMELEAF;
 import static java.util.Collections.singletonMap;
 
 @Log4j2
@@ -14,27 +21,31 @@ import static java.util.Collections.singletonMap;
 public class DocumentService {
 //todo to interface
 
-    private final ResourceProperties resourceProperties;
+    @Autowired
+    private ResourceLoaderTool resourceTool;
 
     @Autowired
     private TemplateEngine templateEngine;
 
-    @Autowired
-    public DocumentService(ResourceProperties resourceProperties) {
-        this.resourceProperties = resourceProperties;
-    }
-
-    public void convertHtmlToPdf(String htmlFileName, DocumentConverterStrategyType strategyType) {
+    public void convertHtmlToPdf(String htmlFileName, HtmlToPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
-            DocumentConverterStrategy converter = new ThymeleafDocumentConverter(htmlFileName, singletonMap("imageUrl", resourceProperties.getImageUrl()),templateEngine);
+            Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getResourceProperties().getImageUrl());
+            HtmlToPdfConverterStrategy converter = new ThymeleafDocumentConverter(htmlFileName, thymeleafVariables,templateEngine, resourceTool);
+            converter.convertHtmlToPdf();
+        } else if (STANDARD == strategyType){
+            HtmlToPdfConverterStrategy converter = new ResourceConverterBean(htmlFileName, resourceTool);
             converter.convertHtmlToPdf();
         }
     }
-
-    public String getHtmlBody(String htmlFileName, DocumentConverterStrategyType strategyType) {
+    check
+    public String getHtmlBody(String htmlFileName, HtmlToPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
-            DocumentConverterStrategy converter = new ThymeleafDocumentConverter(htmlFileName, singletonMap("imageUrl", resourceProperties.getImageUrl()),templateEngine);
+            Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getResourceProperties().getImageUrl());
+            HtmlToPdfConverterStrategy converter = new ThymeleafDocumentConverter(htmlFileName, thymeleafVariables,templateEngine, resourceTool);
            return converter.getHtmlBody();
+        } else if (STANDARD == strategyType){
+            HtmlToPdfConverterStrategy converter = new ResourceConverterBean(htmlFileName, resourceTool);
+            converter.convertHtmlToPdf();
         }
         return "";
     }

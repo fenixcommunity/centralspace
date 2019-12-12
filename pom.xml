@@ -36,6 +36,7 @@
         <spring-core.version>5.2.0.RELEASE</spring-core.version>
         <spring-security.version>5.2.0.RELEASE</spring-security.version>
         <spring.hateoas.version>2.2.0.RELEASE</spring.hateoas.version>
+        <spring-log4j2.version>2.2.0.RELEASE</spring-log4j2.version>
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.5</postgresql.version>
         <!-- UTILITIES DEPENDENCIES -->
@@ -49,6 +50,7 @@
         <pdf2dom.version>1.7</pdf2dom.version>
         <itextpdf-itextpdf.version>5.5.13</itextpdf-itextpdf.version>
         <itextpdf-html2pdf.version>2.1.4</itextpdf-html2pdf.version>
+        <itextpdf-xmlworker.version>5.5.1</itextpdf-xmlworker.version>
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
         <spring-boot-test.version>2.2.0.RELEASE</spring-boot-test.version>
@@ -170,6 +172,11 @@
                 <artifactId>html2pdf</artifactId>
                 <version>${itextpdf-html2pdf.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.itextpdf.tool</groupId>
+                <artifactId>xmlworker</artifactId>
+                <version>${itextpdf-xmlworker.version}</version>
+            </dependency>
             <!-- PERSISTENCE DEPENDENCIES -->
             <dependency>
                 <groupId>org.postgresql</groupId>
@@ -197,6 +204,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
+            <version>${spring-log4j2.version}</version>
         </dependency>
         <!-- UTILITIES DEPENDENCIES -->
         <dependency>

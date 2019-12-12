@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.service.document;
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlToPdfConverterStrategyType;
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlToPdfConverterStrategy;
 import com.fenixcommunity.centralspace.app.service.document.converter.ResourceConverterBean;
-import com.fenixcommunity.centralspace.app.service.document.converter.ThymeleafDocumentConverter;
+import com.fenixcommunity.centralspace.app.service.document.converter.ThymeleafResourceConverter;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +30,22 @@ public class DocumentService {
     public void convertHtmlToPdf(String htmlFileName, HtmlToPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
             Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getResourceProperties().getImageUrl());
-            HtmlToPdfConverterStrategy converter = new ThymeleafDocumentConverter(htmlFileName, thymeleafVariables,templateEngine, resourceTool);
+            HtmlToPdfConverterStrategy converter = new ThymeleafResourceConverter(htmlFileName, thymeleafVariables,templateEngine, resourceTool);
             converter.convertHtmlToPdf();
         } else if (STANDARD == strategyType){
             HtmlToPdfConverterStrategy converter = new ResourceConverterBean(htmlFileName, resourceTool);
             converter.convertHtmlToPdf();
         }
     }
-    check
+
     public String getHtmlBody(String htmlFileName, HtmlToPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
             Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getResourceProperties().getImageUrl());
-            HtmlToPdfConverterStrategy converter = new ThymeleafDocumentConverter(htmlFileName, thymeleafVariables,templateEngine, resourceTool);
+            HtmlToPdfConverterStrategy converter = new ThymeleafResourceConverter(htmlFileName, thymeleafVariables,templateEngine, resourceTool);
            return converter.getHtmlBody();
         } else if (STANDARD == strategyType){
             HtmlToPdfConverterStrategy converter = new ResourceConverterBean(htmlFileName, resourceTool);
-            converter.convertHtmlToPdf();
+            return converter.getHtmlBody();
         }
         return "";
     }

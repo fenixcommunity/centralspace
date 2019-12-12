@@ -77,6 +77,10 @@
             <groupId>net.sf.cssbox</groupId>
             <artifactId>pdf2dom</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.itextpdf.tool</groupId>
+            <artifactId>xmlworker</artifactId>
+        </dependency>
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>com.icegreen</groupId>

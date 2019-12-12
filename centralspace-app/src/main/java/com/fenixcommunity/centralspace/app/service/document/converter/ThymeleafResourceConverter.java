@@ -10,7 +10,6 @@ import org.thymeleaf.context.Context;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,22 +19,20 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 
 @Log4j2
 @AllArgsConstructor
-public class ThymeleafDocumentConverter implements HtmlToPdfConverterStrategy {
+public class ThymeleafResourceConverter implements HtmlToPdfConverterStrategy {
 
     private String fileName;
     private Map<String,String> thymeleafVariables;
 
     private final TemplateEngine templateEngine;
-    private final ResourceLoaderTool resource;
+    private final ResourceLoaderTool resourceTool;
 
     @Override
     public void convertHtmlToPdf() {
-        String htmlContent = getHtmlBody();
-        try {
-            String convertedPdfPath = resource.getResourceProperties().getConvertedPdfPath() + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
-            OutputStream fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(convertedPdfPath)), false);
+        var htmlContent = getHtmlBody();
+        var convertedPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath() + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
+        try(var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(convertedPdfPath)), false)) {
             HtmlConverter.convertToPdf(htmlContent, fileStream);
-            fileStream.close();
         }  catch (IOException e) {
             log.error("convertHtmlToPdf error", e);
         }
@@ -43,7 +40,7 @@ public class ThymeleafDocumentConverter implements HtmlToPdfConverterStrategy {
 
     @Override
     public String getHtmlBody() {
-        Context templateContext = new Context();
+        var templateContext = new Context();
         thymeleafVariables.entrySet().forEach(x->
                 templateContext.setVariable(x.getKey(), x.getValue()));
         return templateEngine.process(fileName, templateContext);

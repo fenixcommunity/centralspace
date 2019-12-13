@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.ResponseMessage;
@@ -18,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
 
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.getSimpleClassName;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_URL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
 import static com.google.common.collect.Lists.newArrayList;
@@ -56,6 +58,7 @@ public class SwaggerConfig {
                 input.matches("/mail/.*") ||
                 input.matches("/password/.*") ||
                 input.matches("/register/.*") ||
+                input.matches("/logger/.*") ||
                 input.matches("/resource/.*");
     }
 
@@ -71,9 +74,11 @@ public class SwaggerConfig {
     private List<ResponseMessage> errorList() {
         return newArrayList(
                 new ResponseMessageBuilder().code(NOT_FOUND.value())
+                        .responseModel(new ModelRef(getSimpleClassName(ErrorDetails.class)))
                         .message(ErrorDetails.toStringModel())
                         .build(),
                 new ResponseMessageBuilder().code(INTERNAL_SERVER_ERROR.value())
+                        .responseModel(new ModelRef(getSimpleClassName(ErrorDetails.class)))
                         .message(ErrorDetails.toStringModel())
                         .build()
                 //             .responseModel(new ModelRef(getClassName(ErrorDetails.class))).build());

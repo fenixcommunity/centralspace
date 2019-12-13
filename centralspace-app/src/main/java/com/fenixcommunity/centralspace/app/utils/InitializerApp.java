@@ -17,7 +17,7 @@ public class InitializerApp implements CommandLineRunner {
     public void run(String... args) throws Exception {
         String appInfo = "Fenix community application has been launched" + Var.LINE;
         String swaggerInfo = format("Please look at swager UI page:" + Var.LINE +
-                "%s/api/swagger-ui.html#/", swagger2Host);
+                "http://%s/api/swagger-ui.html#/", swagger2Host);
         System.out.println(appInfo + swaggerInfo);
     }
 }

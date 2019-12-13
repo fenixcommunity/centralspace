@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
-public class RestRegisterResponse  {
+public class RestRegisterResponse {
     public final String infoMessage;
     public final String redirectionLink;
     public final RegisterType registerType;

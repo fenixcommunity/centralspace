@@ -142,12 +142,12 @@
                 <artifactId>spring-security-core</artifactId>
                 <version>${spring-security.version}</version>
             </dependency>
-<!--        removed -> conflicts with swagger for latest spring boot -->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-hateoas</artifactId>-->
-<!--                <version>${spring-hateoas.version}</version>-->
-<!--            </dependency>-->
+            <!--        removed -> conflicts with swagger for latest spring boot -->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-starter-hateoas</artifactId>-->
+            <!--                <version>${spring-hateoas.version}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>

@@ -58,9 +58,9 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses(value = {
             @ApiResponse(code = 200, response = BasicResponse.class, message = "OK"),
-            @ApiResponse(code = 503, response = ServiceFailedException.class, message = "xxx"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, response = ServiceFailedException.class, message = "xxx"),
             @ApiResponse(code = 501, message = "Not implemented for given extraction type")
     })
     public ResponseEntity<List<Account>> getAll() {
@@ -115,7 +115,8 @@ public class AccountController {
         accountService.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }
-//todo remove?
+
+    //todo remove?
     private URI getCurrentURI() {
         return ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
     }

@@ -20,7 +20,7 @@ public class BasicMailMessage extends MailMessageTemplate {
 
     @Override
     public void buildMailBodyFromProperties(Object obj) {
-        if (obj instanceof MailContent && this.mailContent == null){
+        if (obj instanceof MailContent && this.mailContent == null) {
             this.mailContent = (MailContent) obj;
         }
     }

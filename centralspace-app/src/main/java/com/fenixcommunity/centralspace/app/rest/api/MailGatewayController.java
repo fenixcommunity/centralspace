@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @RestController
 @RequestMapping("/mail")
 public class MailGatewayController {
-//todo account/mail/
+    //todo account/mail/
     private final MailService mailService;
 
     public MailGatewayController(MailService mailService) {

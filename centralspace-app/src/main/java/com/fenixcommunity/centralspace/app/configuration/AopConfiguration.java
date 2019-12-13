@@ -30,7 +30,8 @@ public class AopConfiguration {
 
     //package logging
     @Pointcut("execution(* com.fenixcommunity.centralspace.domain.repository..*.*(..))")
-    public void monitorRepository() {}
+    public void monitorRepository() {
+    }
 
     @Before("monitorRepository()")
     public void logJoinPoint(JoinPoint joinPoint) {
@@ -59,7 +60,8 @@ public class AopConfiguration {
             + OR + " execution(public * com.fenixcommunity.centralspace.app.service.AccountService.findById(..)) "
             + OR + " execution(public * com.fenixcommunity.centralspace.app.service.document.DocumentService.*(..))")
     @SuppressWarnings("unused")
-    public void timeMonitor() { }
+    public void timeMonitor() {
+    }
 
     @Before("timeMonitor()")
     public void logMethod(JoinPoint joinPoint) {

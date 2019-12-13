@@ -29,19 +29,9 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.util.Assert.doesNotContain;
-import static org.springframework.util.Assert.hasLength;
-import static org.springframework.util.Assert.hasText;
-import static org.springframework.util.Assert.isAssignable;
-import static org.springframework.util.Assert.isInstanceOf;
-import static org.springframework.util.Assert.isTrue;
-import static org.springframework.util.Assert.noNullElements;
-import static org.springframework.util.Assert.notEmpty;
+import static org.springframework.util.Assert.*;
 
 @DisplayName("Test to check PasswordValidator")
 @ExtendWith(MockitoExtension.class)
@@ -76,7 +66,7 @@ public class PasswordValidatorTest {
         hasLength(password, "password must not be null and must not the empty");
         hasText(password, "key must not be null and must contain at least one non-whitespace  character");
         doesNotContain(password, "123", "key mustn't contain 123");
-        List<String> list = new ArrayList<>(Arrays.asList(password,password,password));
+        List<String> list = new ArrayList<>(Arrays.asList(password, password, password));
         notEmpty(list, "collection mustn't be empty");
         noNullElements(list, "collection  mustn't contain null elements");
 

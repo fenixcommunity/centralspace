@@ -22,7 +22,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 public class ThymeleafResourceConverter implements HtmlToPdfConverterStrategy {
 
     private String fileName;
-    private Map<String,String> thymeleafVariables;
+    private Map<String, String> thymeleafVariables;
 
     private final TemplateEngine templateEngine;
     private final ResourceLoaderTool resourceTool;
@@ -31,9 +31,9 @@ public class ThymeleafResourceConverter implements HtmlToPdfConverterStrategy {
     public void convertHtmlToPdf() {
         var htmlContent = getHtmlBody();
         var convertedPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath() + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
-        try(var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(convertedPdfPath)), false)) {
+        try (var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(convertedPdfPath)), false)) {
             HtmlConverter.convertToPdf(htmlContent, fileStream);
-        }  catch (IOException e) {
+        } catch (IOException e) {
             log.error("convertHtmlToPdf error", e);
         }
     }
@@ -41,7 +41,7 @@ public class ThymeleafResourceConverter implements HtmlToPdfConverterStrategy {
     @Override
     public String getHtmlBody() {
         var templateContext = new Context();
-        thymeleafVariables.entrySet().forEach(x->
+        thymeleafVariables.entrySet().forEach(x ->
                 templateContext.setVariable(x.getKey(), x.getValue()));
         return templateEngine.process(fileName, templateContext);
     }

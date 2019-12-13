@@ -12,7 +12,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Getter
 public class RegistrationMailMessage extends MailMessageTemplate {
 
-   private MailRegistrationContent mailRegistrationContent;
+    private MailRegistrationContent mailRegistrationContent;
 
     @Builder
     public RegistrationMailMessage(String from, String subject, String replyTo, boolean htmlBody) {
@@ -21,7 +21,7 @@ public class RegistrationMailMessage extends MailMessageTemplate {
 
     @Override
     public void buildMailBodyFromProperties(Object obj) {
-        if (obj instanceof MailRegistrationContent && this.mailRegistrationContent == null){
+        if (obj instanceof MailRegistrationContent && this.mailRegistrationContent == null) {
             this.mailRegistrationContent = (MailRegistrationContent) obj;
         }
     }

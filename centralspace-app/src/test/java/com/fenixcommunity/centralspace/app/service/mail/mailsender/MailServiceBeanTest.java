@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_FROM;
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_TO;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
 import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -134,7 +134,7 @@ class MailServiceBeanTest {
     void shouldSendMail() throws MessagingException, IOException {
         //given
         //when
-        mailServiceBean.sendBasicMail(EMAIL_TO);
+        mailServiceBean.sendBasicMail(EMAIL);
         smtpServer.waitForIncomingEmail(5000, 1);
         //then
         Message[] messages = smtpServer.getReceivedMessages();

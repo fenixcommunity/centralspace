@@ -3,12 +3,11 @@ package com.fenixcommunity.centralspace.app.rest.dto.register;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.time.ZonedDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RestFilledRegisterForm extends RepresentationModel {
+public class RestFilledRegisterForm {
 
     public String firstName;
     public String lastName;

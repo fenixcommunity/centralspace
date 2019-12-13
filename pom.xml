@@ -26,17 +26,18 @@
         <java.version>11</java.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <!-- SPRING DEPENDENCIES -->
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
-        <spring-boot-web.version>2.2.0.RELEASE</spring-boot-web.version>
-        <spring-boot-data.version>2.2.0.RELEASE</spring-boot-data.version>
-        <spring-boot-tomcat.version>2.2.0.RELEASE</spring-boot-tomcat.version>
-        <spring-boot-mail.version>2.2.0.RELEASE</spring-boot-mail.version>
-        <spring-boot-thymeleaf.version>2.2.0.RELEASE</spring-boot-thymeleaf.version>
-        <spring-context-support.version>5.2.0.RELEASE</spring-context-support.version>
-        <spring-core.version>5.2.0.RELEASE</spring-core.version>
-        <spring-security.version>5.2.0.RELEASE</spring-security.version>
-        <spring.hateoas.version>2.2.0.RELEASE</spring.hateoas.version>
-        <spring-log4j2.version>2.2.0.RELEASE</spring-log4j2.version>
+        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <spring-boot-web.version>2.2.2.RELEASE</spring-boot-web.version>
+        <spring-boot-data.version>2.2.2.RELEASE</spring-boot-data.version>
+        <spring-boot-tomcat.version>2.2.2.RELEASE</spring-boot-tomcat.version>
+        <spring-boot-mail.version>2.2.2.RELEASE</spring-boot-mail.version>
+        <spring-boot-thymeleaf.version>2.2.2.RELEASE</spring-boot-thymeleaf.version>
+        <spring-context-support.version>5.2.2.RELEASE</spring-context-support.version>
+        <spring-core.version>5.2.2.RELEASE</spring-core.version>
+        <spring-security.version>5.2.1.RELEASE</spring-security.version>
+        <spring-log4j2.version>2.2.2.RELEASE</spring-log4j2.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.5</postgresql.version>
         <!-- UTILITIES DEPENDENCIES -->
@@ -53,7 +54,7 @@
         <itextpdf-xmlworker.version>5.5.1</itextpdf-xmlworker.version>
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
-        <spring-boot-test.version>2.2.0.RELEASE</spring-boot-test.version>
+        <spring-boot-test.version>2.2.2.RELEASE</spring-boot-test.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <junit-jupiter-api.version>${junit-jupiter.version}</junit-jupiter-api.version>
         <junit-jupiter-params.version>${junit-jupiter.version}</junit-jupiter-params.version>
@@ -141,15 +142,27 @@
                 <artifactId>spring-security-core</artifactId>
                 <version>${spring-security.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-hateoas</artifactId>
-                <version>${spring.hateoas.version}</version>
-            </dependency>
+<!--        removed -> conflicts with swagger for latest spring boot -->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-hateoas</artifactId>-->
+<!--                <version>${spring-hateoas.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-boot-thymeleaf.version}</version>
+            </dependency>
+            <!-- DOCUMENTATION DEPENDENCIES -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger-ui.version}</version>
             </dependency>
             <!-- RESOURCE CONVERTER DEPENDENCIES -->
             <dependency>

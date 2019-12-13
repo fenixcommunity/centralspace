@@ -22,7 +22,7 @@ public class Var {
     //MAIL
     public static final String EMAIL_FROM = "hermes.delivery.noreply@gmail.com";
     public static final String EMAIL_REPLY_TO = "hermes.delivery.noreply@gmail.com";
-    public static final String EMAIL_TO = "max3112@o2.com";
+    public static final String EMAIL = "max3112@o2.com";
     public static final String SUBJECT = "Message subject";
     public static final String MESSAGE = "Massage to you, your welcome";
     public static final String BASIC_MAIL = "Basic Mail";

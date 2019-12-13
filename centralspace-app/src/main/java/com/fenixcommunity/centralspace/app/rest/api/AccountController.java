@@ -1,12 +1,15 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.exception.rest.ResourceNotFoundException;
+import com.fenixcommunity.centralspace.app.exception.rest.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 // todo swagger/postman
 //todo decorator and strategy
@@ -48,12 +51,18 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         AccountDto accountDto = findByIdAndMapToDto(id);
-        accountDto.add(linkTo(methodOn(AccountController.class).confirmMessage(id.toString())).withSelfRel());
         return ResponseEntity.ok(accountDto);
     }
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, response = BasicResponse.class, message = "OK"),
+            @ApiResponse(code = 503, response = ServiceFailedException.class, message = "xxx"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 501, message = "Not implemented for given extraction type")
+    })
     public ResponseEntity<List<Account>> getAll() {
         List<Account> accounts = accountService.findAll();
         //todo password add
@@ -63,24 +72,22 @@ public class AccountController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public RepresentationModel create(@Valid @RequestBody AccountDto accountDto) {
+    public ResponseEntity<BasicResponse> create(@Valid @RequestBody AccountDto accountDto) {
         Account createdAccount = mapToJpa(accountDto);
         Long generatedId = accountService.save(createdAccount).getId();
-        RepresentationModel response = new RepresentationModel();
-        response.add(linkTo(methodOn(AccountController.class).confirmMessage(generatedId.toString())).withSelfRel());
-        return response;
+        BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
+        return ResponseEntity.created(getCurrentURI()).body(response);
     }
 
     //    todo RestErrorHandler apply
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public RepresentationModel update(@PathVariable(name = "id") Long id, @Valid @RequestBody Account requestAccount) throws ResourceNotFoundException {
+    public ResponseEntity<BasicResponse> update(@PathVariable(name = "id") Long id, @Valid @RequestBody Account requestAccount) throws ResourceNotFoundException {
         isRecordExistElseThrowEx(id);
         //todo account exist
         final Account updatedAccount = accountService.save(requestAccount);
-        RepresentationModel response = new RepresentationModel();
-        response.add(linkTo(methodOn(AccountController.class).confirmMessage(updatedAccount.getId().toString())).withSelfRel());
-        return response;
+        BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
+        return ResponseEntity.created(getCurrentURI()).body(response);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -107,5 +114,9 @@ public class AccountController {
     private void isRecordExistElseThrowEx(Long id) throws ResourceNotFoundException {
         accountService.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
+    }
+//todo remove?
+    private URI getCurrentURI() {
+        return ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
     }
 }

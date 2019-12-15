@@ -38,6 +38,8 @@
         <spring-log4j2.version>2.2.2.RELEASE</spring-log4j2.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
+        <!--sources from repo jcenter-snapshots-->
+        <!--<springfox-validators.version>2.9.2</springfox-validators.version>-->
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.5</postgresql.version>
         <!-- UTILITIES DEPENDENCIES -->
@@ -164,6 +166,12 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger-ui.version}</version>
             </dependency>
+            <!--no works for latest Spring-->
+            <!--<dependency>-->
+            <!--<groupId>io.springfox</groupId>-->
+            <!--<artifactId>springfox-data-rest</artifactId>-->
+            <!--<version>3.0.0-SNAPSHOT</version>-->
+            <!--</dependency>-->
             <!-- RESOURCE CONVERTER DEPENDENCIES -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>

@@ -1,11 +1,13 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
+import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.EmailAnnotationPlugin;
 import com.fenixcommunity.centralspace.app.exception.rest.ErrorDetails;
 import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMethod;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -27,14 +29,21 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
-@Configuration
 @EnableSwagger2
+//SpringDataRestConfiguration.class no works for latest Spring
+@Import({BeanValidatorPluginsConfiguration.class})
 public class SwaggerConfig {
 
     public static final String APP_PACKAGE = "com.fenixcommunity.centralspace.app";
 
     @Value("${springfox.swagger2.host}")
     private String swagger2Host;
+
+    @Bean
+    public EmailAnnotationPlugin emailPlugin() {
+        return new EmailAnnotationPlugin();
+    }
+
 
     @Bean
     public Docket getDocumentation() {

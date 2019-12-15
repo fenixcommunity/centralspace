@@ -1,7 +1,9 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
+import com.fenixcommunity.centralspace.app.service.document.DocumentService;
 import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
@@ -35,7 +37,8 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {
         MailServiceBean.class,
         JavaMailSenderImpl.class,
-        ValidatorFactory.class
+        ValidatorFactory.class,
+        ResourceLoaderTool.class
 })
 @TestPropertySource(locations = {"classpath:mail-gateway.properties"})
 @SpringBootTest
@@ -47,6 +50,14 @@ class MailServiceBeanTest {
     private MailServiceBean mailServiceBean;
 
     //todo MockBean and ReflectionTestUtils.setField vs Autowired?
+
+
+    @MockBean
+    private ResourceLoaderTool resourceLoaderTool;
+
+    @MockBean
+    private DocumentService documentService;
+    //todo autowired vs mockbean
 
     @MockBean
     private ResourceProperties resourceProperties;
@@ -90,7 +101,8 @@ class MailServiceBeanTest {
         setUpResourceProperties();
         setUpBasicMailTemplate();
         setUpRegistrationMailTemplate();
-        ReflectionTestUtils.setField(mailServiceBean, "resourceProperties", resourceProperties);
+        ReflectionTestUtils.setField(mailServiceBean, "resourceLoaderTool", resourceLoaderTool);
+        ReflectionTestUtils.setField(mailServiceBean, "documentService", documentService);
         ReflectionTestUtils.setField(mailServiceBean, "validatorFactory", validatorFactory);
         ReflectionTestUtils.setField(mailServiceBean, "basicMailMessage", basicMailMessage);
         ReflectionTestUtils.setField(mailServiceBean, "registrationMailMessage", registrationMailMessage);
@@ -105,6 +117,7 @@ class MailServiceBeanTest {
     }
 
     private void setUpResourceProperties() {
+        when(resourceLoaderTool.getResourceProperties()).thenReturn(resourceProperties);
         when(resourceProperties.getImageUrl()).thenReturn("/img");
     }
 

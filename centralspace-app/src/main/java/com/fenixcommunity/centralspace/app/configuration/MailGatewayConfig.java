@@ -62,7 +62,7 @@ public class MailGatewayConfig {
         mailSender.setProtocol(mailProperties.getProtocol());
         mailSender.setUsername(mailProperties.getUsername());
         mailSender.setPassword(mailProperties.getPassword());
-// how to check connection -> telnet smtp.gmail.com 587
+//tip: how to check connection -> telnet smtp.gmail.com 587
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -72,6 +72,7 @@ public class MailGatewayConfig {
         return mailSender;
     }
 
+// prototype in singleton
 //    @Autowired
 //    private ObjectFactory<RegistrationMailMessage> mailMessageObjectFactory;
 

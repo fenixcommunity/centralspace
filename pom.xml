@@ -25,6 +25,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <spring-plugin.version>1.2.0.RELEASE</spring-plugin.version>
         <!-- SPRING DEPENDENCIES -->
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <spring-boot-web.version>2.2.2.RELEASE</spring-boot-web.version>
@@ -172,6 +173,7 @@
             <!--<artifactId>springfox-data-rest</artifactId>-->
             <!--<version>3.0.0-SNAPSHOT</version>-->
             <!--</dependency>-->
+
             <!-- RESOURCE CONVERTER DEPENDENCIES -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
@@ -285,6 +287,12 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${junit-jupiter-mockito.version}</version>
             <scope>test</scope>
+        </dependency>
+        <!--PLUGIN DEPENDENCIES-->
+        <dependency>
+            <groupId>org.springframework.plugin</groupId>
+            <artifactId>spring-plugin-core</artifactId>
+            <version>${spring-plugin.version}</version>
         </dependency>
     </dependencies>
 

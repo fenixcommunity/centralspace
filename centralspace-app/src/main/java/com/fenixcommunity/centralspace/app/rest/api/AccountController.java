@@ -1,12 +1,14 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import com.fenixcommunity.centralspace.app.exception.rest.ResourceNotFoundException;
-import com.fenixcommunity.centralspace.app.exception.rest.ServiceFailedException;
+import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
+import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 //todo decorator and strategy
 @RestController
 @RequestMapping(value = "/account", produces = {MediaType.APPLICATION_JSON_VALUE})
+@Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;
@@ -63,6 +66,7 @@ public class AccountController {
             @ApiResponse(code = 500, response = ServiceFailedException.class, message = "xxx"),
             @ApiResponse(code = 501, message = "Not implemented for given extraction type")
     })
+    @ApiOperation(value = "Get all Accounts")
     public ResponseEntity<List<Account>> getAll() {
         List<Account> accounts = accountService.findAll();
         //todo password add

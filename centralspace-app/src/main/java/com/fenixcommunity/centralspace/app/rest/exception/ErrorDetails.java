@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.exception.rest;
+package com.fenixcommunity.centralspace.app.rest.exception;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;

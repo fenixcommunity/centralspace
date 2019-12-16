@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import com.fenixcommunity.centralspace.app.exception.rest.ErrorDetails;
+import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;

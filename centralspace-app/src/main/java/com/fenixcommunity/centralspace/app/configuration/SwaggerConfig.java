@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.EmailAnnotationPlugin;
-import com.fenixcommunity.centralspace.app.exception.rest.ErrorDetails;
+import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +34,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Import({BeanValidatorPluginsConfiguration.class})
 public class SwaggerConfig {
 
-    public static final String APP_PACKAGE = "com.fenixcommunity.centralspace.app";
+    private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
 
     @Value("${springfox.swagger2.host}")
     private String swagger2Host;
@@ -55,7 +55,7 @@ public class SwaggerConfig {
                 .globalResponseMessage(RequestMethod.PUT, errorList())
                 .globalResponseMessage(RequestMethod.DELETE, errorList())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(APP_PACKAGE))
+                .apis(RequestHandlerSelectors.basePackage(REST_PACKAGE))
                 .paths(pathsFilter())
                 .build()
                 .apiInfo(metadata());

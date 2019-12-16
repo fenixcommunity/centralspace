@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.exception.rest;
+package com.fenixcommunity.centralspace.app.rest.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

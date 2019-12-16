@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.exception.rest;
+package com.fenixcommunity.centralspace.app.rest.exception;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

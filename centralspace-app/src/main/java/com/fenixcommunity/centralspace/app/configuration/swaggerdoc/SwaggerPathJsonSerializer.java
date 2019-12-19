@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app;
+package com.fenixcommunity.centralspace.app.configuration.swaggerdoc;
 
 import io.swagger.models.Swagger;
 import org.springframework.context.annotation.Primary;

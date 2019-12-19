@@ -19,10 +19,11 @@ public class AccountDto {
     @NotNull
     @Min(value = 3, message = "login should not be less than 3")
     @Max(value = 15, message = "login should not be greater than 15")
-    @ApiModelProperty(notes = "Account login")
+    @ApiModelProperty(notes = "Account login", required = true, example = "maxLogin")
     public String login;
 
     @NotNull
+    @ApiModelProperty(notes = "Email of the account.", required = true, example = "max3112@o2.pl")
     @Email(regexp = ".@.\\..*", message = "Email should be valid")
     public String mail;
 }

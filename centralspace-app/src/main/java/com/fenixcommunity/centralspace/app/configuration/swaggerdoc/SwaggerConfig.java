@@ -1,12 +1,13 @@
-package com.fenixcommunity.centralspace.app.configuration;
+package com.fenixcommunity.centralspace.app.configuration.swaggerdoc;
 
-import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.EmailAnnotationPlugin;
+import com.fenixcommunity.centralspace.app.configuration.profile.Profiles;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -35,6 +36,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @EnableSwagger2WebMvc
 @Import({BeanValidatorPluginsConfiguration.class}) //SpringDataRestConfiguration.class no works for latest Spring
 @Configuration
+@Profile(Profiles.SWAGGER_ENABLED_PROFILE)
 public class SwaggerConfig implements WebMvcConfigurer {
 
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";

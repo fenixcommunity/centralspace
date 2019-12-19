@@ -1,7 +1,7 @@
-package com.fenixcommunity.centralspace.app.configuration;
+package com.fenixcommunity.centralspace.app.configuration.mail;
 
 
-import com.fenixcommunity.centralspace.app.configuration.properties.MailProperties;
+import com.fenixcommunity.centralspace.app.configuration.mail.MailProperties;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerService;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceBean;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;

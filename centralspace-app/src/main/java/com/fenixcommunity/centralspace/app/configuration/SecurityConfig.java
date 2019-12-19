@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] SWAGGER_AUTH_LIST = {
+    private static final String[] AUTH_LIST = {
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources",
@@ -35,11 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(SWAGGER_AUTH_LIST).authenticated()
+                .antMatchers(AUTH_LIST).authenticated()
+                .antMatchers("/logger/**")
+                .permitAll()
                 .and()
                 .httpBasic();
     }
-
+test
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,15 +27,9 @@ import java.util.Optional;
 
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.removeLinks;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -48,6 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         HeaderApiFilter.class, CacheCookieApiFilter.class
 })
 @WebMvcTest
+@WithMockUser(username = "admin", roles={"ADMIN"}, password = "password")
 // 4 APPROACH https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/
 public class AccountControllerTest {
 
@@ -125,6 +121,7 @@ public class AccountControllerTest {
 //              .andExpect(result -> result.getResponse().containsHeader(HEADER_SESSION))
                 .andReturn().getResponse();
 
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertTrue(response.containsHeader(HEADER_SESSION));
         assertNotNull(response.getCookie(COOKIE_SESSION));
     }

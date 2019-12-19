@@ -35,12 +35,12 @@
         <spring-boot-thymeleaf.version>2.2.2.RELEASE</spring-boot-thymeleaf.version>
         <spring-context-support.version>5.2.2.RELEASE</spring-context-support.version>
         <spring-core.version>5.2.2.RELEASE</spring-core.version>
-        <spring-security.version>5.2.1.RELEASE</spring-security.version>
+        <spring-boot-security.version>2.2.2.RELEASE</spring-boot-security.version>
         <spring-log4j2.version>2.2.2.RELEASE</spring-log4j2.version>
-        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
-        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
-        <!--sources from repo jcenter-snapshots-->
-        <!--<springfox-validators.version>2.9.2</springfox-validators.version>-->
+        <springfox-swagger2.version>3.0.0-SNAPSHOT</springfox-swagger2.version>
+        <springfox-swagger-ui.version>3.0.0-SNAPSHOT</springfox-swagger-ui.version>
+        <springfox-swagger-webmvc.version>3.0.0-SNAPSHOT</springfox-swagger-webmvc.version>
+        <springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.5</postgresql.version>
         <!-- UTILITIES DEPENDENCIES -->
@@ -141,16 +141,12 @@
                 <version>${spring-core.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-core</artifactId>
-                <version>${spring-security.version}</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot-security.version}</version>
             </dependency>
             <!--        removed -> conflicts with swagger for latest spring boot -->
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
             <!--                <artifactId>spring-boot-starter-hateoas</artifactId>-->
-            <!--                <version>${spring-hateoas.version}</version>-->
-            <!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -167,12 +163,18 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger-ui.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-bean-validators</artifactId>
+                <version>${springfox-validators.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-spring-webmvc</artifactId>
+                <version>${springfox-swagger-webmvc.version}</version>
+            </dependency>
             <!--no works for latest Spring-->
-            <!--<dependency>-->
-            <!--<groupId>io.springfox</groupId>-->
             <!--<artifactId>springfox-data-rest</artifactId>-->
-            <!--<version>3.0.0-SNAPSHOT</version>-->
-            <!--</dependency>-->
 
             <!-- RESOURCE CONVERTER DEPENDENCIES -->
             <dependency>

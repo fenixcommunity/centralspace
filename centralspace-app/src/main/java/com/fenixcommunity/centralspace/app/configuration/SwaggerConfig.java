@@ -5,8 +5,11 @@ import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,7 +20,7 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.List;
 
@@ -29,21 +32,18 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
-@EnableSwagger2
-//SpringDataRestConfiguration.class no works for latest Spring
-@Import({BeanValidatorPluginsConfiguration.class})
-public class SwaggerConfig {
+@EnableSwagger2WebMvc
+@Import({BeanValidatorPluginsConfiguration.class}) //SpringDataRestConfiguration.class no works for latest Spring
+@Configuration
+public class SwaggerConfig implements WebMvcConfigurer {
 
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
 
+    @Value("${app.path}")
+    private String APP_PATH;
+
     @Value("${springfox.swagger2.host}")
     private String swagger2Host;
-
-    @Bean
-    public EmailAnnotationPlugin emailPlugin() {
-        return new EmailAnnotationPlugin();
-    }
-
 
     @Bean
     public Docket getDocumentation() {
@@ -61,14 +61,20 @@ public class SwaggerConfig {
                 .apiInfo(metadata());
     }
 
+    @Bean
+    public EmailAnnotationPlugin emailPlugin() {
+        return new EmailAnnotationPlugin();
+    }
+
     private Predicate<String> pathsFilter() {
-        return input -> input.matches("/account/.*") ||
-                input.matches("/doc/.*") ||
-                input.matches("/mail/.*") ||
-                input.matches("/password/.*") ||
-                input.matches("/register/.*") ||
-                input.matches("/logger/.*") ||
-                input.matches("/resource/.*");
+        return input ->
+                input.matches(APP_PATH + "/account/.*") ||
+                        input.matches(APP_PATH + "/doc/.*") ||
+                        input.matches(APP_PATH + "/mail/.*") ||
+                        input.matches(APP_PATH + "/password/.*") ||
+                        input.matches(APP_PATH + "/register/.*") ||
+                        input.matches(APP_PATH + "/logger/.*") ||
+                        input.matches(APP_PATH + "/resource/.*");
     }
 
     private ApiInfo metadata() {
@@ -92,6 +98,16 @@ public class SwaggerConfig {
                         .build()
                 //             .responseModel(new ModelRef(getClassName(ErrorDetails.class))).build());
         );
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry
+                .addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
 }

@@ -26,7 +26,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.OR;
 @EnableAspectJAutoProxy
 @Aspect
 @Log4j2
-public class AopConfiguration {
+public class AopConfg {
 
     //package logging
     @Pointcut("execution(* com.fenixcommunity.centralspace.domain.repository..*.*(..))")

@@ -13,16 +13,16 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel
 public class AccountDto {
-//todo to all DTO, not works
+    //todo to all DTO, not works
     public String id;
 
     @NotNull
-    @Min(value = 3, message = "login should not be less than 15")
-    @Max(value = 15, message = "login should not be greater than 65")
+    @Min(value = 3, message = "login should not be less than 3")
+    @Max(value = 15, message = "login should not be greater than 15")
     @ApiModelProperty(notes = "Account login")
     public String login;
 
     @NotNull
-    @Email(regexp=".@.\\..*", message = "Email should be valid")
+    @Email(regexp = ".@.\\..*", message = "Email should be valid")
     public String mail;
 }

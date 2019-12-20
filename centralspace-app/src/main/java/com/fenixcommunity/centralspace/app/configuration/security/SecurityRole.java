@@ -14,8 +14,7 @@ public enum SecurityRole {
 // to entity
     BASIC("basic user", asList("BASIC")),
     ADMIN("admin user", mergeLists(asList("ADMIN"), BASIC.roles)),
-    SWAGGER_FULL("can see and try swagger documentation", asList("SWAGGER_FULL")),
-    SWAGGER_READ("readonly swagger documentation", asList("SWAGGER_READ"));
+    SWAGGER("can see and try swagger documentation", asList("SWAGGER"));
 
     private String description;
     private List<String> roles;

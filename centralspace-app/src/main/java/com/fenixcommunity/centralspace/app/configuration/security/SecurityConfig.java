@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.ADMIN;
 import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.SWAGGER_FULL;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.SWAGGER;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
@@ -49,9 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder().encode(PASSWORD))
                 .roles(listsTo1Array(ADMIN.getRoles()))
                 .and()
-                .withUser(SWAGGER_FULL.name())
+                .withUser(SWAGGER.name())
                 .password(passwordEncoder().encode(PASSWORD))
-                .roles(listsTo1Array(SWAGGER_FULL.getRoles()));
+                .roles(listsTo1Array(SWAGGER.getRoles()));
     }
 
 
@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER_FULL.name())
+                .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
                 .antMatchers(APP_AUTH_LIST).hasRole(ADMIN.name())
                 .antMatchers(NO_AUTH_LIST).permitAll()
                 .and()

@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.domain.repository;
 
-import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
+import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -36,7 +36,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Configuration
 //@Profile(Profiles.SWAGGER_ENABLED_PROFILE)
 public class SwaggerConfig implements WebMvcConfigurer {
-
+//todo block try api for readonly
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
 
     @Value("${app.path}")

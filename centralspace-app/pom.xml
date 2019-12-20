@@ -36,13 +36,6 @@
         <dependency>
             <groupId>com.fenixcommunity.centralspace</groupId>
             <artifactId>centralspace-utilities</artifactId>
-            <!-- Project-X -> Project-Y -->
-            <!--            <exclusions>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>com.fenixcommunity</groupId>-->
-            <!--                    <artifactId>xxx</artifactId>-->
-            <!--                </exclusion>-->
-            <!--            </exclusions>-->
         </dependency>
 
         <!-- SPRING DEPENDENCIES -->
@@ -85,12 +78,6 @@
             <version>${springfox-validators.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <version>4.0.0.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-spring-webmvc</artifactId>
             <version>${springfox-swagger-webmvc.version}</version>
@@ -123,6 +110,11 @@
         <dependency>
             <groupId>com.icegreen</groupId>
             <artifactId>greenmail-spring</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

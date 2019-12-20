@@ -11,6 +11,7 @@ import springfox.documentation.spi.schema.contexts.ModelPropertyContext;
 import javax.validation.constraints.Email;
 import java.util.Optional;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
 import static springfox.bean.validators.plugins.Validators.annotationFromBean;
 
 @Component
@@ -26,7 +27,7 @@ public class EmailAnnotationPlugin implements ModelPropertyBuilderPlugin {
         Optional<Email> email = annotationFromBean(context, Email.class);
         if (email.isPresent()) {
             context.getBuilder().pattern(email.get().regexp());
-            context.getBuilder().example("email@email.com");
+            context.getBuilder().example(EMAIL);
         }
     }
 }

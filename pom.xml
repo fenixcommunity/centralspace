@@ -58,6 +58,7 @@
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
         <spring-boot-test.version>2.2.2.RELEASE</spring-boot-test.version>
+        <spring-security-test.version>5.2.1.RELEASE</spring-security-test.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <junit-jupiter-api.version>${junit-jupiter.version}</junit-jupiter-api.version>
         <junit-jupiter-params.version>${junit-jupiter.version}</junit-jupiter-params.version>
@@ -219,6 +220,12 @@
                 <groupId>com.icegreen</groupId>
                 <artifactId>greenmail-spring</artifactId>
                 <version>${greenmail.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-test</artifactId>
+                <version>${spring-security-test.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class DevTool {
 
@@ -39,4 +44,24 @@ public class DevTool {
     public static String randomString() {
         return UUID.randomUUID().toString();
     }
+
+    //todo generic
+    public static String[] mergeStringArrays(String[]... arrays) {
+        String[] result = new String[0];
+        if (Objects.nonNull(arrays) && Stream.of(arrays).noneMatch(Objects::isNull)) {
+            return Stream.of(arrays).flatMap(Stream::of).toArray(String[]::new);
+        }
+        return result;
+    }
+
+    public static String[] listsTo1Array(List<String>... lists) {
+        return mergeLists(lists).toArray(String[]::new);
+    }
+
+    public static List<String> mergeLists(List<String>... lists) {
+        List<String> result = new ArrayList<>();
+        Arrays.stream(lists).forEach(result::addAll);
+        return result;
+    }
+
 }

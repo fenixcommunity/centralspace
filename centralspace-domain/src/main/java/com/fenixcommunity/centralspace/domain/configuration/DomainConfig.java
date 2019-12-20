@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @PropertySource(value = {"classpath:domain.properties"})
 public class DomainConfig {
 
-//    @Bean(name = "dataSource")      // 3
+//    @Bean(name = "dataSource")
 //    @Primary
 //    @ConfigurationProperties(prefix = "spring.datasource")
 //    public DataSource mysqlDataSource() {

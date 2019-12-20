@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service;
 
+import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,12 +14,16 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.utilities.common.Var.WRONG_PASSWORD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.util.Assert.hasText;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = com.fenixcommunity.centralspace.app.CentralspaceApplication.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = CentralspaceApplicationConfig.class)
 public class SecurityWebTest {
 
     private TestRestTemplate restTemplate;
@@ -26,11 +31,11 @@ public class SecurityWebTest {
 
     @LocalServerPort
     private String port;
-test
+
     @BeforeEach
     public void setUp() throws MalformedURLException {
-        restTemplate = new TestRestTemplate("admin", "admin");
-        baseUrl = new URL("http://localhost:" + port + "/api/logger");
+        restTemplate = new TestRestTemplate(ADMIN.name(), PASSWORD);
+        baseUrl = new URL("http://localhost:" + port + "/api/logger/run");
     }
 
     @Test
@@ -40,22 +45,17 @@ test
                 = restTemplate.getForEntity(baseUrl.toString(), String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response
-                .getBody()
-                .contains("Baeldung"));
     }
 
     @Test
     public void whenUserWithWrongCredentials_thenUnauthorizedPage() {
 
-        restTemplate = new TestRestTemplate("user", "wrongpassword");
+        restTemplate = new TestRestTemplate(BASIC.name(), WRONG_PASSWORD);
         ResponseEntity<String> response
                 = restTemplate.getForEntity(baseUrl.toString(), String.class);
 
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-        assertTrue(response
-                .getBody()
-                .contains("Unauthorized"));
+        hasText(response.getBody(), "Unauthorized");
     }
 
 }

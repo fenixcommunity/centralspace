@@ -28,8 +28,16 @@ import java.util.Optional;
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.removeLinks;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -43,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         HeaderApiFilter.class, CacheCookieApiFilter.class
 })
 @WebMvcTest
-@WithMockUser(username = "admin", roles={"ADMIN"}, password = "password")
+@WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
 // 4 APPROACH https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/
 public class AccountControllerTest {
 
@@ -61,7 +69,6 @@ public class AccountControllerTest {
     private ZonedDateTime dateTime;
 
     private static final String BASE_ACCOUNT_URL = "/account/";
-    private static final String BASE_PASSWORD_URL = "/password/";
     private Account account;
 
     @BeforeEach

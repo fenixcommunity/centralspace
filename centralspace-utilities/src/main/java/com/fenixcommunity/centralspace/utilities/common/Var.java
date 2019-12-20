@@ -6,13 +6,20 @@ public class Var {
     public static final String NAME = "name";
     public static final String TEXT = "text";
     public static final String EMPTY = "empty";
+
     public static final String LOGIN = "login123";
     public static final String PASSWORD_HIGH = "Password1&23";
     public static final String PASSWORD_LOW = "password1";
+    public static final String PASSWORD = "password";
+    public static final String WRONG_PASSWORD = "wrongpassword";
+    public static final String USER = "user";
+    public static final String ADMIN = "admin";
+
     public static final String HEADER_SESSION = "CENTRALSPACE-APP-HEADER-SESSION";
     public static final String COOKIE_SESSION = "CENTRALSPACE-APP-COOKIE-SESSION";
     public static final String DOMAIN_ID = "K343kdndnwok&kerfj02kJNNodok3Zfj87439Kf83";
     public static final String DOMAIN_URL = "www.fenixcommunity.pl";
+
     public static final String DOT = ".";
     public static final String SLASH = "/";
     public static final String LINE = "\n";

@@ -19,4 +19,10 @@ public class ResourceProperties {
     private String imageUrl;
     @NotBlank
     private String convertedPdfPath;
+    @NotBlank
+    private String convertedHtmlPath;
+    @NotBlank
+    private String convertedImagePath;
+    @NotBlank
+    private String convertedDocxPath;
 }

@@ -19,7 +19,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 
 @Log4j2
 @AllArgsConstructor
-public class ThymeleafResourceConverter implements HtmlToPdfConverterStrategy {
+public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
 
     private String fileName;
     private Map<String, String> thymeleafVariables;
@@ -30,12 +30,18 @@ public class ThymeleafResourceConverter implements HtmlToPdfConverterStrategy {
     @Override
     public void convertHtmlToPdf() {
         var htmlContent = getHtmlBody();
-        var convertedPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath() + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
-        try (var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(convertedPdfPath)), false)) {
+        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath() + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
+        try (var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)), false)) {
             HtmlConverter.convertToPdf(htmlContent, fileStream);
         } catch (IOException e) {
             log.error("convertHtmlToPdf error", e);
         }
+    }
+
+    @Override
+    public void convertPdfToHtml() {
+        var converter = new BasicPdfConverter(fileName, resourceTool);
+        converter.convertPdfToHtml();
     }
 
     @Override

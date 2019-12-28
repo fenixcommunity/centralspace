@@ -19,15 +19,13 @@ import org.springframework.stereotype.Service;
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
 
-//TODO CZY WSZEDZIE IMPL?
+//TODO in all places should be interface with IBean?
 @Service
 public class MailServiceBean implements MailService {
 
     public static final String TEMPLATE_BASIC_MAIL = "template_basic_mail";
     private final JavaMailSender mailSender;
-
-    @Autowired
-    private ValidatorFactory validatorFactory;
+    private final Validator validator;
 
     @Autowired
     private ResourceLoaderTool resourceLoaderTool;
@@ -44,8 +42,9 @@ public class MailServiceBean implements MailService {
     private MailMessageTemplate registrationMailMessage;
 
     @Autowired
-    public MailServiceBean(JavaMailSender mailSender) {
+    public MailServiceBean(JavaMailSender mailSender, ValidatorFactory validatorFactory) {
         this.mailSender = mailSender;
+        this.validator = validatorFactory.getInstance(MAIL);
     }
 
     @Override
@@ -105,7 +104,6 @@ public class MailServiceBean implements MailService {
     }
 
     private void validateMailContent(MailBuilder mailBuilder) {
-        Validator validator = validatorFactory.getInstance(MAIL);
         validator.validateWithException(mailBuilder);
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.BASIC;
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
+import static com.fenixcommunity.centralspace.utilities.common.Var.IMAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 
 @RestController
 @RequestMapping("/doc")
@@ -19,6 +21,18 @@ public class DocumentController {
 
     @Autowired
     private DocumentService documentService;
+
+    @GetMapping("/pdf-to-image")
+    public void convertPdfToImage(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_image") String pdfFileName,
+                                  @RequestParam(value = "extension", defaultValue = "png") String extension) {
+        documentService.convertPdfToImage(pdfFileName, MediaType.parseMediaType(IMAGE + SLASH + extension));
+    }
+
+    @GetMapping("/image-to-pdf-as-admin")
+    public void convertImageToPdfAsAdmin(@RequestParam(value = "imageFile", defaultValue = "image_to_pdf") String imageFileName,
+                                         @RequestParam(value = "extension", defaultValue = "png") String extension) {
+        documentService.convertImageToPdfAsAdmin(imageFileName, MediaType.parseMediaType(IMAGE + SLASH + extension));
+    }
 
     @GetMapping("/html-to-pdf")
     public String htmlToPdf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") String htmlFileName) {
@@ -69,17 +83,5 @@ public class DocumentController {
     @GetMapping("/pdf-to-docx")
     public void convertPdfToDocx(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_docx") String pdfFileName) {
         documentService.convertPdfToDocx(pdfFileName);
-    }
-
-    @GetMapping("/pdf-to-image")
-    public void convertPdfToImage(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_image") String pdfFileName,
-                                  @RequestParam(value = "extension", defaultValue = "png") String extension) {
-        popraw + logging.level.org.mabb.fontverter.opentype.TtfInstructionParser = WARNING
-        documentService.convertPdfToImage(pdfFileName, MediaType.parseMediaType(extension));
-    }
-
-    @GetMapping("/image-to-pdf")
-    public void convertImageToPdf(@RequestParam(value = "imageFile", defaultValue = "image_to_pdf") String imageFileName) {
-        documentService.convertImageToPdf(imageFileName);
     }
 }

@@ -1,7 +1,6 @@
 package com.fenixcommunity.centralspace.app.configuration.mail;
 
 
-import com.fenixcommunity.centralspace.app.configuration.mail.MailProperties;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerService;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceBean;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
@@ -38,8 +37,12 @@ public class MailGatewayConfig {
     @Autowired
     private MailProperties mailProperties;
 
+    private final Validator validator;
+
     @Autowired
-    private ValidatorFactory validatorFactory;
+    public MailGatewayConfig(ValidatorFactory validatorFactory) {
+        this.validator = validatorFactory.getInstance(MAIL);
+    }
 //    todo we can use also
 //    @Autowired
 //    private Environment env;
@@ -107,7 +110,6 @@ public class MailGatewayConfig {
     }
 
     private void validateMailTemplate(MailMessageTemplate template) {
-        Validator validator = validatorFactory.getInstance(MAIL);
         validator.validateWithException(template);
     }
 }

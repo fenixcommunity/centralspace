@@ -1,7 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.PasswordService;
-import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PasswordController {
 
     private PasswordService passwordService;
-
-    @Autowired
-    private ValidatorFactory validatorFactory;
 
     @Autowired
     public PasswordController(PasswordService passwordService) {

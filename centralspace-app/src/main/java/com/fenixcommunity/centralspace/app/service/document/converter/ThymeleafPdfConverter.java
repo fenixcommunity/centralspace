@@ -15,7 +15,6 @@ import java.util.Objects;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 
 @Log4j2
 @AllArgsConstructor
@@ -30,7 +29,8 @@ public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
     @Override
     public void convertHtmlToPdf() {
         var htmlContent = getHtmlBody();
-        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath() + SLASH + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
+        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
+                + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
         try (var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)), false)) {
             HtmlConverter.convertToPdf(htmlContent, fileStream);
         } catch (IOException e) {

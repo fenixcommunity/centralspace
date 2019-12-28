@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.document;
 
+import com.fenixcommunity.centralspace.app.service.SecurityService;
 import com.fenixcommunity.centralspace.app.service.document.converter.BasicPdfConverter;
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategy;
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType;
@@ -8,8 +9,10 @@ import com.fenixcommunity.centralspace.app.service.document.converter.ThymeleafP
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.TemplateEngine;
 
 import java.util.Map;
@@ -28,6 +31,28 @@ public class DocumentService {
 
     @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
+    private SecurityService securityService;
+
+    private final RestTemplateBuilder restTemplateBuilder;
+
+    public DocumentService(RestTemplateBuilder restTemplateBuilder) {
+        this.restTemplateBuilder = restTemplateBuilder;
+    }
+
+    public void convertPdfToImage(String pdfFileName, MediaType extension) {
+        IPdfConverter converter = new BasicPdfConverter(pdfFileName, resourceTool);
+        converter.convertPdfToImage(extension);
+    }
+
+    public void convertImageToPdfAsAdmin(String imageFileName, MediaType extension) {
+        IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
+        if (securityService.isValidSecurityRole()) {
+            RestTemplate restTemplate = restTemplateBuilder.build();
+            converter.convertImageToPdf(extension, restTemplate);
+        }
+    }
 
     public void convertHtmlToPdf(String htmlFileName, HtmlPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
@@ -75,16 +100,6 @@ public class DocumentService {
     public void convertPdfToDocx(String pdfFileName) {
         IPdfConverter converter = new BasicPdfConverter(pdfFileName, resourceTool);
         converter.convertPdfToDocx();
-    }
-
-    public void convertPdfToImage(String pdfFileName, MediaType extension) {
-        IPdfConverter converter = new BasicPdfConverter(pdfFileName, resourceTool);
-        converter.convertPdfToImage(extension);
-    }
-
-    public void convertImageToPdf(String imageFileName) {
-        IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
-        converter.convertImageToPdf();
     }
 
 }

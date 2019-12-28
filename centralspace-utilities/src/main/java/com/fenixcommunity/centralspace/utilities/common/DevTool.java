@@ -32,13 +32,20 @@ public class DevTool {
     }
 
     public static File createNewOutputFile(String filePath) {
+        if (createFileDirectories(filePath)) {
+            return new File(filePath);
+        }
+        return null;
+    }
+
+    public static boolean createFileDirectories(String filePath) {
         Path path = Paths.get(filePath);
         try {
             Files.createDirectories(path.getParent());
         } catch (IOException e) {
-            return null;
+            return false;
         }
-        return new File(filePath);
+        return true;
     }
 
     public static String randomString() {

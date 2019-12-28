@@ -1,4 +1,3 @@
-
 package other.calculator;
 
 import java.math.BigDecimal;

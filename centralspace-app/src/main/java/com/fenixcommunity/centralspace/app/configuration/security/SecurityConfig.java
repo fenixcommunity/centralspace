@@ -9,9 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.SWAGGER;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.*;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
@@ -21,7 +19,15 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] APP_AUTH_LIST = {
-            "/account/**"
+            "/account/**",
+            "/doc/**",
+            "/mail/**",
+            "/password/**",
+            "/register/**"
+    };
+
+    private static final String[] BASIC_AUTH_LIST = {
+            "/resource/**"
     };
 
     private static final String[] NO_AUTH_LIST = {
@@ -60,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
+                .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
                 .antMatchers(APP_AUTH_LIST).hasRole(ADMIN.name())
                 .antMatchers(NO_AUTH_LIST).permitAll()
                 .and()

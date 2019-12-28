@@ -40,7 +40,7 @@ public class SecurityWebTest {
 
     @Test
     public void whenLoggedUserRequestsHomePage_ThenSuccess()
-            throws IllegalStateException{
+            throws IllegalStateException {
         ResponseEntity<String> response
                 = restTemplate.getForEntity(baseUrl.toString(), String.class);
 

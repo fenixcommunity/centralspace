@@ -21,7 +21,7 @@ public class ResourceLoaderTool {
 
     public Resource loadResourceFile(InternalResource resource) {
         //todo validator
-        String subtype = resource.getFileType().getSubtype();
+        String subtype = resource.getFileFormat().getSubtype();
         StringBuilder fullPath = new StringBuilder("classpath:static/")
                 .append(subtype)
                 .append(SLASH)

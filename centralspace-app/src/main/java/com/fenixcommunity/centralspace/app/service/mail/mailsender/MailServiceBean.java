@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
 import com.fenixcommunity.centralspace.app.service.document.DocumentService;
+import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.mail.MailBuilder;
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
@@ -9,7 +10,6 @@ import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -98,7 +98,7 @@ public class MailServiceBean implements MailService {
     }
 
     private InternalResource getRegistrationAttachment() {
-        InternalResource attachment = InternalResource.resourceByNameAndType("attachment", MediaType.APPLICATION_PDF);
+        InternalResource attachment = InternalResource.resourceByNameAndType("attachment", FileFormat.PDF);
         attachment.setContent(resourceLoaderTool.loadResourceFile(attachment));
         return attachment;
     }

@@ -1,6 +1,5 @@
-package com.fenixcommunity.centralspace.app.service.document;
+package com.fenixcommunity.centralspace.app.service.document.converter;
 
-import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategy;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2

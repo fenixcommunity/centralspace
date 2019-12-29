@@ -1,10 +1,10 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
+import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.itextpdf.html2pdf.HtmlConverter;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.MediaType;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -30,7 +30,7 @@ public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
     public void convertHtmlToPdf() {
         var htmlContent = getHtmlBody();
         var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
-                + fileName + DOT + MediaType.APPLICATION_PDF.getSubtype();
+                + fileName + DOT + FileFormat.PDF.getSubtype();
         try (var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)), false)) {
             HtmlConverter.convertToPdf(htmlContent, fileStream);
         } catch (IOException e) {

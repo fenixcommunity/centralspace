@@ -1,12 +1,12 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
-import org.springframework.http.MediaType;
+import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import org.springframework.web.client.RestTemplate;
 
 public interface IPdfConverter {
-    void convertPdfToImage(MediaType extension);
+    void convertPdfToImage(FileFormat fileFormat);
 
-    void convertImageToPdf(MediaType extension, RestTemplate restTemplate);
+    void convertImageToPdf(FileFormat fileFormat, RestTemplate restTemplate);
 
     void convertPdfToText();
 

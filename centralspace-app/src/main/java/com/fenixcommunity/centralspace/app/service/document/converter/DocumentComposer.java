@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.service.document.converter;
 import com.fenixcommunity.centralspace.app.exception.DocumentServiceException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 
@@ -39,5 +40,11 @@ public class DocumentComposer {
         return document;
     }
 
+    public static Font composeFont() {
+        var font = new Font();
+        font.setStyle(Font.BOLD);
+        font.setSize(15);
+        return font;
+    }
 
 }

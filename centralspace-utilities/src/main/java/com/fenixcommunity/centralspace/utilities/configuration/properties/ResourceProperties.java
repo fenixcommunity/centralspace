@@ -24,5 +24,7 @@ public class ResourceProperties {
     @NotBlank
     private String convertedImagePath;
     @NotBlank
+    private String convertedTxtPath;
+    @NotBlank
     private String convertedDocxPath;
 }

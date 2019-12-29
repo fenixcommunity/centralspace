@@ -55,6 +55,7 @@
         <itextpdf-itextpdf.version>5.5.13</itextpdf-itextpdf.version>
         <itextpdf-html2pdf.version>2.1.4</itextpdf-html2pdf.version>
         <itextpdf-xmlworker.version>5.5.1</itextpdf-xmlworker.version>
+        <apache-poi.version>4.1.1</apache-poi.version>
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
         <spring-boot-test.version>2.2.2.RELEASE</spring-boot-test.version>
@@ -202,6 +203,11 @@
                 <groupId>com.itextpdf.tool</groupId>
                 <artifactId>xmlworker</artifactId>
                 <version>${itextpdf-xmlworker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${apache-poi.version}</version>
             </dependency>
             <!-- PERSISTENCE DEPENDENCIES -->
             <dependency>

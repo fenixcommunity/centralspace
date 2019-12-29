@@ -1,36 +1,38 @@
 package com.fenixcommunity.centralspace.utilities.resourcehelper;
 
+import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import lombok.Getter;
 import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 
 @Getter
 public final class InternalResource {
     private String fileName;
-    private MediaType fileType;
+    private FileFormat fileFormat;
     private Resource content;
     //todo more than like instead extend class
 
 
-    public InternalResource resourceByFullName(String fullName) {
+    public static InternalResource resourceByFullName(String fullName) {
         InternalResource resource = new InternalResource();
-        String[] splitedName = fullName.split(".");
+        String[] splitedName = fullName.split("\\.");
         resource.fileName = splitedName[0];
-        resource.fileType = MediaType.parseMediaType(splitedName[1]);
+        if (splitedName.length > 1) {
+            resource.fileFormat = FileFormat.parseFileFormat(splitedName[1]);
+        }
         return resource;
     }
 
-    public static InternalResource resourceByNameAndType(String fileName, MediaType fileType) {
+    public static InternalResource resourceByNameAndType(String fileName, FileFormat fileFormat) {
         InternalResource resource = new InternalResource();
         resource.fileName = fileName;
-        resource.fileType = fileType;
+        resource.fileFormat = fileFormat;
         return resource;
     }
 
     public String getFullName() {
-        return fileName + DOT + fileType.getSubtype();
+        return fileName + DOT + fileFormat.getSubtype();
     }
 
     public void setContent(Resource content) {

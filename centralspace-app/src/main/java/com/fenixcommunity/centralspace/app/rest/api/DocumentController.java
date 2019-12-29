@@ -1,9 +1,9 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.document.DocumentService;
+import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.BASIC;
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
-import static com.fenixcommunity.centralspace.utilities.common.Var.IMAGE;
-import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 
 @RestController
 @RequestMapping("/doc")
@@ -24,14 +22,14 @@ public class DocumentController {
 
     @GetMapping("/pdf-to-image")
     public void convertPdfToImage(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_image") String pdfFileName,
-                                  @RequestParam(value = "extension", defaultValue = "png") String extension) {
-        documentService.convertPdfToImage(pdfFileName, MediaType.parseMediaType(IMAGE + SLASH + extension));
+                                  @RequestParam(value = "fileFormat", defaultValue = "png") String fileFormat) {
+        documentService.convertPdfToImage(pdfFileName, FileFormat.parseFileFormat(fileFormat));
     }
 
     @GetMapping("/image-to-pdf-as-admin")
     public void convertImageToPdfAsAdmin(@RequestParam(value = "imageFile", defaultValue = "image_to_pdf") String imageFileName,
-                                         @RequestParam(value = "extension", defaultValue = "png") String extension) {
-        documentService.convertImageToPdfAsAdmin(imageFileName, MediaType.parseMediaType(IMAGE + SLASH + extension));
+                                         @RequestParam(value = "fileFormat", defaultValue = "png") String fileFormat) {
+        documentService.convertImageToPdfAsAdmin(imageFileName, FileFormat.parseFileFormat(fileFormat));
     }
 
     @GetMapping("/html-to-pdf")
@@ -70,13 +68,13 @@ public class DocumentController {
         return htmlBody;
     }
 
-    @GetMapping("/pdf-to-text")
-    public void convertPdfToText(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_text") String pdfFileName) {
+    @GetMapping("/pdf-to-txt")
+    public void convertPdfToText(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_txt") String pdfFileName) {
         documentService.convertPdfToText(pdfFileName);
     }
 
-    @GetMapping("/text-to-pdf")
-    public void convertTextToPdf(@RequestParam(value = "textFile", defaultValue = "text_to_pdf") String textFileName) {
+    @GetMapping("/txt-to-pdf")
+    public void convertTextToPdf(@RequestParam(value = "textFile", defaultValue = "txt_to_pdf") String textFileName) {
         documentService.convertTextToPdf(textFileName);
     }
 

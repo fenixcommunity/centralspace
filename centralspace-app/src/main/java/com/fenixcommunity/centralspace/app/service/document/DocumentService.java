@@ -6,11 +6,11 @@ import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfCon
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType;
 import com.fenixcommunity.centralspace.app.service.document.converter.IPdfConverter;
 import com.fenixcommunity.centralspace.app.service.document.converter.ThymeleafPdfConverter;
+import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.TemplateEngine;
@@ -41,16 +41,16 @@ public class DocumentService {
         this.restTemplateBuilder = restTemplateBuilder;
     }
 
-    public void convertPdfToImage(String pdfFileName, MediaType extension) {
+    public void convertPdfToImage(String pdfFileName, FileFormat fileFormat) {
         IPdfConverter converter = new BasicPdfConverter(pdfFileName, resourceTool);
-        converter.convertPdfToImage(extension);
+        converter.convertPdfToImage(fileFormat);
     }
 
-    public void convertImageToPdfAsAdmin(String imageFileName, MediaType extension) {
+    public void convertImageToPdfAsAdmin(String imageFileName, FileFormat fileFormat) {
         IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
         if (securityService.isValidSecurityRole()) {
             RestTemplate restTemplate = restTemplateBuilder.build();
-            converter.convertImageToPdf(extension, restTemplate);
+            converter.convertImageToPdf(fileFormat, restTemplate);
         }
     }
 

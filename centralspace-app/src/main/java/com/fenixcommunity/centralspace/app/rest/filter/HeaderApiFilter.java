@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
 
@@ -29,7 +30,7 @@ public class HeaderApiFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         var request = (HttpServletRequest) servletRequest;
         var response = (HttpServletResponse) servletResponse;
-
+        Collections.list(request.getHeaderNames()).stream().forEach(System.out::println);
         response.setHeader(HEADER_SESSION, "HeaderApiFilter-set");
         chain.doFilter(request, response);
     }

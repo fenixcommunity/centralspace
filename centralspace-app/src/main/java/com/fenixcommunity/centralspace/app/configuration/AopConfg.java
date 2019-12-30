@@ -48,6 +48,7 @@ public class AopConfg {
         logJoinPointAfterThrowing(joinPoint, ex);
     }
 
+    //2019-12-30 13:56:02,881 main ERROR Unable to locate appender "RollingFile" for logger config "org.mabb.fontverter"
     //time logging
     @Around("@annotation(com.fenixcommunity.centralspace.utilities.aop.MethodMonitoring)")
     public void logMethod(ProceedingJoinPoint joinPoint) throws Throwable {

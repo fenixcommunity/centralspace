@@ -16,7 +16,7 @@ public class FilterApiConfig {
 
     @Bean
     public FilterRegistrationBean registerHeaderApiFilter() {
-        return createFilterRegistration(new HeaderApiFilter(), "/account/*", 1);
+        return createFilterRegistration(new HeaderApiFilter(), "/public/*", 1);
     }
 
     @Bean

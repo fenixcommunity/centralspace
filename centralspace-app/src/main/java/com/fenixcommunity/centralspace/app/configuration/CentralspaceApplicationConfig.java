@@ -2,7 +2,7 @@ package com.fenixcommunity.centralspace.app.configuration;
 
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestTemplateConfig;
-import com.fenixcommunity.centralspace.app.configuration.security.SecurityConfig;
+import com.fenixcommunity.centralspace.app.configuration.security2.SecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;

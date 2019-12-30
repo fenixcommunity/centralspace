@@ -1,22 +1,20 @@
 package com.fenixcommunity.centralspace.app.configuration.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.*;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.SWAGGER;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//@Configuration
+//@EnableWebSecurity
+public class SecurityConfig2 {
 
     private static final String[] APP_AUTH_LIST = {
             "/account/**",
@@ -43,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**"
     };
 
-    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //todo change!
         auth.inMemoryAuthentication()
@@ -61,8 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    //TODO ADD ROLE ENUM
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
@@ -73,7 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

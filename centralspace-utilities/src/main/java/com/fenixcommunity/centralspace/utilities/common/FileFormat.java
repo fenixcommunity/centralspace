@@ -11,12 +11,13 @@ public enum FileFormat {
 
     PDF("PDF", "pdf"),
     HTML("HTML", "html"),
-    PNG("PNG", "png"),
-    JPG("JPG", "jpg"),
     TXT("TXT", "txt"),
-    DOCX("DOCX", "docx");
+    DOCX("DOCX", "docx"),
 
-    private String formatName;
+    PNG("IMAGE", "png"),
+    JPG("IMAGE", "jpg");
+
+    private String categoryName;
     private String subtype;
 
     public static FileFormat parseFileFormat(String subtype) {

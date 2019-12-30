@@ -1,12 +1,17 @@
 package com.fenixcommunity.centralspace.utilities.resourcehelper;
 
 import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
+import com.fenixcommunity.centralspace.utilities.validator.Validator;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.IMAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.IMAGE_FORMAT;
 import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
+import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 
 
 @Component
@@ -19,11 +24,18 @@ public class ResourceLoaderTool {
     @Autowired
     private ResourceProperties resourceProperties;
 
+    private final Validator validator;
+
+    public ResourceLoaderTool(ValidatorFactory validatorFactory) {
+        this.validator = validatorFactory.getInstance(NOT_NULL);
+    }
+
     public Resource loadResourceFile(InternalResource resource) {
-        //todo validator
-        String subtype = resource.getFileFormat().getSubtype();
+        validator.validateWithException(resource);
+
+        String fileParentPath = resolveResourcePrefix(resource);
         StringBuilder fullPath = new StringBuilder("classpath:static/")
-                .append(subtype)
+                .append(fileParentPath)
                 .append(SLASH)
                 .append(resource.getFullName());
         return resourceLoader.getResource(fullPath.toString());
@@ -36,4 +48,14 @@ public class ResourceLoaderTool {
     public ResourceProperties getResourceProperties() {
         return resourceProperties;
     }
+
+    private String resolveResourcePrefix(InternalResource resource) {
+        var fileFormat = resource.getFileFormat();
+        if (IMAGE.equals(fileFormat.getCategoryName())) {
+            return IMAGE_FORMAT;
+        } else {
+            return fileFormat.getSubtype();
+        }
+    }
+
 }

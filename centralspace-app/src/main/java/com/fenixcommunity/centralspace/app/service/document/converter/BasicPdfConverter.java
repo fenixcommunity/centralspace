@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.service.document.converter;
 import com.fenixcommunity.centralspace.app.exception.DocumentServiceException;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
+import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.itextpdf.styledxmlparser.jsoup.Jsoup;
@@ -53,8 +54,13 @@ import java.util.stream.Stream;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.DOCX;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.HTML;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.TXT;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
+import static com.fenixcommunity.centralspace.utilities.common.Var.NUMBER_WATERMARK;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Log4j2
@@ -108,8 +114,8 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
 //            or
 //            ResponseEntity<byte[]> response2 =restTemplate.getForEntity(inputImageUrl, byte[].class);
             Image image = Image.getInstance(Objects.requireNonNull(response.getBody()));
-            document = DocumentComposer.composeDocument(document);
-            document = DocumentComposer.composeImage(document, Collections.singletonList(image));
+            document = PdfDocumentComposer.composeDocument(document);
+            document = PdfDocumentComposer.composeImage(document, Collections.singletonList(image));
 
             writer.flush();
         } catch (Exception e) {
@@ -203,7 +209,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             try {
                 document.close();
             } catch (IOException e) {
-                throw new DocumentServiceException(e.getMessage(), e);
+                //ignore
             }
         }
     }
@@ -221,7 +227,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             document.open();
             document.add(new Paragraph("\n"));
 
-            var font = DocumentComposer.composeFont();
+            var font = PdfDocumentComposer.composeFont();
 
             try (Stream<String> stream = converterInput.lines()) {
                 stream.forEach(line -> {
@@ -278,7 +284,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             try {
                 document.close();
             } catch (IOException e) {
-                throw new DocumentServiceException(e.getMessage(), e);
+                //ignore
             }
         }
     }

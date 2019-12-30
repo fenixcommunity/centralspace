@@ -21,13 +21,15 @@ public class Var {
     public static final String DOMAIN_URL = "www.fenixcommunity.pl";
 
     public static final String DOT = ".";
+    public static final String UNDERSCORE = "_";
     public static final String SLASH = "/";
     public static final String LINE = "\n";
     public static final String SPACE = " ";
     public static final String OR = "||";
     public static final String UTF_8 = "UTF-8";
     public static final String NUMBER_WATERMARK = "%d";
-    public static final String IMAGE = "image";
+    public static final String IMAGE = "IMAGE";
+    public static final String IMAGE_FORMAT = "img";
     //MAIL
     public static final String EMAIL_FROM = "hermes.delivery.noreply@gmail.com";
     public static final String EMAIL_REPLY_TO = "hermes.delivery.noreply@gmail.com";

@@ -20,6 +20,11 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
+    @GetMapping("/create-pdf")
+    public void createPdf(@RequestParam(value = "pdfFile", defaultValue = "created_pdf") String pdfFileName) {
+        documentService.createPdf(pdfFileName);
+    }
+
     @GetMapping("/pdf-to-image")
     public void convertPdfToImage(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_image") String pdfFileName,
                                   @RequestParam(value = "fileFormat", defaultValue = "png") String fileFormat) {

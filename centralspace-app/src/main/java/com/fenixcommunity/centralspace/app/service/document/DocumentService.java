@@ -6,6 +6,8 @@ import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfCon
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType;
 import com.fenixcommunity.centralspace.app.service.document.converter.IPdfConverter;
 import com.fenixcommunity.centralspace.app.service.document.converter.ThymeleafPdfConverter;
+import com.fenixcommunity.centralspace.app.service.document.pdfcreator.IPdfCreator;
+import com.fenixcommunity.centralspace.app.service.document.pdfcreator.ITextPdfCreator;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.extern.log4j.Log4j2;
@@ -39,6 +41,11 @@ public class DocumentService {
 
     public DocumentService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplateBuilder = restTemplateBuilder;
+    }
+
+    public void createPdf(String pdfFileName) {
+        IPdfCreator pdfCreator = new ITextPdfCreator(pdfFileName, resourceTool);
+        pdfCreator.createPdf();
     }
 
     public void convertPdfToImage(String pdfFileName, FileFormat fileFormat) {

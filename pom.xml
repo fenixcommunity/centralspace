@@ -49,12 +49,13 @@
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>
         <javassist.version>3.23.1-GA</javassist.version>
-        <!-- RESOURCE CONVERTER DEPENDENCIES -->
+        <!-- DOCUMENT CONVERTER DEPENDENCIES -->
         <pdfbox-tools.version>2.0.17</pdfbox-tools.version>
         <pdf2dom.version>1.7</pdf2dom.version>
         <itextpdf-itextpdf.version>5.5.13</itextpdf-itextpdf.version>
         <itextpdf-html2pdf.version>2.1.4</itextpdf-html2pdf.version>
         <itextpdf-xmlworker.version>5.5.1</itextpdf-xmlworker.version>
+        <bouncycastle.version>1.56</bouncycastle.version>
         <apache-poi.version>4.1.1</apache-poi.version>
         <!-- TEST DEPENDENCIES -->
         <h2database.version>1.4.199</h2database.version>
@@ -178,7 +179,7 @@
             <!--no works for latest Spring-->
             <!--<artifactId>springfox-data-rest</artifactId>-->
 
-            <!-- RESOURCE CONVERTER DEPENDENCIES -->
+            <!-- DOCUMENT CONVERTER DEPENDENCIES -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
                 <artifactId>pdfbox-tools</artifactId>
@@ -203,6 +204,12 @@
                 <groupId>com.itextpdf.tool</groupId>
                 <artifactId>xmlworker</artifactId>
                 <version>${itextpdf-xmlworker.version}</version>
+            </dependency>
+            <!--            helper to pdf encryptor-->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>

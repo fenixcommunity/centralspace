@@ -51,6 +51,7 @@ public class Password extends AbstractBaseEntity implements Serializable {
     @Convert(converter = CryptoJpaConverter.class)
     @Column(name = "password", nullable = false)
     private String password;
+    //todo replace to byte[] or char[]
 
     @Column(name = "password_type", nullable = false)
     @Enumerated(EnumType.STRING)

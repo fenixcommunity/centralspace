@@ -1,20 +1,18 @@
-package com.fenixcommunity.centralspace.app.configuration.security;
+package com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.configuration.security.SecurityRole.SWAGGER;
+import static com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity.SecurityRole.*;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 
 //@Configuration
 //@EnableWebSecurity
-public class SecurityConfig2 {
+public class AutoSecurityConfig {
 
     private static final String[] APP_AUTH_LIST = {
             "/account/**",
@@ -36,7 +34,7 @@ public class SecurityConfig2 {
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources",
-            "/configuration/security",
+            "/configuration/autoconfigsecurity",
             "/swagger-ui.html",
             "/webjars/**"
     };

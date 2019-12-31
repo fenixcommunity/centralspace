@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security2;
+package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,7 @@ import static java.util.Optional.ofNullable;
 @Service
 final class InMemoryUsers implements UserCrudService {
 
+    //todo move to memory HAZELCAST or standard DB
     Map<String, User> users = new HashMap<>();
 
     @Override

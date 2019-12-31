@@ -2,7 +2,7 @@ package com.fenixcommunity.centralspace.app.configuration;
 
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestTemplateConfig;
-import com.fenixcommunity.centralspace.app.configuration.security2.SecurityConfig;
+import com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity.AdvancedSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
@@ -16,7 +16,8 @@ import org.springframework.context.annotation.Import;
 @ComponentScan({"com.fenixcommunity.centralspace.app"})
 @Import({DomainConfig.class,
         UtilitiesConfig.class,
-        SecurityConfig.class,
+        AdvancedSecurityConfig.class,
+//        AutoSecurityConfig.class,
         MailGatewayConfig.class,
         FilterApiConfig.class,
         AopConfg.class,

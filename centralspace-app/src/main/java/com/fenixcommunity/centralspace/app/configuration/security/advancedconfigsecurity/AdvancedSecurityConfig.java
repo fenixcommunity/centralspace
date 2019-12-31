@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security2;
+package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
 
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -28,7 +28,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//todo FieldDefaults private final??
+public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/public/**")
     );
@@ -36,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     TokenAuthenticationProvider provider;
 
-    SecurityConfig(final TokenAuthenticationProvider provider) {
+    AdvancedSecurityConfig(final TokenAuthenticationProvider provider) {
         super();
         this.provider = requireNonNull(provider);
     }

@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.service;
 
-import com.fenixcommunity.centralspace.app.configuration.security.AuthenticationFacade;
-import com.fenixcommunity.centralspace.app.configuration.security.SecurityRole;
+import com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity.AuthenticationFacade;
+import com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity.SecurityRole;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -43,6 +43,8 @@
         <springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.5</postgresql.version>
+        <!-- COMMONS DEPENDENCIES -->
+        <jwttoken.version>0.9.1</jwttoken.version>
         <!-- UTILITIES DEPENDENCIES -->
         <lombok.version>1.18.4</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
@@ -205,7 +207,7 @@
                 <artifactId>xmlworker</artifactId>
                 <version>${itextpdf-xmlworker.version}</version>
             </dependency>
-            <!--            helper to pdf encryptor-->
+            <!--helper to pdf encryptor-->
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
@@ -221,6 +223,12 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+            <!-- COMMONS DEPENDENCIES -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwttoken.version}</version>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

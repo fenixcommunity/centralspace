@@ -19,13 +19,8 @@ import java.io.IOException;
 import java.util.Collections;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.JPG;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PNG;
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
-import static com.fenixcommunity.centralspace.utilities.common.Var.UNDERSCORE;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 
 public class ITextPdfCreator implements IPdfCreator {
@@ -81,7 +76,7 @@ public class ITextPdfCreator implements IPdfCreator {
             pdfReader = new PdfReader(dest);
             String encryptedPdfPath = dest.replace(fileName, fileName + UNDERSCORE + ENCRYPTED_SURFIX);
             pdfStamper = new PdfStamper(pdfReader, new FileOutputStream(encryptedPdfPath));
-            //todo PASSWORD from security.properties
+            //todo PASSWORD from autoconfigsecurity.properties
             pdfStamper.setEncryption(PASSWORD.getBytes(), PASSWORD.getBytes(),
                     PdfWriter.ALLOW_PRINTING, PdfWriter.ENCRYPTION_AES_128 | PdfWriter.DO_NOT_ENCRYPT_METADATA);
         } catch (IOException | DocumentException e) {

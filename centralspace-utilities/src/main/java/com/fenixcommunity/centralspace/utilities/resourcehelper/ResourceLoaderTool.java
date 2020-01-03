@@ -8,8 +8,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.IMAGE;
-import static com.fenixcommunity.centralspace.utilities.common.Var.IMAGE_FORMAT;
 import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 
@@ -51,11 +49,7 @@ public class ResourceLoaderTool {
 
     private String resolveResourcePrefix(InternalResource resource) {
         var fileFormat = resource.getFileFormat();
-        if (IMAGE.equals(fileFormat.getCategoryName())) {
-            return IMAGE_FORMAT;
-        } else {
             return fileFormat.getSubtype();
-        }
     }
 
 }

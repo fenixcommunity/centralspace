@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
 
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,10 +15,10 @@ import java.io.IOException;
 
 import static com.google.common.net.HttpHeaders.AUTHORIZATION;
 import static java.util.Optional.ofNullable;
-import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PACKAGE;
 import static org.apache.commons.lang3.StringUtils.removeStart;
 
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@FieldDefaults(level = PACKAGE, makeFinal = true)
 final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     private static final String BEARER = "Bearer";
 
@@ -51,4 +51,9 @@ final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFi
         super.successfulAuthentication(request, response, chain, authResult);
         chain.doFilter(request, response);
     }
+
+//    @Override
+//    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+//    }
+
 }

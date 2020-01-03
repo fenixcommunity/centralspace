@@ -29,7 +29,6 @@ public class Var {
     public static final String UTF_8 = "UTF-8";
     public static final String NUMBER_WATERMARK = "%d";
     public static final String IMAGE = "IMAGE";
-    public static final String IMAGE_FORMAT = "img";
     //MAIL
     public static final String EMAIL_FROM = "hermes.delivery.noreply@gmail.com";
     public static final String EMAIL_REPLY_TO = "hermes.delivery.noreply@gmail.com";

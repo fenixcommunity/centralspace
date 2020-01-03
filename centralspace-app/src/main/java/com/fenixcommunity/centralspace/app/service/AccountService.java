@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.app.service;
 
+import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
 import com.fenixcommunity.centralspace.domain.model.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.AccountRepository;
-import com.fenixcommunity.centralspace.utilities.aop.MethodMonitoring;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

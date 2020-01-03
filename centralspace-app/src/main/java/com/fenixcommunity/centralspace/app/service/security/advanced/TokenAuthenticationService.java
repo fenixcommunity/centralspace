@@ -1,7 +1,9 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
+package com.fenixcommunity.centralspace.app.service.security.advanced;
 
 
-import com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity.jwt.TokenService;
+import com.fenixcommunity.centralspace.app.service.security.advanced.jwt.TokenService;
+import com.fenixcommunity.centralspace.app.service.security.advanced.user.SecuredUser;
+import com.fenixcommunity.centralspace.app.service.security.advanced.user.SecuredUserCrudService;
 import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -17,28 +19,13 @@ import static lombok.AccessLevel.PRIVATE;
 @Service
 @AllArgsConstructor(access = PACKAGE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-final class TokenAuthenticationService implements UserAuthenticationService {
+final class TokenAuthenticationService implements SecuredUserAuthenticationService {
 
     @NonNull
     TokenService tokens;
 
     @NonNull
-    UserCrudService users;
-
-    //OLD
-//    @Override
-//    public Optional<String> login(final String username, final String password) {
-//        final String uuid = UUID.randomUUID().toString();
-//        final User user = User
-//                .builder()
-//                .id(uuid)
-//                .username(username)
-//                .password(password)
-//                .build();
-//
-//        users.save(user);
-//        return Optional.of(uuid);
-//    }
+    SecuredUserCrudService users;
 
     @Override
     public Optional<String> login(final String username, final String password) {
@@ -48,10 +35,10 @@ final class TokenAuthenticationService implements UserAuthenticationService {
                 .map(user -> tokens.expiring(ImmutableMap.of("username", username)));
     }
 
-    //10b49b6d-2c54-417f-8907-4be3986d9b10
+    //todo ImmutableMap
 
     @Override
-    public Optional<User> findByToken(final String token) {
+    public Optional<SecuredUser> findByToken(final String token) {
         return Optional
                 .of(tokens.verify(token))
                 .map(map -> map.get("username"))
@@ -59,7 +46,7 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     }
 
     @Override
-    public void logout(final User user) {
+    public void logout(final SecuredUser user) {
 
     }
 }

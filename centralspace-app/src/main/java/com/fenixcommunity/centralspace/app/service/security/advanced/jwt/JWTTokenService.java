@@ -1,7 +1,6 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity.jwt;
+package com.fenixcommunity.centralspace.app.service.security.advanced.jwt;
 
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMap;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
@@ -11,11 +10,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.compression.GzipCompressionCodec;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import static io.jsonwebtoken.impl.TextCodec.BASE64;
@@ -24,27 +25,28 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.substringBeforeLast;
 
 @Service
+@PropertySource("classpath:security.properties")
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 final class JWTTokenService implements Clock, TokenService {
     private static final String DOT = ".";
     private static final GzipCompressionCodec COMPRESSION_CODEC = new GzipCompressionCodec();
 
-    TimeTool dates;
+    TimeTool timeTool;
     String issuer;
     int expirationSec;
     int clockSkewSec;
     String secretKey;
 
-    JWTTokenService(final TimeTool dates,
-                    @Value("${jwt.issuer:octoperf}") final String issuer,
-                    @Value("${jwt.expiration-sec:86400}") final int expirationSec,
-                    @Value("${jwt.clock-skew-sec:300}") final int clockSkewSec,
+    JWTTokenService(final TimeTool timeTool,
+                    @Value("${jwt.issuer:fenixcommunity}") final String issuer,
+                    @Value("${jwt.expiration-sec:44400}") final int expirationSec,
+                    @Value("${jwt.clock-skew-sec:400}") final int clockSkewSec,
                     @Value("${jwt.secret:secret}") final String secret) {
         super();
-        this.dates = requireNonNull(dates);
+        this.timeTool = requireNonNull(timeTool);
         this.issuer = requireNonNull(issuer);
-        this.expirationSec = requireNonNull(expirationSec);
-        this.clockSkewSec = requireNonNull(clockSkewSec);
+        this.expirationSec = expirationSec;
+        this.clockSkewSec = clockSkewSec;
         this.secretKey = BASE64.encode(requireNonNull(secret));
     }
 
@@ -63,11 +65,11 @@ final class JWTTokenService implements Clock, TokenService {
         final Claims claims = Jwts
                 .claims()
                 .setIssuer(issuer)
-                .setIssuedAt(dates.TO_DATE(now));
+                .setIssuedAt(timeTool.TO_DATE(now));
 
         if (expiresInSec > 0) {
             final ZonedDateTime expiresAt = now.plusSeconds(expiresInSec);
-            claims.setExpiration(dates.TO_DATE(expiresAt));
+            claims.setExpiration(timeTool.TO_DATE(expiresAt));
         }
         claims.putAll(attributes);
 
@@ -118,6 +120,6 @@ final class JWTTokenService implements Clock, TokenService {
 
     @Override
     public Date now() {
-        return dates.TO_DATE(ZonedDateTime.now());
+        return timeTool.TO_DATE(ZonedDateTime.now());
     }
 }

@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

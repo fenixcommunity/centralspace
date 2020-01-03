@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
+package com.fenixcommunity.centralspace.app.service.security.advanced.user;
 
 import org.springframework.stereotype.Service;
 
@@ -10,23 +10,23 @@ import java.util.Optional;
 import static java.util.Optional.ofNullable;
 
 @Service
-final class InMemoryUsers implements UserCrudService {
+final class SecuredUsersInMemory implements SecuredUserCrudService {
 
     //todo move to memory HAZELCAST or standard DB
-    Map<String, User> users = new HashMap<>();
+    Map<String, SecuredUser> users = new HashMap<>();
 
     @Override
-    public User save(final User user) {
+    public SecuredUser save(final SecuredUser user) {
         return users.put(user.getId(), user);
     }
 
     @Override
-    public Optional<User> find(final String id) {
+    public Optional<SecuredUser> find(final String id) {
         return ofNullable(users.get(id));
     }
 
     @Override
-    public Optional<User> findByUsername(final String username) {
+    public Optional<SecuredUser> findByUsername(final String username) {
         return users
                 .values()
                 .stream()

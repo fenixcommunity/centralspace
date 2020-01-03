@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
+package com.fenixcommunity.centralspace.app.service.security.advanced;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -19,7 +19,7 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 final class TokenAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
     @NonNull
-    UserAuthenticationService auth;
+    SecuredUserAuthenticationService auth;
 
     @Override
     protected void additionalAuthenticationChecks(final UserDetails d, final UsernamePasswordAuthenticationToken auth) {

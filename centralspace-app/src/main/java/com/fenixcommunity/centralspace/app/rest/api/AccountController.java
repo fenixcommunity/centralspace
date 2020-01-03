@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
+import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
+import static java.util.Collections.singletonMap;
 
 // todo swagger/postman
 //todo decorator and strategy
@@ -54,7 +58,11 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         AccountDto accountDto = findByIdAndMapToDto(id);
-        return ResponseEntity.ok(accountDto);
+        singletonMap("Custom-Header", accountDto.id);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
+                .headers(prepareResponseHeaders(singletonMap("Custom-Header", accountDto.id)))
+                .body(accountDto);
     }
 
     @GetMapping("/all")

@@ -1,9 +1,10 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
 
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,9 +36,9 @@ public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
     );
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 
-    TokenAuthenticationProvider provider;
+    AbstractUserDetailsAuthenticationProvider provider;
 
-    AdvancedSecurityConfig(final TokenAuthenticationProvider provider) {
+    AdvancedSecurityConfig(final AbstractUserDetailsAuthenticationProvider provider) {
         super();
         this.provider = requireNonNull(provider);
     }

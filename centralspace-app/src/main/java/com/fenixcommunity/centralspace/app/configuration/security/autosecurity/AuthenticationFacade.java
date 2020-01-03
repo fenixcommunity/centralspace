@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -26,7 +26,7 @@ public class ResourceController {
     @GetMapping("/**")
     public @ResponseBody
     byte[] getFileByPath(HttpServletRequest request) throws IOException {
-        String extractedPath = WebTool.extractPath(request);
+        String extractedPath = WebTool.extractUriPath(request);
         Resource resource = resourceTool.loadResourceByPath(extractedPath);
         return IOUtils.toByteArray(FileUtils.openInputStream(resource.getFile()));
     }

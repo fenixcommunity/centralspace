@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.utilities.aop;
+package com.fenixcommunity.centralspace.app.configuration.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

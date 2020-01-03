@@ -1,5 +1,7 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
+package com.fenixcommunity.centralspace.app.rest.api.security;
 
+import com.fenixcommunity.centralspace.app.service.security.advanced.SecuredUserAuthenticationService;
+import com.fenixcommunity.centralspace.app.service.security.advanced.user.SecuredUser;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
@@ -17,15 +19,16 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PACKAGE)
 final class SecuredUsersController {
     @NonNull
-    UserAuthenticationService authentication;
+    SecuredUserAuthenticationService authentication;
 
     @GetMapping("/current")
-    User getCurrent(@AuthenticationPrincipal final User user) {
+    SecuredUser getCurrent(@AuthenticationPrincipal final SecuredUser user) {
         return user;
     }
+//todo to DTO!
 
     @GetMapping("/logout")
-    boolean logout(@AuthenticationPrincipal final User user) {
+    boolean logout(@AuthenticationPrincipal final SecuredUser user) {
         authentication.logout(user);
         return true;
     }

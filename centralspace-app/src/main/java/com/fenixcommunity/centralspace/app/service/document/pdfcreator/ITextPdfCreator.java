@@ -76,7 +76,7 @@ public class ITextPdfCreator implements IPdfCreator {
             pdfReader = new PdfReader(dest);
             String encryptedPdfPath = dest.replace(fileName, fileName + UNDERSCORE + ENCRYPTED_SURFIX);
             pdfStamper = new PdfStamper(pdfReader, new FileOutputStream(encryptedPdfPath));
-            //todo PASSWORD from autoconfigsecurity.properties
+            //todo PASSWORD from autosecurity.properties
             pdfStamper.setEncryption(PASSWORD.getBytes(), PASSWORD.getBytes(),
                     PdfWriter.ALLOW_PRINTING, PdfWriter.ENCRYPTION_AES_128 | PdfWriter.DO_NOT_ENCRYPT_METADATA);
         } catch (IOException | DocumentException e) {

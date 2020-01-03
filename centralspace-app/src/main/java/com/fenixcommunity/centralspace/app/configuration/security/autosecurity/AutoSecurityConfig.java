@@ -1,18 +1,24 @@
-package com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
+import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity.SecurityRole.*;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.*;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 
-//@Configuration
-//@EnableWebSecurity
-public class AutoSecurityConfig {
+@IgnoreDuringScan
+@Configuration
+@EnableWebSecurity
+public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] APP_AUTH_LIST = {
             "/account/**",
@@ -34,11 +40,12 @@ public class AutoSecurityConfig {
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources",
-            "/configuration/autoconfigsecurity",
+            "/configuration/security",
             "/swagger-ui.html",
             "/webjars/**"
     };
 
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //todo change!
         auth.inMemoryAuthentication()
@@ -56,6 +63,7 @@ public class AutoSecurityConfig {
     }
 
 
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
@@ -66,6 +74,7 @@ public class AutoSecurityConfig {
                 .httpBasic();
     }
 
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

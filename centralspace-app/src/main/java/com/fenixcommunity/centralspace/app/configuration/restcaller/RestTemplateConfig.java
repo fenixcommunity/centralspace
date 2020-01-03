@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 
 @Configuration

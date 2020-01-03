@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
 
 import org.springframework.security.web.RedirectStrategy;
 

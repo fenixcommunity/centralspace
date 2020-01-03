@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedconfigsecurity.jwt;
+package com.fenixcommunity.centralspace.app.service.security.advanced.jwt;
 
 import java.util.Map;
 

@@ -14,8 +14,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.autoconfigsecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static com.fenixcommunity.centralspace.utilities.common.Var.WRONG_PASSWORD;
 import static org.junit.jupiter.api.Assertions.assertEquals;

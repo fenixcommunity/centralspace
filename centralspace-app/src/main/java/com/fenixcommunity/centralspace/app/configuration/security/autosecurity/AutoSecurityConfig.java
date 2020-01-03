@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
-import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,8 +15,8 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1A
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 
-@IgnoreDuringScan
 @Configuration
+@Order(1)
 @EnableWebSecurity
 public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
 

@@ -30,7 +30,8 @@ public class HeaderApiFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         var request = (HttpServletRequest) servletRequest;
         var response = (HttpServletResponse) servletResponse;
-        Collections.list(request.getHeaderNames()).stream().forEach(System.out::println);
+        System.out.println("All header names:\n");
+        Collections.list(request.getHeaderNames()).forEach(System.out::println);
         response.setHeader(HEADER_SESSION, "HeaderApiFilter-set");
         chain.doFilter(request, response);
     }

@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.api.security;
+package com.fenixcommunity.centralspace.app.rest.api.adancedsecurity;
 
 import com.fenixcommunity.centralspace.app.service.security.advanced.SecuredUserAuthenticationService;
 import com.fenixcommunity.centralspace.app.service.security.advanced.user.SecuredUser;

@@ -38,10 +38,11 @@ final class JWTTokenService implements Clock, TokenService {
     String secretKey;
 
     JWTTokenService(final TimeTool timeTool,
-                    @Value("${jwt.issuer:fenixcommunity}") final String issuer,
-                    @Value("${jwt.expiration-sec:44400}") final int expirationSec,
-                    @Value("${jwt.clock-skew-sec:400}") final int clockSkewSec,
-                    @Value("${jwt.secret:secret}") final String secret) {
+                    @Value("${jwt.issuer}") final String issuer,
+                    @Value("${jwt.expirationsec:300}") final int expirationSec,
+                    // default value if property no exist
+                    @Value("${jwt.clocksec}") final int clockSkewSec,
+                    @Value("${jwt.secret}") final String secret) {
         super();
         this.timeTool = requireNonNull(timeTool);
         this.issuer = requireNonNull(issuer);

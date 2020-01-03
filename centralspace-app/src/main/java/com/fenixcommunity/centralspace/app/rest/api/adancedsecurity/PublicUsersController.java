@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.api.security;
+package com.fenixcommunity.centralspace.app.rest.api.adancedsecurity;
 
 
 import com.fenixcommunity.centralspace.app.rest.dto.security.RequestedUser;
@@ -32,6 +32,7 @@ final class PublicUsersController {
     String register(@RequestBody RequestedUser requestedUser) {
         String username = requestedUser.getUsername();
         String password = requestedUser.getPassword();
+        String role = requestedUser.getRole();
         users.findByUsername(username).ifPresent(u -> {
             throw new ServiceFailedException(format("requested username:%s exist", u.getUsername()));
         });
@@ -39,6 +40,7 @@ final class PublicUsersController {
                 .id(username)
                 .username(username)
                 .password(password)
+                .role(role)
                 .build()
         );
 

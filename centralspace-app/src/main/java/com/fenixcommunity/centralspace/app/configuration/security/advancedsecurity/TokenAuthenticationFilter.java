@@ -26,6 +26,7 @@ final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFi
         super(requiresAuth);
     }
 
+    //todo refactor
     @Override
     public Authentication attemptAuthentication(
             final HttpServletRequest request,

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -21,27 +22,24 @@ public class SecuredUser implements UserDetails {
     String id;
     String username;
     String password;
+    Collection<GrantedAuthority> authorities = new ArrayList<>();
 
     @JsonCreator
     SecuredUser(@JsonProperty("id") final String id,
                 @JsonProperty("username") final String username,
-                @JsonProperty("password") final String password) {
+                @JsonProperty("password") final String password,
+                @JsonProperty("role") final String role) {
         super();
         this.id = requireNonNull(id);
         this.username = requireNonNull(username);
         this.password = requireNonNull(password);
-    }
-
-    @JsonIgnore
-    @Override
-    public Collection<GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        this.authorities.add(new SimpleGrantedAuthority(role));
     }
 
     @JsonIgnore
     @Override
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     @JsonIgnore
@@ -67,4 +65,41 @@ public class SecuredUser implements UserDetails {
         return true;
     }
 
+    @JsonIgnore
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    //overrided lombock builder
+    public static class SecuredUserBuilder {
+        String id;
+        String username;
+        String password;
+        String role;
+
+        public SecuredUserBuilder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public SecuredUserBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public SecuredUserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public SecuredUserBuilder role(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public SecuredUser build() {
+            return new SecuredUser(this.id, this.username, this.password, this.role);
+        }
+    }
 }

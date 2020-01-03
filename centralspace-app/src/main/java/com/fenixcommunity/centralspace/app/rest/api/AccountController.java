@@ -16,6 +16,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ import static java.util.Collections.singletonMap;
 @RestController
 @RequestMapping(value = "/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
+@PreAuthorize("hasAuthority('ROLE_USER')")
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;

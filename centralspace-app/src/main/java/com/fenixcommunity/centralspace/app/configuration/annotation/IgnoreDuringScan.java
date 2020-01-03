@@ -6,4 +6,4 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IgnoreDuringScan {
 }
-//todo works?
+//todo works? for component

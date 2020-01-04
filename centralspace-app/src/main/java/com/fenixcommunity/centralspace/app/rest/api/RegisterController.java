@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 
 
 @RestController
-@RequestMapping("/register")
+@RequestMapping("/api/register")
 @Log4j2
 class RegisterController {
 

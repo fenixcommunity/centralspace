@@ -16,7 +16,7 @@ import java.time.ZonedDateTime;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.randomString;
 
 @RestController
-@RequestMapping("/logger")
+@RequestMapping("/api/logger")
 @Log4j2
 public class LoggingController {
 

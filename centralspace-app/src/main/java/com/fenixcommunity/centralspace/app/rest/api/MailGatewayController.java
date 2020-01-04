@@ -17,7 +17,7 @@ import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareRespo
 import static java.util.Collections.singletonMap;
 
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/api/mail")
 public class MailGatewayController {
     //todo account/mail/
     private final MailService mailService;

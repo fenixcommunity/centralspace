@@ -39,8 +39,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
 
-    @Value("${app.path}")
-    private String APP_PATH;
+    @Value("${app.api.path}")
+    private String APP_API_PATH;
 
     @Value("${springfox.swagger2.host}")
     private String swagger2Host;
@@ -68,13 +68,13 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private Predicate<String> pathsFilter() {
         return input ->
-                input.matches(APP_PATH + "/account/.*") ||
-                        input.matches(APP_PATH + "/doc/.*") ||
-                        input.matches(APP_PATH + "/mail/.*") ||
-                        input.matches(APP_PATH + "/password/.*") ||
-                        input.matches(APP_PATH + "/register/.*") ||
-                        input.matches(APP_PATH + "/logger/.*") ||
-                        input.matches(APP_PATH + "/resource/.*");
+                input.matches(APP_API_PATH + "/account/.*") ||
+                        input.matches(APP_API_PATH + "/doc/.*") ||
+                        input.matches(APP_API_PATH + "/mail/.*") ||
+                        input.matches(APP_API_PATH + "/password/.*") ||
+                        input.matches(APP_API_PATH + "/register/.*") ||
+                        input.matches(APP_API_PATH + "/logger/.*") ||
+                        input.matches(APP_API_PATH + "/resource/.*");
     }
 
     private ApiInfo metadata() {

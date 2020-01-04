@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/authorize", produces = {MediaType.ALL_VALUE})
+@RequestMapping(value = "/api/authorize", produces = {MediaType.ALL_VALUE})
 public class LoginController {
 
     @PostMapping("/init")

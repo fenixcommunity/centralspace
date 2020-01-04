@@ -41,7 +41,7 @@ import static java.util.Collections.singletonMap;
 // todo swagger/postman
 //todo decorator and strategy
 @RestController
-@RequestMapping(value = "/account", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 @PreAuthorize("hasAuthority('ROLE_USER')")
 public class AccountController {

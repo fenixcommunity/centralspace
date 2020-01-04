@@ -1,5 +1,7 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,27 +17,28 @@ import static com.fenixcommunity.centralspace.app.configuration.security.autosec
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static lombok.AccessLevel.PRIVATE;
 
-@Configuration
 @EnableWebSecurity
-@Order(1)
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
-public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
+//todo FieldDefaults private final??
+@FieldDefaults(level = PRIVATE, makeFinal = true)
+public class AutoSecurityConfig {
 
     private static final String[] APP_AUTH_LIST = {
-            "/account/**",
-            "/doc/**",
-            "/mail/**",
-            "/password/**",
-            "/register/**"
+            "/api/account/**",
+            "/api/doc/**",
+            "/api/mail/**",
+            "/api/password/**",
+            "/api/register/**"
     };
 
     private static final String[] BASIC_AUTH_LIST = {
-            "/resource/**"
+            "/api/resource/**"
     };
 
     private static final String[] NO_AUTH_LIST = {
-            "/logger/**"
+            "/api/logger/**"
     };
 
     private static final String[] SWAGGER_AUTH_LIST = {
@@ -47,8 +50,8 @@ public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**"
     };
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
                 .withUser(BASIC.name())
@@ -64,37 +67,55 @@ public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles(listsTo1Array(SWAGGER.getRoles()));
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
-                .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
-                .antMatchers(APP_AUTH_LIST).hasRole(ADMIN.name())
-                .antMatchers(NO_AUTH_LIST).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .rememberMe()
-                .rememberMeCookieName("app-remember-me")
-                .tokenValiditySeconds(60)
-//                .tokenValiditySeconds(24 * 60 * 60)
-                .and()
-                //todo String to static final
-                .logout().logoutUrl("/logout");
-//                .loginPage("/login")
-//                .failureUrl("/login-error")
-//                .loginProcessingUrl("/security_check")
-//                .usernameParameter("username").passwordParameter("password")
-//                .permitAll();
 
-
-//                .and()
-//                .httpBasic();
+    @Configuration
+    @Order(1)
+    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.antMatcher("/api/**").authorizeRequests()
+                    .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
+                    .antMatchers(APP_AUTH_LIST).hasRole(ADMIN.name())
+                    .antMatchers(NO_AUTH_LIST).permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .httpBasic();
+        }
     }
 
+    @Configuration
+    @Order(2)
+    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests()
+                    .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
+                    .antMatchers(NO_AUTH_LIST).permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .and()
+                    .rememberMe()
+//                    .tokenRepository(persistenceTokenRepository)
+            no works !
+                    .rememberMeCookieName("rememberme")
+                    .tokenValiditySeconds(60)
+
+                    .and()
+                    //todo String to static final
+                    .logout().logoutUrl("/logout");
+//                 .loginPage("/login")
+//                 .failureUrl("/login-error")
+//                 .loginProcessingUrl("/security_check")
+//                 .usernameParameter("username").passwordParameter("password")
+//                 .permitAll();
+        }
+
+
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

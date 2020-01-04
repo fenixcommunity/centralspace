@@ -13,7 +13,7 @@ import static com.fenixcommunity.centralspace.app.service.document.converter.Htm
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
 
 @RestController
-@RequestMapping("/doc")
+@RequestMapping("/api/doc")
 @Log4j2
 public class DocumentController {
 

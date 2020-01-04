@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/resource")
+@RequestMapping("/api/resource")
 public class ResourceController {
 
     private final ResourceLoaderTool resourceTool;

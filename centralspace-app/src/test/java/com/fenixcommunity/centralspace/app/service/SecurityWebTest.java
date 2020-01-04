@@ -35,7 +35,7 @@ public class SecurityWebTest {
     @BeforeEach
     public void setUp() throws MalformedURLException {
         restTemplate = new TestRestTemplate(ADMIN.name(), PASSWORD);
-        baseUrl = new URL("http://localhost:" + port + "/api/logger/run");
+        baseUrl = new URL("http://localhost:" + port + "/app/api/logger/run");
     }
 
     @Test

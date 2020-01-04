@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,8 +17,9 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStri
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 
 @Configuration
-@Order(1)
 @EnableWebSecurity
+@Order(1)
+@ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
 public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] APP_AUTH_LIST = {
@@ -47,8 +49,8 @@ public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //todo change!
-        auth.inMemoryAuthentication()
+        auth
+                .inMemoryAuthentication()
                 .withUser(BASIC.name())
                 .password(passwordEncoder().encode(PASSWORD))
                 .roles(listsTo1Array(BASIC.getRoles()))
@@ -62,7 +64,6 @@ public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles(listsTo1Array(SWAGGER.getRoles()));
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -70,8 +71,26 @@ public class AutoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
                 .antMatchers(APP_AUTH_LIST).hasRole(ADMIN.name())
                 .antMatchers(NO_AUTH_LIST).permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                .and()
+                .rememberMe()
+                .rememberMeCookieName("app-remember-me")
+                .tokenValiditySeconds(60)
+//                .tokenValiditySeconds(24 * 60 * 60)
+                .and()
+                //todo String to static final
+                .logout().logoutUrl("/logout");
+//                .loginPage("/login")
+//                .failureUrl("/login-error")
+//                .loginProcessingUrl("/security_check")
+//                .usernameParameter("username").passwordParameter("password")
+//                .permitAll();
+
+
+//                .and()
+//                .httpBasic();
     }
 
     @Bean

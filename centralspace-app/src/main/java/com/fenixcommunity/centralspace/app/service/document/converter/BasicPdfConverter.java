@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
-import com.fenixcommunity.centralspace.app.exception.DocumentServiceException;
+import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
@@ -54,13 +54,8 @@ import java.util.stream.Stream;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.DOCX;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.HTML;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.TXT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
-import static com.fenixcommunity.centralspace.utilities.common.Var.NUMBER_WATERMARK;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Log4j2

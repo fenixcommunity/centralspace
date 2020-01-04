@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.security.advanced;
 
-import com.fenixcommunity.centralspace.app.service.security.advanced.user.SecuredUser;
+import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
 
 import java.util.Optional;
 

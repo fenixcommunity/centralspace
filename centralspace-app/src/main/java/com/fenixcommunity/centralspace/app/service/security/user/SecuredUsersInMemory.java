@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.security.advanced.user;
+package com.fenixcommunity.centralspace.app.service.security.user;
 
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.document.pdfcreator;
 
-import com.fenixcommunity.centralspace.app.exception.DocumentServiceException;
+import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;

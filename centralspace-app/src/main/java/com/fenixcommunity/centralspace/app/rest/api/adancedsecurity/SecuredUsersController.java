@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api.adancedsecurity;
 
 import com.fenixcommunity.centralspace.app.service.security.advanced.SecuredUserAuthenticationService;
-import com.fenixcommunity.centralspace.app.service.security.advanced.user.SecuredUser;
+import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;

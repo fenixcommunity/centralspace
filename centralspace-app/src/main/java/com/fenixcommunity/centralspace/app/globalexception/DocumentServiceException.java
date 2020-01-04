@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.exception;
+package com.fenixcommunity.centralspace.app.globalexception;
 
 public class DocumentServiceException extends RuntimeException {
 

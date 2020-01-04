@@ -1,8 +1,10 @@
 package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
 
+import com.fenixcommunity.centralspace.app.service.security.advanced.InMemoryUserDetailsService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -15,7 +17,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
@@ -29,8 +33,9 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
-@Order(2)
 @EnableWebSecurity
+@Order(2)
+@ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 //todo FieldDefaults private final??
@@ -42,9 +47,13 @@ public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
 
     AbstractUserDetailsAuthenticationProvider provider;
 
-    AdvancedSecurityConfig(final AbstractUserDetailsAuthenticationProvider provider) {
+    private final InMemoryUserDetailsService userService;
+
+    AdvancedSecurityConfig(final AbstractUserDetailsAuthenticationProvider provider, InMemoryUserDetailsService userService) {
         super();
         this.provider = requireNonNull(provider);
+        //todo requireNonNull all place
+        this.userService = requireNonNull(userService);
     }
 
     @Override
@@ -64,12 +73,12 @@ public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
+                .userDetailsService(userService)
+//              .and() custom like above or for example inMemoryAuthentication
                 .sessionManagement()
                 .sessionCreationPolicy(STATELESS)
                 .and()
                 .exceptionHandling()
-                // this entry point handles when you request a protected page and you are not yet
-                // authenticated
                 .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), PROTECTED_URLS)
                 .and()
                 .authenticationProvider(provider)
@@ -111,5 +120,14 @@ public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     AuthenticationEntryPoint forbiddenEntryPoint() {
         return new HttpStatusEntryPoint(FORBIDDEN);
+    }
+
+    //    if .rememberMe().rememberMeServices(rememberMeServices()).key("password");
+//    @Bean
+    public RememberMeServices rememberMeServices() {
+        TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices("password", userService);
+        rememberMeServices.setCookieName("cookieName");
+        rememberMeServices.setParameter("rememberMe");
+        return rememberMeServices;
     }
 }

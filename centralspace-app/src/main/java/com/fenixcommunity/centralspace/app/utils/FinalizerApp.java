@@ -25,7 +25,7 @@ public class FinalizerApp implements ExitCodeGenerator {
     @Bean
     ExitCodeExceptionMapper exitCodeToExceptionMapper() {
         return exception -> {
-            // set exit code base on the exception type
+            // set exit code base on the globalexception type
             if (exception.getCause() instanceof NumberFormatException) {
                 return NUMBER_FORMAT_EXCEPTION_CODE;
             }

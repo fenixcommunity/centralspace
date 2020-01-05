@@ -1,10 +1,13 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
+import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestTemplateConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
+import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
+import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +27,7 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
 //        AdvancedSecurityConfig.class,
         MailGatewayConfig.class,
         FilterApiConfig.class,
+        HttpSessionConfig.class,
         AopConfg.class,
         SwaggerConfig.class,
         RestTemplateConfig.class

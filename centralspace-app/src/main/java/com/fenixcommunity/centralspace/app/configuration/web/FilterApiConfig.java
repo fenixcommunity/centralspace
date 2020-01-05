@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration;
+package com.fenixcommunity.centralspace.app.configuration.web;
 
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.RequestResponseLoggingFilter;

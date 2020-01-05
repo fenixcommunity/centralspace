@@ -32,8 +32,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 //@ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-// info: alternative to auto security config
-@Deprecated
+@Deprecated // info: alternative to auto security config
 public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/public/**")

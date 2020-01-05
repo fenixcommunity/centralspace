@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration;
+package com.fenixcommunity.centralspace.app.configuration.aop;
 
 import com.fenixcommunity.centralspace.utilities.aop.TimePerformanceMonitorInterceptor;
 import lombok.extern.log4j.Log4j2;

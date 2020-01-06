@@ -1,12 +1,20 @@
 package com.fenixcommunity.centralspace.domain.configuration;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaAuditing // uwzględnia @PrePersist, @PreRemove
@@ -16,12 +24,22 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @PropertySource(value = {"classpath:domain.properties"})
 public class DomainConfig {
 
-//    @Bean(name = "dataSource")
-//    @Primary
-//    @ConfigurationProperties(prefix = "spring.datasource")
-//    public DataSource mysqlDataSource() {
-//        return DataSourceBuilder.create().build();
-//    }
+    @Value("classpath:/script/postgres/security_jdbc_users.sql")
+    private Resource dataScript;
+
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
+        final DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
+        initializer.setDatabasePopulator(databasePopulator());
+        return initializer;
+    }
+
+    private DatabasePopulator databasePopulator() {
+        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(dataScript);
+        return populator;
+    }
 
 }
 

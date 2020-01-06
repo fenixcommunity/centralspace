@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
 import javax.sql.DataSource;
@@ -21,6 +23,7 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1A
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Configuration
 @EnableWebSecurity // (debug = true)
@@ -114,7 +117,7 @@ public abstract class AutoSecurityConfig {
     private String groupAuthoritiesByUsername() {
         return "select g.id, g.group_name, ga.authority " +
                 "from groups g, group_members gm, group_authorities ga " +
-                "where gm.username = 'DB_USER' and g.id = ga.group_id and g.id = gm.group_id;";
+                "where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id";
     }
 
     @Configuration
@@ -122,13 +125,22 @@ public abstract class AutoSecurityConfig {
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher(API_PATH + "/**").authorizeRequests()
+            http
+                    .exceptionHandling()
+                    .authenticationEntryPoint(forbiddenEntryPoint())
+                    .and()
+                    .antMatcher(API_PATH + "/**").authorizeRequests()
                     .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
                     .antMatchers(APP_AUTH_LIST).hasRole(ADMIN.name())
                     .antMatchers(NO_AUTH_LIST).permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .httpBasic();
+        }
+
+        @Bean
+        AuthenticationEntryPoint forbiddenEntryPoint() {
+            return new HttpStatusEntryPoint(FORBIDDEN);
         }
     }
 
@@ -143,7 +155,11 @@ public abstract class AutoSecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
+            http
+                    .exceptionHandling()
+                    .authenticationEntryPoint(forbiddenEntryPoint())
+                    .and()
+                    .authorizeRequests()
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
                     .antMatchers(NO_AUTH_LIST).permitAll() // or hasAnyRole
                     .anyRequest().authenticated()
@@ -166,11 +182,18 @@ public abstract class AutoSecurityConfig {
         }
 
         @Bean
+        AuthenticationEntryPoint forbiddenEntryPoint() {
+            return new HttpStatusEntryPoint(FORBIDDEN);
+        }
+
+        @Bean
         public JdbcTokenRepositoryImpl tokenRepository() {
             JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
             tokenRepository.setCreateTableOnStartup(false);
             tokenRepository.setDataSource(dataSource);
             return tokenRepository;
         }
+
+        https://www.baeldung.com/securing-a-restful-web-service-with-spring-security
     }
 }

@@ -22,11 +22,16 @@ import static org.apache.commons.lang3.StringUtils.removeStart;
 final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     private static final String BEARER = "Bearer";
 
+    //look also: FilterChainProxy contains:
+//    context.request.async.WebAsyncManagerIntegrationFilter
+//    context.SecurityContextPersistenceFilter
+//    header.HeaderWriterFilter
+//    authentication.logout.LogoutFilter
+//    authentication.UsernamePasswordAuthenticationFilter
     TokenAuthenticationFilter(final RequestMatcher requiresAuth) {
         super(requiresAuth);
     }
 
-    //todo refactor
     @Override
     public Authentication attemptAuthentication(
             final HttpServletRequest request,

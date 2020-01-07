@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.model;
+package com.fenixcommunity.centralspace.domain.model.mounted;
 
 import com.fenixcommunity.centralspace.domain.converter.ZonedDateTimeJpaConverter;
 import lombok.Getter;

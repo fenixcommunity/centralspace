@@ -8,7 +8,8 @@ import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.A
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
-import com.fenixcommunity.centralspace.domain.configuration.DomainConfig;
+import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
+import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -21,7 +22,9 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
 @Configuration
 @ComponentScan(value = {"com.fenixcommunity.centralspace.app"},
         excludeFilters = @Filter(IgnoreDuringScan.class))
-@Import({DomainConfig.class,
+@Import({
+        PostgresDomainConfig.class,
+        H2DomainConfig.class,
         UtilitiesConfig.class,
         AutoSecurityConfig.class,
 //        AdvancedSecurityConfig.class,

@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.domain.core;
 
-import com.fenixcommunity.centralspace.domain.model.account.Account;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;

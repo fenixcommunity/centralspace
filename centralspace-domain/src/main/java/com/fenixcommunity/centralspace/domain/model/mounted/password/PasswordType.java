@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.model.password;
+package com.fenixcommunity.centralspace.domain.model.mounted.password;
 
 public enum PasswordType {
     TO_CENTRALSPACE {

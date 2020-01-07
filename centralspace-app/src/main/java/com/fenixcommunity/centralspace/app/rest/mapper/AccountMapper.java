@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.mapper;
 
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
-import com.fenixcommunity.centralspace.domain.model.account.Account;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.Level;
 
 import static java.util.Objects.isNull;

@@ -6,7 +6,7 @@ import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundExcept
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
-import com.fenixcommunity.centralspace.domain.model.account.Account;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

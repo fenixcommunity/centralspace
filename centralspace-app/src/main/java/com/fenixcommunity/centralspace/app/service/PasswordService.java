@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.service;
 
-import com.fenixcommunity.centralspace.domain.model.password.Password;
-import com.fenixcommunity.centralspace.domain.repository.PasswordRepository;
+import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
+import com.fenixcommunity.centralspace.domain.repository.mounted.PasswordRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

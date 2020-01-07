@@ -1,8 +1,8 @@
-package com.fenixcommunity.centralspace.domain.model.password;
+package com.fenixcommunity.centralspace.domain.model.mounted.password;
 
 import com.fenixcommunity.centralspace.domain.converter.CryptoJpaConverter;
-import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
-import com.fenixcommunity.centralspace.domain.model.account.Account;
+import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

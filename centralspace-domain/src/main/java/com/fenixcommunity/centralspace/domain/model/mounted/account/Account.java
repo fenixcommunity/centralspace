@@ -1,9 +1,9 @@
-package com.fenixcommunity.centralspace.domain.model.account;
+package com.fenixcommunity.centralspace.domain.model.mounted.account;
 
 import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
 import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
-import com.fenixcommunity.centralspace.domain.model.AbstractBaseEntity;
-import com.fenixcommunity.centralspace.domain.model.password.Password;
+import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
+import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

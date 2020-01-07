@@ -1,5 +1,8 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
+import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationFailureHandler;
+import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationSuccessHandler;
+import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppBasicAuthenticationEntryPoint;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +15,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 import javax.sql.DataSource;
 
@@ -23,9 +27,7 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1A
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 
-@Configuration
 @EnableWebSecurity // (debug = true)
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
 //todo FieldDefaults private final??
@@ -127,7 +129,7 @@ public abstract class AutoSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
-                    .authenticationEntryPoint(forbiddenEntryPoint())
+                    .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
                     .and()
                     .antMatcher(API_PATH + "/**").authorizeRequests()
                     .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
@@ -139,25 +141,31 @@ public abstract class AutoSecurityConfig {
         }
 
         @Bean
-        AuthenticationEntryPoint forbiddenEntryPoint() {
-            return new HttpStatusEntryPoint(FORBIDDEN);
+        public BasicAuthenticationEntryPoint appBasicAuthenticationEntryPoint() {
+            return new AppBasicAuthenticationEntryPoint();
         }
+
     }
 
     @Configuration
     @Order(2)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private final DataSource dataSource;
+        private final AppBasicAuthenticationEntryPoint basicAuthenticationEntryPoint;
 
-        public FormLoginWebSecurityConfigurerAdapter(DataSource dataSource) {
+        public FormLoginWebSecurityConfigurerAdapter(DataSource dataSource,
+                                                     AppBasicAuthenticationEntryPoint basicAuthenticationEntryPoint) {
             this.dataSource = dataSource;
+            this.basicAuthenticationEntryPoint = basicAuthenticationEntryPoint;
         }
+
+        check
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
-                    .authenticationEntryPoint(forbiddenEntryPoint())
+                    .authenticationEntryPoint(basicAuthenticationEntryPoint)
                     .and()
                     .authorizeRequests()
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
@@ -165,6 +173,8 @@ public abstract class AutoSecurityConfig {
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
+                    .successHandler(appAuthenticationSuccessHandler())
+                    .failureHandler(appAuthenticationFailureHandler())
                     .and()
                     .rememberMe().key(REMEMBER_ME_KEY)
                     .rememberMeCookieName(REMEMBER_ME_COOKIE)
@@ -182,8 +192,13 @@ public abstract class AutoSecurityConfig {
         }
 
         @Bean
-        AuthenticationEntryPoint forbiddenEntryPoint() {
-            return new HttpStatusEntryPoint(FORBIDDEN);
+        public AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
+            return new AppAuthenticationSuccessHandler();
+        }
+
+        @Bean
+        public AuthenticationFailureHandler appAuthenticationFailureHandler() {
+            return new AppAuthenticationFailureHandler();
         }
 
         @Bean
@@ -194,6 +209,5 @@ public abstract class AutoSecurityConfig {
             return tokenRepository;
         }
 
-        https://www.baeldung.com/securing-a-restful-web-service-with-spring-security
     }
 }

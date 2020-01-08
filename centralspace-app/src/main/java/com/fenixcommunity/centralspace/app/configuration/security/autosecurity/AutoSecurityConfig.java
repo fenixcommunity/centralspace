@@ -1,8 +1,7 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationFailureHandler;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationSuccessHandler;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppBasicAuthenticationEntryPoint;
+import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.PreviousPageAuthenticationSuccessHandler;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 import javax.sql.DataSource;
 
@@ -129,7 +127,6 @@ public abstract class AutoSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
-                    .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
                     .and()
                     .antMatcher(API_PATH + "/**").authorizeRequests()
                     .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
@@ -140,32 +137,22 @@ public abstract class AutoSecurityConfig {
                     .httpBasic();
         }
 
-        @Bean
-        public BasicAuthenticationEntryPoint appBasicAuthenticationEntryPoint() {
-            return new AppBasicAuthenticationEntryPoint();
-        }
-
     }
 
     @Configuration
     @Order(2)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private final DataSource dataSource;
-        private final AppBasicAuthenticationEntryPoint basicAuthenticationEntryPoint;
 
-        public FormLoginWebSecurityConfigurerAdapter(DataSource dataSource,
-                                                     AppBasicAuthenticationEntryPoint basicAuthenticationEntryPoint) {
+        public FormLoginWebSecurityConfigurerAdapter(DataSource dataSource) {
             this.dataSource = dataSource;
-            this.basicAuthenticationEntryPoint = basicAuthenticationEntryPoint;
         }
-
-        check
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
-                    .authenticationEntryPoint(basicAuthenticationEntryPoint)
+//                    .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
                     .and()
                     .authorizeRequests()
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
@@ -193,7 +180,7 @@ public abstract class AutoSecurityConfig {
 
         @Bean
         public AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
-            return new AppAuthenticationSuccessHandler();
+            return new PreviousPageAuthenticationSuccessHandler();
         }
 
         @Bean

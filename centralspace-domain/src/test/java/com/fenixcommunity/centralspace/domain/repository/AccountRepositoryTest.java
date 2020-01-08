@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@TestPropertySource(locations = {"classpath:domain.properties"})
+@TestPropertySource(locations = {"classpath:domain-test.properties"})
 @ContextConfiguration(classes = DomainConfigForTest.class)
 //@AutoConfigureTestDatabase(replace = NONE)
 @SqlGroup({
@@ -41,10 +41,9 @@ public class AccountRepositoryTest {
 
     @Autowired
     private AccountRepository repository;
-    check
+//    check
 
     @Test
-
     public void repoInitTest() {
         assertNotNull(testEntityManager);
         assertNotNull(dataSource);

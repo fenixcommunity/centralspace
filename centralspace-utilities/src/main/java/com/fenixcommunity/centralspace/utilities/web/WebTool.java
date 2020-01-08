@@ -6,6 +6,7 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -30,5 +31,9 @@ public class WebTool {
         HttpHeaders responseHeaders = new HttpHeaders();
         headers.forEach(responseHeaders::add);
         return responseHeaders;
+    }
+
+    public static Optional<String> getPreviousPageByRequest(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader("Referer"));
     }
 }

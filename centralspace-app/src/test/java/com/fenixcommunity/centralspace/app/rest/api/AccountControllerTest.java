@@ -27,9 +27,17 @@ import java.util.Optional;
 
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.removeLinks;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -60,7 +68,7 @@ public class AccountControllerTest {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private ZonedDateTime dateTime;
 
-    private static final String BASE_ACCOUNT_URL = "/account/";
+    private static final String BASE_ACCOUNT_URL = "/api/account/";
     private Account account;
 
     @BeforeEach

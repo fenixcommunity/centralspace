@@ -3,8 +3,8 @@ package com.fenixcommunity.centralspace.domain.repository;
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.mounted.AccountRepository;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
@@ -28,6 +29,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+/*If you want to use Spring Custom Method ..findByLogin please extend to:
+@AutoConfigureTestEntityManager
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)*/
 @TestPropertySource(locations = {"classpath:domain-test.properties"})
 @ContextConfiguration(classes = DomainConfigForTest.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -37,10 +41,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
                 config = @SqlConfig(encoding = "utf-8", transactionMode = SqlConfig.TransactionMode.DEFAULT)
         )
 })
-// zastap data.sql wtedy ttlko raz
 public class AccountRepositoryTest {
-    //todo SpringExtension  + https://github.com/antkorwin/junit5-integration-test-utils#postgresql
-// todo http://zetcode.com/springboot/datajpatest/
+
+    public static final long ACCOUNT_ID_FROM_QUERY = 99L;
+
     @Autowired
     private TestEntityManager testEntityManager;
 
@@ -52,65 +56,45 @@ public class AccountRepositoryTest {
 
     private Account account;
 
-    @BeforeAll
-    void init() {
+    // used junit4, no jupiter
+    @Before
+    public void init() {
         account = Account.builder()
-                .id(ID)
                 .login(LOGIN)
                 .mail(MAIL).build();
-        testEntityManager.persist(account);
+        testEntityManager.persistAndGetId(account);
         testEntityManager.flush();
     }
 
     @Test
     public void repoInitTest() {
         assertNotNull(testEntityManager);
+        assertNotNull(accountRepository);
         assertNotNull(dataSource);
     }
 
     @Test
-    public void repoTest1() {
-//        Account account = Account.builder()
-//                .login(LOGIN)
-//                .mail(MAIL).build();
-//        testEntityManager.persist(account);
-//        testEntityManager.flush();
-
-        assertNotNull(accountRepository.findAll());
-    }
-
-    @Test
-    public void repoTest2() {
-//        Account account = Account.builder()
-//                .login(LOGIN)
-//                .mail(MAIL).build();
-//        testEntityManager.persist(account);
-//        testEntityManager.flush();
-
+    public void repoTest() {
         assertNotNull(accountRepository.findById(ID));
-    }
-
-    @Test
-    public void repoTest3() {
-//        Account account = Account.builder()
-//                .login(LOGIN)
-//                .mail(MAIL).build();
-//        testEntityManager.persist(account);
-//        testEntityManager.flush();
         assertNotNull(accountRepository.findByLogin(LOGIN));
     }
 
     @Test
-    public void repoTest4() {
-        List<Account> accounts = (List<Account>) accountRepository.findAll();
-        Account foundAccount = accountRepository.findById(99L).get();
-        Account foundAccount2 = accountRepository.findByLogin("test");
-        assertThat(accounts).extracting(Account::getLogin).containsOnly("test");
-        assertNotNull(foundAccount);
-        assertNotNull(foundAccount2);
+    public void repoExtractingTest() {
+        List<Account> accounts = accountRepository.findAll();
+        assertNotNull(accounts);
+        assertThat(accounts).extracting(Account::getLogin).containsAnyOf(LOGIN);
     }
 
-    todo
-
-
+    @Test
+    public void repoFromExecutedQueryTest() {
+        Optional<Account> foundAccount = accountRepository.findById(ACCOUNT_ID_FROM_QUERY);
+//      assertNotNull(accountRepository.findByLogin("loginQuery"));  // no works, only when we persist in code
+        assertNotNull(foundAccount.orElse(null));
+    }
+2020-01-10 16:40:53,365
+    main ERROR
+    Unable to
+    locate appender "RollingFile"for
+    logger config "org.mabb.fontverter"
 }

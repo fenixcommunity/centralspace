@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestPropertySource(locations = {"classpath:security.properties"})
 @ExtendWith(MockitoExtension.class)
-public class CryptoJpaConverterTest {
+class CryptoJpaConverterTest {
 
     @ParameterizedTest
     @ValueSource(strings = {Var.PASSWORD_HIGH, Var.PASSWORD_LOW})

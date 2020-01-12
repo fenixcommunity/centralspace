@@ -27,17 +27,9 @@ import java.util.Optional;
 
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.removeLinks;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -53,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
 // 4 APPROACH https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/
-public class AccountControllerTest {
+class AccountControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -72,7 +64,7 @@ public class AccountControllerTest {
     private Account account;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         JacksonTester.initFields(this, new ObjectMapper());
 
         initAccount();
@@ -90,7 +82,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void shouldReturnResponse_ForAccountIdCall() throws Exception {
+    void shouldReturnResponse_ForAccountIdCall() throws Exception {
         var response = mvc.perform(get(BASE_ACCOUNT_URL + ID)
                 // when POST .content(jacksonTester.write(account).getJson())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -105,7 +97,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void shouldReturnOkData_ForAccountIdCall() throws Exception {
+    void shouldReturnOkData_ForAccountIdCall() throws Exception {
         mvc.perform(get(BASE_ACCOUNT_URL + ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -121,7 +113,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void shouldSetHeaderAndCookie_AfterFilterAction() throws Exception {
+    void shouldSetHeaderAndCookie_AfterFilterAction() throws Exception {
         var response = mvc.perform(get(BASE_ACCOUNT_URL + ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

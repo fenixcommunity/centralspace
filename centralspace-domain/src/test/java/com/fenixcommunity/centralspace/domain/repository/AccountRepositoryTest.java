@@ -21,9 +21,7 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -41,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
                 config = @SqlConfig(encoding = "utf-8", transactionMode = SqlConfig.TransactionMode.DEFAULT)
         )
 })
-public class AccountRepositoryTest {
+class AccountRepositoryTest {
 
     public static final long ACCOUNT_ID_FROM_QUERY = 99L;
 
@@ -92,9 +90,4 @@ public class AccountRepositoryTest {
 //      assertNotNull(accountRepository.findByLogin("loginQuery"));  // no works, only when we persist in code
         assertNotNull(foundAccount.orElse(null));
     }
-2020-01-10 16:40:53,365
-    main ERROR
-    Unable to
-    locate appender "RollingFile"for
-    logger config "org.mabb.fontverter"
 }

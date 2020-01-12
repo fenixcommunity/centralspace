@@ -1,7 +1,6 @@
 package com.fenixcommunity.centralspace.app.configuration.swaggerdoc;
 
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
-import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +21,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.getSimpleClassName;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_URL;

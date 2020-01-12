@@ -35,7 +35,7 @@ import static org.springframework.util.Assert.*;
 
 @DisplayName("Test to check PasswordValidator")
 @ExtendWith(MockitoExtension.class)
-public class PasswordValidatorTest {
+class PasswordValidatorTest {
 
     @InjectMocks
     private ValidatorFactory validatorFactory;

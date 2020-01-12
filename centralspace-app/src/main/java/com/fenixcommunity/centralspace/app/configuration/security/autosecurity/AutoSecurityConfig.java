@@ -32,24 +32,25 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public abstract class AutoSecurityConfig {
 
-    static String API_PATH = "/api";
-    static String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
-    static String REMEMBER_ME_COOKIE = "remembermecookie";
-    static int TOKEN_VALIDITY_SECONDS = 60 * 60;
-    static String[] APP_AUTH_LIST = {
+    private final static String API_PATH = "/api";
+    private final static String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
+    private final static String REMEMBER_ME_COOKIE = "remembermecookie";
+    private final static int TOKEN_VALIDITY_SECONDS = 60 * 60;
+
+    private final static String[] APP_AUTH_LIST = {
             API_PATH + "/account/**",
             API_PATH + "/doc/**",
             API_PATH + "/mail/**",
             API_PATH + "/password/**",
             API_PATH + "/register/**"
     };
-    static String[] BASIC_AUTH_LIST = {
+    private final static String[] BASIC_AUTH_LIST = {
             API_PATH + "/resource/**"
     };
-    static String[] NO_AUTH_LIST = {
+    private final static String[] NO_AUTH_LIST = {
             API_PATH + "/logger/**"
     };
-    static String[] SWAGGER_AUTH_LIST = {
+    private final static String[] SWAGGER_AUTH_LIST = {
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources",

@@ -7,7 +7,7 @@ import org.junit.jupiter.params.converter.ArgumentConverter;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 
-public class CryptoJpaConverterTestHelper implements ArgumentConverter {
+class CryptoJpaConverterTestHelper implements ArgumentConverter {
 
     private CryptoJpaConverter cryptoJpaConverter = new CryptoJpaConverter();
 

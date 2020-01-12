@@ -1,2 +1,3 @@
--- init during start after schema.sql
-select 1 from users;
+-- init during app starting after schema.sql (Primary database)
+
+select 1 from account;

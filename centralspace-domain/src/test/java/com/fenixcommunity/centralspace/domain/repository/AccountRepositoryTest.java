@@ -24,6 +24,8 @@ import java.util.Optional;
 import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.DEFAULT;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -35,13 +37,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SqlGroup({
         @Sql(scripts = {"classpath:/script/schema-test.sql"},
-                executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,
-                config = @SqlConfig(encoding = "utf-8", transactionMode = SqlConfig.TransactionMode.DEFAULT)
+                executionPhase = BEFORE_TEST_METHOD,
+                config = @SqlConfig(encoding = "utf-8", transactionMode = DEFAULT)
         )
 })
-class AccountRepositoryTest {
+public class AccountRepositoryTest {
 
-    public static final long ACCOUNT_ID_FROM_QUERY = 99L;
+    private static final long ACCOUNT_ID_FROM_QUERY = 99L;
 
     @Autowired
     private TestEntityManager testEntityManager;
@@ -52,12 +54,11 @@ class AccountRepositoryTest {
     @Autowired
     private AccountRepository accountRepository;
 
-    private Account account;
-
     // used junit4, no jupiter
     @Before
     public void init() {
-        account = Account.builder()
+        // magic, we don't need class var in Before method
+        Account account = Account.builder()
                 .login(LOGIN)
                 .mail(MAIL).build();
         testEntityManager.persistAndGetId(account);

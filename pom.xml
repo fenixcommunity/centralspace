@@ -224,6 +224,11 @@
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2database.version}</version>
+            </dependency>
             <!-- COMMONS DEPENDENCIES -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -231,12 +236,6 @@
                 <version>${jwttoken.version}</version>
             </dependency>
             <!-- TEST DEPENDENCIES -->
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2database.version}</version>
-                <scope>test</scope>
-            </dependency>
             <dependency>
                 <groupId>com.icegreen</groupId>
                 <artifactId>greenmail-spring</artifactId>

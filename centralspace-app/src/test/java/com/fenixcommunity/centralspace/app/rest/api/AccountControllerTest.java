@@ -72,7 +72,7 @@ class AccountControllerTest {
 
     private void initAccount() {
 //            .apply(SecurityMockMvcConfigurers.springSecurity())
-        account = Account.builder()
+        Account account = Account.builder()
                 .id(ID)
                 .login(LOGIN)
                 .mail(MAIL)
@@ -82,6 +82,7 @@ class AccountControllerTest {
     }
 
     @Test
+// we can add also in method level    @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
     void shouldReturnResponse_ForAccountIdCall() throws Exception {
         var response = mvc.perform(get(BASE_ACCOUNT_URL + ID)
                 // when POST .content(jacksonTester.write(account).getJson())

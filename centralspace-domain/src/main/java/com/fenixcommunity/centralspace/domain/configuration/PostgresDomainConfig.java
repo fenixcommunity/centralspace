@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -72,7 +73,8 @@ public class PostgresDomainConfig {
     }
 
     @Bean
-    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
+    @Order(1)
+    public DataSourceInitializer dataSourceInitializer(final @Qualifier("postgresDataSource") DataSource dataSource) {
         final DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(databasePopulator());

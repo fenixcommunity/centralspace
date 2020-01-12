@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.domain.configuration;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -9,7 +10,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -30,8 +36,8 @@ import javax.sql.DataSource;
 @PropertySource(value = {"classpath:domain.properties"})
 public class H2DomainConfig {
 
-//    @Value("classpath:/script/h2/scripts.sql")
-//    private Resource dataScript;
+    @Value("classpath:/script/h2/scripts.sql")
+    private Resource dataScript;
 
     @Bean(name = "h2DataSource")
     @ConfigurationProperties(prefix = "postgres.datasource")
@@ -52,6 +58,8 @@ public class H2DomainConfig {
                 .build();
     }
 
+    console
+
     @Bean(name = "h2TransactionManager")
     public PlatformTransactionManager transactionManager(
             @Qualifier("h2EntityManagerFactory") EntityManagerFactory
@@ -60,19 +68,22 @@ public class H2DomainConfig {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
-//    @Bean
-//    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
-//        final DataSourceInitializer initializer = new DataSourceInitializer();
-//        initializer.setDataSource(dataSource);
-//        initializer.setDatabasePopulator(databasePopulator());
-//        return initializer;
-//    }
-//
-//    private DatabasePopulator databasePopulator() {
-//        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-//        populator.addScript(dataScript);
-//        return populator;
-//    }
+    @Bean
+    @Order(2)
+    public DataSourceInitializer dataSourceInitializer(
+            final @Qualifier("h2DataSource") DataSource dataSource,
+            @Value("classpath:/script/h2/initialization.sql") Resource initializationScript) {
+        final DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
+        initializer.setDatabasePopulator(databasePopulator());
+        return initializer;
+    }
+
+    private DatabasePopulator databasePopulator() {
+        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(dataScript);
+        return populator;
+    }
 
 }
 

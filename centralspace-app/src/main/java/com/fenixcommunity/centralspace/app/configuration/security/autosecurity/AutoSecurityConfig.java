@@ -4,6 +4,7 @@ import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.h
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.PreviousPageAuthenticationSuccessHandler;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -59,9 +60,9 @@ public abstract class AutoSecurityConfig {
             "/webjars/**"
     };
 
-    DataSource dataSource;
+    private final DataSource dataSource;
 
-    public AutoSecurityConfig(DataSource dataSource) {
+    public AutoSecurityConfig(final @Qualifier("h2DataSource") DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -145,7 +146,7 @@ public abstract class AutoSecurityConfig {
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private final DataSource dataSource;
 
-        public FormLoginWebSecurityConfigurerAdapter(DataSource dataSource) {
+        public FormLoginWebSecurityConfigurerAdapter(final @Qualifier("h2DataSource") DataSource dataSource) {
             this.dataSource = dataSource;
         }
 

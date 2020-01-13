@@ -37,10 +37,11 @@
         <spring-core.version>5.2.2.RELEASE</spring-core.version>
         <spring-boot-security.version>2.2.2.RELEASE</spring-boot-security.version>
         <spring-log4j2.version>2.2.2.RELEASE</spring-log4j2.version>
-        <springfox-swagger2.version>3.0.0-SNAPSHOT</springfox-swagger2.version>
-        <springfox-swagger-ui.version>3.0.0-SNAPSHOT</springfox-swagger-ui.version>
-        <springfox-swagger-webmvc.version>3.0.0-SNAPSHOT</springfox-swagger-webmvc.version>
-        <springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
+        <!--a lot of bugs:-->
+        <!--<springfox-swagger-webmvc.version>3.0.0-SNAPSHOT</springfox-swagger-webmvc.version>-->
+        <!--<springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>-->
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.8</postgresql.version>
         <!-- COMMONS DEPENDENCIES -->
@@ -167,16 +168,6 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger-ui.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-bean-validators</artifactId>
-                <version>${springfox-validators.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-spring-webmvc</artifactId>
-                <version>${springfox-swagger-webmvc.version}</version>
             </dependency>
             <!--no works for latest Spring-->
             <!--<artifactId>springfox-data-rest</artifactId>-->

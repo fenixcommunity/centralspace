@@ -72,16 +72,6 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-swagger-ui.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-            <version>${springfox-validators.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-spring-webmvc</artifactId>
-            <version>${springfox-swagger-webmvc.version}</version>
-        </dependency>
         <!--no works for latest Spring-->
         <!--<artifactId>springfox-data-rest</artifactId>-->
 

@@ -38,12 +38,15 @@ public abstract class AutoSecurityConfig {
     private final static String REMEMBER_ME_COOKIE = "remembermecookie";
     private final static int TOKEN_VALIDITY_SECONDS = 60 * 60;
 
-    private final static String[] APP_AUTH_LIST = {
+    private final static String[] ADMIN_API_AUTH_LIST = {
             API_PATH + "/account/**",
             API_PATH + "/doc/**",
             API_PATH + "/mail/**",
             API_PATH + "/password/**",
             API_PATH + "/register/**"
+    };
+    private final static String[] ADMIN_FORM_AUTH_LIST = {
+            "/h2-console/**"
     };
     private final static String[] BASIC_AUTH_LIST = {
             API_PATH + "/resource/**"
@@ -132,7 +135,7 @@ public abstract class AutoSecurityConfig {
                     .and()
                     .antMatcher(API_PATH + "/**").authorizeRequests()
                     .antMatchers(BASIC_AUTH_LIST).hasRole(BASIC.name())
-                    .antMatchers(APP_AUTH_LIST).hasRole(ADMIN.name())
+                    .antMatchers(ADMIN_API_AUTH_LIST).hasRole(ADMIN.name())
                     .antMatchers(NO_AUTH_LIST).permitAll()
                     .anyRequest().authenticated()
                     .and()
@@ -140,7 +143,7 @@ public abstract class AutoSecurityConfig {
         }
 
     }
-
+//    PERSISTENT_LOGINS dodaj
     @Configuration
     @Order(2)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
@@ -158,9 +161,13 @@ public abstract class AutoSecurityConfig {
                     .and()
                     .authorizeRequests()
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
+                    .antMatchers(mergeStringArrays(ADMIN_FORM_AUTH_LIST)).hasRole(ADMIN.name())
                     .antMatchers(NO_AUTH_LIST).permitAll() // or hasAnyRole
                     .anyRequest().authenticated()
                     .and()
+                    .csrf().disable()
+                    aa.headers().frameOptions().disable()
+                    aaa.and()
                     .formLogin()
                     .successHandler(appAuthenticationSuccessHandler())
                     .failureHandler(appAuthenticationFailureHandler())
@@ -193,7 +200,7 @@ public abstract class AutoSecurityConfig {
         @Bean
         public JdbcTokenRepositoryImpl tokenRepository() {
             JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-            tokenRepository.setCreateTableOnStartup(false);
+            tokenRepository.setCreateTableOnStartup(true);
             tokenRepository.setDataSource(dataSource);
             return tokenRepository;
         }

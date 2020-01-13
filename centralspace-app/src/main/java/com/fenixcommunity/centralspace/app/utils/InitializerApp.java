@@ -22,7 +22,7 @@ public class InitializerApp implements CommandLineRunner {
         String swaggerInfo = format("Please look at swager UI page:" + LINE +
                 "http://%s/app/swagger-ui.html#/", swagger2Host);
         String h2Info = format("Please look at h2 database console:" + LINE +
-                "http://%s/h2-console", h2Host);
+                "http://%s/app/h2-console", h2Host);
         System.out.println(appInfo + LINE + swaggerInfo + LINE + h2Info + LINE);
     }
 }

@@ -42,7 +42,7 @@
         <springfox-swagger-webmvc.version>3.0.0-SNAPSHOT</springfox-swagger-webmvc.version>
         <springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>
         <!-- PERSISTENCE DEPENDENCIES -->
-        <postgresql.version>42.2.5</postgresql.version>
+        <postgresql.version>42.2.8</postgresql.version>
         <!-- COMMONS DEPENDENCIES -->
         <jwttoken.version>0.9.1</jwttoken.version>
         <!-- UTILITIES DEPENDENCIES -->

@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -39,9 +38,6 @@ import javax.sql.DataSource;
 @PropertySource(value = {"classpath:domain.properties"})
 public class PostgresDomainConfig {
 
-    @Value("classpath:/script/postgres/security_jdbc_users.sql")
-    private Resource dataScript;
-
     @Primary
     @Bean(name = "postgresDataSource")
     @ConfigurationProperties(prefix = "postgres.datasource")
@@ -52,10 +48,8 @@ public class PostgresDomainConfig {
     @Primary
     @Bean(name = "postgresEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean
-    entityManagerFactory(
-            EntityManagerFactoryBuilder builder,
-            @Qualifier("postgresDataSource") DataSource dataSource
-    ) {
+    entityManagerFactory(EntityManagerFactoryBuilder builder,
+                         @Qualifier("postgresDataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
                 .packages("com.fenixcommunity.centralspace.domain")
@@ -66,27 +60,27 @@ public class PostgresDomainConfig {
     @Primary
     @Bean(name = "postgresTransactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("postgresEntityManagerFactory") EntityManagerFactory
-                    entityManagerFactory
-    ) {
+            @Qualifier("postgresEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
-    @Bean
-    @Order(1)
-    public DataSourceInitializer dataSourceInitializer(final @Qualifier("postgresDataSource") DataSource dataSource) {
+    @Primary
+    @Bean(name = "postgresDataSourceInitializer")
+    public DataSourceInitializer dataSourceInitializer(final @Qualifier("postgresDataSource") DataSource dataSource,
+                                                       @Value("classpath:/script/postgres/postgres_initialization.sql") Resource initializationScript) {
         final DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(databasePopulator());
+        initializer.setDatabasePopulator(databasePopulator(initializationScript));
         return initializer;
     }
 
-    private DatabasePopulator databasePopulator() {
+    private DatabasePopulator databasePopulator(Resource initializationScript) {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(dataScript);
+        populator.setSeparator("/");
+        populator.addScript(initializationScript);
         return populator;
     }
-
+//    https://github.com/spring-projects/spring-boot/issues/6217
 }
 
 

@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.restcaller;
+package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate;
 
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.client.RestTemplateBuilder;

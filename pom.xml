@@ -29,6 +29,7 @@
         <!-- SPRING DEPENDENCIES -->
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <spring-boot-web.version>2.2.2.RELEASE</spring-boot-web.version>
+        <spring-boot-webflux.version>2.2.2.RELEASE</spring-boot-webflux.version>
         <spring-boot-data.version>2.2.2.RELEASE</spring-boot-data.version>
         <spring-boot-tomcat.version>2.2.2.RELEASE</spring-boot-tomcat.version>
         <spring-boot-mail.version>2.2.2.RELEASE</spring-boot-mail.version>
@@ -44,6 +45,8 @@
         <!--<springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>-->
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.8</postgresql.version>
+        <h2database.version>1.4.199</h2database.version>
+        <hikariCP.version>2.6.1</hikariCP.version>
         <!-- COMMONS DEPENDENCIES -->
         <spring-boot-devtools.version>2.2.2.RELEASE</spring-boot-devtools.version>
         <jwttoken.version>0.9.1</jwttoken.version>
@@ -62,7 +65,6 @@
         <bouncycastle.version>1.56</bouncycastle.version>
         <apache-poi.version>4.1.1</apache-poi.version>
         <!-- TEST DEPENDENCIES -->
-        <h2database.version>1.4.199</h2database.version>
         <spring-boot-test.version>2.2.2.RELEASE</spring-boot-test.version>
         <spring-security-test.version>5.2.1.RELEASE</spring-security-test.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
@@ -121,6 +123,11 @@
                         <artifactId>spring-boot-starter-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webflux</artifactId>
+                <version>${spring-boot-webflux.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -221,6 +228,11 @@
                 <artifactId>h2</artifactId>
                 <scope>runtime</scope>
                 <version>${h2database.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP-java9ea</artifactId>
+                <version>${hikariCP.version}</version>
             </dependency>
             <!-- COMMONS DEPENDENCIES -->
             <dependency>

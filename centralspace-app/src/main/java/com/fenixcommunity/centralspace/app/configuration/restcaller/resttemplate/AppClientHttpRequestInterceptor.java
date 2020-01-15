@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.restcaller;
+package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate;
 
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;

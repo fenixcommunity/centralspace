@@ -16,7 +16,4 @@ public class RestRegisterResponse {
     private final String infoMessage;
     private final String redirectionLink;
     private final RegisterType registerType;
-
-//    public URL optionalRedirectionLink;
-    //todo jaka data?
 }

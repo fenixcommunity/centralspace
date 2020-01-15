@@ -3,7 +3,8 @@ package com.fenixcommunity.centralspace.app.configuration;
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
-import com.fenixcommunity.centralspace.app.configuration.restcaller.RestTemplateConfig;
+import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.RestTemplateConfig;
+import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
@@ -35,7 +36,8 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
         HttpSessionConfig.class,
         AopConfg.class,
         SwaggerConfig.class,
-        RestTemplateConfig.class
+        RestTemplateConfig.class,
+        WebClientConfig.class,
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

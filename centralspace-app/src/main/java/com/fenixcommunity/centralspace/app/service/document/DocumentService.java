@@ -16,6 +16,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.thymeleaf.TemplateEngine;
 
 import java.util.Map;
@@ -36,7 +37,10 @@ public class DocumentService {
     private final ResourceLoaderTool resourceTool;
     private final TemplateEngine templateEngine;
     private final SecurityService securityService;
+
     private final RestTemplateBuilder restTemplateBuilder;
+    // vs
+    private final WebClient webClientTemplate;
 
     public void createPdf(final String pdfFileName) {
         final IPdfCreator pdfCreator = new ITextPdfCreator(pdfFileName, resourceTool);

@@ -7,6 +7,7 @@ import lombok.Value;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -15,8 +16,9 @@ import static lombok.AccessLevel.PRIVATE;
 @Value
 @Builder
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class RestFilledRegisterForm {
+class RestFilledRegisterForm {
 
+    @NotNull
     private final String firstName;
     private final String lastName;
     private final String mail;
@@ -24,6 +26,8 @@ public class RestFilledRegisterForm {
     private final String registerURL;
 
     //todo test
+    //todo @JsonCreator
+    //todo jaka data?
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private final ZonedDateTime dateTime;

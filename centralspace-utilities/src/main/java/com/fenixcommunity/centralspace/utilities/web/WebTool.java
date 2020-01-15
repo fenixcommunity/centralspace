@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class WebTool {
-
+    //todo var in small functions <for(var ... , packages preferred instead multimoduling
     public static String removeLinks(final String content) {
         String result = content;
         if (isNotEmpty(content)) {

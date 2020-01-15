@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailService;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -16,18 +17,16 @@ import java.util.concurrent.TimeUnit;
 
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 @RestController
 @RequestMapping("/api/mail")
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PACKAGE)
 public class MailGatewayController {
     //todo account/mail/
     private final MailService mailService;
-
-    public MailGatewayController(final MailService mailService) {
-        this.mailService = mailService;
-    }
 
     @PostMapping("/basic/{to}")
     @ResponseStatus(HttpStatus.OK)

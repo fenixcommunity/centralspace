@@ -11,8 +11,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,6 +37,7 @@ import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapT
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 // todo swagger/postman
@@ -46,14 +47,10 @@ import static lombok.AccessLevel.PRIVATE;
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 //TODO @PreAuthorize("hasAuthority('ROLE_USER')")
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PACKAGE)
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;
-
-    @Autowired
-    public AccountController(final AccountService accountService) {
-        this.accountService = accountService;
-    }
 
     //todo zobacz inne narzedzia jpa repo
     // Optional
@@ -62,10 +59,10 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") final Long id) throws ResourceNotFoundException {
         final AccountDto accountDto = findByIdAndMapToDto(id);
-        singletonMap("Custom-Header", accountDto.id);
+        singletonMap("Custom-Header", accountDto.getId());
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
-                .headers(prepareResponseHeaders(singletonMap("Custom-Header", accountDto.id)))
+                .headers(prepareResponseHeaders(singletonMap("Custom-Header", accountDto.getId())))
                 .body(accountDto);
     }
 
@@ -130,6 +127,7 @@ public class AccountController {
 
     //todo przenies
     private void isRecordExistElseThrowEx(final Long id) throws ResourceNotFoundException {
+//todo        checkNotNull(id) or @Nullable?
         accountService.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }

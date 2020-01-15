@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.configuration.mail;
 
 
+import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailService;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerService;
 import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceBean;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
@@ -38,12 +39,14 @@ import static lombok.AccessLevel.PRIVATE;
 public class MailGatewayConfig {
 
     private final MailProperties mailProperties;
+    private final MailService mailService;
     private final Validator validator;
 
     @Autowired
-    public MailGatewayConfig(final ValidatorFactory validatorFactory, final MailProperties mailProperties) {
+    public MailGatewayConfig(final ValidatorFactory validatorFactory, final MailProperties mailProperties, MailService mailService) {
         this.validator = validatorFactory.getInstance(MAIL);
         this.mailProperties = mailProperties;
+        this.mailService = mailService;
     }
 //    todo we can use also
 //    @Autowired

@@ -40,9 +40,11 @@ class RegisterController {
     //todo regex
 
     private RestRegisterResponse buildRegisterResponse(final String info) {
-        final RestRegisterResponse response = new RestRegisterResponse(info, "linkredirection", RegisterType.STANDARD);
         //todo ...
-        return response;
+        return RestRegisterResponse.builder()
+                .infoMessage(info)
+                .redirectionLink("linkredirection")
+                .registerType(RegisterType.STANDARD).build();
     }
 
 }

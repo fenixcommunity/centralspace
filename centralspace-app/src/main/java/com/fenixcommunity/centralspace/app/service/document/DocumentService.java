@@ -10,6 +10,7 @@ import com.fenixcommunity.centralspace.app.service.document.pdfcreator.IPdfCreat
 import com.fenixcommunity.centralspace.app.service.document.pdfcreator.ITextPdfCreator;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,11 +23,13 @@ import java.util.Map;
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.BASIC;
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
 import static java.util.Collections.singletonMap;
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @Service
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PACKAGE)
 public class DocumentService {
 //todo to interface
 
@@ -34,15 +37,6 @@ public class DocumentService {
     private final TemplateEngine templateEngine;
     private final SecurityService securityService;
     private final RestTemplateBuilder restTemplateBuilder;
-
-    public DocumentService(
-            final ResourceLoaderTool resourceTool, final TemplateEngine templateEngine,
-            final SecurityService securityService, final RestTemplateBuilder restTemplateBuilder) {
-        this.resourceTool = resourceTool;
-        this.templateEngine = templateEngine;
-        this.securityService = securityService;
-        this.restTemplateBuilder = restTemplateBuilder;
-    }
 
     public void createPdf(final String pdfFileName) {
         final IPdfCreator pdfCreator = new ITextPdfCreator(pdfFileName, resourceTool);

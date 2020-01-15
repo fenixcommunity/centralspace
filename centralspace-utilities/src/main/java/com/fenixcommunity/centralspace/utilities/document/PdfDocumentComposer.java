@@ -43,6 +43,7 @@ public class PdfDocumentComposer {
     }
 
     public static Document composeImage(final Document document, final List<Image> images) {
+//        ImmutableList.copyOf(images)?
         float documentWidth = document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin();
         float documentHeight = document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin();
         images.forEach(i -> i.scaleToFit(documentWidth / 2, documentHeight / 2));

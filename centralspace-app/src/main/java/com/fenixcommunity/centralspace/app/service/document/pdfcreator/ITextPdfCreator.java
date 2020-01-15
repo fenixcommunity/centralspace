@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.io.File;
@@ -23,9 +24,11 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFil
 import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
 import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PUBLIC)
 public class ITextPdfCreator implements IPdfCreator {
 
     private static final String imageName = "image_to_pdf";
@@ -34,11 +37,6 @@ public class ITextPdfCreator implements IPdfCreator {
 
     private final String fileName;
     private final ResourceLoaderTool resourceTool;
-
-    public ITextPdfCreator(final String fileName, final ResourceLoaderTool resourceTool) {
-        this.fileName = fileName;
-        this.resourceTool = resourceTool;
-    }
 
     @Override
     public void createPdf() {

@@ -17,10 +17,11 @@ import java.util.Objects;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
 
 @Log4j2
-@AllArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PUBLIC) //todo change to package?
 public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
 
     private final String fileName;

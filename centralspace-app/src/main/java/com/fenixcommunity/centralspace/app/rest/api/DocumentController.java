@@ -2,9 +2,9 @@ package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.document.DocumentService;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,20 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.BASIC;
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 @RestController
 @RequestMapping("/api/doc")
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PACKAGE)
 public class DocumentController {
 
-    @Autowired
     private final DocumentService documentService;
-
-    public DocumentController(final DocumentService documentService) {
-        this.documentService = documentService;
-    }
 
     @GetMapping("/create-pdf")
     public void createPdf(@RequestParam(value = "pdfFile", defaultValue = "created_pdf") final String pdfFileName) {

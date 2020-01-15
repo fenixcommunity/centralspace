@@ -4,6 +4,7 @@ import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.A
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.EnumUtils.isValidEnum;
 
 @Service
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PACKAGE)
 public class SecurityService {
 
     private final AuthenticationFacade authenticationFacade;

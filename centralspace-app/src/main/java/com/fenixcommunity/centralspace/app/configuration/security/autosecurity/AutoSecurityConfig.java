@@ -70,7 +70,7 @@ public abstract class AutoSecurityConfig {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(getUserQuery())
@@ -129,7 +129,7 @@ public abstract class AutoSecurityConfig {
     @Order(1)
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        protected void configure(final HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
                     .and()
@@ -143,7 +143,8 @@ public abstract class AutoSecurityConfig {
         }
 
     }
-//    PERSISTENT_LOGINS dodaj
+
+    //    PERSISTENT_LOGINS dodaj
     @Configuration
     @Order(2)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
@@ -154,7 +155,7 @@ public abstract class AutoSecurityConfig {
         }
 
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        protected void configure(final HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
 //                    .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
@@ -166,7 +167,8 @@ public abstract class AutoSecurityConfig {
                     .anyRequest().authenticated()
                     .and()
                     .csrf().disable()
-                    .headers().frameOptions().sameOrigin()
+                    .headers()
+                    .frameOptions().sameOrigin()
                     .and()
                     .formLogin()
                     .successHandler(appAuthenticationSuccessHandler())
@@ -177,8 +179,13 @@ public abstract class AutoSecurityConfig {
                     .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
                     .tokenRepository(tokenRepository())
                     .and()
-                    //todo String to static final
-                    .logout().logoutUrl("/logout");
+                    .logout()
+                    .logoutUrl("/logout")
+                    .and()
+                    .sessionManagement().maximumSessions(1)
+                    .expiredUrl("/login?expired");
+            //todo String to static final
+//                 .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
 //                 .deleteCookies("JSESSIONID");
 //                 .loginPage("/login")
 //                 .failureUrl("/login-error")
@@ -188,18 +195,18 @@ public abstract class AutoSecurityConfig {
         }
 
         @Bean
-        public AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
+        AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
             return new PreviousPageAuthenticationSuccessHandler();
         }
 
         @Bean
-        public AuthenticationFailureHandler appAuthenticationFailureHandler() {
+        AuthenticationFailureHandler appAuthenticationFailureHandler() {
             return new AppAuthenticationFailureHandler();
         }
 
         @Bean
-        public JdbcTokenRepositoryImpl tokenRepository() {
-            JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        JdbcTokenRepositoryImpl tokenRepository() {
+            final JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
             tokenRepository.setCreateTableOnStartup(true);
             tokenRepository.setDataSource(dataSource);
             return tokenRepository;

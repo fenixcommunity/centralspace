@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.configuration.web;
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.RequestResponseLoggingFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.cache.CacheCookieApiFilter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,8 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Configuration
 @ComponentScan({"com.fenixcommunity.centralspace.app.rest.filter"})
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class FilterApiConfig {
 
     @Bean
@@ -30,7 +34,7 @@ public class FilterApiConfig {
     }
 
     private FilterRegistrationBean createFilterRegistration(Filter filter, String context, int order) {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
+        final FilterRegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
         registrationBean.addUrlPatterns(context);
         registrationBean.setOrder(order);
 //      registrationBean.addInitParameter("name", "value");

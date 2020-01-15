@@ -1,9 +1,13 @@
 package com.fenixcommunity.centralspace.utilities.time;
 
+import lombok.experimental.FieldDefaults;
+
 import java.time.format.DateTimeFormatter;
 
-public class TimeFormatter {
+import static lombok.AccessLevel.PRIVATE;
 
+@FieldDefaults(level = PRIVATE, makeFinal = true)
+public class TimeFormatter {
     //    DATE_TIME
     public static final DateTimeFormatter DT_FORMATTER_1 = DateTimeFormatter.ISO_DATE_TIME;
     public static final DateTimeFormatter DT_FORMATTER_2 = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss");

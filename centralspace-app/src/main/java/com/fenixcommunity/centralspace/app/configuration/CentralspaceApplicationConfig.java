@@ -11,12 +11,14 @@ import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
 import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
 import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
 @Configuration
@@ -36,6 +38,7 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
         RestTemplateConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class CentralspaceApplicationConfig {
     //todo profiles!!!

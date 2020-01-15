@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
+import lombok.experimental.FieldDefaults;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,44 +22,46 @@ import java.util.Collections;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
 import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ITextPdfCreator implements IPdfCreator {
 
     private static final String imageName = "image_to_pdf";
     private static final String imageLogoName = "it_logo";
     private static final String ENCRYPTED_SURFIX = "encrypted";
 
-    private String fileName;
+    private final String fileName;
     private final ResourceLoaderTool resourceTool;
 
-    public ITextPdfCreator(String fileName, ResourceLoaderTool resourceTool) {
+    public ITextPdfCreator(final String fileName, final ResourceLoaderTool resourceTool) {
         this.fileName = fileName;
         this.resourceTool = resourceTool;
     }
 
     @Override
     public void createPdf() {
-        String outputPdfPath = createOutputPdfFile();
-        Document document = PdfDocumentComposer.composeNewA4Document();
+        final String outputPdfPath = createOutputPdfFile();
+        final Document document = PdfDocumentComposer.composeNewA4Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(outputPdfPath));
             document.open();
 
-            var font = PdfDocumentComposer.composeFont();
-            document = PdfDocumentComposer.composeChunk(MESSAGE, document, font);
+            final var font = PdfDocumentComposer.composeFont();
+            PdfDocumentComposer.composeChunk(MESSAGE, document, font);
             document.add(Chunk.NEWLINE);
 
-            PdfPTable table = PdfDocumentComposer.composeTable(5);
-            table = PdfDocumentComposer.composeTableHeader(table);
-            Image imageLogo = Image.getInstance(readFileToByteArray(getImageLogoFile()));
-            table = PdfDocumentComposer.composeRowsWithLogo(table, imageLogo);
+            final PdfPTable table = PdfDocumentComposer.composeTable(5);
+            PdfDocumentComposer.composeTableHeader(table);
+            final Image imageLogo = Image.getInstance(readFileToByteArray(getImageLogoFile()));
+            PdfDocumentComposer.composeRowsWithLogo(table, imageLogo);
             document.add(table);
 
             document.add(Chunk.NEWLINE);
 
-            Image image = Image.getInstance(readFileToByteArray(getImageFile()));
-            document = PdfDocumentComposer.composeImage(document, Collections.singletonList(image));
+            final Image image = Image.getInstance(readFileToByteArray(getImageFile()));
+            PdfDocumentComposer.composeImage(document, Collections.singletonList(image));
         } catch (IOException | DocumentException e) {
             //todo log.error
             throw new DocumentServiceException(e.getMessage(), e);
@@ -74,7 +77,7 @@ public class ITextPdfCreator implements IPdfCreator {
         PdfStamper pdfStamper = null;
         try {
             pdfReader = new PdfReader(dest);
-            String encryptedPdfPath = dest.replace(fileName, fileName + UNDERSCORE + ENCRYPTED_SURFIX);
+            final String encryptedPdfPath = dest.replace(fileName, fileName + UNDERSCORE + ENCRYPTED_SURFIX);
             pdfStamper = new PdfStamper(pdfReader, new FileOutputStream(encryptedPdfPath));
             //todo PASSWORD from autosecurity.properties
             pdfStamper.setEncryption(PASSWORD.getBytes(), PASSWORD.getBytes(),
@@ -94,19 +97,19 @@ public class ITextPdfCreator implements IPdfCreator {
     }
 
     private String createOutputPdfFile() {
-        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
+        final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + PDF.getSubtype();
         createFileDirectories(outputPdfPath);
         return outputPdfPath;
     }
 
     private File getImageFile() throws IOException {
-        var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(imageName, PNG));
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(imageName, PNG));
         return resource.getFile();
     }
 
     private File getImageLogoFile() throws IOException {
-        var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(imageLogoName, JPG));
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(imageLogoName, JPG));
         return resource.getFile();
     }
 

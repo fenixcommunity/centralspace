@@ -1,20 +1,27 @@
 package com.fenixcommunity.centralspace.app.utils;
 
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
 import static java.lang.String.format;
+import static lombok.AccessLevel.PRIVATE;
 
 @Component
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class InitializerApp implements CommandLineRunner {
 
-    @Value("${springfox.swagger2.host}")
-    private String swagger2Host;
+    private final String swagger2Host;
 
-    @Value("${h2-console.host}")
-    private String h2Host;
+    private final String h2Host;
+
+    public InitializerApp(@Value("${h2-console.host}") String swagger2Host,
+                          @Value("${springfox.swagger2.host}") String h2Host) {
+        this.swagger2Host = swagger2Host;
+        this.h2Host = h2Host;
+    }
 
     @Override
     public void run(String... args) throws Exception {

@@ -4,6 +4,7 @@ import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.itextpdf.html2pdf.HtmlConverter;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -15,21 +16,23 @@ import java.util.Objects;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
+import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @AllArgsConstructor
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
 
-    private String fileName;
-    private Map<String, String> thymeleafVariables;
+    private final String fileName;
+    private final Map<String, String> thymeleafVariables;
 
     private final TemplateEngine templateEngine;
     private final ResourceLoaderTool resourceTool;
 
     @Override
     public void convertHtmlToPdf() {
-        var htmlContent = getHtmlBody();
-        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
+        final var htmlContent = getHtmlBody();
+        final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + FileFormat.PDF.getSubtype();
         try (var fileStream = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)), false)) {
             HtmlConverter.convertToPdf(htmlContent, fileStream);
@@ -40,13 +43,13 @@ public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
 
     @Override
     public void convertPdfToHtml() {
-        var converter = new BasicPdfConverter(fileName, resourceTool);
+        final var converter = new BasicPdfConverter(fileName, resourceTool);
         converter.convertPdfToHtml();
     }
 
     @Override
     public String getHtmlBody() {
-        var templateContext = new Context();
+        final var templateContext = new Context();
         thymeleafVariables.entrySet().forEach(x ->
                 templateContext.setVariable(x.getKey(), x.getValue()));
         return templateEngine.process(fileName, templateContext);

@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.domain.repository;
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.mounted.AccountRepository;
+import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
@@ -41,6 +43,7 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.DE
                 config = @SqlConfig(encoding = "utf-8", transactionMode = DEFAULT)
         )
 })
+@FieldDefaults(level = PRIVATE)
 public class AccountRepositoryTest {
 
     private static final long ACCOUNT_ID_FROM_QUERY = 99L;

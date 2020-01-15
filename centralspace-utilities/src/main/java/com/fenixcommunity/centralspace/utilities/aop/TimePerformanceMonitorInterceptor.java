@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.utilities.aop;
 
 import com.fenixcommunity.centralspace.utilities.time.TimeFormatter;
 import com.google.common.base.Stopwatch;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
@@ -11,8 +12,10 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.METHOD_INVOCATION_TIME_LIMIT_mS;
+import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class TimePerformanceMonitorInterceptor extends AbstractMonitoringInterceptor {
 
     public TimePerformanceMonitorInterceptor() {
@@ -23,10 +26,10 @@ public class TimePerformanceMonitorInterceptor extends AbstractMonitoringInterce
     }
 
     @Override
-    protected Object invokeUnderTrace(MethodInvocation invocation, Log dynamicLogger)
+    protected Object invokeUnderTrace(final MethodInvocation invocation, final Log dynamicLogger)
             throws Throwable {
-        String name = createInvocationTraceName(invocation);
-        Stopwatch watch = Stopwatch.createStarted();
+        final String name = createInvocationTraceName(invocation);
+        final Stopwatch watch = Stopwatch.createStarted();
         log.trace("Method " + name + " execution started at: " + LocalDateTime.now().format(TimeFormatter.DT_FORMATTER_2));
         try {
             return invocation.proceed();

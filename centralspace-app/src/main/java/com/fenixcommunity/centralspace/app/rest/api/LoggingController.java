@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.ZonedDateTime;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.randomString;
+import static lombok.AccessLevel.PRIVATE;
 
 @RestController
 @RequestMapping("/api/logger")
 @Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class LoggingController {
 
     @ResponseStatus(HttpStatus.OK)
@@ -36,7 +39,7 @@ public class LoggingController {
         log.warn("WARN Message");
         log.error("ERROR Message");
 
-        ErrorDetails errorDetails = ErrorDetails.builder()
+        final ErrorDetails errorDetails = ErrorDetails.builder()
                 .timestamp(ZonedDateTime.now())
                 .message("error")
                 .details("details")

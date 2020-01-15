@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,7 @@ import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapT
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
+import static lombok.AccessLevel.PRIVATE;
 
 // todo swagger/postman
 //todo decorator and strategy
@@ -43,12 +45,13 @@ import static java.util.Collections.singletonMap;
 @RequestMapping(value = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 //TODO @PreAuthorize("hasAuthority('ROLE_USER')")
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(final AccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -57,8 +60,8 @@ public class AccountController {
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
-        AccountDto accountDto = findByIdAndMapToDto(id);
+    public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") final Long id) throws ResourceNotFoundException {
+        final AccountDto accountDto = findByIdAndMapToDto(id);
         singletonMap("Custom-Header", accountDto.id);
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
@@ -77,7 +80,7 @@ public class AccountController {
     })
     @ApiOperation(value = "Get all Accounts")
     public ResponseEntity<List<Account>> getAll() {
-        List<Account> accounts = accountService.findAll();
+        final List<Account> accounts = accountService.findAll();
         //todo password add
         //todo AccountDto
         return ResponseEntity.ok(accounts);
@@ -85,27 +88,29 @@ public class AccountController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<BasicResponse> create(@Valid @RequestBody AccountDto accountDto) {
-        Account createdAccount = mapToJpa(accountDto);
-        Long generatedId = accountService.save(createdAccount).getId();
-        BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
+    public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
+        final Account createdAccount = mapToJpa(accountDto);
+        final Long generatedId = accountService.save(createdAccount).getId();
+        final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
     }
 
     //    todo RestErrorHandler apply
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<BasicResponse> update(@PathVariable(name = "id") Long id, @Valid @RequestBody Account requestAccount) throws ResourceNotFoundException {
+    public ResponseEntity<BasicResponse> update(
+            @PathVariable(name = "id") final Long id, @Valid @RequestBody final Account requestAccount)
+            throws ResourceNotFoundException {
         isRecordExistElseThrowEx(id);
         //todo account exist
         final Account updatedAccount = accountService.save(requestAccount);
-        BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
+        final BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
     }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity delete(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+    public ResponseEntity delete(@PathVariable(value = "id") final Long id) throws ResourceNotFoundException {
         return accountService.findById(id).map(
                 a -> {
                     accountService.deleteById(id);
@@ -114,17 +119,17 @@ public class AccountController {
     }
 
     @GetMapping("/confirm")
-    public ResponseEntity<String> confirmMessage(@PathVariable(value = "id") String id) {
+    public ResponseEntity<String> confirmMessage(@PathVariable(value = "id") final String id) {
         return ResponseEntity.ok(id);
     }
 
-    private AccountDto findByIdAndMapToDto(Long id) throws ResourceNotFoundException {
+    private AccountDto findByIdAndMapToDto(final Long id) throws ResourceNotFoundException {
         return accountService.findById(id).map(x -> AccountMapper.mapToDto(x, HIGH))
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }
 
     //todo przenies
-    private void isRecordExistElseThrowEx(Long id) throws ResourceNotFoundException {
+    private void isRecordExistElseThrowEx(final Long id) throws ResourceNotFoundException {
         accountService.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }

@@ -2,17 +2,21 @@ package com.fenixcommunity.centralspace.utilities.configuration.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Component
 @ConfigurationProperties(prefix = "resource")
 @PropertySource("classpath:resource.properties")
 @Getter
 @Setter
+@FieldDefaults(level = PRIVATE)
 public class ResourceProperties {
 
     @NotBlank

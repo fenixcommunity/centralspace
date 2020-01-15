@@ -1,8 +1,12 @@
 package com.fenixcommunity.centralspace.utilities.logger;
 
+import lombok.experimental.FieldDefaults;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import static lombok.AccessLevel.PUBLIC;
+
+@FieldDefaults(level = PUBLIC, makeFinal = true)
 public class MarkersVar {
     public static final Marker ADMIN_USER = MarkerManager.getMarker("ADMIN");
     public static final Marker GENERAL_USER = MarkerManager.getMarker("GENERAL");

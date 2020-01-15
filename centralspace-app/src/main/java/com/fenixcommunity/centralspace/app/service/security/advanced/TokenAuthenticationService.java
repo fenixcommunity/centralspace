@@ -22,10 +22,10 @@ import static lombok.AccessLevel.PRIVATE;
 final class TokenAuthenticationService implements SecuredUserAuthenticationService {
 
     @NonNull
-    TokenService tokens;
+    private final TokenService tokens;
 
     @NonNull
-    SecuredUserCrudService users;
+    private final SecuredUserCrudService users;
 
     @Override
     public Optional<String> login(final String username, final String password) {

@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.configuration.mail;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Component
 @ConfigurationProperties(prefix = "mailgateway")
 @PropertySource("classpath:mail-gateway.properties")
 @Getter
 @Setter
-public class MailProperties {
+@FieldDefaults(level = PRIVATE)
+class MailProperties {
 
     private String host;
     @Min(25)

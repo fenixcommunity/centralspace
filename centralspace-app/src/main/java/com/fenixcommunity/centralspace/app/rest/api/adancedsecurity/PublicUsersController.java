@@ -23,16 +23,17 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @AllArgsConstructor(access = PACKAGE)
 final class PublicUsersController {
+    //todo to all or validateNotNull
     @NonNull
-    SecuredUserAuthenticationService authentication;
+    private final SecuredUserAuthenticationService authentication;
     @NonNull
-    SecuredUserCrudService users;
+    private final SecuredUserCrudService users;
 
     @PostMapping("/register")
-    String register(@RequestBody RequestedUser requestedUser) {
-        String username = requestedUser.getUsername();
-        String password = requestedUser.getPassword();
-        String role = requestedUser.getRole();
+    public String register(@RequestBody final RequestedUser requestedUser) {
+        final String username = requestedUser.getUsername();
+        final String password = requestedUser.getPassword();
+        final String role = requestedUser.getRole();
         users.findByUsername(username).ifPresent(u -> {
             throw new ServiceFailedException(format("requested username:%s exist", u.getUsername()));
         });
@@ -48,9 +49,9 @@ final class PublicUsersController {
     }
 
     @PostMapping("/login")
-    String login(@RequestBody RequestedUser requestedUser) {
-        String username = requestedUser.getUsername();
-        String password = requestedUser.getPassword();
+    public String login(@RequestBody final RequestedUser requestedUser) {
+        final String username = requestedUser.getUsername();
+        final String password = requestedUser.getPassword();
         return authentication
                 .login(username, password)
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));

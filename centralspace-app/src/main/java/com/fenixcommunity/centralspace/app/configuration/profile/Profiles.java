@@ -1,5 +1,10 @@
 package com.fenixcommunity.centralspace.app.configuration.profile;
 
+import lombok.experimental.FieldDefaults;
+
+import static lombok.AccessLevel.PRIVATE;
+
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class Profiles {
 
     public static final String STANDALONE_PROFILE = "STANDALONE_PROFILE";

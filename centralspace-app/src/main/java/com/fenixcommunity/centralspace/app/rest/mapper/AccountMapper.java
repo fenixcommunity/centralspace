@@ -1,28 +1,32 @@
 package com.fenixcommunity.centralspace.app.rest.mapper;
 
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.rest.dto.AccountDto.AccountDtoBuilder;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.Level;
+import lombok.experimental.FieldDefaults;
 
 import static java.util.Objects.isNull;
+import static lombok.AccessLevel.PRIVATE;
 
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountMapper {
 
-    public static AccountDto mapToDto(Account account, Level level) {
-        AccountDto rest = new AccountDto();
+    public static AccountDto mapToDto(final Account account, final Level level) {
+        final AccountDtoBuilder dtoBuilder = AccountDto.builder();
         if (Level.HIGH.equals(level)) {
             if (!isNull(account.getId())) {
-                rest.id = account.getId().toString();
+                dtoBuilder.id(account.getId().toString());
             }
         }
-        rest.login = account.getLogin();
-        rest.mail = account.getMail();
-        return rest;
+        dtoBuilder.login(account.getLogin());
+        dtoBuilder.mail(account.getMail());
+        return dtoBuilder.build();
     }
 
     public static Account mapToJpa(AccountDto rest) {
         return Account.builder()
-                .login(rest.login)
-                .mail(rest.mail).build();
+                .login(rest.getLogin())
+                .mail(rest.getMail()).build();
     }
 }

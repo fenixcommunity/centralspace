@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.exception;
 
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,10 +15,12 @@ import java.time.ZonedDateTime;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.randomString;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static lombok.AccessLevel.PRIVATE;
 
 @ControllerAdvice
 @Log4j2
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)

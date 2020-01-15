@@ -14,9 +14,9 @@ public final class InternalResource {
     //todo more than like instead extend class
 
 
-    public static InternalResource resourceByFullName(String fullName) {
-        InternalResource resource = new InternalResource();
-        String[] splitedName = fullName.split("\\.");
+    public static InternalResource resourceByFullName(final String fullName) {
+        final InternalResource resource = new InternalResource();
+        final String[] splitedName = fullName.split("\\.");
         resource.fileName = splitedName[0];
         if (splitedName.length > 1) {
             resource.fileFormat = FileFormat.parseFileFormat(splitedName[1]);
@@ -24,8 +24,8 @@ public final class InternalResource {
         return resource;
     }
 
-    public static InternalResource resourceByNameAndType(String fileName, FileFormat fileFormat) {
-        InternalResource resource = new InternalResource();
+    public static InternalResource resourceByNameAndType(final String fileName, final FileFormat fileFormat) {
+        final InternalResource resource = new InternalResource();
         resource.fileName = fileName;
         resource.fileFormat = fileFormat;
         return resource;
@@ -35,7 +35,7 @@ public final class InternalResource {
         return fileName + DOT + fileFormat.getSubtype();
     }
 
-    public void setContent(Resource content) {
+    public void setContent(final Resource content) {
         if (this.content == null) {
             this.content = content;
         }

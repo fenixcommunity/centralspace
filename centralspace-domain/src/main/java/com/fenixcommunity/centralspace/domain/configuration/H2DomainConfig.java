@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.domain.configuration;
 
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -23,6 +24,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Configuration
 //@EnableJpaAuditing - disabled, required only one
 @EnableTransactionManagement
@@ -33,6 +36,7 @@ import javax.sql.DataSource;
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model.memory"})
 @PropertySource(value = {"classpath:domain.properties"})
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class H2DomainConfig {
 
     @Bean(name = "h2DataSource")
@@ -43,8 +47,8 @@ public class H2DomainConfig {
 
     @Bean(name = "h2EntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean
-    entityManagerFactory(EntityManagerFactoryBuilder builder,
-                         @Qualifier("h2DataSource") DataSource dataSource) {
+    entityManagerFactory(final EntityManagerFactoryBuilder builder,
+                         @Qualifier("h2DataSource") final DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
                 .packages("com.fenixcommunity.centralspace.domain")
@@ -54,20 +58,20 @@ public class H2DomainConfig {
 
     @Bean(name = "h2TransactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("h2EntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("h2EntityManagerFactory") final EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Bean(name = "h2DataSourceInitializer")
-    public DataSourceInitializer dataSourceInitializer(final @Qualifier("h2DataSource") DataSource dataSource,
-                                                       @Value("classpath:/script/h2/h2_initialization.sql") Resource initializationScript) {
+    public DataSourceInitializer dataSourceInitializer(@Qualifier("h2DataSource") final DataSource dataSource,
+                                                       @Value("classpath:/script/h2/h2_initialization.sql") final Resource initializationScript) {
         final DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(databasePopulator(initializationScript));
         return initializer;
     }
 
-    private DatabasePopulator databasePopulator(Resource initializationScript) {
+    private DatabasePopulator databasePopulator(final Resource initializationScript) {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(initializationScript);
         return populator;

@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.app.configuration.swaggerdoc;
 
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.google.common.base.Predicate;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.getSimple
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_URL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
 import static com.google.common.collect.Lists.newArrayList;
+import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -33,6 +35,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Configuration
 //@Import({BeanValidatorPluginsConfiguration.class}) SpringDataRestConfiguration.class no works for latest Spring
 //@Profile(Profiles.SWAGGER_ENABLED_PROFILE)
+@FieldDefaults(level = PRIVATE)
 public class SwaggerConfig implements WebMvcConfigurer {
 
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
@@ -100,7 +103,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");

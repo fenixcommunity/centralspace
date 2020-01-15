@@ -10,9 +10,9 @@ import java.util.Optional;
  */
 public interface SecuredUserCrudService {
 
-    SecuredUser save(SecuredUser user);
+    SecuredUser save(final SecuredUser user);
 
-    Optional<SecuredUser> find(String id);
+    Optional<SecuredUser> find(final String id);
 
-    Optional<SecuredUser> findByUsername(String username);
+    Optional<SecuredUser> findByUsername(final String username);
 }

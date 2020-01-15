@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.domain.core;
 
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -9,6 +10,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 
+import static lombok.AccessLevel.PRIVATE;
+
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountEntityListener {
     @PrePersist
     public void beforePersist(Account account) {
@@ -16,27 +20,27 @@ public class AccountEntityListener {
     }
 
     @PostPersist
-    public void afterPersist(Account account) {
+    public void afterPersist(final Account account) {
         System.out.println("Persisted account with id = " + account.getId());
     }
 
     @PreUpdate
-    public void beforeUpdate(Account account) {
+    public void beforeUpdate(final Account account) {
         System.out.println("Updating account with id = " + account.getId());
     }
 
     @PostUpdate
-    public void afterUpdate(Account account) {
+    public void afterUpdate(final Account account) {
         System.out.println("Updated account with id = " + account.getId());
     }
 
     @PreRemove
-    private void beforeRemove(Account account) {
+    private void beforeRemove(final Account account) {
         System.out.println("Removing account with id = " + account.getId());
     }
 
     @PostRemove
-    public void afterRemove(Account account) {
+    public void afterRemove(final Account account) {
         System.out.println("Removed account with id = " + account.getId());
     }
 }

@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.filter;
 
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.Filter;
@@ -13,12 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static java.lang.String.format;
+import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class RequestResponseLoggingFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) {
+    public void init(final FilterConfig filterConfig) {
     }
 
     @Override
@@ -26,10 +29,12 @@ public class RequestResponseLoggingFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        var request = (HttpServletRequest) servletRequest;
-        var response = (HttpServletResponse) servletResponse;
-        String requestURI = request.getRequestURI();
+    public void doFilter
+            (final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain chain)
+            throws IOException, ServletException {
+        final var request = (HttpServletRequest) servletRequest;
+        final var response = (HttpServletResponse) servletResponse;
+        final String requestURI = request.getRequestURI();
 
         log.info(format("START Api call requestURI: %s", requestURI));
         chain.doFilter(request, response);

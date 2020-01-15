@@ -3,24 +3,27 @@ package com.fenixcommunity.centralspace.utilities.mail.template;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailRegistrationContent;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.mail.MailPreparationException;
 
 import static com.fenixcommunity.centralspace.utilities.mail.properties.MailRegistrationContent.ACCOUNT_TOKEN;
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Getter
+@FieldDefaults(level = PRIVATE)
 public class RegistrationMailMessage extends MailMessageTemplate {
 
     private MailRegistrationContent mailRegistrationContent;
 
     @Builder
-    public RegistrationMailMessage(String from, String subject, String replyTo, boolean htmlBody) {
+    public RegistrationMailMessage(final String from, final String subject, final String replyTo, final boolean htmlBody) {
         super(from, subject, replyTo, htmlBody);
     }
 
     @Override
-    public void buildMailBodyFromProperties(Object obj) {
+    public void buildMailBodyFromProperties(final Object obj) {
         if (obj instanceof MailRegistrationContent && this.mailRegistrationContent == null) {
             this.mailRegistrationContent = (MailRegistrationContent) obj;
         }

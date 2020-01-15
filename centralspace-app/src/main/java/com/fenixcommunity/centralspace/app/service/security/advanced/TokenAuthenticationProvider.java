@@ -19,7 +19,7 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 final class TokenAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
     @NonNull
-    SecuredUserAuthenticationService auth;
+    private final SecuredUserAuthenticationService auth;
 
     @Override
     protected void additionalAuthenticationChecks(final UserDetails d, final UsernamePasswordAuthenticationToken auth) {

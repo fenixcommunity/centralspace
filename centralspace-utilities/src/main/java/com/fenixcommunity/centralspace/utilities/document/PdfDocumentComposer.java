@@ -12,6 +12,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
@@ -19,17 +20,19 @@ import java.util.stream.Stream;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
 import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
+import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PdfDocumentComposer {
 
     public static Document composeNewA4Document() {
         return new Document(PageSize.A4, 20, 20, 20, 20);
     }
 
-    public static Document composeDocument(Document document) throws DocumentException {
+    public static Document composeDocument(final Document document) throws DocumentException {
         document.newPage();
-        Paragraph paragraph1 = new Paragraph("This is composeDocument");
+        final Paragraph paragraph1 = new Paragraph("This is composeDocument");
         document.add(paragraph1);
         document.setPageCount(10);
         document.setMargins(5, 5, 10, 10);
@@ -39,7 +42,7 @@ public class PdfDocumentComposer {
         return document;
     }
 
-    public static Document composeImage(Document document, List<Image> images) {
+    public static Document composeImage(final Document document, final List<Image> images) {
         float documentWidth = document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin();
         float documentHeight = document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin();
         images.forEach(i -> i.scaleToFit(documentWidth / 2, documentHeight / 2));
@@ -54,13 +57,13 @@ public class PdfDocumentComposer {
     }
 
     public static Font composeFont() {
-        var font = new Font();
+        final var font = new Font();
         font.setStyle(Font.BOLD);
         font.setSize(15);
         return font;
     }
 
-    public static Document composeChunk(String message, Document document, Font font) throws DocumentException {
+    public static Document composeChunk(final String message, final Document document, final Font font) throws DocumentException {
         var chunk = new Chunk(message, font);
         document.add(chunk);
         return document;
@@ -70,7 +73,7 @@ public class PdfDocumentComposer {
         return new PdfPTable(columnsNo);
     }
 
-    public static PdfPTable composeTableHeader(PdfPTable table) {
+    public static PdfPTable composeTableHeader(final PdfPTable table) {
         Stream.of("column header 1", "column header 2", "column header 3")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
@@ -82,16 +85,16 @@ public class PdfDocumentComposer {
         return table;
     }
 
-    public static PdfPTable composeRowsWithLogo(PdfPTable table, Image imageLogo) {
+    public static PdfPTable composeRowsWithLogo(final PdfPTable table, final Image imageLogo) {
         imageLogo.scalePercent(10);
-        PdfPCell imageCell = new PdfPCell(imageLogo);
+        final PdfPCell imageCell = new PdfPCell(imageLogo);
         table.addCell(imageCell);
 
-        PdfPCell horizontalAlignCell = new PdfPCell(new Phrase("row 2, col 2"));
+        final PdfPCell horizontalAlignCell = new PdfPCell(new Phrase("row 2, col 2"));
         horizontalAlignCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(horizontalAlignCell);
 
-        PdfPCell verticalAlignCell = new PdfPCell(new Phrase("row 2, col 3"));
+        final PdfPCell verticalAlignCell = new PdfPCell(new Phrase("row 2, col 3"));
         verticalAlignCell.setVerticalAlignment(Element.ALIGN_BOTTOM);
         table.addCell(verticalAlignCell);
 

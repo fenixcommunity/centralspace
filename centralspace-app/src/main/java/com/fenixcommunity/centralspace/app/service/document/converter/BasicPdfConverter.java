@@ -19,6 +19,7 @@ import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.io.RandomAccessFile;
@@ -57,27 +58,29 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNew
 import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
 import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @AllArgsConstructor
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrategy {
 
     private static final int IMAGE_DPI = 500;
-    public static final String READ_MODE = "r";
+    private static final String READ_MODE = "r";
 
-    private String fileName;
+    private final String fileName;
     private final ResourceLoaderTool resourceTool;
 
     @Override
-    public void convertPdfToImage(FileFormat fileFormat) {
-        var outputImagePath = resourceTool.getResourceProperties().getConvertedImagePath()
+    public void convertPdfToImage(final FileFormat fileFormat) {
+        final var outputImagePath = resourceTool.getResourceProperties().getConvertedImagePath()
                 + fileName + NUMBER_WATERMARK + DOT + fileFormat.getSubtype();
         try (var converterInput = PDDocument.load(getPDFFile())) {
-            PDFRenderer pdfRenderer = new PDFRenderer(converterInput);
+            final PDFRenderer pdfRenderer = new PDFRenderer(converterInput);
             for (int page = 0; page < converterInput.getNumberOfPages(); ++page) {
-                var filePathWithPageNo = String.format(outputImagePath, page + 1);
+                final var filePathWithPageNo = String.format(outputImagePath, page + 1);
                 createFileDirectories(filePathWithPageNo);
-                BufferedImage image = pdfRenderer.renderImageWithDPI(
+                final BufferedImage image = pdfRenderer.renderImageWithDPI(
                         page, IMAGE_DPI, ImageType.RGB);
                 ImageIOUtil.writeImage(
                         image, filePathWithPageNo, IMAGE_DPI);
@@ -88,14 +91,14 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
     }
 
     @Override
-    public void convertImageToPdf(FileFormat fileFormat, RestTemplate restTemplate) {
-        var inputImageUrl = resourceTool.getResourceProperties().getImageUrl()
+    public void convertImageToPdf(final FileFormat fileFormat, final RestTemplate restTemplate) {
+        final var inputImageUrl = resourceTool.getResourceProperties().getImageUrl()
                 + fileName + DOT + fileFormat.getSubtype();
-        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
+        final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + PDF.getSubtype();
         createFileDirectories(outputPdfPath);
 
-        var document = new Document();
+        final var document = new Document();
         OutputStream converterOutput = null;
         PdfWriter writer = null;
         try {
@@ -104,13 +107,13 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             writer.open();
             document.open();
 
-            ResponseEntity<byte[]> response = restTemplate
+            final ResponseEntity<byte[]> response = restTemplate
                     .exchange(inputImageUrl, HttpMethod.GET, RestTemplateHelper.createHttpEntityWithHeaders(MediaType.ALL), byte[].class);
 //            or
 //            ResponseEntity<byte[]> response2 =restTemplate.getForEntity(inputImageUrl, byte[].class);
-            Image image = Image.getInstance(Objects.requireNonNull(response.getBody()));
-            document = PdfDocumentComposer.composeDocument(document);
-            document = PdfDocumentComposer.composeImage(document, Collections.singletonList(image));
+            final Image image = Image.getInstance(Objects.requireNonNull(response.getBody()));
+            PdfDocumentComposer.composeDocument(document);
+            PdfDocumentComposer.composeImage(document, Collections.singletonList(image));
 
             writer.flush();
         } catch (Exception e) {
@@ -130,12 +133,12 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
 
     @Override
     public void convertHtmlToPdf() {
-        var document = new Document();
-        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
+        final var document = new Document();
+        final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + PDF.getSubtype();
         try (var converterInput = new FileInputStream(getHtmlFile());
              var converterOutput = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)), false)) {
-            var writer = PdfWriter.getInstance(document, converterOutput);
+            final var writer = PdfWriter.getInstance(document, converterOutput);
             document.open();
             XMLWorkerHelper.getInstance().parseXHtml(writer, document, converterInput);
             document.close();
@@ -151,7 +154,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
     @Override
     public String getHtmlBody() {
         try {
-            var htmlFile = Jsoup.parse(getHtmlFile(), UTF_8.name());
+            final var htmlFile = Jsoup.parse(getHtmlFile(), UTF_8.name());
             return htmlFile.toString();
         } catch (IOException e) {
             log.error("getHtmlBody error", e);
@@ -160,13 +163,13 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
     }
 
     private File getHtmlFile() throws IOException {
-        var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(fileName, HTML));
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(fileName, HTML));
         return resource.getFile();
     }
 
     @Override
     public void convertPdfToHtml() {
-        var outputHtmlPath = resourceTool.getResourceProperties().getConvertedHtmlPath()
+        final var outputHtmlPath = resourceTool.getResourceProperties().getConvertedHtmlPath()
                 + fileName + DOT + HTML.getSubtype();
         try (var converterInput = PDDocument.load(getPDFFile());
              var converterOutput = new PrintWriter(Objects.requireNonNull(createNewOutputFile(outputHtmlPath)))) {
@@ -179,21 +182,21 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
 
     //todo special class to get pdf or html file
     private File getPDFFile() throws IOException {
-        var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(fileName, PDF));
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(fileName, PDF));
         return resource.getFile();
     }
 
     @Override
     public void convertPdfToText() {
         String parsedText = EMPTY;
-        PDDocument document = new PDDocument();
+        PDDocument document = null;
         var outputTxtPath = resourceTool.getResourceProperties().getConvertedTxtPath()
                 + fileName + DOT + TXT.getSubtype();
         try (var converterOutput = new PrintWriter(Objects.requireNonNull(createNewOutputFile(outputTxtPath)))) {
-            PDFParser pdfParser = new PDFParser(new RandomAccessFile(getPDFFile(), READ_MODE));
+            final PDFParser pdfParser = new PDFParser(new RandomAccessFile(getPDFFile(), READ_MODE));
             pdfParser.parse();
-            COSDocument cosDoc = pdfParser.getDocument();
-            PDFTextStripper pdfStripper = new PDFTextStripper();
+            final COSDocument cosDoc = pdfParser.getDocument();
+            final PDFTextStripper pdfStripper = new PDFTextStripper();
             document = new PDDocument(cosDoc);
             parsedText = pdfStripper.getText(document);
             converterOutput.print(parsedText);
@@ -202,7 +205,9 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             throw new DocumentServiceException(e.getMessage(), e);
         } finally {
             try {
-                document.close();
+                if (document != null) {
+                    document.close();
+                }
             } catch (IOException e) {
                 //ignore
             }
@@ -214,7 +219,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
         //todo final?
         final var document = new Document(PageSize.A4);
 
-        var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
+        final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + PDF.getSubtype();
         try (var converterInput = new BufferedReader(new FileReader(getTxtFile()));
              var converterOutput = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)))) {
@@ -222,11 +227,11 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             document.open();
             document.add(new Paragraph("\n"));
 
-            var font = PdfDocumentComposer.composeFont();
+            final var font = PdfDocumentComposer.composeFont();
 
             try (Stream<String> stream = converterInput.lines()) {
                 stream.forEach(line -> {
-                    Paragraph paragraph = new Paragraph(line + "\n", font);
+                    final Paragraph paragraph = new Paragraph(line + "\n", font);
                     paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
                     try {
                         document.add(paragraph);
@@ -245,27 +250,27 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
     }
 
     private File getTxtFile() throws IOException {
-        var resource = resourceTool.loadResourceFile(InternalResource.resourceByFullName(fileName + DOT + TXT.getSubtype()));
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByFullName(fileName + DOT + TXT.getSubtype()));
         return resource.getFile();
     }
 
     @Override
     public void convertPdfToDocx() {
-        XWPFDocument document = new XWPFDocument();
+        final XWPFDocument document = new XWPFDocument();
         PdfReader reader = null;
 
-        var outputDocxPath = resourceTool.getResourceProperties().getConvertedDocxPath()
+        final var outputDocxPath = resourceTool.getResourceProperties().getConvertedDocxPath()
                 + fileName + DOT + DOCX.getSubtype();
         try (var converterInput = new FileInputStream(getPDFFile());
              var converterOutput = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputDocxPath)))) {
             reader = new PdfReader(converterInput);
-            PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+            final PdfReaderContentParser parser = new PdfReaderContentParser(reader);
 
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
                 var textExtractionStrategy = parser.processContent(i, new SimpleTextExtractionStrategy());
-                String text = textExtractionStrategy.getResultantText();
-                XWPFParagraph p = document.createParagraph();
-                XWPFRun run = p.createRun();
+                final String text = textExtractionStrategy.getResultantText();
+                final XWPFParagraph p = document.createParagraph();
+                final XWPFRun run = p.createRun();
                 run.setText(text);
                 run.addBreak(BreakType.PAGE);
 

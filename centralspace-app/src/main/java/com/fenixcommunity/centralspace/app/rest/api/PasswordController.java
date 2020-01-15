@@ -1,18 +1,23 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.PasswordService;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @RestController
 @RequestMapping("/api/password")
+
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PasswordController {
 
-    private PasswordService passwordService;
+    private final PasswordService passwordService;
 
     @Autowired
-    public PasswordController(PasswordService passwordService) {
+    public PasswordController(final PasswordService passwordService) {
         this.passwordService = passwordService;
     }
 

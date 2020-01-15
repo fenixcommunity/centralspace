@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
+
 
 @Entity
 @EntityListeners(AccountEntityListener.class)
@@ -33,6 +36,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString()
+@FieldDefaults(level = PRIVATE)
 public class Account extends AbstractBaseEntity {
 
     //  TODO  AuditingEntityListener co to?

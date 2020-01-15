@@ -13,7 +13,7 @@ import static java.util.Optional.ofNullable;
 final class SecuredUsersInMemory implements SecuredUserCrudService {
 
     //todo move to memory HAZELCAST or standard DB
-    Map<String, SecuredUser> users = new HashMap<>();
+    private final Map<String, SecuredUser> users = new HashMap<>();
 
     @Override
     public SecuredUser save(final SecuredUser user) {

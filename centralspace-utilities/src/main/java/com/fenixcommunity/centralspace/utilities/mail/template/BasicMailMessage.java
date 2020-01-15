@@ -3,18 +3,21 @@ package com.fenixcommunity.centralspace.utilities.mail.template;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.mail.MailPreparationException;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Getter
+@FieldDefaults(level = PRIVATE)
 public class BasicMailMessage extends MailMessageTemplate {
 
     private MailContent mailContent;
 
     @Builder
-    public BasicMailMessage(String from, String subject, String replyTo, boolean htmlBody) {
+    public BasicMailMessage(final String from, final String subject, final String replyTo, boolean htmlBody) {
         super(from, subject, replyTo, htmlBody);
     }
 
@@ -27,7 +30,7 @@ public class BasicMailMessage extends MailMessageTemplate {
 
     @Override
     public String getMailBody() {
-        String mailBody = EMPTY;
+        final String mailBody;
         if (mailContent == null) {
             throw new MailPreparationException("mailContent hasn't been initialized");
         }

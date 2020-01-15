@@ -29,13 +29,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_FROM;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
-import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -101,7 +96,7 @@ class MailServiceBeanTest {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
 
-        mailServiceBean = new MailServiceBean(mailSender, validatorFactory);
+        mailServiceBean = new MailServiceBean(mailSender, validatorFactory, resourceLoaderTool, documentService);
         setUpTemplateEngine();
         setUpResourceProperties();
         setUpBasicMailTemplate();

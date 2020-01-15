@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.domain.converter;
 
 import com.fenixcommunity.centralspace.domain.exception.cenverter.CryptoJpaConverterException;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.codec.Base64;
 
@@ -16,13 +17,15 @@ import java.util.Objects;
 import java.util.Properties;
 
 import static com.fenixcommunity.centralspace.utilities.logger.MarkersVar.GENERAL_USER;
+import static lombok.AccessLevel.PRIVATE;
 
 @Converter
 @Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CryptoJpaConverter implements AttributeConverter<String, String> {
 
-    private static String ALGORITHM;
-    private static byte[] KEY;
+    private static final String ALGORITHM;
+    private static final byte[] KEY;
     private static final String algorithm_property_key = "encryption.algorithm";
     private static final String secret_property_key = "encryption.key";
     private static final String security_file = "security.properties";
@@ -41,11 +44,11 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
 
     @Override
     @Transient
-    public String convertToDatabaseColumn(String ccData) {
+    public String convertToDatabaseColumn(final String ccData) {
         if (ccData == null) {
             throw new CryptoJpaConverterException("Data to convert required");
         }
-        Key key = new SecretKeySpec(KEY, ALGORITHM);
+        final Key key = new SecretKeySpec(KEY, ALGORITHM);
         try {
             final Cipher c = Cipher.getInstance(ALGORITHM);
             c.init(Cipher.ENCRYPT_MODE, key);
@@ -59,11 +62,11 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
 
     @Override
     @Transient
-    public String convertToEntityAttribute(String dbData) {
+    public String convertToEntityAttribute(final String dbData) {
         if (dbData == null) {
             throw new CryptoJpaConverterException("Data to convert required");
         }
-        Key key = new SecretKeySpec(KEY, ALGORITHM);
+        final Key key = new SecretKeySpec(KEY, ALGORITHM);
         try {
             final Cipher c = Cipher.getInstance(ALGORITHM);
             c.init(Cipher.DECRYPT_MODE, key);

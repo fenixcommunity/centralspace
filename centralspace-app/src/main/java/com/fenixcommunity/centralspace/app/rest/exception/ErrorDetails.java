@@ -3,12 +3,16 @@ package com.fenixcommunity.centralspace.app.rest.exception;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Value;
+import lombok.experimental.FieldDefaults;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Value
 @Builder
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ErrorDetails {
 
     private List<String> collectedErrors;

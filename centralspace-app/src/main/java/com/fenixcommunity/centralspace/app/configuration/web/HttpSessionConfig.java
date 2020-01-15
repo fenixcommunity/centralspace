@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.configuration.web;
 
+import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,19 +9,22 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Configuration
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class HttpSessionConfig {
 
     @Bean
     public HttpSessionListener httpSessionListener() {
         return new HttpSessionListener() {
             @Override
-            public void sessionCreated(HttpSessionEvent se) {
+            public void sessionCreated(final HttpSessionEvent se) {
                 System.out.println("Session Created with session id+" + se.getSession().getId());
             }
 
             @Override
-            public void sessionDestroyed(HttpSessionEvent se) {
+            public void sessionDestroyed(final HttpSessionEvent se) {
                 System.out.println("Session Destroyed, Session id:" + se.getSession().getId());
 
             }
@@ -32,19 +36,19 @@ public class HttpSessionConfig {
     public HttpSessionAttributeListener httpSessionAttributeListener() {
         return new HttpSessionAttributeListener() {
             @Override
-            public void attributeAdded(HttpSessionBindingEvent se) {
+            public void attributeAdded(final HttpSessionBindingEvent se) {
                 System.out.println("Attribute Added following information");
                 System.out.println("Attribute Name:" + se.getName());
                 System.out.println("Attribute Value:" + se.getValue());
             }
 
             @Override
-            public void attributeRemoved(HttpSessionBindingEvent se) {
+            public void attributeRemoved(final HttpSessionBindingEvent se) {
                 System.out.println("attributeRemoved");
             }
 
             @Override
-            public void attributeReplaced(HttpSessionBindingEvent se) {
+            public void attributeReplaced(final HttpSessionBindingEvent se) {
                 System.out.println("Attribute Replaced following information");
                 System.out.println("Attribute Name:" + se.getName());
                 System.out.println("Attribute Old Value:" + se.getValue());

@@ -19,16 +19,16 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PACKAGE)
 final class SecuredUsersController {
     @NonNull
-    SecuredUserAuthenticationService authentication;
+    private final SecuredUserAuthenticationService authentication;
 
     @GetMapping("/current")
-    SecuredUser getCurrent(@AuthenticationPrincipal final SecuredUser user) {
+    public SecuredUser getCurrent(@AuthenticationPrincipal final SecuredUser user) {
         return user;
     }
 //todo to DTO!
 
     @GetMapping("/logout")
-    boolean logout(@AuthenticationPrincipal final SecuredUser user) {
+    public boolean logout(@AuthenticationPrincipal final SecuredUser user) {
         authentication.logout(user);
         return true;
     }

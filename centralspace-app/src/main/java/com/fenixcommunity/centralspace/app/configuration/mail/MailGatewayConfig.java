@@ -10,6 +10,7 @@ import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTempla
 import com.fenixcommunity.centralspace.utilities.mail.template.RegistrationMailMessage;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ import java.util.Properties;
 import static com.fenixcommunity.centralspace.utilities.common.Var.BASIC_MAIL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.REGISTRATION_MAIL;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
+import static lombok.AccessLevel.PRIVATE;
 
 //todo useless? EnableScheduling EnableAsync
 @Configuration
@@ -32,16 +34,16 @@ import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.
 @EnableAsync
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.mail"})
 @EnableConfigurationProperties(MailProperties.class)
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class MailGatewayConfig {
 
-    @Autowired
-    private MailProperties mailProperties;
-
+    private final MailProperties mailProperties;
     private final Validator validator;
 
     @Autowired
-    public MailGatewayConfig(ValidatorFactory validatorFactory) {
+    public MailGatewayConfig(final ValidatorFactory validatorFactory, final MailProperties mailProperties) {
         this.validator = validatorFactory.getInstance(MAIL);
+        this.mailProperties = mailProperties;
     }
 //    todo we can use also
 //    @Autowired
@@ -53,20 +55,19 @@ public class MailGatewayConfig {
 
     @Bean
     public SchedulerService getSchedulerService() {
-        return new SchedulerServiceBean();
+        return new SchedulerServiceBean(mailService);
     }
 
     @Bean
     public JavaMailSender getJavaMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-
+        final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(mailProperties.getHost());
         mailSender.setPort(mailProperties.getPort());
         mailSender.setProtocol(mailProperties.getProtocol());
         mailSender.setUsername(mailProperties.getUsername());
         mailSender.setPassword(mailProperties.getPassword());
 //tip: how to check connection -> telnet smtp.gmail.com 587
-        Properties props = mailSender.getJavaMailProperties();
+        final Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
@@ -82,9 +83,9 @@ public class MailGatewayConfig {
     //todo MailContentBuilder
     @Bean("registrationMailMessage")
     public MailMessageTemplate getRegistrationMailTemplate() {
-        MailContent mailConfigTemplate = mailProperties.getContent();
-        MailRegistrationContent mailRegistrationTemplate = mailConfigTemplate.getRegistrationContent();
-        MailMessageTemplate mailTemplate = RegistrationMailMessage.builder()
+        final MailContent mailConfigTemplate = mailProperties.getContent();
+        final MailRegistrationContent mailRegistrationTemplate = mailConfigTemplate.getRegistrationContent();
+        final MailMessageTemplate mailTemplate = RegistrationMailMessage.builder()
                 .from(mailConfigTemplate.getEmailFrom())
                 .subject(REGISTRATION_MAIL)
                 .build();
@@ -97,8 +98,8 @@ public class MailGatewayConfig {
 
     @Bean("basicMailMessage")
     public MailMessageTemplate getBasicMailTemplate() {
-        MailContent mailConfigTemplate = mailProperties.getContent();
-        MailMessageTemplate mailTemplate = BasicMailMessage.builder()
+        final MailContent mailConfigTemplate = mailProperties.getContent();
+        final MailMessageTemplate mailTemplate = BasicMailMessage.builder()
                 .from(mailConfigTemplate.getEmailFrom())
                 .subject(BASIC_MAIL)
                 .build();
@@ -109,7 +110,7 @@ public class MailGatewayConfig {
         return mailTemplate;
     }
 
-    private void validateMailTemplate(MailMessageTemplate template) {
+    private void validateMailTemplate(final MailMessageTemplate template) {
         validator.validateWithException(template);
     }
 }

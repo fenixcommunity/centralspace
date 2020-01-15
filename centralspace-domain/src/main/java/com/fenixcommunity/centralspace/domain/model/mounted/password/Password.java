@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -22,6 +23,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+import static lombok.AccessLevel.PRIVATE;
+
 //immutable objects, like @Value
 // Builder gdy mamy pola final i chcemy je tworzyc w elastycznym konstruktorze
 // Builder stosujemy gdy tworzymy obiekt raz i nie zmianiamy go potem przez sety
@@ -33,6 +36,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@FieldDefaults(level = PRIVATE)
 public class Password extends AbstractBaseEntity implements Serializable {
 
     //TODO         return Optional.ofNullable(isoCountryCode)

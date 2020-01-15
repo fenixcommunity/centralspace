@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailService;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +16,22 @@ import java.util.concurrent.TimeUnit;
 
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
+import static lombok.AccessLevel.PRIVATE;
 
 @RestController
 @RequestMapping("/api/mail")
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class MailGatewayController {
     //todo account/mail/
     private final MailService mailService;
 
-    public MailGatewayController(MailService mailService) {
+    public MailGatewayController(final MailService mailService) {
         this.mailService = mailService;
     }
 
     @PostMapping("/basic/{to}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity sendBasicMail(@PathVariable("to") @NotBlank String to) {
+    public ResponseEntity sendBasicMail(@PathVariable("to") @NotBlank final String to) {
         mailService.sendBasicMail(to);
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
@@ -38,7 +41,7 @@ public class MailGatewayController {
 
     @PostMapping("/registration/{to}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity sendMailWithAttachment(@PathVariable("to") @NotBlank String to) {
+    public ResponseEntity sendMailWithAttachment(@PathVariable("to") @NotBlank final String to) {
         mailService.sendRegistrationMailWithAttachment(to);
         return ResponseEntity.ok().build();
     }

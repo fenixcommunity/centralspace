@@ -3,11 +3,15 @@ package com.fenixcommunity.centralspace.utilities.validator;
 
 import com.fenixcommunity.centralspace.utilities.common.Level;
 import com.fenixcommunity.centralspace.utilities.exception.validator.PasswordValidatorException;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static lombok.AccessLevel.PRIVATE;
+
+@FieldDefaults(level = PRIVATE)
 public class PasswordValidator implements Validator {
     // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
     private static final Pattern PATTERN_HIGH = Pattern.compile("^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\\d]){1,})(?=(.*[\\W]){1,})(?!.*\\s).{8,}$");
@@ -21,22 +25,22 @@ public class PasswordValidator implements Validator {
     private PasswordValidator() {
     }
 
-    public static PasswordValidator lowValidator() {
-        PasswordValidator validator = new PasswordValidator();
+    static PasswordValidator lowValidator() {
+        final PasswordValidator validator = new PasswordValidator();
         validator.level = Level.LOW;
         validator.pattern = PATTERN_LOW;
         return validator;
     }
 
-    public static PasswordValidator highValidator() {
-        PasswordValidator validator = new PasswordValidator();
+    static PasswordValidator highValidator() {
+        final PasswordValidator validator = new PasswordValidator();
         validator.pattern = PATTERN_HIGH;
         return validator;
     }
 
     //TODO implementacja, test null
     @Override
-    public boolean isValid(Object obj) {
+    public boolean isValid(final Object obj) {
         if (obj instanceof String) {
             return isValid((String) obj);
         }
@@ -44,25 +48,25 @@ public class PasswordValidator implements Validator {
     }
 
     @Override
-    public boolean isValidAll(Object... obj) {
+    public boolean isValidAll(final Object... obj) {
         return Objects.nonNull(obj) && Stream.of(obj).anyMatch(this::isValid);
     }
 
     @Override
-    public void validateWithException(Object obj) {
+    public void validateWithException(final Object obj) {
         if (!isValid(obj)) {
             throw new PasswordValidatorException("Incorrect password on level: " + level.name());
         }
     }
 
     @Override
-    public void validateAllWithException(Object... obj) {
+    public void validateAllWithException(final Object... obj) {
         if (!isValidAll(obj)) {
             throw new PasswordValidatorException("Incorrect passwords on level: " + level.name());
         }
     }
 
-    private boolean isValid(String arg) {
+    private boolean isValid(final String arg) {
         return pattern.matcher(arg).find();
     }
 }

@@ -2,11 +2,15 @@ package com.fenixcommunity.centralspace.utilities.mail.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Getter
 @Setter
+@FieldDefaults(level = PRIVATE)
 public class MailRegistrationContent {
 
     public static final String ACCOUNT_TOKEN = "account_token";
@@ -18,10 +22,10 @@ public class MailRegistrationContent {
     }
 
     @NotBlank
-    private String fullUrl;
+    private final String fullUrl;
     @NotBlank
-    private String url;
+    private final String url;
     @NotBlank
-    private String domainId;
+    private final String domainId;
     private String accountToken;
 }

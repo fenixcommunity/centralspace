@@ -4,7 +4,7 @@ import org.springframework.mail.MailException;
 
 public interface MailService {
 
-    void sendBasicMail(String to) throws MailException;
+    void sendBasicMail(final String to) throws MailException;
 
-    void sendRegistrationMailWithAttachment(String to) throws MailException;
+    void sendRegistrationMailWithAttachment(final String to) throws MailException;
 }

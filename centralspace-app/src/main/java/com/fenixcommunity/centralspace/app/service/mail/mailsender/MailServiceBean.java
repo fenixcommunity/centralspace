@@ -8,6 +8,7 @@ import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailException;
@@ -18,20 +19,18 @@ import org.springframework.stereotype.Service;
 
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
+import static lombok.AccessLevel.PRIVATE;
 
 //TODO in all places should be interface with IBean?
 @Service
+@FieldDefaults(level = PRIVATE)
 public class MailServiceBean implements MailService {
 
-    public static final String TEMPLATE_BASIC_MAIL = "template_basic_mail";
+    private static final String TEMPLATE_BASIC_MAIL = "template_basic_mail";
     private final JavaMailSender mailSender;
     private final Validator validator;
-
-    @Autowired
-    private ResourceLoaderTool resourceLoaderTool;
-
-    @Autowired
-    private DocumentService documentService;
+    private final ResourceLoaderTool resourceLoaderTool;
+    private final DocumentService documentService;
 
     @Autowired
     @Qualifier("basicMailMessage")
@@ -42,14 +41,17 @@ public class MailServiceBean implements MailService {
     private MailMessageTemplate registrationMailMessage;
 
     @Autowired
-    public MailServiceBean(JavaMailSender mailSender, ValidatorFactory validatorFactory) {
+    public MailServiceBean(final JavaMailSender mailSender, final ValidatorFactory validatorFactory,
+                           final ResourceLoaderTool resourceLoaderTool, final DocumentService documentService) {
         this.mailSender = mailSender;
         this.validator = validatorFactory.getInstance(MAIL);
+        this.resourceLoaderTool = resourceLoaderTool;
+        this.documentService = documentService;
     }
 
     @Override
-    public void sendBasicMail(String to) throws MailException {
-        MailBuilder mailBuilder = new MailBuilder(basicMailMessage);
+    public void sendBasicMail(final String to) throws MailException {
+        final MailBuilder mailBuilder = new MailBuilder(basicMailMessage);
         mailBuilder.addTo(to);
 //        mailBuilder.setHtmlBody(true);
         if (mailBuilder.isHtmlBody()) {
@@ -59,17 +61,17 @@ public class MailServiceBean implements MailService {
     }
 
     @Override
-    public void sendRegistrationMailWithAttachment(String to) throws MailException {
-        MailBuilder mailBuilder = new MailBuilder(registrationMailMessage);
+    public void sendRegistrationMailWithAttachment(final String to) throws MailException {
+        final MailBuilder mailBuilder = new MailBuilder(registrationMailMessage);
         mailBuilder.addTo(to);
-        InternalResource attachment = getRegistrationAttachment();
+        final InternalResource attachment = getRegistrationAttachment();
         sendMailWithAttachment(mailBuilder, attachment);
     }
 
-    private void sendBasicMail(MailBuilder mailBuilder) throws MailException {
+    private void sendBasicMail(final MailBuilder mailBuilder) throws MailException {
         validateMailContent(mailBuilder);
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        final MimeMessagePreparator messagePreparator = mimeMessage -> {
+            final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setTo(mailBuilder.getToArray());
             helper.setSubject(mailBuilder.getSubject());
             helper.setText(mailBuilder.getBody(), mailBuilder.isHtmlBody());
@@ -80,10 +82,10 @@ public class MailServiceBean implements MailService {
         mailSender.send(messagePreparator);
     }
 
-    private void sendMailWithAttachment(MailBuilder mailBuilder, InternalResource attachment) throws MailException {
+    private void sendMailWithAttachment(final MailBuilder mailBuilder, final InternalResource attachment) throws MailException {
         validateMailContent(mailBuilder);
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        final MimeMessagePreparator messagePreparator = mimeMessage -> {
+            final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setTo(mailBuilder.getToArray());
             helper.setSubject(mailBuilder.getSubject());
             helper.setText(mailBuilder.getBody(), mailBuilder.isHtmlBody());
@@ -98,12 +100,12 @@ public class MailServiceBean implements MailService {
     }
 
     private InternalResource getRegistrationAttachment() {
-        InternalResource attachment = InternalResource.resourceByNameAndType("attachment", FileFormat.PDF);
+        final InternalResource attachment = InternalResource.resourceByNameAndType("attachment", FileFormat.PDF);
         attachment.setContent(resourceLoaderTool.loadResourceFile(attachment));
         return attachment;
     }
 
-    private void validateMailContent(MailBuilder mailBuilder) {
+    private void validateMailContent(final MailBuilder mailBuilder) {
         validator.validateWithException(mailBuilder);
     }
 }

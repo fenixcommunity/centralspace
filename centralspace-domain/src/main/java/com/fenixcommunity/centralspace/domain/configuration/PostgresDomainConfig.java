@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.domain.configuration;
 
 
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -26,6 +27,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Configuration
 @EnableJpaAuditing // uwzględnia @PrePersist, @PreRemove
 @EnableTransactionManagement
@@ -36,6 +39,7 @@ import javax.sql.DataSource;
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model.mounted"})
 @PropertySource(value = {"classpath:domain.properties"})
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PostgresDomainConfig {
 
     @Primary
@@ -48,8 +52,8 @@ public class PostgresDomainConfig {
     @Primary
     @Bean(name = "postgresEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean
-    entityManagerFactory(EntityManagerFactoryBuilder builder,
-                         @Qualifier("postgresDataSource") DataSource dataSource) {
+    entityManagerFactory(final EntityManagerFactoryBuilder builder,
+                         @Qualifier("postgresDataSource") final DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
                 .packages("com.fenixcommunity.centralspace.domain")
@@ -60,21 +64,22 @@ public class PostgresDomainConfig {
     @Primary
     @Bean(name = "postgresTransactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("postgresEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("postgresEntityManagerFactory") final EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Primary
     @Bean(name = "postgresDataSourceInitializer")
-    public DataSourceInitializer dataSourceInitializer(final @Qualifier("postgresDataSource") DataSource dataSource,
-                                                       @Value("classpath:/script/postgres/postgres_initialization.sql") Resource initializationScript) {
+    public DataSourceInitializer dataSourceInitializer
+            (@Qualifier("postgresDataSource") final DataSource dataSource,
+             @Value("classpath:/script/postgres/postgres_initialization.sql") final Resource initializationScript) {
         final DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(databasePopulator(initializationScript));
         return initializer;
     }
 
-    private DatabasePopulator databasePopulator(Resource initializationScript) {
+    private DatabasePopulator databasePopulator(final Resource initializationScript) {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.setSeparator("/");
         populator.addScript(initializationScript);

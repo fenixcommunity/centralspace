@@ -4,16 +4,19 @@ import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTempla
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Getter
 @Setter
+@FieldDefaults(level = PRIVATE)
 public class MailBuilder {
 
     public MailBuilder(MailMessageTemplate template) {

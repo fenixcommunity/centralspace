@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 
 import com.fenixcommunity.centralspace.app.service.document.DocumentService;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,80 +12,86 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.BASIC;
 import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
+import static lombok.AccessLevel.PRIVATE;
 
 @RestController
 @RequestMapping("/api/doc")
 @Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class DocumentController {
 
     @Autowired
-    private DocumentService documentService;
+    private final DocumentService documentService;
+
+    public DocumentController(final DocumentService documentService) {
+        this.documentService = documentService;
+    }
 
     @GetMapping("/create-pdf")
-    public void createPdf(@RequestParam(value = "pdfFile", defaultValue = "created_pdf") String pdfFileName) {
+    public void createPdf(@RequestParam(value = "pdfFile", defaultValue = "created_pdf") final String pdfFileName) {
         documentService.createPdf(pdfFileName);
     }
 
     @GetMapping("/pdf-to-image")
-    public void convertPdfToImage(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_image") String pdfFileName,
-                                  @RequestParam(value = "fileFormat", defaultValue = "png") String fileFormat) {
+    public void convertPdfToImage(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_image") final String pdfFileName,
+                                  @RequestParam(value = "fileFormat", defaultValue = "png") final String fileFormat) {
         documentService.convertPdfToImage(pdfFileName, FileFormat.parseFileFormat(fileFormat));
     }
 
     @GetMapping("/image-to-pdf-as-admin")
-    public void convertImageToPdfAsAdmin(@RequestParam(value = "imageFile", defaultValue = "image_to_pdf") String imageFileName,
-                                         @RequestParam(value = "fileFormat", defaultValue = "png") String fileFormat) {
+    public void convertImageToPdfAsAdmin(@RequestParam(value = "imageFile", defaultValue = "image_to_pdf") final String imageFileName,
+                                         @RequestParam(value = "fileFormat", defaultValue = "png") final String fileFormat) {
         documentService.convertImageToPdfAsAdmin(imageFileName, FileFormat.parseFileFormat(fileFormat));
     }
 
     @GetMapping("/html-to-pdf")
-    public String htmlToPdf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") String htmlFileName) {
+    public String htmlToPdf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
         documentService.convertHtmlToPdf(htmlFileName, BASIC);
         return "STANDARD DONE";
     }
 
     @GetMapping("/html-to-pdf-thymeleaf")
-    public String htmlToPdfByThymeleaf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") String htmlFileName) {
+    public String htmlToPdfByThymeleaf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
         documentService.convertHtmlToPdf(htmlFileName, THYMELEAF);
         return "THYMELEAF DONE";
     }
 
     @GetMapping("/pdf-to-html")
-    public String pdfToHtml(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") String pdfFileName) {
+    public String pdfToHtml(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") final String pdfFileName) {
         documentService.convertPdfToHtml(pdfFileName, BASIC);
         return "STANDARD DONE";
     }
 
     @GetMapping("/pdf-to-html-thymeleaf")
-    public String pdfToHtmlByThymeleaf(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") String pdfFileName) {
+    public String pdfToHtmlByThymeleaf(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") final String pdfFileName) {
         documentService.convertPdfToHtml(pdfFileName, THYMELEAF);
         return "THYMELEAF DONE";
     }
 
     @GetMapping("/html-body")
-    public String getHtmlBody(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") String htmlFileName) {
-        String htmlBody = documentService.getHtmlBody(htmlFileName, BASIC);
+    public String getHtmlBody(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
+        final String htmlBody = documentService.getHtmlBody(htmlFileName, BASIC);
         return htmlBody;
     }
 
     @GetMapping("/html-body-thymeleaf")
-    public String getHtmlBodyByThymeleaf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") String htmlFileName) {
-        String htmlBody = documentService.getHtmlBody(htmlFileName, THYMELEAF);
+    public String getHtmlBodyByThymeleaf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
+        final String htmlBody = documentService.getHtmlBody(htmlFileName, THYMELEAF);
         return htmlBody;
     }
 
     @GetMapping("/pdf-to-txt")
-    public void convertPdfToText(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_txt") String pdfFileName) {
+    public void convertPdfToText(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_txt") final String pdfFileName) {
         documentService.convertPdfToText(pdfFileName);
     }
 
     @GetMapping("/txt-to-pdf")
-    public void convertTextToPdf(@RequestParam(value = "textFile", defaultValue = "txt_to_pdf") String textFileName) {
+    public void convertTextToPdf(@RequestParam(value = "textFile", defaultValue = "txt_to_pdf") final String textFileName) {
         documentService.convertTextToPdf(textFileName);
     }
 
     @GetMapping("/pdf-to-docx")
-    public void convertPdfToDocx(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_docx") String pdfFileName) {
+    public void convertPdfToDocx(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_docx") final String pdfFileName) {
         documentService.convertPdfToDocx(pdfFileName);
     }
 }

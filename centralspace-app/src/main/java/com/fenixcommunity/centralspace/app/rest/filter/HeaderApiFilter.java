@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.filter;
 
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.Filter;
@@ -14,12 +15,14 @@ import java.io.IOException;
 import java.util.Collections;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
+import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class HeaderApiFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) {
+    public void init(final FilterConfig filterConfig) {
     }
 
     @Override
@@ -27,9 +30,11 @@ public class HeaderApiFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        var request = (HttpServletRequest) servletRequest;
-        var response = (HttpServletResponse) servletResponse;
+    public void doFilter
+            (final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain chain)
+            throws IOException, ServletException {
+        final var request = (HttpServletRequest) servletRequest;
+        final var response = (HttpServletResponse) servletResponse;
         System.out.println("All header names:\n");
         Collections.list(request.getHeaderNames()).forEach(System.out::println);
         response.setHeader(HEADER_SESSION, "HeaderApiFilter-set");

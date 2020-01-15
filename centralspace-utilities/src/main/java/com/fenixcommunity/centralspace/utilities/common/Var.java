@@ -1,5 +1,10 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
+import lombok.experimental.FieldDefaults;
+
+import static lombok.AccessLevel.PUBLIC;
+
+@FieldDefaults(level = PUBLIC, makeFinal = true)
 public class Var {
     public static final Long ID = 1L;
     public static final Long WRONG_ID = 999999L;

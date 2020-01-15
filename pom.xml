@@ -45,6 +45,7 @@
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.8</postgresql.version>
         <!-- COMMONS DEPENDENCIES -->
+        <spring-boot-devtools.version>2.2.2.RELEASE</spring-boot-devtools.version>
         <jwttoken.version>0.9.1</jwttoken.version>
         <!-- UTILITIES DEPENDENCIES -->
         <lombok.version>1.18.4</lombok.version>
@@ -218,6 +219,7 @@
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
+                <scope>runtime</scope>
                 <version>${h2database.version}</version>
             </dependency>
             <!-- COMMONS DEPENDENCIES -->
@@ -225,6 +227,11 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jwttoken.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>${spring-boot-devtools.version}</version>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

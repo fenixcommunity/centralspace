@@ -41,8 +41,8 @@ public class MailServiceBean implements MailService {
     private MailMessageTemplate registrationMailMessage;
 
     @Autowired
-    public MailServiceBean(final JavaMailSender mailSender, final ValidatorFactory validatorFactory,
-                           final ResourceLoaderTool resourceLoaderTool, final DocumentService documentService) {
+    MailServiceBean(final JavaMailSender mailSender, final ValidatorFactory validatorFactory,
+                    final ResourceLoaderTool resourceLoaderTool, final DocumentService documentService) {
         this.mailSender = mailSender;
         this.validator = validatorFactory.getInstance(MAIL);
         this.resourceLoaderTool = resourceLoaderTool;

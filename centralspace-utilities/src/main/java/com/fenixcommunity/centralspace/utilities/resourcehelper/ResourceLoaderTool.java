@@ -22,7 +22,7 @@ public class ResourceLoaderTool {
     private final ResourceProperties resourceProperties;
     private final Validator validator;
 
-    public ResourceLoaderTool
+    ResourceLoaderTool
             (final ResourceLoader resourceLoader, final ResourceProperties resourceProperties, final ValidatorFactory validatorFactory) {
         this.resourceLoader = resourceLoader;
         this.resourceProperties = resourceProperties;

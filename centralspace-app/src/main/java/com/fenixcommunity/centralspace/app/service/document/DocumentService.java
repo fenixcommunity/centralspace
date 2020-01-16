@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.document;
 
+import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.service.SecurityService;
 import com.fenixcommunity.centralspace.app.service.document.converter.BasicPdfConverter;
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategy;
@@ -13,10 +14,7 @@ import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTo
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.thymeleaf.TemplateEngine;
 
 import java.util.Map;
@@ -38,9 +36,7 @@ public class DocumentService {
     private final TemplateEngine templateEngine;
     private final SecurityService securityService;
 
-    private final RestTemplateBuilder restTemplateBuilder;
-    // vs
-    private final WebClient webClientTemplate;
+    private final RestCallerStrategy restCallerStrategy;
 
     public void createPdf(final String pdfFileName) {
         final IPdfCreator pdfCreator = new ITextPdfCreator(pdfFileName, resourceTool);
@@ -52,11 +48,17 @@ public class DocumentService {
         converter.convertPdfToImage(fileFormat);
     }
 
-    public void convertImageToPdfAsAdmin(final String imageFileName, final FileFormat fileFormat) {
+    public void convertImageToPdfAsAdminByRestTemplate(final String imageFileName, final FileFormat fileFormat) {
         final IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
         if (securityService.isValidSecurityRole()) {
-            final RestTemplate restTemplate = restTemplateBuilder.build();
-            converter.convertImageToPdf(fileFormat, restTemplate);
+            converter.convertImageToPdf(fileFormat, restCallerStrategy);
+        }
+    }
+
+    public void convertImageToPdfAsAdminByWebClient(final String imageFileName, final FileFormat fileFormat) {
+        final IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
+        if (securityService.isValidSecurityRole()) {
+            converter.convertImageToPdf(fileFormat, restCallerStrategy);
         }
     }
 

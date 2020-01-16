@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PUBLIC;
 
 @Service
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-@AllArgsConstructor(access = PUBLIC)
+@AllArgsConstructor(access = PACKAGE)
 public class SchedulerServiceBean implements SchedulerService {
 
     private final MailService mailService;

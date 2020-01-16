@@ -21,7 +21,7 @@ public class TimeTool {
     private final Validator validator;
 
     @Autowired
-    public TimeTool(final ValidatorFactory validatorFactory) {
+    TimeTool(final ValidatorFactory validatorFactory) {
         this.validator = validatorFactory.getInstance(NOT_NULL);
     }
 

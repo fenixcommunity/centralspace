@@ -25,7 +25,7 @@ public class SecurityService {
     private final Validator validator;
 
     @Autowired
-    public SecurityService(AuthenticationFacade authenticationFacade, ValidatorFactory validatorFactory) {
+    SecurityService(AuthenticationFacade authenticationFacade, ValidatorFactory validatorFactory) {
         this.authenticationFacade = authenticationFacade;
         this.validator = validatorFactory.getInstance(NOT_NULL);
     }

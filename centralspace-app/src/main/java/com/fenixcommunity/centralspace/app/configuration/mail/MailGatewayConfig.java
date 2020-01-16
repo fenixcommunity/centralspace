@@ -1,9 +1,6 @@
 package com.fenixcommunity.centralspace.app.configuration.mail;
 
 
-import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailService;
-import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerService;
-import com.fenixcommunity.centralspace.app.service.mail.scheduler.SchedulerServiceBean;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailRegistrationContent;
 import com.fenixcommunity.centralspace.utilities.mail.template.BasicMailMessage;
@@ -38,27 +35,15 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class MailGatewayConfig {
 
-    private final MailProperties mailProperties;
-    private final MailService mailService;
     private final Validator validator;
+    private final MailProperties mailProperties;
+/*    @Autowired -> to resolve Circular dependencies.
+            But for me ugly, refactoring required. Another solution is @Lazy in constructor*/
 
     @Autowired
-    public MailGatewayConfig(final ValidatorFactory validatorFactory, final MailProperties mailProperties, MailService mailService) {
+    MailGatewayConfig(final ValidatorFactory validatorFactory, final MailProperties mailProperties) {
         this.validator = validatorFactory.getInstance(MAIL);
         this.mailProperties = mailProperties;
-        this.mailService = mailService;
-    }
-//    todo we can use also
-//    @Autowired
-//    private Environment env;
-//    env.getRequiredProperty(EMAILGETEWAY_HOST)
-//    or
-//    @Value(EMAILGETEWAY_PORT)
-//    int port;
-
-    @Bean
-    public SchedulerService getSchedulerService() {
-        return new SchedulerServiceBean(mailService);
     }
 
     @Bean

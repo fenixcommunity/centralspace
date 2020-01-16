@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
+import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
@@ -37,7 +38,6 @@ import org.fit.pdfdom.PDFDomTree;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.image.BufferedImage;
@@ -55,9 +55,15 @@ import java.util.stream.Stream;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.DOCX;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.HTML;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.TXT;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
+import static com.fenixcommunity.centralspace.utilities.common.Var.NUMBER_WATERMARK;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
@@ -91,7 +97,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
     }
 
     @Override
-    public void convertImageToPdf(final FileFormat fileFormat, final RestTemplate restTemplate) {
+    public void convertImageToPdf(final FileFormat fileFormat, final RestCallerStrategy restCallerStrategy) {
         final var inputImageUrl = resourceTool.getResourceProperties().getImageUrl()
                 + fileName + DOT + fileFormat.getSubtype();
         final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
@@ -107,13 +113,25 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             writer.open();
             document.open();
 
-            final ResponseEntity<byte[]> response = restTemplate
+            final ResponseEntity<byte[]> responseRestTemplate = restCallerStrategy.buildRestTemplate()
                     .exchange(inputImageUrl, HttpMethod.GET, RestTemplateHelper.createHttpEntityWithHeaders(MediaType.ALL), byte[].class);
 //            or
 //            ResponseEntity<byte[]> response2 =restTemplate.getForEntity(inputImageUrl, byte[].class);
-            final Image image = Image.getInstance(Objects.requireNonNull(response.getBody()));
+//            or
+            final ResponseEntity<byte[]> responseWebClient = restCallerStrategy.buildWebClient()
+                    .get()
+                    .uri("/api/resource/static/img/{file}", fileName + DOT + fileFormat.getSubtype()) // or builder
+                    .headers(httpHeaders -> httpHeaders.setAccept(Collections.singletonList(MediaType.ALL)))
+                    .exchange()
+                    .then();
+            baeldung.com / spring - 5 - webclient
+            https:
+//docs.spring.io/spring/docs/5.0.0.M4_to_5.0.0.M5/Spring%20Framework%205.0.0.M5/org/springframework/web/reactive/function/client/WebClient.html
+
+            final Image image = Image.getInstance(Objects.requireNonNull(responseRestTemplate.getBody()));
+            final Image image2 = Image.getInstance(Objects.requireNonNull(responseWebClient.getBody()));
             PdfDocumentComposer.composeDocument(document);
-            PdfDocumentComposer.composeImage(document, Collections.singletonList(image));
+            PdfDocumentComposer.composeImage(document, asList(image, image2));
 
             writer.flush();
         } catch (Exception e) {

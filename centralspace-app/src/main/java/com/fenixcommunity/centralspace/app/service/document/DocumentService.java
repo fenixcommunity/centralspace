@@ -48,14 +48,7 @@ public class DocumentService {
         converter.convertPdfToImage(fileFormat);
     }
 
-    public void convertImageToPdfAsAdminByRestTemplate(final String imageFileName, final FileFormat fileFormat) {
-        final IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
-        if (securityService.isValidSecurityRole()) {
-            converter.convertImageToPdf(fileFormat, restCallerStrategy);
-        }
-    }
-
-    public void convertImageToPdfAsAdminByWebClient(final String imageFileName, final FileFormat fileFormat) {
+    public void convertImageToPdfAsAdminByWebClientAndRestTemplate(final String imageFileName, final FileFormat fileFormat) {
         final IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
         if (securityService.isValidSecurityRole()) {
             converter.convertImageToPdf(fileFormat, restCallerStrategy);

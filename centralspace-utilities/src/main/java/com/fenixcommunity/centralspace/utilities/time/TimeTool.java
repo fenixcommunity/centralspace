@@ -7,8 +7,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 import static lombok.AccessLevel.PRIVATE;
@@ -21,7 +21,7 @@ public class TimeTool {
     private final Validator validator;
 
     @Autowired
-    TimeTool(final ValidatorFactory validatorFactory) {
+    public TimeTool(final ValidatorFactory validatorFactory) {
         this.validator = validatorFactory.getInstance(NOT_NULL);
     }
 
@@ -29,7 +29,7 @@ public class TimeTool {
         return validator.isValidAll(dateFirst, dateSecond) && dateFirst.isEqual(dateSecond);
     }
 
-    public java.util.Date TO_DATE(final ZonedDateTime dateTime) {
+    public Date TO_OLD_DATE(final ZonedDateTime dateTime) {
         return Date.from(dateTime.toInstant());
     }
 }

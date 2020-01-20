@@ -15,12 +15,13 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Component
 public class RestCallerStrategy {
+
     private final RestTemplateBuilder basicAuthRestTemplateBuilder;
+
     @Qualifier("basicAuthWebClientBuilder")
     private final WebClient.Builder basicAuthWebClientBuilder;
 
     public RestTemplate buildRestTemplate() {
-//        todo copy???
         return basicAuthRestTemplateBuilder.build();
     }
 

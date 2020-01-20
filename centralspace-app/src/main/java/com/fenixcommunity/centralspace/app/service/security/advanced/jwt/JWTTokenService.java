@@ -66,11 +66,11 @@ final class JWTTokenService implements Clock, TokenService {
         final Claims claims = Jwts
                 .claims()
                 .setIssuer(issuer)
-                .setIssuedAt(timeTool.TO_DATE(now));
+                .setIssuedAt(timeTool.TO_OLD_DATE(now));
 
         if (expiresInSec > 0) {
             final ZonedDateTime expiresAt = now.plusSeconds(expiresInSec);
-            claims.setExpiration(timeTool.TO_DATE(expiresAt));
+            claims.setExpiration(timeTool.TO_OLD_DATE(expiresAt));
         }
         claims.putAll(attributes);
 
@@ -121,6 +121,6 @@ final class JWTTokenService implements Clock, TokenService {
 
     @Override
     public Date now() {
-        return timeTool.TO_DATE(ZonedDateTime.now());
+        return timeTool.TO_OLD_DATE(ZonedDateTime.now());
     }
 }

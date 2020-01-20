@@ -38,6 +38,7 @@ import org.fit.pdfdom.PDFDomTree;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import reactor.core.publisher.Mono;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.image.BufferedImage;
@@ -49,19 +50,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.DOCX;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.HTML;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.TXT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
-import static com.fenixcommunity.centralspace.utilities.common.Var.NUMBER_WATERMARK;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PRIVATE;
@@ -118,18 +116,29 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
 //            or
 //            ResponseEntity<byte[]> response2 =restTemplate.getForEntity(inputImageUrl, byte[].class);
 //            or
-            final ResponseEntity<byte[]> responseWebClient = restCallerStrategy.buildWebClient()
+            final String responseWebClientUri = inputImageUrl + "{file}";
+            final Mono<byte[]> responseWebClient = restCallerStrategy.buildWebClient()
                     .get()
-                    .uri("/api/resource/static/img/{file}", fileName + DOT + fileFormat.getSubtype()) // or builder
+                    .uri(responseWebClientUri, fileName + DOT + fileFormat.getSubtype()) // or builder
+//                  .body(BodyInserters.fromMultipartData(new LinkedMultiValueMap()) // add(k,v)
+//                        BodyInserters.fromObject(new Long(2)) );
+                    .cookies(cookie -> cookie.add("cookieKey", "cookieValue"))
                     .headers(httpHeaders -> httpHeaders.setAccept(Collections.singletonList(MediaType.ALL)))
-                    .exchange()
-                    .then();
-            baeldung.com / spring - 5 - webclient
-            https:
-//docs.spring.io/spring/docs/5.0.0.M4_to_5.0.0.M5/Spring%20Framework%205.0.0.M5/org/springframework/web/reactive/function/client/WebClient.html
+                    .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)
+                    .acceptCharset(Charset.forName("UTF-8"))
+                    .ifModifiedSince(ZonedDateTime.now())
+                    .exchange() // retrieve when we need only body, exchange if headers etc
+                    .flatMap(response -> response.bodyToMono(byte[].class)); // Mono -> single, Flux -> multiple
+// TODO create controller which returns Flux with onErrorReturn
+//                    .doOnError(ex -> log.error(ex.getMessage()));
+//                    .onErrorMap(ex -> new DocumentServiceException(ex.getMessage(), ex))
+//                    .onErrorReturn(new byte[0]);
+            final byte[] responseWebClientBody = responseWebClient.blockOptional()
+                    .orElseThrow(() -> new DocumentServiceException("image not fetched"));
+            responseWebClient.subscribe(response -> System.out.println(response.length));
 
             final Image image = Image.getInstance(Objects.requireNonNull(responseRestTemplate.getBody()));
-            final Image image2 = Image.getInstance(Objects.requireNonNull(responseWebClient.getBody()));
+            final Image image2 = Image.getInstance(Objects.requireNonNull(responseWebClientBody));
             PdfDocumentComposer.composeDocument(document);
             PdfDocumentComposer.composeImage(document, asList(image, image2));
 

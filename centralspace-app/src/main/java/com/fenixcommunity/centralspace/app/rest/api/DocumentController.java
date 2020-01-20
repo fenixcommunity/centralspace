@@ -35,16 +35,10 @@ public class DocumentController {
         documentService.convertPdfToImage(pdfFileName, FileFormat.parseFileFormat(fileFormat));
     }
 
-    @GetMapping("/image-to-pdf-as-admin-by-rest-templateByRestTemplate")
-    public void convertImageToPdfAsAdmin(@RequestParam(value = "imageFile", defaultValue = "image_to_pdf") final String imageFileName,
-                                         @RequestParam(value = "fileFormat", defaultValue = "png") final String fileFormat) {
-        documentService.convertImageToPdfAsAdminByRestTemplate(imageFileName, FileFormat.parseFileFormat(fileFormat));
-    }
-
-    @GetMapping("/image-to-pdf-as-admin-by-webc-lient")
+    @GetMapping("/image-to-pdf-as-admin-by-web-client-and-rest-template")
     public void convertImageToPdfAsAdminByWebClient(@RequestParam(value = "imageFile", defaultValue = "image_to_pdf") final String imageFileName,
                                                     @RequestParam(value = "fileFormat", defaultValue = "png") final String fileFormat) {
-        documentService.convertImageToPdfAsAdminByWebClient(imageFileName, FileFormat.parseFileFormat(fileFormat));
+        documentService.convertImageToPdfAsAdminByWebClientAndRestTemplate(imageFileName, FileFormat.parseFileFormat(fileFormat));
     }
 
     @GetMapping("/html-to-pdf")

@@ -28,6 +28,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
 
 @EnableWebSecurity // (debug = true)
+//@EnableWebFluxSecurity todo https://www.baeldung.com/spring-security-5-reactive
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
 //todo FieldDefaults private final??
 @FieldDefaults(level = PRIVATE, makeFinal = true)

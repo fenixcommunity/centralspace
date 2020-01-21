@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.service.document.converter;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
@@ -38,6 +39,7 @@ import org.fit.pdfdom.PDFDomTree;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -129,10 +131,21 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
                     .ifModifiedSince(ZonedDateTime.now())
                     .exchange() // retrieve when we need only body, exchange if headers etc
                     .flatMap(response -> response.bodyToMono(byte[].class)); // Mono -> single, Flux -> multiple
-// TODO create controller which returns Flux with onErrorReturn
-//                    .doOnError(ex -> log.error(ex.getMessage()));
-//                    .onErrorMap(ex -> new DocumentServiceException(ex.getMessage(), ex))
-//                    .onErrorReturn(new byte[0]);
+
+
+            final Flux<Account> responseWebClient2 = restCallerStrategy.buildWebClient()
+                    .get()
+                    .uri("http://localhost:8088/app/api/account/all") // or builder
+                    .cookies(cookie -> cookie.add("cookieKey", "cookieValue"))
+                    .headers(httpHeaders -> httpHeaders.setAccept(Collections.singletonList(MediaType.ALL)))
+                    .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)
+                    .acceptCharset(Charset.forName("UTF-8"))
+                    .ifModifiedSince(ZonedDateTime.now())
+                    .exchange()
+                    .flatMapMany(response -> response.bodyToFlux(Account.class)); // Mono -> single, Flux -> multiple
+
+            Account responseWebClientBody2 = responseWebClient2.blockFirst();
+
             final byte[] responseWebClientBody = responseWebClient.blockOptional()
                     .orElseThrow(() -> new DocumentServiceException("image not fetched"));
             responseWebClient.subscribe(response -> System.out.println(response.length));

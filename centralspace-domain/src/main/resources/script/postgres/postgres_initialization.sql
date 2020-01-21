@@ -19,4 +19,6 @@
 --                ) THEN (select a.login from account a limit 1)
 --            ELSE 'not exist' END;
 
-select 1 from account;
+INSERT INTO account(id, login, mail, creation_date, update_date)
+SELECT 999, 'loginQuery', 'text@mail.com', NOW(), NOW()
+WHERE NOT EXISTS ( SELECT id FROM account WHERE id = 999 );

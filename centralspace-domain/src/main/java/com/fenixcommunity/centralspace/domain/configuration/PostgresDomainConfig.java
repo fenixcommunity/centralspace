@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -81,7 +82,7 @@ public class PostgresDomainConfig {
 
     private DatabasePopulator databasePopulator(final Resource initializationScript) {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.setSeparator("/");
+        populator.setSeparator(ScriptUtils.EOF_STATEMENT_SEPARATOR);
         populator.addScript(initializationScript);
         return populator;
     }

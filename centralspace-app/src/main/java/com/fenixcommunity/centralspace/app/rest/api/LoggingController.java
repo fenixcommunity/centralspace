@@ -28,6 +28,7 @@ public class LoggingController {
             @ApiResponse(code = 200, response = ErrorDetails.class, message = "OK"),
             @ApiResponse(code = 400, response = ErrorDetails.class, message = "Bad request"),
             @ApiResponse(code = 404, response = ErrorDetails.class, message = "Not found"),
+            @ApiResponse(code = 415, response = ErrorDetails.class, message = "Unsupported"),
             @ApiResponse(code = 500, response = ErrorDetails.class, message = "Internal server error"),
             @ApiResponse(code = 501, response = ErrorDetails.class, message = "Not implemented for given extraction type")
     })
@@ -44,6 +45,6 @@ public class LoggingController {
                 .message("error")
                 .details("details")
                 .logRef(randomString()).build();
-        return ResponseEntity.ok(errorDetails);
+        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorDetails);
     }
 }

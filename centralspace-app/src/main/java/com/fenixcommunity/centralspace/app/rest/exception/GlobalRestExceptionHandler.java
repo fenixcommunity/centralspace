@@ -22,7 +22,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Log4j2
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class GlobalExceptionHandler {
+public class GlobalRestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
@@ -79,4 +79,5 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getRawStatusCode()).body(ex.getResponseBodyAsString());
     }
 
+    test
 }

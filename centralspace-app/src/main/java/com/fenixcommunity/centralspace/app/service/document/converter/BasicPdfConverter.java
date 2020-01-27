@@ -60,8 +60,13 @@ import java.util.stream.Stream;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.DOCX;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.HTML;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.TXT;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
+import static com.fenixcommunity.centralspace.utilities.common.Var.NUMBER_WATERMARK;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PRIVATE;
@@ -121,15 +126,20 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             final String responseWebClientUri = inputImageUrl + "{file}";
             final Mono<byte[]> responseWebClient = restCallerStrategy.buildWebClient()
                     .get()
-                    .uri(responseWebClientUri, fileName + DOT + fileFormat.getSubtype()) // or builder
+                    .uri(responseWebClientUri, fileName + DOT + fileFormat.getSubtype()) // or builder if queryParam
 //                  .body(BodyInserters.fromMultipartData(new LinkedMultiValueMap()) // add(k,v)
 //                        BodyInserters.fromObject(new Long(2)) );
+//                        Mono.just(...,)
                     .cookies(cookie -> cookie.add("cookieKey", "cookieValue"))
                     .headers(httpHeaders -> httpHeaders.setAccept(Collections.singletonList(MediaType.ALL)))
                     .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)
                     .acceptCharset(Charset.forName("UTF-8"))
                     .ifModifiedSince(ZonedDateTime.now())
                     .exchange() // retrieve when we need only body, exchange if headers etc
+//                    .retrieve()  // for exchange()  @ExceptionHandler(WebClientResponseException.class)
+//                    .onStatus(HttpStatus::is5xxServerError, clientResponse ->
+//                            Mono.error(new DocumentServiceException())
+//                    )
                     .flatMap(response -> response.bodyToMono(byte[].class)); // Mono -> single, Flux -> multiple
 
 

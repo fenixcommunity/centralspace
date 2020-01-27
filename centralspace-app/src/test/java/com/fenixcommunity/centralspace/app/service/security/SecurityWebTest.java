@@ -15,7 +15,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.*;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.SWAGGER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static com.fenixcommunity.centralspace.utilities.common.Var.WRONG_PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
@@ -86,8 +88,8 @@ class SecurityWebTest {
         ResponseEntity<String> response
                 = restTemplate.getForEntity(baseUrl.toString(), String.class);
 
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-        hasText(response.getBody(), "Unauthorized");
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        hasText(response.getBody(), "Forbidden");
     }
 
     @Test

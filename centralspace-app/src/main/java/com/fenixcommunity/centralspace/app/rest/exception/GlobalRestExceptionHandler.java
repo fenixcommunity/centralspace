@@ -79,5 +79,4 @@ public class GlobalRestExceptionHandler {
         return ResponseEntity.status(ex.getRawStatusCode()).body(ex.getResponseBodyAsString());
     }
 
-    test
 }

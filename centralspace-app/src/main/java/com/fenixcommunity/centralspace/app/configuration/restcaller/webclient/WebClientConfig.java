@@ -32,8 +32,6 @@ public class WebClientConfig {
         //todo     ...passwordEncoder().encode(PASSWORD)
     }
 
-    test
-
     private ExchangeFilterFunction logRequest() {
         return (clientRequest, next) -> {
             log.info("WebClient request: {} {}", clientRequest.method(), clientRequest.url());

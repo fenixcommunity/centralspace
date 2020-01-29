@@ -145,7 +145,6 @@ public abstract class AutoSecurityConfig {
 
     }
 
-    //    PERSISTENT_LOGINS dodaj
     @Configuration
     @Order(2)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {

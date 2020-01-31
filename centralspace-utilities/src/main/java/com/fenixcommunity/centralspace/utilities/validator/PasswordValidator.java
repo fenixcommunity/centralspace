@@ -1,15 +1,15 @@
 package com.fenixcommunity.centralspace.utilities.validator;
 
 
-import com.fenixcommunity.centralspace.utilities.common.Level;
-import com.fenixcommunity.centralspace.utilities.exception.validator.PasswordValidatorException;
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static lombok.AccessLevel.PRIVATE;
+import com.fenixcommunity.centralspace.utilities.common.Level;
+import com.fenixcommunity.centralspace.utilities.exception.validator.PasswordValidatorException;
+import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PRIVATE)
 public class PasswordValidator implements Validator {

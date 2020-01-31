@@ -1,5 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.dto.register;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -13,13 +15,10 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.io.IOException;
-
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @JsonSerialize(using = RegisterType.RegisterTypeSerializer.class)
 @JsonDeserialize(using = RegisterType.RegisterTypeDeserializer.class)
-@AllArgsConstructor
-@Getter
+@AllArgsConstructor @Getter
 public enum RegisterType {
     ADMIN("ADM", 0), STANDARD("STD", 1);
 

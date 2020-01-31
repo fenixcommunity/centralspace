@@ -1,13 +1,13 @@
 package com.fenixcommunity.centralspace.app.rest.caller;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.Collections;
+
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-
-import java.util.Collections;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class RestTemplateHelper {

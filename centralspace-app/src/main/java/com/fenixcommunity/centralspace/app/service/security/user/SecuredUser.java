@@ -1,5 +1,11 @@
 package com.fenixcommunity.centralspace.app.service.security.user;
 
+import static java.util.Objects.requireNonNull;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,15 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static java.util.Objects.requireNonNull;
-import static lombok.AccessLevel.PRIVATE;
-
-@Value
-@Builder
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@Value @Builder @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class SecuredUser implements UserDetails {
     private static final long serialVersionUID = 2396654715019746670L;
 

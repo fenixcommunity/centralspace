@@ -1,9 +1,9 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)

@@ -1,22 +1,20 @@
 package com.fenixcommunity.centralspace.utilities.mail;
 
+import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.validation.constraints.Email;
+
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-import javax.validation.constraints.Email;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static lombok.AccessLevel.PRIVATE;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
-@Getter
-@Setter
-@FieldDefaults(level = PRIVATE)
+@Getter @Setter @FieldDefaults(level = PRIVATE)
 public class MailBuilder {
 
     public MailBuilder(MailMessageTemplate template) {

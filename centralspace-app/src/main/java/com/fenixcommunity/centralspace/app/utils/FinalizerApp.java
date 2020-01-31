@@ -1,5 +1,7 @@
 package com.fenixcommunity.centralspace.app.utils;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.ExitCodeEvent;
 import org.springframework.boot.ExitCodeExceptionMapper;
@@ -9,8 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @SpringBootApplication
 @ComponentScan({"com.fenixcommunity.centralspace.app"})

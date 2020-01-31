@@ -1,5 +1,16 @@
 package com.fenixcommunity.centralspace.app.service.security.advanced.jwt;
 
+import static io.jsonwebtoken.SignatureAlgorithm.HS256;
+import static io.jsonwebtoken.impl.TextCodec.BASE64;
+import static java.util.Objects.requireNonNull;
+import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.StringUtils.substringBeforeLast;
+
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.Map;
+import java.util.function.Supplier;
+
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import com.google.common.collect.ImmutableMap;
 import io.jsonwebtoken.Claims;
@@ -13,21 +24,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.Map;
-import java.util.function.Supplier;
-
-import static io.jsonwebtoken.SignatureAlgorithm.HS256;
-import static io.jsonwebtoken.impl.TextCodec.BASE64;
-import static java.util.Objects.requireNonNull;
-import static lombok.AccessLevel.PRIVATE;
-import static org.apache.commons.lang3.StringUtils.substringBeforeLast;
-
 @Service
 @PropertySource("classpath:security.properties")
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-final class JWTTokenService implements Clock, TokenService {
+@FieldDefaults(level = PRIVATE, makeFinal = true) final class JWTTokenService implements Clock, TokenService {
     private static final String DOT = ".";
     private static final GzipCompressionCodec COMPRESSION_CODEC = new GzipCompressionCodec();
 

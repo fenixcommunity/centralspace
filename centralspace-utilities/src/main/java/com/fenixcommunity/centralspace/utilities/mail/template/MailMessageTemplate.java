@@ -1,14 +1,13 @@
 package com.fenixcommunity.centralspace.utilities.mail.template;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
-
 //TODO 27.11.2019 what about getters?
 
-@Getter
-@AllArgsConstructor
+@Getter @AllArgsConstructor
 public abstract class MailMessageTemplate {
 
     @NotBlank

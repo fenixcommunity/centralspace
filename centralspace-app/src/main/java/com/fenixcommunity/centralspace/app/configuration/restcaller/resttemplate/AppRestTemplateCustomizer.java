@@ -1,12 +1,12 @@
 package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.client.RestTemplateCustomizer;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.web.client.RestTemplate;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)

@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.app.service.security.advanced;
 
-import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
-
 import java.util.Optional;
+
+import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
 
 public interface SecuredUserAuthenticationService {
 

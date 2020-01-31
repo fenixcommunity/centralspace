@@ -1,5 +1,8 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
+import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.context.annotation.ComponentScan.Filter;
+
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
@@ -18,9 +21,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-import static lombok.AccessLevel.PRIVATE;
-import static org.springframework.context.annotation.ComponentScan.Filter;
 
 @Configuration
 @ComponentScan(value = {"com.fenixcommunity.centralspace.app"},

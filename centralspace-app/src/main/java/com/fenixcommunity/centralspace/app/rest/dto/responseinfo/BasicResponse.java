@@ -1,17 +1,15 @@
 package com.fenixcommunity.centralspace.app.rest.dto.responseinfo;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
-import static lombok.AccessLevel.PRIVATE;
-
-@Value
-@Builder
 @ApiModel(value = "RestResponse")
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@Value @Builder @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class BasicResponse {
 
     @ApiModelProperty(value = "Basic description", required = true, example = "INSERT", allowableValues = "INSERT,DELETE,UPDATE")

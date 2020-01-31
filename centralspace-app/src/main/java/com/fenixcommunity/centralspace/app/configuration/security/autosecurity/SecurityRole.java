@@ -1,15 +1,14 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import java.util.List;
-
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeLists;
 import static java.util.Arrays.asList;
 
-@AllArgsConstructor
-@Getter
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor @Getter
 public enum SecurityRole {
     // to entity
     SWAGGER("can see and try api in swagger documentation", asList("SWAGGER")),

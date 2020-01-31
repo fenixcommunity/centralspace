@@ -1,5 +1,9 @@
 package com.fenixcommunity.centralspace.app.configuration.swaggerdoc;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.List;
+
 import io.swagger.models.Swagger;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Primary;
@@ -7,10 +11,6 @@ import org.springframework.stereotype.Component;
 import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
 import springfox.documentation.spring.web.json.Json;
 import springfox.documentation.spring.web.json.JsonSerializer;
-
-import java.util.List;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @Component
 @Primary

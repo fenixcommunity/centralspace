@@ -1,10 +1,10 @@
 package com.fenixcommunity.centralspace.domain.converter;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
-
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 
 class CryptoJpaConverterTestHelper implements ArgumentConverter {

@@ -1,5 +1,19 @@
 package com.fenixcommunity.centralspace.domain.model.mounted.account;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
 import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
@@ -12,31 +26,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.List;
 
-import static lombok.AccessLevel.PRIVATE;
-
-
-@Entity
-@EntityListeners(AccountEntityListener.class)
-@Table(name = "account")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@ToString()
-@FieldDefaults(level = PRIVATE)
+@Entity @Table(name = "account") @EntityListeners(AccountEntityListener.class)
+@Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class Account extends AbstractBaseEntity {
 
     //  TODO  AuditingEntityListener co to?

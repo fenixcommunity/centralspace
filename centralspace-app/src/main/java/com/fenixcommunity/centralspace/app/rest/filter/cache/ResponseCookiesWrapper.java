@@ -1,14 +1,14 @@
 package com.fenixcommunity.centralspace.app.rest.filter.cache;
 
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.util.ArrayList;
-import java.util.List;
 
-import static lombok.AccessLevel.PRIVATE;
+import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 class ResponseCookiesWrapper extends HttpServletResponseWrapper {

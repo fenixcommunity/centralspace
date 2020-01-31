@@ -1,20 +1,20 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler;
 
+import static com.fenixcommunity.centralspace.utilities.web.WebTool.getPreviousPageByRequest;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.io.IOException;
+import java.util.Set;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.UrlUtils;
 import org.springframework.util.Assert;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Set;
-
-import static com.fenixcommunity.centralspace.utilities.web.WebTool.getPreviousPageByRequest;
-import static lombok.AccessLevel.PRIVATE;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHandler {

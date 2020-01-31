@@ -1,5 +1,11 @@
 package com.fenixcommunity.centralspace.utilities.aop;
 
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.METHOD_INVOCATION_TIME_LIMIT_mS;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
+
 import com.fenixcommunity.centralspace.utilities.time.TimeFormatter;
 import com.google.common.base.Stopwatch;
 import lombok.experimental.FieldDefaults;
@@ -7,12 +13,6 @@ import lombok.extern.log4j.Log4j2;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
 import org.springframework.aop.interceptor.AbstractMonitoringInterceptor;
-
-import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
-
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.METHOD_INVOCATION_TIME_LIMIT_mS;
-import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)

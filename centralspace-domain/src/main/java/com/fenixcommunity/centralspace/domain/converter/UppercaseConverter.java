@@ -1,11 +1,11 @@
 package com.fenixcommunity.centralspace.domain.converter;
 
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import static lombok.AccessLevel.PRIVATE;
+import lombok.experimental.FieldDefaults;
 
 @Converter
 @FieldDefaults(level = PRIVATE, makeFinal = true)

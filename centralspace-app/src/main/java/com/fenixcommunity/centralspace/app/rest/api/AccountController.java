@@ -1,5 +1,17 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
+import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
+import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
+import static java.util.Collections.singletonMap;
+import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.net.URI;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.validation.Valid;
+
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
@@ -28,26 +40,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
-import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
-import static java.util.Collections.singletonMap;
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
-
 // todo swagger/postman
 //todo decorator and strategy
-@RestController
-@RequestMapping(value = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RestController @RequestMapping(value = "/api/account", produces = {MediaType.ALL_VALUE})
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 //TODO @PreAuthorize("hasAuthority('ROLE_USER')")
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-@AllArgsConstructor(access = PACKAGE)
+@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;
@@ -59,10 +57,9 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") final Long id) throws ResourceNotFoundException {
         final AccountDto accountDto = findByIdAndMapToDto(id);
-        singletonMap("Custom-Header", accountDto.getId());
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
-                .headers(prepareResponseHeaders(singletonMap("Custom-Header", accountDto.getId())))
+                .headers(prepareResponseHeaders(singletonMap("Custom-Header", String.valueOf(accountDto.getId()))))
                 .body(accountDto);
     }
 
@@ -85,11 +82,12 @@ public class AccountController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
+    public ResponseEntity<AccountDto> create(@Valid @RequestBody final AccountDto accountDto) {
         final Account createdAccount = mapToJpa(accountDto);
         final Long generatedId = accountService.save(createdAccount).getId();
-        final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
-        return ResponseEntity.created(getCurrentURI()).body(response);
+        gfhfg
+//        final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
+        return ResponseEntity.created(getCurrentURI()).body(accountDto);
     }
 
     //    todo RestErrorHandler apply

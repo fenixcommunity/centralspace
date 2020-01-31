@@ -1,13 +1,13 @@
 package com.fenixcommunity.centralspace.utilities.validator;
 
-import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static lombok.AccessLevel.PRIVATE;
+import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 
 // @Component???

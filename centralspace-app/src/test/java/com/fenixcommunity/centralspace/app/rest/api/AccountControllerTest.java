@@ -1,5 +1,28 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
+import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.utilities.web.WebTool.removeLinks;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Optional;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
@@ -20,29 +43,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.Optional;
-
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
-import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
-import static com.fenixcommunity.centralspace.utilities.web.WebTool.removeLinks;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {

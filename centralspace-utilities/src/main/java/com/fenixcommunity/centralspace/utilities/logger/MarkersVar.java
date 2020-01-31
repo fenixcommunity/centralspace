@@ -1,10 +1,10 @@
 package com.fenixcommunity.centralspace.utilities.logger;
 
+import static lombok.AccessLevel.PUBLIC;
+
 import lombok.experimental.FieldDefaults;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-
-import static lombok.AccessLevel.PUBLIC;
 
 @FieldDefaults(level = PUBLIC, makeFinal = true)
 public class MarkersVar {

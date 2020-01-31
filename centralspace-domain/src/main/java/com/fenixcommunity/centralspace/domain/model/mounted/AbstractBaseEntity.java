@@ -1,23 +1,20 @@
 package com.fenixcommunity.centralspace.domain.model.mounted;
 
-import com.fenixcommunity.centralspace.domain.converter.ZonedDateTimeJpaConverter;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
+import java.time.ZonedDateTime;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import java.time.ZonedDateTime;
 
-import static lombok.AccessLevel.PRIVATE;
+import com.fenixcommunity.centralspace.domain.converter.ZonedDateTimeJpaConverter;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
-@MappedSuperclass
-@Getter
-@Setter
-@FieldDefaults(level = PRIVATE)
+@MappedSuperclass @Getter @Setter @FieldDefaults(level = PRIVATE)
 public abstract class AbstractBaseEntity {
     // Store always in UTC
     // Read from database (stored in UTC) and return with the system default.

@@ -1,5 +1,9 @@
 package com.fenixcommunity.centralspace.utilities.resourcehelper;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
+import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
+import static lombok.AccessLevel.PRIVATE;
+
 import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
@@ -7,10 +11,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.SLASH;
-import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
-import static lombok.AccessLevel.PRIVATE;
 
 
 @Component

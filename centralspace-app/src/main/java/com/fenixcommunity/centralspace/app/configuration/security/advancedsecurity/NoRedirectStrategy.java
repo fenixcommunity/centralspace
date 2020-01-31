@@ -1,10 +1,10 @@
 package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
 
-import org.springframework.security.web.RedirectStrategy;
-
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.springframework.security.web.RedirectStrategy;
 
 class NoRedirectStrategy implements RedirectStrategy {
 

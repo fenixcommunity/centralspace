@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
-import lombok.experimental.FieldDefaults;
-
 import static lombok.AccessLevel.PUBLIC;
+
+import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PUBLIC, makeFinal = true)
 public class Var {

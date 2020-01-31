@@ -1,12 +1,12 @@
 package com.fenixcommunity.centralspace.utilities.validator;
 
-import lombok.experimental.FieldDefaults;
-import org.springframework.util.Assert;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import static lombok.AccessLevel.PRIVATE;
+import lombok.experimental.FieldDefaults;
+import org.springframework.util.Assert;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class NotNullValidator implements Validator {

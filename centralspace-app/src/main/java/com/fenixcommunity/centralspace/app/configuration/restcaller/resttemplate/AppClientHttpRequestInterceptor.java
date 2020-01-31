@@ -1,15 +1,15 @@
 package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import java.io.IOException;
+
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
-
-import java.io.IOException;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)

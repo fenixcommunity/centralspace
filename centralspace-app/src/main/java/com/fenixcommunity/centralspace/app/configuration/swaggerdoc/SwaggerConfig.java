@@ -1,5 +1,15 @@
 package com.fenixcommunity.centralspace.app.configuration.swaggerdoc;
 
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.getSimpleClassName;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_URL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
+import static com.google.common.collect.Lists.newArrayList;
+import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+import java.util.List;
+
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.google.common.base.Predicate;
 import lombok.experimental.FieldDefaults;
@@ -19,16 +29,6 @@ import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.List;
-
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.getSimpleClassName;
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOMAIN_URL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
-import static com.google.common.collect.Lists.newArrayList;
-import static lombok.AccessLevel.PRIVATE;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
 @EnableSwagger2 //@EnableSwagger2WebMvc 3.0.0v

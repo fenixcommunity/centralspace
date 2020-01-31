@@ -1,17 +1,16 @@
 package com.fenixcommunity.centralspace.utilities.mail.template;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
+import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.mail.MailPreparationException;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
-import static lombok.AccessLevel.PRIVATE;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
-@Getter
-@FieldDefaults(level = PRIVATE)
+@Getter @FieldDefaults(level = PRIVATE)
 public class BasicMailMessage extends MailMessageTemplate {
 
     private MailContent mailContent;

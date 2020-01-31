@@ -1,16 +1,16 @@
 package com.fenixcommunity.centralspace.utilities.web;
 
+import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
+import java.util.Map;
+import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-import java.util.Optional;
-
-import static lombok.AccessLevel.PRIVATE;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class WebTool {

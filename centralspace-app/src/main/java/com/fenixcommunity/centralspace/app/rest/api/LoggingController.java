@@ -1,5 +1,8 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -8,17 +11,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.ZonedDateTime;
-
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.randomString;
-import static lombok.AccessLevel.PRIVATE;
-
-@RestController
-@RequestMapping("/api/logger")
+@RestController @RequestMapping("/api/logger")
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class LoggingController {
@@ -41,10 +39,19 @@ public class LoggingController {
         log.error("ERROR Message");
 
         final ErrorDetails errorDetails = ErrorDetails.builder()
-                .timestamp(ZonedDateTime.now())
                 .message("error")
-                .details("details")
-                .logRef(randomString()).build();
+                .details("details").build();
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorDetails);
+    }
+
+    gh
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("/post")
+
+    public ResponseEntity<LoggerDto> postLog(final LoggerDto loggerDto) {
+        log.info(loggerDto.toString());
+
+        return ResponseEntity.accepted()
+                .body(new LoggerDto(null, "logger"));
     }
 }

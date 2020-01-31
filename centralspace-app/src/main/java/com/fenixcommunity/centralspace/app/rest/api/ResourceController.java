@@ -1,5 +1,11 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.fenixcommunity.centralspace.utilities.web.WebTool;
 import lombok.AllArgsConstructor;
@@ -12,16 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
-
-@Controller
-@RequestMapping("/api/resource")
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-@AllArgsConstructor(access = PACKAGE)
+@Controller @RequestMapping("/api/resource")
+@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ResourceController {
 
     private final ResourceLoaderTool resourceTool;

@@ -1,13 +1,13 @@
 package com.fenixcommunity.centralspace.app.utils;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static java.lang.String.format;
+import static lombok.AccessLevel.PRIVATE;
+
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
-import static java.lang.String.format;
-import static lombok.AccessLevel.PRIVATE;
 
 @Component
 @FieldDefaults(level = PRIVATE, makeFinal = true)

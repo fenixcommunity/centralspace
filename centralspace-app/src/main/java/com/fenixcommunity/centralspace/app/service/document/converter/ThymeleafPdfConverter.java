@@ -1,5 +1,15 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
+
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.itextpdf.html2pdf.HtmlConverter;
@@ -9,19 +19,8 @@ import lombok.extern.log4j.Log4j2;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Objects;
-
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
-import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PUBLIC;
-
 @Log4j2
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-@AllArgsConstructor(access = PUBLIC) //todo change to package?
+@AllArgsConstructor(access = PUBLIC) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
 
     private final String fileName;

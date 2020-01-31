@@ -1,7 +1,6 @@
 package com.fenixcommunity.centralspace.domain.core;
 
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -10,7 +9,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 
-import static lombok.AccessLevel.PRIVATE;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountEntityListener {

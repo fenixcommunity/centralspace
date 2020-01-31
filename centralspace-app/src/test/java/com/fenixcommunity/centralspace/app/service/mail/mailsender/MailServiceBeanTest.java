@@ -1,5 +1,22 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.EMAIL_FROM;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+
 import com.fenixcommunity.centralspace.app.service.document.DocumentService;
 import com.fenixcommunity.centralspace.utilities.configuration.properties.ResourceProperties;
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
@@ -20,18 +37,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {

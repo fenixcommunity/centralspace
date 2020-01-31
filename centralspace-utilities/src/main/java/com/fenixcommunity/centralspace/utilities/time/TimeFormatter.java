@@ -1,10 +1,10 @@
 package com.fenixcommunity.centralspace.utilities.time;
 
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.time.format.DateTimeFormatter;
 
-import static lombok.AccessLevel.PRIVATE;
+import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class TimeFormatter {

@@ -1,12 +1,11 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
+import java.util.EnumSet;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.EnumSet;
-
-@AllArgsConstructor
-@Getter
+@AllArgsConstructor @Getter
 public enum FileFormat {
 
     PDF("PDF", "pdf"),

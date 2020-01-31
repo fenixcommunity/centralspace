@@ -1,5 +1,11 @@
 package com.fenixcommunity.centralspace.app.configuration.aop;
 
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.getClassPath;
+import static com.fenixcommunity.centralspace.utilities.common.Var.OR;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.Arrays;
+
 import com.fenixcommunity.centralspace.utilities.aop.TimePerformanceMonitorInterceptor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
@@ -17,12 +23,6 @@ import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-
-import java.util.Arrays;
-
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.getClassPath;
-import static com.fenixcommunity.centralspace.utilities.common.Var.OR;
-import static lombok.AccessLevel.PRIVATE;
 
 @Configuration
 @EnableAspectJAutoProxy

@@ -1,5 +1,18 @@
 package com.fenixcommunity.centralspace.domain.repository;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static lombok.AccessLevel.PRIVATE;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.DEFAULT;
+
+import java.util.List;
+import java.util.Optional;
+import javax.sql.DataSource;
+
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.mounted.AccountRepository;
@@ -18,19 +31,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.sql.DataSource;
-import java.util.List;
-import java.util.Optional;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
-import static lombok.AccessLevel.PRIVATE;
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.DEFAULT;
-
-@RunWith(SpringRunner.class)
-@DataJpaTest
+@RunWith(SpringRunner.class) @DataJpaTest
 /*If you want to use Spring Custom Method ..findByLogin please extend to:
 @AutoConfigureTestEntityManager
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)*/

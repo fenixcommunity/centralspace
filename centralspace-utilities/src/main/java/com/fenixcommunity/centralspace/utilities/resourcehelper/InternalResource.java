@@ -1,10 +1,10 @@
 package com.fenixcommunity.centralspace.utilities.resourcehelper;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
+
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import lombok.Getter;
 import org.springframework.core.io.Resource;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 
 @Getter
 public final class InternalResource {

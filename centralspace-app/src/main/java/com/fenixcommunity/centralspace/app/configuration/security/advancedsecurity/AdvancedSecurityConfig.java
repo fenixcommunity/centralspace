@@ -1,5 +1,12 @@
 package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
 
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
+import static java.util.Objects.requireNonNull;
+import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import com.fenixcommunity.centralspace.app.service.security.advanced.InMemoryUserDetailsService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -19,13 +26,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
-import static java.util.Objects.requireNonNull;
-import static lombok.AccessLevel.PRIVATE;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 //@Configuration
 //@EnableWebSecurity

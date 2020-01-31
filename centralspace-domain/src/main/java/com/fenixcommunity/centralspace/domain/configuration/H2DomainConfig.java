@@ -1,5 +1,10 @@
 package com.fenixcommunity.centralspace.domain.configuration;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,11 +25,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @Configuration
 //@EnableJpaAuditing - disabled, required only one

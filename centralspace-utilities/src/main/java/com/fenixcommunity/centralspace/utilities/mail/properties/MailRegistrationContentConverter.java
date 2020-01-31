@@ -1,12 +1,12 @@
 package com.fenixcommunity.centralspace.utilities.mail.properties;
 
+import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import static lombok.AccessLevel.PRIVATE;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 
 @Component

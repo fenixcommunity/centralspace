@@ -1,15 +1,15 @@
 package com.fenixcommunity.centralspace.app.configuration.web;
 
-import lombok.experimental.FieldDefaults;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import static lombok.AccessLevel.PRIVATE;
 
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import static lombok.AccessLevel.PRIVATE;
+import lombok.experimental.FieldDefaults;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @FieldDefaults(level = PRIVATE, makeFinal = true)

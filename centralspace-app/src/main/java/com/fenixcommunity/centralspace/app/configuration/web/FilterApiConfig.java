@@ -1,5 +1,9 @@
 package com.fenixcommunity.centralspace.app.configuration.web;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import javax.servlet.Filter;
+
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.RequestResponseLoggingFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.cache.CacheCookieApiFilter;
@@ -8,10 +12,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import javax.servlet.Filter;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @Configuration
 @ComponentScan({"com.fenixcommunity.centralspace.app.rest.filter"})

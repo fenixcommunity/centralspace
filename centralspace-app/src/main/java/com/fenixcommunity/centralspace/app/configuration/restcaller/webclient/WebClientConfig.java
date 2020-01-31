@@ -1,5 +1,9 @@
 package com.fenixcommunity.centralspace.app.configuration.restcaller.webclient;
 
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static lombok.AccessLevel.PRIVATE;
+
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,10 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
-import static lombok.AccessLevel.PRIVATE;
 
 @Configuration
 @FieldDefaults(level = PRIVATE, makeFinal = true)

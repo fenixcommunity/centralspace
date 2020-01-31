@@ -1,5 +1,12 @@
 package com.fenixcommunity.centralspace.utilities.document;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.List;
+import java.util.stream.Stream;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -14,13 +21,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
-import static com.fenixcommunity.centralspace.utilities.common.Var.SUBJECT;
-import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)

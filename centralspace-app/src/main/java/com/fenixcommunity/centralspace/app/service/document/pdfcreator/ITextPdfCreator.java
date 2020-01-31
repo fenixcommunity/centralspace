@@ -1,5 +1,22 @@
 package com.fenixcommunity.centralspace.app.service.document.pdfcreator;
 
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.JPG;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PNG;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MESSAGE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.utilities.common.Var.UNDERSCORE;
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
+import static org.apache.commons.io.FileUtils.readFileToByteArray;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Collections;
+
 import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
@@ -15,20 +32,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Collections;
-
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
-import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PUBLIC;
-import static org.apache.commons.io.FileUtils.readFileToByteArray;
-
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-@AllArgsConstructor(access = PUBLIC)
+@AllArgsConstructor(access = PUBLIC) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ITextPdfCreator implements IPdfCreator {
 
     private static final String imageName = "image_to_pdf";

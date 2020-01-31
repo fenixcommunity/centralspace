@@ -1,23 +1,23 @@
 package com.fenixcommunity.centralspace.domain.converter;
 
-import com.fenixcommunity.centralspace.domain.exception.cenverter.CryptoJpaConverterException;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.security.crypto.codec.Base64;
+import static com.fenixcommunity.centralspace.utilities.logger.MarkersVar.GENERAL_USER;
+import static lombok.AccessLevel.PRIVATE;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-import javax.persistence.Transient;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Objects;
 import java.util.Properties;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+import javax.persistence.Transient;
 
-import static com.fenixcommunity.centralspace.utilities.logger.MarkersVar.GENERAL_USER;
-import static lombok.AccessLevel.PRIVATE;
+import com.fenixcommunity.centralspace.domain.exception.cenverter.CryptoJpaConverterException;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.codec.Base64;
 
 @Converter
 @Log4j2

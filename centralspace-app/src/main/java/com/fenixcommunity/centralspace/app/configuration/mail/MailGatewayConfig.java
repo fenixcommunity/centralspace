@@ -1,6 +1,13 @@
 package com.fenixcommunity.centralspace.app.configuration.mail;
 
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.BASIC_MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.REGISTRATION_MAIL;
+import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.Properties;
+
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailRegistrationContent;
 import com.fenixcommunity.centralspace.utilities.mail.template.BasicMailMessage;
@@ -18,13 +25,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-import java.util.Properties;
-
-import static com.fenixcommunity.centralspace.utilities.common.Var.BASIC_MAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.REGISTRATION_MAIL;
-import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
-import static lombok.AccessLevel.PRIVATE;
 
 //todo useless? EnableScheduling EnableAsync
 @Configuration

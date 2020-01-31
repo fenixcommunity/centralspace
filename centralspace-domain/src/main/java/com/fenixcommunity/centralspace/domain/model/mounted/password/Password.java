@@ -1,15 +1,8 @@
 package com.fenixcommunity.centralspace.domain.model.mounted.password;
 
-import com.fenixcommunity.centralspace.domain.converter.CryptoJpaConverter;
-import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -21,22 +14,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
 
-import static lombok.AccessLevel.PRIVATE;
+import com.fenixcommunity.centralspace.domain.converter.CryptoJpaConverter;
+import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 //immutable objects, like @Value
 // Builder gdy mamy pola final i chcemy je tworzyc w elastycznym konstruktorze
 // Builder stosujemy gdy tworzymy obiekt raz i nie zmianiamy go potem przez sety
 //@Setter(value = AccessLevel.PACKAGE)
-@Entity
-@Table(name = "password")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@FieldDefaults(level = PRIVATE)
+@Entity @Table(name = "password")
+@Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @FieldDefaults(level = PRIVATE)
 public class Password extends AbstractBaseEntity implements Serializable {
 
     //TODO         return Optional.ofNullable(isoCountryCode)

@@ -1,11 +1,11 @@
 package com.fenixcommunity.centralspace.utilities.validator;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import com.fenixcommunity.centralspace.utilities.mail.MailBuilder;
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
 import lombok.experimental.FieldDefaults;
 import org.springframework.mail.MailPreparationException;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class MailValidator implements Validator {

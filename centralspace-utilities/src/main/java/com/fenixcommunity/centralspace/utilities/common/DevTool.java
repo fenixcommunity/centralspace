@@ -1,7 +1,6 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
-import lombok.experimental.FieldDefaults;
-import org.springframework.util.ClassUtils;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,8 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static lombok.AccessLevel.PRIVATE;
+import lombok.experimental.FieldDefaults;
+import org.springframework.util.ClassUtils;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class DevTool {

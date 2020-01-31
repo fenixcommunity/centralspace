@@ -1,10 +1,31 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.util.Assert.isInstanceOf;
+import static org.springframework.util.Assert.isTrue;
+import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
+
+import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Optional;
+
 import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
-import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
+import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerDto;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.Level;
@@ -29,24 +50,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.Optional;
-
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.util.Assert.isInstanceOf;
-import static org.springframework.util.Assert.isTrue;
-import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT,
@@ -128,28 +131,49 @@ class WebClientTest {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value())
                 .expectBody()
-                .jsonPath("$[0].message").isEqualTo("error");
+                .jsonPath("$.message").isEqualTo("error"); // if array [0].message
     }
 
     @Test
     void testAccountCreateCallAsAdmin() {
-        EntityExchangeResult<BasicResponse> result = adminClient.post()
+        EntityExchangeResult<AccountDto> result = adminClient.post()
                 .uri(BASE_ACCOUNT_URL + "create")
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.ALL)
                 .body(Mono.just(accountDto), AccountDto.class)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(BasicResponse.class)
+                .expectBody(AccountDto.class)
                 .consumeWith(response ->
                         Assertions.assertThat(response.getResponseBody()).isNotNull())
                 .returnResult();
 
-        BasicResponse response = result.getResponseBody();
+        AccountDto response = result.getResponseBody();
     }
 
-    todo
+    @Test
+    void testLoggerPostCallAsAdmin() {
+        final LoggerDto postMessage = new LoggerDto(null, "logger");
+
+        EntityExchangeResult<LoggerDto> result = adminClient.post()
+                .uri(BASE_LOGGER_URL + "post")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(postMessage), LoggerDto.class)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(LoggerDto.class)
+                .consumeWith(response ->
+                        Assertions.assertThat(response.getResponseBody()).isNotNull())
+                .returnResult();
+
+        LoggerDto response = result.getResponseBody();
+    }
+
+    ghgf
+
     /*      @Test(expected = WebClientResponseException.class)
             or exceptionRule -> junit4*/
     @Test

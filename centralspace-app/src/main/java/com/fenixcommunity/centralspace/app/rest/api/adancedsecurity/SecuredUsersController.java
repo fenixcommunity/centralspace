@@ -1,5 +1,8 @@
 package com.fenixcommunity.centralspace.app.rest.api.adancedsecurity;
 
+import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PRIVATE;
+
 import com.fenixcommunity.centralspace.app.service.security.advanced.SecuredUserAuthenticationService;
 import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
 import lombok.AllArgsConstructor;
@@ -10,14 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
-
-@RestController
-@RequestMapping("/users")
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@RestController @RequestMapping("/users")
 @AllArgsConstructor(access = PACKAGE)
-final class SecuredUsersController {
+@FieldDefaults(level = PRIVATE, makeFinal = true) final class SecuredUsersController {
     @NonNull
     private final SecuredUserAuthenticationService authentication;
 

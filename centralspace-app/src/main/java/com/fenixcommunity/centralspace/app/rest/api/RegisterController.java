@@ -1,5 +1,9 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import javax.validation.constraints.NotNull;
+
 import com.fenixcommunity.centralspace.app.rest.dto.register.RegisterType;
 import com.fenixcommunity.centralspace.app.rest.dto.register.RestRegisterProcess;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.RestRegisterResponse;
@@ -16,13 +20,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotNull;
 
-import static lombok.AccessLevel.PRIVATE;
-
-
-@RestController
-@RequestMapping("/api/register")
+@RestController @RequestMapping("/api/register")
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 class RegisterController {

@@ -1,5 +1,11 @@
 package com.fenixcommunity.centralspace.app.service;
 
+import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.util.List;
+import java.util.Optional;
+
 import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.mounted.AccountRepository;
@@ -8,16 +14,9 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
-
 @Log4j2
 @Service
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-@AllArgsConstructor(access = PACKAGE)
+@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountService {
 
     private final AccountRepository accountRepository;

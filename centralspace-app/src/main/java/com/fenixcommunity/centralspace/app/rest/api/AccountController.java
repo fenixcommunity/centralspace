@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 // todo swagger/postman
 //todo decorator and strategy
@@ -82,12 +84,22 @@ public class AccountController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AccountDto> create(@Valid @RequestBody final AccountDto accountDto) {
+    public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
         final Account createdAccount = mapToJpa(accountDto);
         final Long generatedId = accountService.save(createdAccount).getId();
-        gfhfg
-//        final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
-        return ResponseEntity.created(getCurrentURI()).body(accountDto);
+        final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
+        return ResponseEntity.created(getCurrentURI()).body(response);
+    }
+
+    @PostMapping("/create-flux")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<AccountDto> createFlux(@Valid @RequestBody final Mono<AccountDto> accountDto) {
+//         Mono<Void>
+        final Account createdAccount = mapToJpa(accountDto.blockOptional()
+                .orElseThrow(() -> new ServiceFailedException("accountDto mono not found")));
+        final Long generatedId = accountService.save(createdAccount).getId();
+        createdAccount.setId(generatedId);
+        return Mono.just(mapToDto(createdAccount, HIGH));
     }
 
     //    todo RestErrorHandler apply

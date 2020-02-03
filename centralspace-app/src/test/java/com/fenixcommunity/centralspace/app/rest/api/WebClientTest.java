@@ -25,11 +25,9 @@ import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplication
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
-import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerDto;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.Level;
-import org.assertj.core.api.Assertions;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +42,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
@@ -62,6 +59,7 @@ class WebClientTest {
     private static final String BASE_LOGGER_URL = "/api/logger/";
     private static final String APP_PATH = "/app";
 
+    // for classic rest only GET
     private WebTestClient adminClient;
     private WebTestClient basicClient;
 
@@ -105,7 +103,6 @@ class WebClientTest {
     }
 
     private void initAccount() {
-//            .apply(SecurityMockMvcConfigurers.springSecurity())
         Account account = Account.builder()
                 .id(ID)
                 .login(LOGIN)
@@ -136,49 +133,33 @@ class WebClientTest {
 
     @Test
     void testAccountCreateCallAsAdmin() {
-        EntityExchangeResult<AccountDto> result = adminClient.post()
-                .uri(BASE_ACCOUNT_URL + "create")
+//        EntityExchangeResult<AccountDto> result = adminClient.post()
+//                .uri(BASE_ACCOUNT_URL + "create-flux")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON)
+//                .body(Mono.just(accountDto), AccountDto.class)
+//                .exchange()
+//                .expectStatus().is2xxSuccessful()
+//                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+//                .expectBody(AccountDto.class)
+//                .consumeWith(response ->
+//                        Assertions.assertThat(response.getResponseBody()).isNotNull())
+//                .returnResult();
+        adminClient.post()
+                .uri(BASE_ACCOUNT_URL + "create-flux")
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.ALL)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(accountDto), AccountDto.class)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(AccountDto.class)
-                .consumeWith(response ->
-                        Assertions.assertThat(response.getResponseBody()).isNotNull())
-                .returnResult();
-
-        AccountDto response = result.getResponseBody();
+                .expectBody();
     }
-
-    @Test
-    void testLoggerPostCallAsAdmin() {
-        final LoggerDto postMessage = new LoggerDto(null, "logger");
-
-        EntityExchangeResult<LoggerDto> result = adminClient.post()
-                .uri(BASE_LOGGER_URL + "post")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(postMessage), LoggerDto.class)
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(LoggerDto.class)
-                .consumeWith(response ->
-                        Assertions.assertThat(response.getResponseBody()).isNotNull())
-                .returnResult();
-
-        LoggerDto response = result.getResponseBody();
-    }
-
-    ghgf
 
     /*      @Test(expected = WebClientResponseException.class)
             or exceptionRule -> junit4*/
     @Test
-
-    void testWebClientExceptionByCreatedWebClient() {
+    void testWebClientExceptionByRealWebClient() {
         WebClientException exception = assertThrows(WebClientException.class, () -> {
             WebClient.create()
                     .get()

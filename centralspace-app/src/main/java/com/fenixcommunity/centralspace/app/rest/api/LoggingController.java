@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,13 +45,11 @@ public class LoggingController {
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorDetails);
     }
 
-    gh
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/post")
-
-    public ResponseEntity<LoggerDto> postLog(final LoggerDto loggerDto) {
+    public ResponseEntity<LoggerDto> postLog(@RequestBody final LoggerDto loggerDto) {
         log.info(loggerDto.toString());
-
+//todo info about system
         return ResponseEntity.accepted()
                 .body(new LoggerDto(null, "logger"));
     }

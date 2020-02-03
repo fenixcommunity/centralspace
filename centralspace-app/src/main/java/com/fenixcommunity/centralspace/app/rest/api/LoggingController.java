@@ -1,7 +1,5 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static lombok.AccessLevel.PRIVATE;
-
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import io.swagger.annotations.ApiResponse;
@@ -16,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+
+import static lombok.AccessLevel.PRIVATE;
 
 @RestController @RequestMapping("/api/logger")
 @Log4j2
@@ -47,10 +48,9 @@ public class LoggingController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/post")
-    public ResponseEntity<LoggerDto> postLog(@RequestBody final LoggerDto loggerDto) {
+    public Mono<LoggerDto> postLog(@RequestBody LoggerDto loggerDto) {
         log.info(loggerDto.toString());
 //todo info about system
-        return ResponseEntity.accepted()
-                .body(new LoggerDto(null, "logger"));
+        return Mono.just(new LoggerDto("s", "d"));
     }
 }

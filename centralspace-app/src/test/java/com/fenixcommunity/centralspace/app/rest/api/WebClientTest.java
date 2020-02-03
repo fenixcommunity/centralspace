@@ -1,33 +1,12 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.util.Assert.isInstanceOf;
-import static org.springframework.util.Assert.isTrue;
-import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
-
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.Optional;
-
 import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerDto;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
-import com.fenixcommunity.centralspace.utilities.common.Level;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,14 +18,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
+
+import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Optional;
+
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.util.Assert.isInstanceOf;
+import static org.springframework.util.Assert.isTrue;
+import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT,
@@ -59,7 +56,6 @@ class WebClientTest {
     private static final String BASE_LOGGER_URL = "/api/logger/";
     private static final String APP_PATH = "/app";
 
-    // for classic rest only GET
     private WebTestClient adminClient;
     private WebTestClient basicClient;
 
@@ -91,7 +87,7 @@ class WebClientTest {
                 .filter(basicAuthentication(user, PASSWORD))
                 .build();
         webTestClient.options()
-                .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)
+                .accept(MediaType.ALL)
                 .headers(httpHeaders -> {
                     httpHeaders.setDate(ZonedDateTime.now());
                 })
@@ -109,9 +105,9 @@ class WebClientTest {
                 .mail(MAIL)
                 .passwords(Collections.singletonList(null))
                 .build();
-        accountDto = mapToDto(account, Level.HIGH);
+        accountDto = new AccountDto(1L, "sdds", "mad@o2.pl");
         when(accountService.findById(ID)).thenReturn(Optional.of(account));
-        when(accountService.save(eq(mapToJpa(accountDto)))).thenReturn(account); // -> or any(Account.class)
+        when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
     }
 
     @Test
@@ -131,29 +127,48 @@ class WebClientTest {
                 .jsonPath("$.message").isEqualTo("error"); // if array [0].message
     }
 
+    refactoring
+    @Test
+
+    void testLoggerAsBasic2() {
+        Mono<LoggerDto> monoo = Mono.just(new LoggerDto("b", "z"));
+        LoggerDto result = restCallerStrategy.buildWebClient().post()
+                .uri("http://localhost:" + port + APP_PATH + BASE_LOGGER_URL + "post")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.ALL)
+                .bodyValue(new LoggerDto("b", "z"))
+                .exchange().flatMap(map -> map.bodyToMono(LoggerDto.class))
+                .block();
+        System.out.println(result.toString());
+    }
+
+    @Test
+    void testLoggerAsBasic3() {
+        Mono<LoggerDto> monoo = Mono.just(new LoggerDto("b", "z"));
+        adminClient.post()
+                .uri("http://localhost:" + port + APP_PATH + BASE_LOGGER_URL + "post")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.ALL)
+                .bodyValue(new LoggerDto("g", "i"))
+                .exchange().expectBody().jsonPath("$.loggerType").isEqualTo("s");
+    }
+
+    webclienttest ->
+
     @Test
     void testAccountCreateCallAsAdmin() {
-//        EntityExchangeResult<AccountDto> result = adminClient.post()
-//                .uri(BASE_ACCOUNT_URL + "create-flux")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON)
-//                .body(Mono.just(accountDto), AccountDto.class)
-//                .exchange()
-//                .expectStatus().is2xxSuccessful()
-//                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-//                .expectBody(AccountDto.class)
-//                .consumeWith(response ->
-//                        Assertions.assertThat(response.getResponseBody()).isNotNull())
-//                .returnResult();
-        adminClient.post()
-                .uri(BASE_ACCOUNT_URL + "create-flux")
+        AccountDto result2 = WebClient.builder()
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .filter(ExchangeFilterFunctions
+                        .basicAuthentication(ADMIN.name(), PASSWORD)).build()
+                .post()
+                .uri("http://localhost:" + port + APP_PATH + BASE_ACCOUNT_URL + "create-flux")
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(accountDto), AccountDto.class)
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody();
+                .accept(MediaType.ALL)
+                .bodyValue(accountDto)
+                .exchange().flatMap(map -> map.bodyToMono(AccountDto.class)).block();
+//                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+        System.out.println(result2);
     }
 
     /*      @Test(expected = WebClientResponseException.class)

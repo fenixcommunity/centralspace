@@ -1,34 +1,5 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.DOCX;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.HTML;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.TXT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
-import static com.fenixcommunity.centralspace.utilities.common.Var.EMPTY;
-import static com.fenixcommunity.centralspace.utilities.common.Var.NUMBER_WATERMARK;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Arrays.asList;
-import static lombok.AccessLevel.PRIVATE;
-
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.stream.Stream;
-import javax.xml.parsers.ParserConfigurationException;
-
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
@@ -70,6 +41,30 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.stream.Stream;
+
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
+import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
@@ -129,6 +124,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
 //                  .body(BodyInserters.fromMultipartData(new LinkedMultiValueMap()) // add(k,v)
 //                        BodyInserters.fromObject(new Long(2)) );
 //                        Mono.just(...,)
+//                    .bodyValue(javaObj)
                     .cookies(cookie -> cookie.add("cookieKey", "cookieValue"))
                     .headers(httpHeaders -> httpHeaders.setAccept(Collections.singletonList(MediaType.ALL)))
                     .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)

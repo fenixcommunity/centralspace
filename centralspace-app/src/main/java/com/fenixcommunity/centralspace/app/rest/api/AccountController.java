@@ -1,18 +1,5 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
-import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
-import static java.util.Collections.singletonMap;
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
-
-import java.net.URI;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import javax.validation.Valid;
-
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
@@ -42,9 +29,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
+import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
+import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
+import static java.util.Collections.singletonMap;
+import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PRIVATE;
+
 // todo swagger/postman
 //todo decorator and strategy
-@RestController @RequestMapping(value = "/api/account", produces = {MediaType.ALL_VALUE})
+@RestController
+@RequestMapping(value = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 //TODO @PreAuthorize("hasAuthority('ROLE_USER')")
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
@@ -93,15 +94,15 @@ public class AccountController {
 
     @PostMapping("/create-flux")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<AccountDto> createFlux(@Valid @RequestBody final Mono<AccountDto> accountDto) {
+    public Mono<AccountDto> createFlux(@Valid @RequestBody final AccountDto accountDto) {
 //         Mono<Void>
-        final Account createdAccount = mapToJpa(accountDto.blockOptional()
-                .orElseThrow(() -> new ServiceFailedException("accountDto mono not found")));
+        final Account createdAccount = mapToJpa(accountDto);
         final Long generatedId = accountService.save(createdAccount).getId();
         createdAccount.setId(generatedId);
         return Mono.just(mapToDto(createdAccount, HIGH));
     }
 
+    improve
     //    todo RestErrorHandler apply
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.CREATED)

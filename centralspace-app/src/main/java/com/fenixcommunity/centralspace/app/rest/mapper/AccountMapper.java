@@ -1,13 +1,13 @@
 package com.fenixcommunity.centralspace.app.rest.mapper;
 
-import static java.util.Objects.isNull;
-import static lombok.AccessLevel.PRIVATE;
-
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto.AccountDtoBuilder;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.Level;
 import lombok.experimental.FieldDefaults;
+
+import static java.util.Objects.isNull;
+import static lombok.AccessLevel.PRIVATE;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountMapper {

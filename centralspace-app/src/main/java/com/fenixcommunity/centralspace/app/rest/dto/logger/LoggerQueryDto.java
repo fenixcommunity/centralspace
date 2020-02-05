@@ -15,17 +15,15 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel
-@Data
-@Builder
-@FieldDefaults(level = PRIVATE)
-public class LoggerDto {
+@Data @Builder @FieldDefaults(level = PRIVATE)
+public class LoggerQueryDto {
 
     @NotEmpty
     private String log;
     private String loggerType = "DEFAULT";
 
     @JsonCreator
-    public LoggerDto(@JsonProperty("log") String log, @JsonProperty("loggerType") String loggerType) {
+    public LoggerQueryDto(@JsonProperty("log") String log, @JsonProperty("loggerType") String loggerType) {
         this.log = log;
         if (isNotEmpty(loggerType)) {
             this.loggerType = loggerType;

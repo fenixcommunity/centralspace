@@ -44,6 +44,7 @@ public abstract class AutoSecurityConfig {
     //API
     private final static String[] ADMIN_API_AUTH_LIST = {
             API_PATH + "/account/**",
+            API_PATH + "/account-flux/**",
             API_PATH + "/doc/**",
             API_PATH + "/mail/**",
             API_PATH + "/password/**",

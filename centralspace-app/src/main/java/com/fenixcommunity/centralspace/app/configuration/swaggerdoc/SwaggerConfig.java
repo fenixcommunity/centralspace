@@ -71,6 +71,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private Predicate<String> pathsFilter() {
         return input ->
                 input.matches(API_PATH + "/account/.*") ||
+                        input.matches(API_PATH + "/account-flux/.*") ||
                         input.matches(API_PATH + "/doc/.*") ||
                         input.matches(API_PATH + "/mail/.*") ||
                         input.matches(API_PATH + "/password/.*") ||

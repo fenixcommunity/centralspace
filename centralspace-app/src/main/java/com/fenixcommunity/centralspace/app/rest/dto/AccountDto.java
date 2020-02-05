@@ -19,10 +19,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 //todo ?
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel
-@Data
-@Builder
-@FieldDefaults(level = PRIVATE)
+@ApiModel @Data @Builder @FieldDefaults(level = PRIVATE)
 public class AccountDto {
     //todo to all DTO, not works
 

@@ -1,6 +1,9 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerDto;
+import static lombok.AccessLevel.PRIVATE;
+
+import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
+import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -15,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @RestController @RequestMapping("/api/logger")
 @Log4j2
@@ -46,11 +47,15 @@ public class LoggingController {
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorDetails);
     }
 
+    //todo info about system
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PostMapping("/post")
-    public Mono<LoggerDto> postLog(@RequestBody LoggerDto loggerDto) {
+    @PostMapping("/query")
+    public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto) {
         log.info(loggerDto.toString());
-//todo info about system
-        return Mono.just(new LoggerDto("s", "d"));
+
+        return Mono.just(LoggerResponseDto.builder()
+                .log("query log")
+                .details("query details")
+                .loggerType(loggerDto.getLoggerType()).build());
     }
 }

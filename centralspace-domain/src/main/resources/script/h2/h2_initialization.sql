@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS authorities;
 DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS group_authorities;
 DROP TABLE IF EXISTS group_members;
+DROP TABLE IF EXISTS persistent_logins;
 
 -- CREATE
 CREATE TABLE users
@@ -62,6 +63,8 @@ insert into group_authorities(group_id, authority)
 VALUES (2, 'ROLE_DB_USER');
 insert into group_authorities(group_id, authority)
 VALUES (2, 'ROLE_SWAGGER');
+
+
 
 -- helpers:
 

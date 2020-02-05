@@ -1,9 +1,32 @@
 package com.fenixcommunity.centralspace.app.service.document.converter;
 
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
+import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
+import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
+import static java.util.Objects.requireNonNull;
+import static lombok.AccessLevel.PRIVATE;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.stream.Stream;
+
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
@@ -39,32 +62,7 @@ import org.fit.pdfdom.PDFDomTree;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.stream.Stream;
-
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
-import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Arrays.asList;
-import static lombok.AccessLevel.PRIVATE;
 
 @Log4j2
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
@@ -138,25 +136,12 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
                     .flatMap(response -> response.bodyToMono(byte[].class)); // Mono -> single, Flux -> multiple
 
 
-            final Flux<Account> responseWebClient2 = restCallerStrategy.buildWebClient()
-                    .get()
-                    .uri("http://localhost:8088/app/api/account/all") // or builder
-                    .cookies(cookie -> cookie.add("cookieKey", "cookieValue"))
-                    .headers(httpHeaders -> httpHeaders.setAccept(Collections.singletonList(MediaType.ALL)))
-                    .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)
-                    .acceptCharset(Charset.forName("UTF-8"))
-                    .ifModifiedSince(ZonedDateTime.now())
-                    .exchange()
-                    .flatMapMany(response -> response.bodyToFlux(Account.class)); // Mono -> single, Flux -> multiple
-
-            Account responseWebClientBody2 = responseWebClient2.blockFirst();
-
             final byte[] responseWebClientBody = responseWebClient.blockOptional()
                     .orElseThrow(() -> new DocumentServiceException("image not fetched"));
             responseWebClient.subscribe(response -> System.out.println(response.length));
 
-            final Image image = Image.getInstance(Objects.requireNonNull(responseRestTemplate.getBody()));
-            final Image image2 = Image.getInstance(Objects.requireNonNull(responseWebClientBody));
+            final Image image = Image.getInstance(requireNonNull(responseRestTemplate.getBody()));
+            final Image image2 = Image.getInstance(requireNonNull(responseWebClientBody));
             PdfDocumentComposer.composeDocument(document);
             PdfDocumentComposer.composeImage(document, asList(image, image2));
 
@@ -182,7 +167,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
         final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + PDF.getSubtype();
         try (var converterInput = new FileInputStream(getHtmlFile());
-             var converterOutput = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)), false)) {
+             var converterOutput = new FileOutputStream(requireNonNull(createNewOutputFile(outputPdfPath)), false)) {
             final var writer = PdfWriter.getInstance(document, converterOutput);
             document.open();
             XMLWorkerHelper.getInstance().parseXHtml(writer, document, converterInput);
@@ -217,7 +202,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
         final var outputHtmlPath = resourceTool.getResourceProperties().getConvertedHtmlPath()
                 + fileName + DOT + HTML.getSubtype();
         try (var converterInput = PDDocument.load(getPDFFile());
-             var converterOutput = new PrintWriter(Objects.requireNonNull(createNewOutputFile(outputHtmlPath)))) {
+             var converterOutput = new PrintWriter(requireNonNull(createNewOutputFile(outputHtmlPath)))) {
             new PDFDomTree().writeText(converterInput, converterOutput);
         } catch (IOException | ParserConfigurationException e) {
             log.error("convertPdfToHtml error", e);
@@ -237,7 +222,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
         PDDocument document = null;
         var outputTxtPath = resourceTool.getResourceProperties().getConvertedTxtPath()
                 + fileName + DOT + TXT.getSubtype();
-        try (var converterOutput = new PrintWriter(Objects.requireNonNull(createNewOutputFile(outputTxtPath)))) {
+        try (var converterOutput = new PrintWriter(requireNonNull(createNewOutputFile(outputTxtPath)))) {
             final PDFParser pdfParser = new PDFParser(new RandomAccessFile(getPDFFile(), READ_MODE));
             pdfParser.parse();
             final COSDocument cosDoc = pdfParser.getDocument();
@@ -267,7 +252,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
         final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + PDF.getSubtype();
         try (var converterInput = new BufferedReader(new FileReader(getTxtFile()));
-             var converterOutput = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputPdfPath)))) {
+             var converterOutput = new FileOutputStream(requireNonNull(createNewOutputFile(outputPdfPath)))) {
             PdfWriter.getInstance(document, converterOutput).setPdfVersion(PdfWriter.PDF_VERSION_1_7);
             document.open();
             document.add(new Paragraph("\n"));
@@ -307,7 +292,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
         final var outputDocxPath = resourceTool.getResourceProperties().getConvertedDocxPath()
                 + fileName + DOT + DOCX.getSubtype();
         try (var converterInput = new FileInputStream(getPDFFile());
-             var converterOutput = new FileOutputStream(Objects.requireNonNull(createNewOutputFile(outputDocxPath)))) {
+             var converterOutput = new FileOutputStream(requireNonNull(createNewOutputFile(outputDocxPath)))) {
             reader = new PdfReader(converterInput);
             final PdfReaderContentParser parser = new PdfReaderContentParser(reader);
 

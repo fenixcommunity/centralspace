@@ -2,10 +2,8 @@ package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
-import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
+import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -23,8 +21,10 @@ import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.We
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
+import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.utilities.common.Level;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT,
@@ -78,6 +77,8 @@ class WebClientLuxTest {
         initAccount();
     }
 
+    ustaw formatowanie
+
     private WebTestClient setOptions(String user) {
         WebTestClient webTestClient = WebTestClient
                 .bindToServer().baseUrl("http://localhost:" + port + APP_PATH)
@@ -88,20 +89,9 @@ class WebClientLuxTest {
                 .headers(httpHeaders -> {
                     httpHeaders.setDate(ZonedDateTime.now());
                 })
-                .cookies(cookie -> cookie.add("cookieTest", "cookieValue"));
+                .cookies(cookie -> cookie.add("cookieTest", "cookieValue"))
+                .ifModifiedSince(ZonedDateTime.now());
         return webTestClient;
-    }
-
-    private void initAccount() {
-        Account account = Account.builder()
-                .id(ID)
-                .login(LOGIN)
-                .mail(MAIL)
-                .passwords(Collections.singletonList(null))
-                .build();
-        accountDto = new AccountDto(1L, "sdds", "mad@o2.pl");
-        when(accountService.findById(ID)).thenReturn(Optional.of(account));
-        when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
     }
 
     @Test
@@ -111,44 +101,65 @@ class WebClientLuxTest {
         assertNotNull(restCallerStrategy.buildWebClient());
     }
 
+    private void initAccount() {
+        Account account = Account.builder()
+                .id(ID)
+                .login(LOGIN)
+                .mail(MAIL)
+                .passwords(Collections.singletonList(null))
+                .build();
+        accountDto = mapToDto(account, Level.HIGH);
+        when(accountService.findById(ID)).thenReturn(Optional.of(account));
+        when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
+    }
+
     @Test
-    void testLoggerAsBasic2() {
+    void testLoggerAsBasic() {
         LoggerResponseDto loggerResponseDto = restCallerStrategy.buildWebClient().post()
                 .uri("http://localhost:" + port + APP_PATH + BASE_LOGGER_URL + "query")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL)
                 .bodyValue(new LoggerQueryDto("this is the test log", "TEST"))
                 .exchange().flatMap(map -> map.bodyToMono(LoggerResponseDto.class))
-                .block();
+                .blockOptional().orElseGet(() -> {
+                    throw new ServiceFailedException("message");
+                });
         assertNotNull(loggerResponseDto);
+
         assertEquals("query log", loggerResponseDto.getLog());
     }
 
-
     @Test
-    void testLoggerAsBasic3() {
-        Mono<LoggerQueryDto> monoo = Mono.just(new LoggerQueryDto("b", "z"));
+    void testLoggerQueryByWebTestClient() {
         adminClient.post()
                 .uri("http://localhost:" + port + APP_PATH + BASE_LOGGER_URL + "query")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL)
-                .bodyValue(new LoggerQueryDto("g", "i"))
-                .exchange().expectBody().jsonPath("$.loggerType").isEqualTo("s");
+                .bodyValue(new LoggerQueryDto("Get server acount id 3 document log", "TEST"))
+                .exchange()
+                .expectBody().jsonPath("$.log").isEqualTo("query log");
     }
 
+    test +
     @Test
     void testAccountCreateCallAsAdmin() {
-        AccountDto result2 = WebClient.builder()
+        AccountDto result = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .filter(ExchangeFilterFunctions
                         .basicAuthentication(ADMIN.name(), PASSWORD)).build()
                 .post()
-                .uri("http://localhost:" + port + APP_PATH + BASE_ACCOUNT_FLUX_URL + "create")
+                .uri("http://localhost:" + port + APP_PATH + BASE_ACCOUNT_FLUX_URL + "create") // or builder if queryParam
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL)
                 .bodyValue(accountDto)
+//              .body(BodyInserters.fromMultipartData(new LinkedMultiValueMap()) // add(k,v)
+//                        BodyInserters.fromObject(new Long(2)) );
+//                        Mono.just(...,)
+//                    .bodyValue(javaObj)
                 .exchange().flatMap(map -> map.bodyToMono(AccountDto.class)).block();
-//                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-        System.out.println(result2);
+//               .expectHeader().contentType(MediaType.APPLICATION_JSON);
+
+        assertNotNull(result);
+        assertEquals(result.getId(), ID);
     }
 }

@@ -1,5 +1,12 @@
 package com.fenixcommunity.centralspace.app.rest.dto;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,19 +16,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-import static java.util.Objects.requireNonNull;
-import static lombok.AccessLevel.PRIVATE;
-
 //todo ?
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel @Data @Builder @FieldDefaults(level = PRIVATE)
+@ApiModel
+@Data @Builder @FieldDefaults(level = PRIVATE)
 public class AccountDto {
-    //todo to all DTO, not works
 
     @NotNull
     private Long id;
@@ -38,9 +37,11 @@ public class AccountDto {
     private String mail;
 
     @JsonCreator
-    public AccountDto(@JsonProperty("id") final Long id, @JsonProperty("login") final String login, @JsonProperty("mail") final String mail) {
-        this.id = requireNonNull(id);
-        this.login = requireNonNull(login);
-        this.mail = requireNonNull(mail);
+    public AccountDto(@JsonProperty("id") Long id, @JsonProperty("login") String login, @JsonProperty("mail") String mail) {
+//        @NotNull -> only info for compiler,  requireNonNull(id) -> runtime
+        this.id = id;
+        this.login = login;
+        this.mail = mail;
     }
+
 }

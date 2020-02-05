@@ -48,6 +48,7 @@ public class LoggingController {
     }
 
     //todo info about system
+    //todo from elastic search
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/query")
     public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto) {

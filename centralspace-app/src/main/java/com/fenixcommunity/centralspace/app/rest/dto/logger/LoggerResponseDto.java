@@ -24,7 +24,9 @@ public class LoggerResponseDto {
     private String loggerType = "DEFAULT";
 
     @JsonCreator
-    public LoggerResponseDto(@JsonProperty("log") String log, @JsonProperty("details") String details, @JsonProperty("loggerType") String loggerType) {
+    public LoggerResponseDto(@JsonProperty("log") String log,
+                             @JsonProperty("details") String details,
+                             @JsonProperty("loggerType") String loggerType) {
         this.log = log;
         this.details = details;
         if (isNotEmpty(loggerType)) {

@@ -82,7 +82,7 @@ public class PostgresDomainConfig {
 
     private DatabasePopulator databasePopulator(final Resource initializationScript) {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.setSeparator(ScriptUtils.EOF_STATEMENT_SEPARATOR);
+        populator.setSeparator(ScriptUtils.EOF_STATEMENT_SEPARATOR); // ScriptUtils.executeSqlScript(connection ...
         populator.addScript(initializationScript);
         return populator;
     }

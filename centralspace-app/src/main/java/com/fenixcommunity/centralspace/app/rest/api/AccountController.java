@@ -7,10 +7,10 @@ import static java.util.Collections.singletonMap;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javax.validation.Valid;
 
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
@@ -29,6 +29,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +45,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 //todo decorator and strategy
 @RestController @RequestMapping(value = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
-//TODO @PreAuthorize("hasAuthority('ROLE_USER')")
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;

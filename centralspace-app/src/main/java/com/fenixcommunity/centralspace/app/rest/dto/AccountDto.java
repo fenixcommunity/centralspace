@@ -37,7 +37,9 @@ public class AccountDto {
     private String mail;
 
     @JsonCreator
-    public AccountDto(@JsonProperty("id") Long id, @JsonProperty("login") String login, @JsonProperty("mail") String mail) {
+    public AccountDto(@JsonProperty("id") Long id,
+                      @JsonProperty("login") String login,
+                      @JsonProperty("mail") String mail) {
 //        @NotNull -> only info for compiler,  requireNonNull(id) -> runtime
         this.id = id;
         this.login = login;

@@ -15,7 +15,7 @@ public class RequestedUserDto {
     private final String username;
     private final String password;
     private final String role;
-
+//todo -> as AccountDto
     @JsonCreator
     RequestedUserDto(@JsonProperty("username") final String username,
                      @JsonProperty("password") final String password,

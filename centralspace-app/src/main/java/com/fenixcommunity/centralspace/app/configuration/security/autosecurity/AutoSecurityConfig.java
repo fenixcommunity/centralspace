@@ -51,6 +51,9 @@ public abstract class AutoSecurityConfig {
     private final static String[] BASIC_API_AUTH_LIST = {
             API_PATH + "/resource/**"
     };
+    private final static String[] FLUX_API_AUTH_LIST = {
+            API_PATH + "/account-flux/**"
+    };
     private final static String[] NO_AUTH_API_LIST = {
             API_PATH + "/logger/post"
     };
@@ -84,7 +87,7 @@ public abstract class AutoSecurityConfig {
                 .authoritiesByUsernameQuery(getAuthoritiesQuery())
                 .groupAuthoritiesByUsername(groupAuthoritiesByUsername())
                 .passwordEncoder(passwordEncoder());
-//             .withUser(User.withUsername(DB_USER.name())
+//              .withUser(User.withUsername(DB_USER.name())
 //                        .password(passwordEncoder().encode(PASSWORD))
 //                        .roles(DB_USER.name())
 //                        .authorities(listsTo1Array(DB_USER.getRoles()))
@@ -92,10 +95,18 @@ public abstract class AutoSecurityConfig {
                 .withUser(SWAGGER.name())
                 .password(passwordEncoder().encode(PASSWORD))
                 .roles(listsTo1Array(SWAGGER.getRoles()))
-//                .and()
-//                .withUser(DB_USER.name())
-//                .password(passwordEncoder().encode(PASSWORD))
-//                .roles(listsTo1Array(DB_USER.getRoles()))
+/*              .and()
+                .withUser(DB_USER.name())
+                .password(passwordEncoder().encode(PASSWORD))
+                .roles(listsTo1Array(DB_USER.getRoles()))*/
+                .and()
+                .withUser(FLUX_GETTER.name())
+                .password(passwordEncoder().encode(PASSWORD))
+                .roles(listsTo1Array(FLUX_GETTER.getRoles()))
+                .and()
+                .withUser(FLUX_EDITOR.name())
+                .password(passwordEncoder().encode(PASSWORD))
+                .roles(listsTo1Array(FLUX_EDITOR.getRoles()))
                 .and()
                 .withUser(BASIC.name())
                 .password(passwordEncoder().encode(PASSWORD))
@@ -111,6 +122,13 @@ public abstract class AutoSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+/*    @Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager() {
+        return new JdbcUserDetailsManager(dataSource);
+    }
+  ->  in service we can: jdbcUserDetailsManager.createUser(
+      new User(myUser.getUserName(), encodededPassword, singletonList(new SimpleGrantedAuthority(myUser.getRoles()))))*/
+
     private String getUserQuery() {
         return "select username as username, password as password, enabled as enabled "
                 + "from users "
@@ -119,11 +137,11 @@ public abstract class AutoSecurityConfig {
 
     private String getAuthoritiesQuery() {
         return "select username, authority from authorities where username=?";
-//   or extend (other option to: groupAuthoritiesByUsername)
-//     "SELECT * FROM AUTHORITIES WHERE AUTHORITY_ID IN( "+
-//                "SELECT DISTINCT AUTHORITY_ID FROM ROLES_AUTHORITIES  S1 "+
-//                "JOIN USERS_ROLES S2 ON S1.ROLE_ID = S2.ROLE_ID "+
-//                "JOIN USERS S3 ON S3.USER_ID = S2.USER_ID AND S3.USERNAME=?)";
+/*   or extend (other option to: groupAuthoritiesByUsername)
+     "SELECT * FROM AUTHORITIES WHERE AUTHORITY_ID IN( "+
+                "SELECT DISTINCT AUTHORITY_ID FROM ROLES_AUTHORITIES  S1 "+
+                "JOIN USERS_ROLES S2 ON S1.ROLE_ID = S2.ROLE_ID "+
+                "JOIN USERS S3 ON S3.USER_ID = S2.USER_ID AND S3.USERNAME=?)";*/
     }
 
     private String groupAuthoritiesByUsername() {
@@ -143,10 +161,11 @@ public abstract class AutoSecurityConfig {
                     .antMatcher(API_PATH + "/**").authorizeRequests()
                     .antMatchers(BASIC_API_AUTH_LIST).hasRole(BASIC.name())
                     .antMatchers(ADMIN_API_AUTH_LIST).hasRole(ADMIN.name())
+                    .antMatchers(FLUX_API_AUTH_LIST).hasRole(FLUX_GETTER.name())
                     .antMatchers(NO_AUTH_API_LIST).permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .csrf().disable()
+                    .csrf().disable() //todo read more about this
                     .httpBasic();
         }
 
@@ -165,7 +184,7 @@ public abstract class AutoSecurityConfig {
         protected void configure(final HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
-//                    .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
+//                  .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
                     .and()
                     .authorizeRequests()
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
@@ -192,13 +211,13 @@ public abstract class AutoSecurityConfig {
                     .sessionManagement().maximumSessions(1)
                     .expiredUrl("/login?expired");
             //todo String to static final
-//                 .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
-//                 .deleteCookies("JSESSIONID");
-//                 .loginPage("/login")
-//                 .failureUrl("/login-error")
-//                 .loginProcessingUrl("/security_check")
-//                 .usernameParameter("username").passwordParameter("password")
-//                 .permitAll();
+/*               .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
+                 .deleteCookies("JSESSIONID");
+                 .loginPage("/login")
+                 .failureUrl("/login-error")
+                 .loginProcessingUrl("/security_check")
+                 .usernameParameter("username").passwordParameter("password")
+                 .permitAll();*/
         }
 
         @Bean

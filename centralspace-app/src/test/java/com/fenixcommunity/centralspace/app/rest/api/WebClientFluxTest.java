@@ -77,8 +77,6 @@ class WebClientLuxTest {
         initAccount();
     }
 
-    ustaw formatowanie
-
     private WebTestClient setOptions(String user) {
         WebTestClient webTestClient = WebTestClient
                 .bindToServer().baseUrl("http://localhost:" + port + APP_PATH)

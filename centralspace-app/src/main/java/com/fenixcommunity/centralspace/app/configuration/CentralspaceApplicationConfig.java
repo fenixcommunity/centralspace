@@ -9,7 +9,7 @@ import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.RestTemplateConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AutoSecurityConfig;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.MethodSecurityConfig;
+import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.MethodAutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Import;
         H2DomainConfig.class,
         UtilitiesConfig.class,
         AutoSecurityConfig.class,
-        MethodSecurityConfig.class,
+        MethodAutoSecurityConfig.class,
 //        AdvancedSecurityConfig.class,
         MailGatewayConfig.class,
         FilterApiConfig.class,

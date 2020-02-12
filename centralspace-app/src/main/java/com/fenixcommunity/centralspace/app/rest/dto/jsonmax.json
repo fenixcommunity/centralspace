@@ -1,0 +1,11 @@
+"""message": "Validation failed for argument [0] in public reactor.core.publisher.Mono<com.fenixcommunity.centralspace.app.rest.dto.AccountDto>
+com.fenixcommunity.centralspace.app.rest.api.AccountFluxController.createFlux(com.fenixcommunity.centralspace.app.rest.dto.AccountDto) with 3 errors:
+[
+Field error in object 'accountDto' on field 'mail': rejected value [max3112@o2.pl]; codes [Email.accountDto.mail, Email.mail, Email.java.lang.String, Email];
+arguments [
+org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountDto.mail, mail]; arguments []; default message [mail],
+[Ljavax.validation.constraints.Pattern$Flag;@4a44f300, .@.\\..*]; default message [Email should be valid]
+]
+[Field error in object 'accountDto' on field 'login': rejected value [maxLogin]; codes [Max.accountDto.login, Max.login, Max.java.lang.String, Max]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountDto.login, login]; arguments []; default message [login], 15]; default message [login should not be greater than 15]]
+[Field error in object 'accountDto' on field 'login': rejected value [maxLogin]; codes [Min.accountDto.login, Min.login, Min.java.lang.String, Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountDto.login, login]; arguments []; default message [login], 3]; default message [login should not be less than 3]] ",
+""

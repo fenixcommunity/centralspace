@@ -1,6 +1,10 @@
 package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.*;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.FLUX_EDITOR;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.FLUX_GETTER;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.SWAGGER;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
@@ -233,7 +237,7 @@ public abstract class AutoSecurityConfig {
         @Bean
         JdbcTokenRepositoryImpl tokenRepository() {
             final JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-            tokenRepository.setCreateTableOnStartup(false);
+            tokenRepository.setCreateTableOnStartup(true);
             tokenRepository.setDataSource(dataSource);
             return tokenRepository;
         }

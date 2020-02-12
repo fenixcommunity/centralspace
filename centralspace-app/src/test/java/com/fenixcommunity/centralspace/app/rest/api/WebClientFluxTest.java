@@ -2,8 +2,12 @@ package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.FLUX_EDITOR;
 import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
-import static com.fenixcommunity.centralspace.utilities.common.Var.*;
+import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -138,13 +142,12 @@ class WebClientLuxTest {
                 .expectBody().jsonPath("$.log").isEqualTo("query log");
     }
 
-    test +
     @Test
-    void testAccountCreateCallAsAdmin() {
+    void testAccountFluxCreateCallAsAdmin() {
         AccountDto result = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .filter(ExchangeFilterFunctions
-                        .basicAuthentication(ADMIN.name(), PASSWORD)).build()
+                        .basicAuthentication(FLUX_EDITOR.name(), PASSWORD)).build()
                 .post()
                 .uri("http://localhost:" + port + APP_PATH + BASE_ACCOUNT_FLUX_URL + "create") // or builder if queryParam
                 .contentType(MediaType.APPLICATION_JSON)
@@ -158,6 +161,6 @@ class WebClientLuxTest {
 //               .expectHeader().contentType(MediaType.APPLICATION_JSON);
 
         assertNotNull(result);
-        assertEquals(result.getId(), ID);
+        assertEquals(ID, result.getId());
     }
 }

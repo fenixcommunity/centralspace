@@ -26,6 +26,7 @@
         <java.version>11</java.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <spring-plugin.version>1.2.0.RELEASE</spring-plugin.version>
+        <sonar-maven-plugin.version>3.6.0.1398E</sonar-maven-plugin.version>
         <!-- SPRING DEPENDENCIES -->
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <spring-boot-web.version>2.2.2.RELEASE</spring-boot-web.version>
@@ -352,6 +353,11 @@
                     <configuration>
                         <mainClass>com.fenixcommunity.centralspace.app.CentralspaceApplication</mainClass>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

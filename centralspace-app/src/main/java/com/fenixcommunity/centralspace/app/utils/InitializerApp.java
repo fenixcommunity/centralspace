@@ -30,6 +30,18 @@ public class InitializerApp implements CommandLineRunner {
                 "http://%s/app/swagger-ui.html#/", swagger2Host);
         String h2Info = format("Please look at h2 database console:" + LINE +
                 "http://%s/app/h2-console", h2Host);
-        System.out.println(appInfo + LINE + swaggerInfo + LINE + h2Info + LINE);
+        String sonarServerInfo = "Please run sonar analyzer console:" + LINE +
+                "http://localhost:9000/dashboard?id=centralspace";
+        String sonarInfo = "Please run sonar build maven:" + LINE + "mvn sonar:sonar \\" + LINE +
+                "-Dsonar.projectKey=centralspace \\" + LINE +
+                "-Dsonar.host.url=http://localhost:9000 \\" + LINE +
+                "-Dsonar.login=1ea3c73b39a7f3aa2e4862bb874c8fbca7895943";
+
+        System.out.println(appInfo + LINE + swaggerInfo + LINE + h2Info + LINE + sonarServerInfo + LINE + sonarInfo + LINE);
     }
+
+    http://localhost:9000/dashboard?id=centralspace
+    todo +
+    read more
+    https://www.baeldung.com/sonar-qube  -> OpenJDK 11 or Oracle JRE 11
 }

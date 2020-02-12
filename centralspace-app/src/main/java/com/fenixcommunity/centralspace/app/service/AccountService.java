@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service;
 
+import static java.util.Collections.unmodifiableList;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -40,7 +41,7 @@ public class AccountService {
 
     @MethodMonitoring
     public List<Account> findAll() {
-        return (List<Account>) accountRepository.findAll();
+        return unmodifiableList(accountRepository.findAll());
     }
 
     public Account findByLogin(final String login) {

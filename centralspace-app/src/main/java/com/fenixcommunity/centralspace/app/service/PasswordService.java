@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.service;
 
+import static java.util.Collections.unmodifiableList;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -24,6 +25,6 @@ public class PasswordService {
     }
 
     public List<Password> findAll() {
-        return (List<Password>) passwordRepository.findAll();
+        return unmodifiableList(passwordRepository.findAll());
     }
 }

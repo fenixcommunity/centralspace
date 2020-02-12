@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
+import static java.util.Collections.unmodifiableList;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
@@ -72,7 +73,7 @@ public class DevTool {
     public static List<String> mergeLists(final List<String>... lists) {
         final List<String> result = new ArrayList<>();
         Arrays.stream(lists).forEach(result::addAll);
-        return result;
+        return unmodifiableList(result);
     }
 
 }

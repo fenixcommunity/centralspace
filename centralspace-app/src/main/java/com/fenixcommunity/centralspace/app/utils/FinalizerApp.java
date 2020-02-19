@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.utils;
 import static lombok.AccessLevel.PRIVATE;
 
 import lombok.experimental.FieldDefaults;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.ExitCodeEvent;
 import org.springframework.boot.ExitCodeExceptionMapper;
 import org.springframework.boot.ExitCodeGenerator;
@@ -15,6 +16,7 @@ import org.springframework.context.event.EventListener;
 @SpringBootApplication
 @ComponentScan({"com.fenixcommunity.centralspace.app"})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Log4j2
 public class FinalizerApp implements ExitCodeGenerator {
     private static final int EXIT_CODE = 42;
     private static final int EXCEPTION_CODE = 1;
@@ -46,7 +48,7 @@ public class FinalizerApp implements ExitCodeGenerator {
     private static class ExitListener {
         @EventListener
         public void exitEvent(final ExitCodeEvent event) {
-            System.out.println("Exit code: " + event.getExitCode());
+            log.info("Exit code: " + event.getExitCode());
         }
     }
 

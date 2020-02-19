@@ -15,8 +15,8 @@ import lombok.experimental.FieldDefaults;
 public class ZonedDateTimeJpaConverter implements AttributeConverter<ZonedDateTime, Timestamp> {
     // Store always in UTC
     // Read from database (stored in UTC) and return with the system default.
-    private final static ZoneId utc_zone_id = ZoneId.of("UTC");
-    private final static ZoneId default_zone_id = ZoneId.systemDefault();
+    private static final ZoneId utc_zone_id = ZoneId.of("UTC");
+    private static final ZoneId default_zone_id = ZoneId.systemDefault();
 
     @Override
     public Timestamp convertToDatabaseColumn(final ZonedDateTime zonedDateTime) {

@@ -11,36 +11,38 @@ import javax.persistence.PreUpdate;
 
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.log4j.Log4j2;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Log4j2
 public class AccountEntityListener {
     @PrePersist
     public void beforePersist(Account account) {
-        System.out.println("persisting account with id = " + account.getId());
+        log.info("persisting account with id = " + account.getId());
     }
 
     @PostPersist
     public void afterPersist(final Account account) {
-        System.out.println("Persisted account with id = " + account.getId());
+        log.info("Persisted account with id = " + account.getId());
     }
 
     @PreUpdate
     public void beforeUpdate(final Account account) {
-        System.out.println("Updating account with id = " + account.getId());
+        log.info("Updating account with id = " + account.getId());
     }
 
     @PostUpdate
     public void afterUpdate(final Account account) {
-        System.out.println("Updated account with id = " + account.getId());
+        log.info("Updated account with id = " + account.getId());
     }
 
     @PreRemove
     private void beforeRemove(final Account account) {
-        System.out.println("Removing account with id = " + account.getId());
+        log.info("Removing account with id = " + account.getId());
     }
 
     @PostRemove
     public void afterRemove(final Account account) {
-        System.out.println("Removed account with id = " + account.getId());
+        log.info("Removed account with id = " + account.getId());
     }
 }

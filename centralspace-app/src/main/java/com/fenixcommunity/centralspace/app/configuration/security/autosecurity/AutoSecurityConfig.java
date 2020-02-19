@@ -38,13 +38,13 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public abstract class AutoSecurityConfig {
 
-    private final static String API_PATH = "/api";
-    private final static String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
-    private final static String REMEMBER_ME_COOKIE = "remembermecookie";
-    private final static int TOKEN_VALIDITY_SECONDS = 60 * 60;
+    private static final String API_PATH = "/api";
+    private static final String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
+    private static final String REMEMBER_ME_COOKIE = "remembermecookie";
+    private static final int TOKEN_VALIDITY_SECONDS = 60 * 60;
     // https://stackoverflow.com/questions/50486314/how-to-solve-403-error-in-spring-boot-post-request
     //API
-    private final static String[] ADMIN_API_AUTH_LIST = {
+    private static final String[] ADMIN_API_AUTH_LIST = {
             API_PATH + "/account/**",
             API_PATH + "/account-flux/**",
             API_PATH + "/doc/**",
@@ -52,23 +52,23 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/password/**",
             API_PATH + "/register/**"
     };
-    private final static String[] BASIC_API_AUTH_LIST = {
+    private static final String[] BASIC_API_AUTH_LIST = {
             API_PATH + "/resource/**"
     };
-    private final static String[] FLUX_API_AUTH_LIST = {
+    private static final String[] FLUX_API_AUTH_LIST = {
             API_PATH + "/account-flux/**"
     };
-    private final static String[] NO_AUTH_API_LIST = {
+    private static final String[] NO_AUTH_API_LIST = {
             API_PATH + "/logger/post"
     };
     //FORM
-    private final static String[] ADMIN_FORM_AUTH_LIST = {
+    private static final String[] ADMIN_FORM_AUTH_LIST = {
             "/h2-console/**"
     };
-    private final static String[] NO_AUTH_FORM_LIST = {
+    private static final String[] NO_AUTH_FORM_LIST = {
             API_PATH + "/logger/run"
     };
-    private final static String[] SWAGGER_AUTH_LIST = {
+    private static final String[] SWAGGER_AUTH_LIST = {
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources",

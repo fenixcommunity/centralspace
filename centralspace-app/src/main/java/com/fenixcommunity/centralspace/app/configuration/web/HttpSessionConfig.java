@@ -8,11 +8,13 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import lombok.experimental.FieldDefaults;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Log4j2
 public class HttpSessionConfig {
 
     @Bean
@@ -20,12 +22,12 @@ public class HttpSessionConfig {
         return new HttpSessionListener() {
             @Override
             public void sessionCreated(final HttpSessionEvent se) {
-                System.out.println("Session Created with session id+" + se.getSession().getId());
+                log.info("Session Created with session id+" + se.getSession().getId());
             }
 
             @Override
             public void sessionDestroyed(final HttpSessionEvent se) {
-                System.out.println("Session Destroyed, Session id:" + se.getSession().getId());
+                log.info("Session Destroyed, Session id:" + se.getSession().getId());
 
             }
         };
@@ -37,21 +39,21 @@ public class HttpSessionConfig {
         return new HttpSessionAttributeListener() {
             @Override
             public void attributeAdded(final HttpSessionBindingEvent se) {
-                System.out.println("Attribute Added following information");
-                System.out.println("Attribute Name:" + se.getName());
-                System.out.println("Attribute Value:" + se.getValue());
+                log.info("Attribute Added following information");
+                log.info("Attribute Name:" + se.getName());
+                log.info("Attribute Value:" + se.getValue());
             }
 
             @Override
             public void attributeRemoved(final HttpSessionBindingEvent se) {
-                System.out.println("attributeRemoved");
+                log.info("attributeRemoved");
             }
 
             @Override
             public void attributeReplaced(final HttpSessionBindingEvent se) {
-                System.out.println("Attribute Replaced following information");
-                System.out.println("Attribute Name:" + se.getName());
-                System.out.println("Attribute Old Value:" + se.getValue());
+                log.info("Attribute Replaced following information");
+                log.info("Attribute Name:" + se.getName());
+                log.info("Attribute Old Value:" + se.getValue());
             }
         };
     }

@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Log4j2
 public class HeaderApiFilter implements Filter {
 
     @Override
@@ -35,9 +35,10 @@ public class HeaderApiFilter implements Filter {
             throws IOException, ServletException {
         final var request = (HttpServletRequest) servletRequest;
         final var response = (HttpServletResponse) servletResponse;
-        System.out.println("All header names:\n");
-        Collections.list(request.getHeaderNames()).forEach(System.out::println);
+        log.info("All header names:\n");
+        Collections.list(request.getHeaderNames()).forEach(log::info);
         response.setHeader(HEADER_SESSION, "HeaderApiFilter-set");
         chain.doFilter(request, response);
     }
 }
+

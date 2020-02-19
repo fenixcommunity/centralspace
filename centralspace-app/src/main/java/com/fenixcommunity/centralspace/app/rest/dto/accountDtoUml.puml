@@ -1,0 +1,12 @@
+@startuml
+class AccountDto {
+   + {static} defaultValue: Long
+   - id: Long
+   - login: String
+   - mail: String
+
+   + AccountDto(Long, String, String)
+
+    + getMail() : String
+}
+@enduml

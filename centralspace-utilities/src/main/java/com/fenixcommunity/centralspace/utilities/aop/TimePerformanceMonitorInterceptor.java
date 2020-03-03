@@ -30,7 +30,7 @@ public class TimePerformanceMonitorInterceptor extends AbstractMonitoringInterce
             throws Throwable {
         final String name = createInvocationTraceName(invocation);
         final Stopwatch watch = Stopwatch.createStarted();
-        log.trace("Method " + name + " execution started at: " + LocalDateTime.now().format(TimeFormatter.DT_FORMATTER_2));
+        log.trace("Method " + name + " execution started at: " + LocalDateTime.now().format(TimeFormatter.DT_FORMATTER_1));
         try {
             return invocation.proceed();
         } finally {

@@ -30,15 +30,15 @@ public class InitializerApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         String appInfo = "Fenix community application has been launched";
-        String pluginIdeInfo = "Please look at interesting plugins:" + LINE +
+        String pluginIdeInfo = "Please look at interesting IntelliJ plugins:" + LINE +
                 "README.md file";
-        String swaggerInfo = format("Please look at swager UI page:" + LINE +
+        String swaggerInfo = format("Please look at SWAGGER UI page:" + LINE +
                 "http://%s/app/swagger-ui.html#/", swagger2Host);
-        String h2Info = format("Please look at h2 database console:" + LINE +
+        String h2Info = format("Please look at H2 database console:" + LINE +
                 "http://%s/app/h2-console", h2Host);
-        String sonarServerInfo = "Please run sonar analyzer console:" + LINE +
+        String sonarServerInfo = "Please run SONAR analyzer console:" + LINE +
                 "http://localhost:9000/dashboard?id=centralspace";
-        String sonarInfo = "Please run sonar build maven:" + LINE + "mvn sonar:sonar" + LINE +
+        String sonarInfo = "Please run SONAR build maven:" + LINE + "mvn sonar:sonar" + LINE +
                 "-Dsonar.projectKey=centralspace" + LINE +
                 "-Dsonar.host.url=http://localhost:9000" + LINE +
                 "-Dsonar.login=1ea3c73b39a7f3aa2e4862bb874c8fbca7895943";
@@ -52,14 +52,6 @@ public class InitializerApp implements CommandLineRunner {
                 .add(sonarInfo).toString());
     }
 
-    http://localhost:9000/dashboard?id=centralspace
     todo +
-    read more
-    https://www.baeldung.com/sonar-qube  -> OpenJDK 11 or Oracle JRE 11
-
-    mvn sonar:sonar
-            -Dsonar.projectKey=centralspace
-            -Dsonar.host.url=http://localhost:9000
-            -Dsonar.login=1ea3c73b39a7f3aa2e4862bb874c8fbca7895943
     zobacz co potrafi Intellij i taby, widoki. Code analizer
 }

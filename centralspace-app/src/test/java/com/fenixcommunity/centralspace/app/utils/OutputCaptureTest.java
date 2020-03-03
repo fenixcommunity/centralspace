@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.other;
+package com.fenixcommunity.centralspace.app.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

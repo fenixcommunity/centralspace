@@ -23,10 +23,6 @@ class RestFilledRegisterForm {
     //TODO opakuj EMAIL
     private final String registerURL;
 
-    //todo test
-    //todo @JsonCreator
-    //todo jaka data?
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private final ZonedDateTime dateTime;
 }

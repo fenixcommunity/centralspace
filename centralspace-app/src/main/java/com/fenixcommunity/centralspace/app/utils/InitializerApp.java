@@ -52,6 +52,6 @@ public class InitializerApp implements CommandLineRunner {
                 .add(sonarInfo).toString());
     }
 
-    todo +
-    zobacz co potrafi Intellij i taby, widoki. Code analizer
+//    todo +
+//    zobacz co potrafi Intellij i taby, widoki. Code analizer
 }

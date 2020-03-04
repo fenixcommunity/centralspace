@@ -64,7 +64,7 @@ class AccountControllerTest {
     @MockBean
     private AccountService accountService;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private ZonedDateTime dateTime;
 

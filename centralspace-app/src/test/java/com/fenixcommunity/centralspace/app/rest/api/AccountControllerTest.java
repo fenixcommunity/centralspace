@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;

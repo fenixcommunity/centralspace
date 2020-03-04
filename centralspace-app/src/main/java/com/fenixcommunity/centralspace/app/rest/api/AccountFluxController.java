@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToDto;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;

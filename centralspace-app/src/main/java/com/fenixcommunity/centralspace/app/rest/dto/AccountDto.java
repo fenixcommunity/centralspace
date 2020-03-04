@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -40,16 +41,19 @@ public class AccountDto {
     private String mail;
 
     private ZonedDateTime dataBaseConsentExpiredDate;
+    private PasswordType passwordType;
 
     @JsonCreator
     @Builder
     public AccountDto(@JsonProperty("id") Long id,
                       @JsonProperty("login") String login,
-                      @JsonProperty("mail") String mail) {
+                      @JsonProperty("mail") String mail,
+                      @JsonProperty("passwordType") PasswordType passwordType) {
 //        @NotNull -> only info for compiler, requireNonNull(id) -> runtime
         this.id = id;
         this.login = login;
         this.mail = mail;
+        this.passwordType = passwordType;
     }
 
     public void setDataBaseConsentExpiredDate(String consentExpiredDate) {

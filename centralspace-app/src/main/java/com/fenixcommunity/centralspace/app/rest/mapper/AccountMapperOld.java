@@ -9,7 +9,7 @@ import com.fenixcommunity.centralspace.utilities.common.Level;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class AccountMapper {
+public class AccountMapperOld {
 
     public static AccountDto mapToDto(final Account account, final Level level) {
         final AccountDto.AccountDtoBuilder dtoBuilder = AccountDto.builder();

@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToJpa;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
@@ -16,7 +16,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import io.swagger.annotations.Api;
@@ -119,7 +119,7 @@ public class AccountController {
     }
 
     private AccountDto findByIdAndMapToDto(final Long id) throws ResourceNotFoundException {
-        return accountService.findById(id).map(x -> AccountMapper.mapToDto(x, HIGH))
+        return accountService.findById(id).map(x -> AccountMapperOld.mapToDto(x, HIGH))
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }
 

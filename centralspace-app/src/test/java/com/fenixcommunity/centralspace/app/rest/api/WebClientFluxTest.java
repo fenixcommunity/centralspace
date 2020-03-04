@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.FLUX_EDITOR;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper.mapToDto;
+import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;

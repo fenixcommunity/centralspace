@@ -8,7 +8,6 @@ import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,7 +19,9 @@ import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordTyp
 import com.fenixcommunity.centralspace.utilities.common.Level;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 
 public class ModelMapperTest {
 
@@ -33,6 +34,7 @@ public class ModelMapperTest {
 
     @BeforeEach
     public void before() {
+        modelMapper = new ModelMapper();
         initAccount = Account.builder()
                 .id(ID)
                 .login(LOGIN)
@@ -44,14 +46,48 @@ public class ModelMapperTest {
         initAccountDto = AccountMapperOld.mapToDto(initAccount, Level.HIGH);
     }
 
+//    @Test
+//    void basicMappingTest() {
+//        AccountMapper accountMapper = new AccountMapper();
+//        AccountDto accountDto =  accountMapper.map(initAccount);
+//        assertEquals(ID, accountDto.getId());
+//        assertEquals(LOGIN, accountDto.getLogin());
+//        assertEquals(MAIL, accountDto.getMail());
+//    }
+
+//    https://stackoverflow.com/questions/46530323/java-object-mapping-framework-working-with-builder-pattern
+//    http://modelmapper.org/getting-started/
+//    https://stackoverflow.com/questions/44534172/how-to-customize-modelmapper
+
     @Test
-    void basicMappingTest() {
-        AccountMapper accountMapper = new AccountMapper();
-        AccountDto accountDto =  accountMapper.map(initAccount);
-        assertEquals(ID, accountDto.getId());
-        assertEquals(LOGIN, accountDto.getLogin());
-        assertEquals(MAIL, accountDto.getMail());
+    void test1() {
+        AccountDtoWithoutBuilder resultAccountDto = modelMapper.map(initAccount, AccountDtoWithoutBuilder.class);
+
+        assertEquals(ID, resultAccountDto.getId());
+        assertEquals(LOGIN, resultAccountDto.getLogin());
+        assertEquals(MAIL, resultAccountDto.getMail());
     }
-    https://stackoverflow.com/questions/46530323/java-object-mapping-framework-working-with-builder-pattern
-    http://modelmapper.org/getting-started/
+
+    @Test
+    void test2() {
+        TypeMap<Account, AccountDtoWithoutBuilder> typeMap = modelMapper.createTypeMap(Account.class, AccountDtoWithoutBuilder.class);
+
+        Converter<List<Password>, String> firstPasswordConverter = ctx -> ctx.getSource().get(0)
+                .getPasswordType().toString().toLowerCase() + "_converter";
+
+        typeMap.addMappings(mapper -> {
+            mapper.using(firstPasswordConverter)
+                    .map(Account::getPasswords, AccountDtoWithoutBuilder::setPasswordType);
+            mapper.map(Account::getLogin, AccountDtoWithoutBuilder::customizeLogin);
+            second no works
+        });
+
+        AccountDtoWithoutBuilder resultAccountDto = modelMapper.map(initAccount, AccountDtoWithoutBuilder.class);
+
+        assertEquals(ID, resultAccountDto.getId());
+        assertEquals(LOGIN + "_custom", resultAccountDto.getLogin());
+        assertEquals(MAIL, resultAccountDto.getMail());
+        assertEquals(PasswordType.TO_CENTRALSPACE.toString().toLowerCase() + "_converter", resultAccountDto.getPasswordType());
+    }
+
 }

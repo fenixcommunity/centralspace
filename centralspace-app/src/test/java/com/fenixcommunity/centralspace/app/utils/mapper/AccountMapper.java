@@ -13,7 +13,7 @@ public class AccountMapper {
 
     public AccountMapper() {
         modelMapper = new ModelMapperBuilder()
-                .withLombokBuilder()
+                .withUsingLombokBuilder()
                 .withMatchingStrategy(MatchingStrategies.STRICT)
                 .build();
     }

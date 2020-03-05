@@ -8,7 +8,7 @@ import org.modelmapper.spi.PropertyType;
 class ModelMapperBuilder {
    private final ModelMapper modelMapper = new ModelMapper();
 
-    ModelMapperBuilder withLombokBuilder() {
+    ModelMapperBuilder withUsingLombokBuilder() {
         modelMapper.getConfiguration()
                 .setDestinationNamingConvention((propertyName, propertyType) -> PropertyType.METHOD.equals(propertyType))
                 .setDestinationNameTransformer((name, nameableType) -> Strings.decapitalize(name));

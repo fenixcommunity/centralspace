@@ -7,12 +7,10 @@ import lombok.Data;
 @Data
 public class AccountDtoWithoutBuilder {
     private Long id;
+    private String idString;
     private String login;
     private String mail;
-    private ZonedDateTime dataBaseConsentExpiredDate;
     private String passwordType;
-
-    public void customizeLogin(String login) {
-        this.login = login + "_custom";
-    }
+    private ContactDetailsDto contactDetailsDto;
+    private ZonedDateTime dataBaseConsentExpiredDate;
 }

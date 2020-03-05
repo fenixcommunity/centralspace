@@ -6,6 +6,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
 import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
 import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
 import com.fenixcommunity.centralspace.utilities.common.Level;
@@ -21,7 +23,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.Provider;
 import org.modelmapper.TypeMap;
+import org.modelmapper.convention.MatchingStrategies;
 
 public class ModelMapperTest {
 
@@ -42,6 +46,8 @@ public class ModelMapperTest {
                 .build();
         List<Password> passwords = singletonList(new Password(ID, initAccount, PASSWORD, PasswordType.TO_CENTRALSPACE));
         initAccount.setPasswords(passwords);
+        Address address = new Address(ID, "Poland", "Cracow", singletonList(initAccount));
+        initAccount.setAddress(address);
 
         initAccountDto = AccountMapperOld.mapToDto(initAccount, Level.HIGH);
     }
@@ -72,22 +78,59 @@ public class ModelMapperTest {
     void test2() {
         TypeMap<Account, AccountDtoWithoutBuilder> typeMap = modelMapper.createTypeMap(Account.class, AccountDtoWithoutBuilder.class);
 
-        Converter<List<Password>, String> firstPasswordConverter = ctx -> ctx.getSource().get(0)
+        Converter<List<Password>, String> firstPasswordConverter = ctx -> ctx.getSource() == null ? null : ctx.getSource().get(0)
                 .getPasswordType().toString().toLowerCase() + "_converter";
 
         typeMap.addMappings(mapper -> {
             mapper.using(firstPasswordConverter)
                     .map(Account::getPasswords, AccountDtoWithoutBuilder::setPasswordType);
-            mapper.map(Account::getLogin, AccountDtoWithoutBuilder::customizeLogin);
-            second no works
+            mapper.using(ctx -> ctx.getSource() == null ? null : ctx.getSource() + "_converter")
+                    .map(Account::getLogin, AccountDtoWithoutBuilder::setLogin);
+            mapper.skip(AccountDtoWithoutBuilder::setContactDetailsDto);
+            mapper.map(Account::getId, AccountDtoWithoutBuilder::setIdString);
         });
 
         AccountDtoWithoutBuilder resultAccountDto = modelMapper.map(initAccount, AccountDtoWithoutBuilder.class);
 
         assertEquals(ID, resultAccountDto.getId());
-        assertEquals(LOGIN + "_custom", resultAccountDto.getLogin());
+        assertEquals(ID.toString(), resultAccountDto.getIdString());
         assertEquals(MAIL, resultAccountDto.getMail());
+        assertEquals(LOGIN + "_converter", resultAccountDto.getLogin());
         assertEquals(PasswordType.TO_CENTRALSPACE.toString().toLowerCase() + "_converter", resultAccountDto.getPasswordType());
+    }
+
+    @Test
+    void test3() {
+        TypeMap<Account, AccountDtoWithoutBuilder> typeMap = modelMapper.createTypeMap(Account.class, AccountDtoWithoutBuilder.class);
+
+        typeMap.addMapping(src -> src.getAddress().getCountry(), (dest, v) -> dest.getContactDetailsDto().setCountry((String) v));
+
+        AccountDtoWithoutBuilder resultAccountDto = modelMapper.map(initAccount, AccountDtoWithoutBuilder.class);
+
+        assertNotNull(resultAccountDto.getContactDetailsDto());
+        assertEquals("Poland", resultAccountDto.getContactDetailsDto().getCountry());
+    }
+
+    @Test
+    void test4() {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        TypeMap<Account, AccountDtoWithoutBuilder> typeMap = modelMapper.createTypeMap(Account.class, AccountDtoWithoutBuilder.class);
+
+        Provider<Address> addressProvider = req ->
+        new Account()  + Address.class, ContactDetailsDto.class
+        new Address(ID, "Germany", null, null);
+
+        typeMap.addMappings(mapper -> mapper
+                .with(addressProvider)
+                .map(Account::getAddress, (dest, v) -> {
+                    Address address = (Address) v;
+                    dest.getContactDetailsDto().setCountry(address.getCountry());
+                }));
+
+        AccountDtoWithoutBuilder resultAccountDto = modelMapper.map(initAccount, AccountDtoWithoutBuilder.class);
+
+        assertNotNull(resultAccountDto.getContactDetailsDto());
+        assertEquals("Germany", resultAccountDto.getContactDetailsDto().getCountry());
     }
 
 }

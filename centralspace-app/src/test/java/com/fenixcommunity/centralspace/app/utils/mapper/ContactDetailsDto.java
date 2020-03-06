@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ContactDetailsDto {
     private String country;
+    private String phoneNumber;
 }

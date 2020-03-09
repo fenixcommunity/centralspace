@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.app.utils.mapper;
 
 import java.time.ZonedDateTime;
 
+import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
 import lombok.Data;
 
 @Data

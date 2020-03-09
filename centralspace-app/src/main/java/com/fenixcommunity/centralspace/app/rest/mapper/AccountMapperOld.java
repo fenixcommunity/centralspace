@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.mapper;
 import static java.util.Objects.isNull;
 import static lombok.AccessLevel.PRIVATE;
 
-import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.Level;
 import lombok.experimental.FieldDefaults;
@@ -29,3 +29,4 @@ public class AccountMapperOld {
                 .mail(rest.getMail()).build();
     }
 }
+remove!!!

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.security.SecuredUserDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.service.AccountService;

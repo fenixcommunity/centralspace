@@ -43,5 +43,7 @@ public class Var {
     public static final String BASIC_MAIL = "Basic Mail";
     public static final String REGISTRATION_MAIL = "Registration Mail";
     public static final String MAIL = "text@gmail.com";
+    public static final String COUNTRY = "Poland";
+    public static final String CITY = "Cracow";
 
 }

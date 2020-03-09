@@ -25,7 +25,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.cache.CacheCookieApiFilter;
 import com.fenixcommunity.centralspace.app.service.AccountService;

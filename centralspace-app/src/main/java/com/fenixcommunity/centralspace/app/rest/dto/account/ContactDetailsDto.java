@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.utils.mapper;
+package com.fenixcommunity.centralspace.app.rest.dto.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

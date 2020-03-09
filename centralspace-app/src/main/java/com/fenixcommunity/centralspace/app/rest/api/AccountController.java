@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.fenixcommunity.centralspace.app.rest.dto.AccountDto;
+import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;

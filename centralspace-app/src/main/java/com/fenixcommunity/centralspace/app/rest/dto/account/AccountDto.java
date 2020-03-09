@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.dto;
+package com.fenixcommunity.centralspace.app.rest.dto.account;
 
 import static com.fenixcommunity.centralspace.utilities.time.TimeFormatter.toIsoZonedDateTime;
 import static lombok.AccessLevel.PRIVATE;
@@ -10,8 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
 import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,6 +33,9 @@ public class AccountDto {
     private Long id;
 
     @NotNull
+    private String idString;
+
+    @NotNull
     @Size(min = 1, max = 15, message = "login should not be less than 3 and not be greater than 15")
     @ApiModelProperty(notes = "Account login", required = true, example = "maxLogin")
     private String login;
@@ -40,25 +45,42 @@ public class AccountDto {
     @Email(regexp = MAIL_REGEX, message = "Email should be valid")
     private String mail;
 
-    private ZonedDateTime dataBaseConsentExpiredDate;
     private PasswordType passwordType;
+    private ContactDetailsDto contactDetailsDto;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") // 2016-06-23 09:07:21.205-07:00
+    private ZonedDateTime dataBaseConsentExpiredDate;
 
     @JsonCreator
     @Builder
     public AccountDto(@JsonProperty("id") Long id,
+                      @JsonProperty("idString") String idString,
                       @JsonProperty("login") String login,
                       @JsonProperty("mail") String mail,
-                      @JsonProperty("passwordType") PasswordType passwordType) {
+                      @JsonProperty("passwordType") PasswordType passwordType,
+                      @JsonProperty("contactDetailsDto") ContactDetailsDto contactDetailsDto,
+                      @JsonProperty("dataBaseConsentExpiredDate") ZonedDateTime dataBaseConsentExpiredDate) {
 //        @NotNull -> only info for compiler, requireNonNull(id) -> runtime
         this.id = id;
+        this.idString = idString;
         this.login = login;
         this.mail = mail;
         this.passwordType = passwordType;
+        this.contactDetailsDto = contactDetailsDto;
     }
 
-    public void setDataBaseConsentExpiredDate(String consentExpiredDate) {
-        if(isNotEmpty(consentExpiredDate)) {
-            this.dataBaseConsentExpiredDate = toIsoZonedDateTime(consentExpiredDate);
+    public static class AccountDtoBuilder {
+
+        public AccountDtoBuilder contactDetailsDtoFromAddress(Address address) {
+            this.contactDetailsDto = new ContactDetailsDto(address.getCountry(), null);
+            return this;
         }
+
+        public AccountDtoBuilder dataBaseConsentExpiredDate(String consentExpiredDate) {
+            if(isNotEmpty(consentExpiredDate)) {
+                this.dataBaseConsentExpiredDate = toIsoZonedDateTime(consentExpiredDate);
+            }
+            return this;
+        }
+
     }
 }

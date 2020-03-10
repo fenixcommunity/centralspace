@@ -1,6 +1,5 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
@@ -16,9 +15,10 @@ import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld;
+import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.utilities.common.Level;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -84,7 +84,7 @@ public class AccountController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
-        final Account createdAccount = mapToJpa(accountDto);
+        final Account createdAccount = new AccountMapper().mapFromDto(accountDto, Level.LOW);
         final Long generatedId = accountService.save(createdAccount).getId();
         final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
@@ -119,7 +119,7 @@ public class AccountController {
     }
 
     private AccountDto findByIdAndMapToDto(final Long id) throws ResourceNotFoundException {
-        return accountService.findById(id).map(x -> AccountMapperOld.mapToDto(x, HIGH))
+        return accountService.findById(id).map(x -> new AccountMapper().mapToDto(x, HIGH))
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }
 

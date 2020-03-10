@@ -3,7 +3,6 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
 import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.FLUX_EDITOR;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
@@ -26,6 +25,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
+import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.Level;
@@ -110,7 +110,7 @@ class WebClientLuxTest {
                 .mail(MAIL)
                 .passwords(Collections.singletonList(null))
                 .build();
-        accountDto = mapToDto(account, Level.HIGH);
+        accountDto = new AccountMapper().mapToDto(account, Level.HIGH);
         when(accountService.findById(ID)).thenReturn(Optional.of(account));
         when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
     }

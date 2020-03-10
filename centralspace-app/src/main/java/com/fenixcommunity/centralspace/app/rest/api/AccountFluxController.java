@@ -1,7 +1,5 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToDto;
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToJpa;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
@@ -15,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.security.SecuredUserDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
+import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import lombok.AllArgsConstructor;
@@ -64,10 +63,10 @@ public class AccountFluxController {
     @Secured({"ROLE_FLUX_EDITOR"})
     public Mono<AccountDto> createFlux(@Valid @RequestBody final AccountDto accountDto) {
 //         Mono<Void> or Flux<AccountDto>
-        final Account createdAccount = mapToJpa(accountDto);
+        final Account createdAccount = new AccountMapper().mapFromDto(accountDto, com.fenixcommunity.centralspace.utilities.common.Level.LOW);
         final Long generatedId = accountService.save(createdAccount).getId();
         createdAccount.setId(generatedId);
-        return Mono.just(mapToDto(createdAccount, HIGH))
+        return Mono.just(new AccountMapper().mapToDto(createdAccount, HIGH))
                 .doOnNext(dto -> System.out.println(dto.getLogin()))
                 .defaultIfEmpty(AccountDto.builder().build())
                 .log("AccountFluxController", Level.INFO, SignalType.ON_COMPLETE)

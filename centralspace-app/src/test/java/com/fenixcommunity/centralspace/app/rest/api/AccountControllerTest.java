@@ -1,6 +1,5 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.rest.mapper.AccountMapperOld.mapToDto;
 import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
@@ -28,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.cache.CacheCookieApiFilter;
+import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,7 +100,7 @@ class AccountControllerTest {
 
         ).andReturn().getResponse();
         String responseContent = removeLinks(response.getContentAsString());
-        String accountJson = jacksonTester.write(mapToDto(account, HIGH)).getJson();
+        String accountJson = jacksonTester.write(new AccountMapper().mapToDto(account, HIGH)).getJson();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertTrue(removeLinks(accountJson).contains(responseContent));

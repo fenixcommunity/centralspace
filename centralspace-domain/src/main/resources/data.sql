@@ -1,4 +1,6 @@
 -- init during app starting after schema.sql (Primary database)
 
-select 1
-from account;
+select * from user;
+
+-- IF TABLES GENERATED:
+select 1 from account;

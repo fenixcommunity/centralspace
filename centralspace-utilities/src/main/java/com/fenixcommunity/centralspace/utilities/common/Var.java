@@ -13,6 +13,7 @@ public class Var {
     public static final String EMPTY = "empty";
 
     public static final String LOGIN = "login123";
+    public static final String LOGIN_UPPER = "LOGIN123";
     public static final String PASSWORD_HIGH = "Password1&23";
     public static final String PASSWORD_LOW = "password1";
     public static final String PASSWORD = "password";

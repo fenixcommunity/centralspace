@@ -49,10 +49,11 @@ public class Account extends AbstractBaseEntity {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    //todo Set<...  sort by ...
     private List<Password> passwords;
 
     @ToString.Exclude
     @ManyToOne(optional = false)
-    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "addressId", nullable = false)
     private Address address;
 }

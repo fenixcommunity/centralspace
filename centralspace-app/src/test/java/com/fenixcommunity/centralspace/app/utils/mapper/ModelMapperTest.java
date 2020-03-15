@@ -25,7 +25,7 @@ import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
 import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
 import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
-import com.fenixcommunity.centralspace.utilities.common.Level;
+import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.Condition;
@@ -223,7 +223,7 @@ public class ModelMapperTest {
     @Test
     void mapToDtoTestLevelLowTest() {
         AccountMapper accountMapper = new AccountMapper();
-        AccountDto resultDto = accountMapper.mapToDto(initAccount, Level.LOW);
+        AccountDto resultDto = accountMapper.mapToDto(initAccount, OperationLevel.LOW);
 
         assertNull(resultDto.getId());
         assertEquals(MAIL, resultDto.getMail());
@@ -233,7 +233,7 @@ public class ModelMapperTest {
     @Test
     void mapToDtoTestLevelHighTest() {
         AccountMapper accountMapper = new AccountMapper();
-        AccountDto resultDto = accountMapper.mapToDto(initAccount, Level.HIGH);
+        AccountDto resultDto = accountMapper.mapToDto(initAccount, OperationLevel.HIGH);
 
         assertEquals(ID, resultDto.getId());
         assertEquals(MAIL, resultDto.getMail());

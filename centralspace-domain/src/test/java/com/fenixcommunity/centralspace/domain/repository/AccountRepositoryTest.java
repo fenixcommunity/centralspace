@@ -1,8 +1,13 @@
 package com.fenixcommunity.centralspace.domain.repository;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.CITY;
+import static com.fenixcommunity.centralspace.utilities.common.Var.COUNTRY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
+import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN_UPPER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static java.util.Collections.singletonList;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,6 +20,9 @@ import javax.sql.DataSource;
 
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
+import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
+import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
 import com.fenixcommunity.centralspace.domain.repository.mounted.AccountRepository;
 import lombok.experimental.FieldDefaults;
 import org.junit.Before;
@@ -62,10 +70,35 @@ public class AccountRepositoryTest {
     @Before
     public void init() {
         // magic, we don't need class var in Before method
+        Address address = Address.builder()
+        .country(COUNTRY)
+        .city(CITY)
+        .build();
+        Long addressId = (Long) testEntityManager.persistAndGetId(address);
+        address.setId(addressId);
+
         Account account = Account.builder()
                 .login(LOGIN)
-                .mail(MAIL).build();
-        testEntityManager.persistAndGetId(account);
+                .mail(MAIL)
+                .address(address)
+                .build();
+        Long accountId = (Long) testEntityManager.persistAndGetId(account);
+        account.setId(accountId);
+
+        Password password = Password.builder()
+                .password(PASSWORD)
+                .account(account)
+                .passwordType(PasswordType.TO_CENTRALSPACE)
+                .build();
+        testEntityManager.persistAndGetId(password);
+        Long passwordId = (Long) testEntityManager.persistAndGetId(password);
+        password.setId(passwordId);
+
+        testEntityManager.flush();
+
+        account.setPasswords(singletonList(password));
+        testEntityManager.refresh(account);
+
         testEntityManager.flush();
     }
 
@@ -79,14 +112,14 @@ public class AccountRepositoryTest {
     @Test
     public void repoTest() {
         assertNotNull(accountRepository.findById(ID));
-        assertNotNull(accountRepository.findByLogin(LOGIN));
+        assertNotNull(accountRepository.findByLogin(LOGIN_UPPER));
     }
 
     @Test
     public void repoExtractingTest() {
         List<Account> accounts = accountRepository.findAll();
         assertNotNull(accounts);
-        assertThat(accounts).extracting(Account::getLogin).containsAnyOf(LOGIN);
+        assertThat(accounts).extracting(Account::getLogin).containsAnyOf(LOGIN_UPPER);
     }
 
     @Test

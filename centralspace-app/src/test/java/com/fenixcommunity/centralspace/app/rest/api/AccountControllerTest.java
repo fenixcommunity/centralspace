@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
+import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.HIGH;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
 import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;

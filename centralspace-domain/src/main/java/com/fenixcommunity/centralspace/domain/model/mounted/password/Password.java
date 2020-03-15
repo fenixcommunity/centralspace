@@ -31,7 +31,7 @@ import lombok.experimental.FieldDefaults;
 //@Setter(value = AccessLevel.PACKAGE)
 @Entity @Table(name = "password")
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @FieldDefaults(level = PRIVATE)
-public class Password extends AbstractBaseEntity implements Serializable {
+public class Password extends AbstractBaseEntity {
 
     //TODO         return Optional.ofNullable(isoCountryCode)
     //             Optional.of(nowa wartosc gdy damy geta optional);
@@ -43,7 +43,7 @@ public class Password extends AbstractBaseEntity implements Serializable {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "accountId", referencedColumnName = "id", nullable = false)
     private Account account;
 
     @Convert(converter = CryptoJpaConverter.class)

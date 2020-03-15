@@ -1,8 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.utilities.common.Level.HIGH;
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
+import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.HIGH;
+import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.LOW;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -16,6 +15,7 @@ import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
@@ -39,7 +39,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.SignalType;
 
 @RestController @RequestMapping(value = "/api/account-flux", produces = {MediaType.APPLICATION_JSON_VALUE})
-@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = AccessLevel.PACKAGE) @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Log4j2
 public class AccountFluxController {
 
@@ -63,7 +63,7 @@ public class AccountFluxController {
     @Secured({"ROLE_FLUX_EDITOR"})
     public Mono<AccountDto> createFlux(@Valid @RequestBody final AccountDto accountDto) {
 //         Mono<Void> or Flux<AccountDto>
-        final Account createdAccount = new AccountMapper().mapFromDto(accountDto, com.fenixcommunity.centralspace.utilities.common.Level.LOW);
+        final Account createdAccount = new AccountMapper().mapFromDto(accountDto, LOW);
         final Long generatedId = accountService.save(createdAccount).getId();
         createdAccount.setId(generatedId);
         return Mono.just(new AccountMapper().mapToDto(createdAccount, HIGH))

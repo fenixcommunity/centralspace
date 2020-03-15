@@ -21,7 +21,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-//todo ?
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel
 @Data @FieldDefaults(level = PRIVATE)
@@ -32,7 +31,6 @@ public class AccountDto {
     @NotNull
     private Long id;
 
-    @NotNull
     private String idString;
 
     @NotNull

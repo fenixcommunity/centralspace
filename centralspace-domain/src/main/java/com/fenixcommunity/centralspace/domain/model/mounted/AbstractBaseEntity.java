@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.domain.model.mounted;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -15,7 +16,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @MappedSuperclass @Getter @Setter @FieldDefaults(level = PRIVATE)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity implements Serializable {
     // Store always in UTC
     // Read from database (stored in UTC) and return with the system default.
 

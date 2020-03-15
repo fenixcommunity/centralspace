@@ -28,7 +28,8 @@ import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
-import com.fenixcommunity.centralspace.utilities.common.Level;
+import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
+import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,9 +109,9 @@ class WebClientLuxTest {
                 .id(ID)
                 .login(LOGIN)
                 .mail(MAIL)
-                .passwords(Collections.singletonList(null))
+                .address(new Address(8L, "Poland", "Cracow", null))
                 .build();
-        accountDto = new AccountMapper().mapToDto(account, Level.HIGH);
+        accountDto = new AccountMapper().mapToDto(account, OperationLevel.HIGH);
         when(accountService.findById(ID)).thenReturn(Optional.of(account));
         when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
     }

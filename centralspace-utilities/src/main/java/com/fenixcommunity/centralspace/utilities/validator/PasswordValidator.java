@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import com.fenixcommunity.centralspace.utilities.common.Level;
+import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import com.fenixcommunity.centralspace.utilities.exception.validator.PasswordValidatorException;
 import lombok.experimental.FieldDefaults;
 
@@ -18,7 +18,7 @@ public class PasswordValidator implements Validator {
     // Minimum eight characters, at least one letter and one number
     private static final Pattern PATTERN_LOW = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
 
-    private Level level = Level.HIGH;
+    private OperationLevel operationLevel = OperationLevel.HIGH;
     private Pattern pattern;
 
     //TODO test i co dać do Validatora?
@@ -27,7 +27,7 @@ public class PasswordValidator implements Validator {
 
     static PasswordValidator lowValidator() {
         final PasswordValidator validator = new PasswordValidator();
-        validator.level = Level.LOW;
+        validator.operationLevel = OperationLevel.LOW;
         validator.pattern = PATTERN_LOW;
         return validator;
     }
@@ -55,14 +55,14 @@ public class PasswordValidator implements Validator {
     @Override
     public void validateWithException(final Object obj) {
         if (!isValid(obj)) {
-            throw new PasswordValidatorException("Incorrect password on level: " + level.name());
+            throw new PasswordValidatorException("Incorrect password on level: " + operationLevel.name());
         }
     }
 
     @Override
     public void validateAllWithException(final Object... obj) {
         if (!isValidAll(obj)) {
-            throw new PasswordValidatorException("Incorrect passwords on level: " + level.name());
+            throw new PasswordValidatorException("Incorrect passwords on level: " + operationLevel.name());
         }
     }
 

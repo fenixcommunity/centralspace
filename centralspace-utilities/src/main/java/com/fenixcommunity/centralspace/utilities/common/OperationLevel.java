@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
-public enum Level {
+public enum OperationLevel {
     HIGH,
     MEDIUM,
     LOW

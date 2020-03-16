@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController @RequestMapping("/api/doc")
 @Log4j2
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-@AllArgsConstructor(access = PACKAGE)
+@FieldDefaults(level = PRIVATE, makeFinal = true) @AllArgsConstructor(access = PACKAGE)
 public class DocumentController {
 
     private final DocumentService documentService;

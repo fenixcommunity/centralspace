@@ -20,7 +20,9 @@ public class CentralspaceApplication extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(CentralspaceApplication.class, args);
+        SpringApplication app = new SpringApplication(CentralspaceApplication.class);
+//      optional:  app.setDefaultProperties(singletonMap("server.port", "8083"));
+        app.run(args);
     }
 }
 

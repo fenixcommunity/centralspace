@@ -59,7 +59,8 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/account-flux/**"
     };
     private static final String[] NO_AUTH_API_LIST = {
-            API_PATH + "/logger/post"
+            API_PATH + "/logger/post",
+            API_PATH + "/cross/**"
     };
     //FORM
     private static final String[] ADMIN_FORM_AUTH_LIST = {

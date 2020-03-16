@@ -86,7 +86,7 @@ public class PostgresDomainConfig {
         populator.addScript(initializationScript);
         return populator;
     }
-//    https://github.com/spring-projects/spring-boot/issues/6217
+
 }
 
 

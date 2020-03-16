@@ -13,6 +13,7 @@ import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.M
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
+import com.fenixcommunity.centralspace.app.configuration.web.WebConfig;
 import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
 import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
@@ -27,19 +28,24 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(value = {"com.fenixcommunity.centralspace.app"},
         excludeFilters = @Filter(IgnoreDuringScan.class))
 @Import({
+        // domain
         PostgresDomainConfig.class,
         H2DomainConfig.class,
-        UtilitiesConfig.class,
+        //security
         AutoSecurityConfig.class,
         MethodAutoSecurityConfig.class,
-//        AdvancedSecurityConfig.class,
-        MailGatewayConfig.class,
+//      AdvancedSecurityConfig.class,
+        // web
+        WebConfig.class,
         FilterApiConfig.class,
         HttpSessionConfig.class,
-        AopConfg.class,
-        SwaggerConfig.class,
         RestTemplateConfig.class,
         WebClientConfig.class,
+        // utils
+        UtilitiesConfig.class,
+        MailGatewayConfig.class,
+        AopConfg.class,
+        SwaggerConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

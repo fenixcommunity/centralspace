@@ -81,6 +81,7 @@
         <module>centralspace-domain</module>
         <module>centralspace-app</module>
         <module>centralspace-utilities</module>
+        <module>centralspace-training</module>
     </modules>
 
     <dependencyManagement>
@@ -99,6 +100,11 @@
             <dependency>
                 <groupId>com.fenixcommunity.centralspace</groupId>
                 <artifactId>centralspace-utilities</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fenixcommunity.centralspace</groupId>
+                <artifactId>centralspace-training</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- SPRING DEPENDENCIES -->

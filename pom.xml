@@ -26,7 +26,7 @@
         <java.version>11</java.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <spring-plugin.version>1.2.0.RELEASE</spring-plugin.version>
-        <sonar-maven-plugin.version>3.6.0.1398E</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
         <!-- SPRING DEPENDENCIES -->
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <spring-boot-web.version>2.2.2.RELEASE</spring-boot-web.version>
@@ -48,16 +48,17 @@
         <postgresql.version>42.2.8</postgresql.version>
         <h2database.version>1.4.199</h2database.version>
         <hikariCP.version>2.6.1</hikariCP.version>
-        <!-- COMMONS DEPENDENCIES -->
+        <!-- UTILITIES DEPENDENCIES -->
         <spring-boot-devtools.version>2.2.2.RELEASE</spring-boot-devtools.version>
         <jwttoken.version>0.9.1</jwttoken.version>
-        <!-- UTILITIES DEPENDENCIES -->
         <lombok.version>1.18.4</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>
         <javassist.version>3.23.1-GA</javassist.version>
         <modelmapper.version>2.3.5</modelmapper.version>
+        <jmh-core.version>1.23</jmh-core.version>
+        <jmh-generator-annprocess.version>1.23</jmh-generator-annprocess.version>
         <!-- DOCUMENT CONVERTER DEPENDENCIES -->
         <pdfbox-tools.version>2.0.17</pdfbox-tools.version>
         <pdf2dom.version>1.7</pdf2dom.version>
@@ -242,7 +243,7 @@
                 <artifactId>HikariCP-java9ea</artifactId>
                 <version>${hikariCP.version}</version>
             </dependency>
-            <!-- COMMONS DEPENDENCIES -->
+            <!-- UTILITIES DEPENDENCIES -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
@@ -252,6 +253,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-devtools</artifactId>
                 <version>${spring-boot-devtools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-core</artifactId>
+                <version>${jmh-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>${jmh-generator-annprocess.version}</version>
+                <scope>test</scope>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>
@@ -347,6 +359,11 @@
             <artifactId>spring-plugin-core</artifactId>
             <version>${spring-plugin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>${sonar-maven-plugin.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -366,11 +383,6 @@
                     <configuration>
                         <mainClass>com.fenixcommunity.centralspace.app.CentralspaceApplication</mainClass>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>${sonar-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

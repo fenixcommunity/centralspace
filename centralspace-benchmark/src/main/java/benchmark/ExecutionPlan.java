@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.utilities.benchmark;
+package benchmark;
 
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
@@ -10,13 +10,11 @@ import org.openjdk.jmh.annotations.State;
 
 @State(Scope.Benchmark)
 public class ExecutionPlan {
+    Hasher hasher;
+    final String password = "4v3rys3kur3p455w0rd";
 
-    @Param({ "100", "200", "300", "500", "1000" })
+    @Param({"100", "1000"})
     public int iterations;
-
-    public Hasher hasher;
-
-    public String password = "4v3rys3kur3p455w0rd";
 
     @Setup(Level.Invocation)
     public void setUp() {

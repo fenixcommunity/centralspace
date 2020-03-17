@@ -82,6 +82,7 @@
         <module>centralspace-domain</module>
         <module>centralspace-app</module>
         <module>centralspace-utilities</module>
+        <module>centralspace-benchmark</module>
         <module>centralspace-training</module>
     </modules>
 
@@ -101,6 +102,11 @@
             <dependency>
                 <groupId>com.fenixcommunity.centralspace</groupId>
                 <artifactId>centralspace-utilities</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fenixcommunity.centralspace</groupId>
+                <artifactId>centralspace-benchmark</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -263,7 +269,6 @@
                 <groupId>org.openjdk.jmh</groupId>
                 <artifactId>jmh-generator-annprocess</artifactId>
                 <version>${jmh-generator-annprocess.version}</version>
-                <scope>test</scope>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

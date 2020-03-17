@@ -1,5 +1,6 @@
 package benchmark;
 
+import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Benchmark;
@@ -21,6 +22,16 @@ public class BenchmarkWithExecutionPlan {
                 .include(BenchmarkWithExecutionPlan.class.getSimpleName())
                 .build();
         new Runner(opt).run();
+    }
+
+    @Fork(value = 2, warmups = 1)
+    @Benchmark
+    @BenchmarkMode(Mode.Throughput)
+    public void executionPlanTest(ExecutionPlan executionPlan) {
+        for (int i = executionPlan.iterations; i > 0; i--) {
+            executionPlan.hasher.putString(executionPlan.password, Charset.defaultCharset());
+        }
+        executionPlan.hasher.hash();
     }
 
     @Benchmark
@@ -53,14 +64,4 @@ public class BenchmarkWithExecutionPlan {
             count++;
         }
     }
-
-//    @Fork(value = 2, warmups = 1)
-//    @Benchmark
-//    @BenchmarkMode(Mode.Throughput)
-//    public void executionPlanTest(ExecutionPlan executionPlan) {
-//        for (int i = executionPlan.iterations; i > 0; i--) {
-//            executionPlan.hasher.putString(executionPlan.password, Charset.defaultCharset());
-//        }
-//        executionPlan.hasher.hash();
-//    }
 }

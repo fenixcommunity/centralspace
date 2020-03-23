@@ -48,6 +48,8 @@
         <postgresql.version>42.2.8</postgresql.version>
         <h2database.version>1.4.199</h2database.version>
         <hikariCP.version>2.6.1</hikariCP.version>
+        <!-- AWS DEPENDENCIES -->
+        <aws-java-sdk.version>1.11.735</aws-java-sdk.version>
         <!-- UTILITIES DEPENDENCIES -->
         <spring-boot-devtools.version>2.2.2.RELEASE</spring-boot-devtools.version>
         <jwttoken.version>0.9.1</jwttoken.version>
@@ -248,6 +250,12 @@
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP-java9ea</artifactId>
                 <version>${hikariCP.version}</version>
+            </dependency>
+            <!-- AWS DEPENDENCIES -->
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk</artifactId>
+                <version>${aws-java-sdk.version}</version>
             </dependency>
             <!-- UTILITIES DEPENDENCIES -->
             <dependency>

@@ -9,7 +9,7 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.Map;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
-import com.fenixcommunity.centralspace.app.service.SecurityService;
+import com.fenixcommunity.centralspace.app.service.security.SecurityService;
 import com.fenixcommunity.centralspace.app.service.document.converter.BasicPdfConverter;
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategy;
 import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType;

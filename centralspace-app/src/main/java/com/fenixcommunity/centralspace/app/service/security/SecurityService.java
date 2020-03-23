@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service;
+package com.fenixcommunity.centralspace.app.service.security;
 
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 import static lombok.AccessLevel.PACKAGE;

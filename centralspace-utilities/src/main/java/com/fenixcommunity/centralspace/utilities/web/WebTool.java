@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.utilities.web;
 import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import java.net.URI;
 import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class WebTool {
@@ -38,5 +40,9 @@ public class WebTool {
 
     public static Optional<String> getPreviousPageByRequest(final HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader("Referer"));
+    }
+
+    public static URI getCurrentURI() {
+        return ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
     }
 }

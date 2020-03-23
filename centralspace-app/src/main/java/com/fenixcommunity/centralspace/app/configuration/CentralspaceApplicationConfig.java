@@ -5,6 +5,7 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
 
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
+import com.fenixcommunity.centralspace.app.configuration.aws.s3.AmazonS3Config;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.RestTemplateConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
@@ -31,7 +32,7 @@ import org.springframework.context.annotation.Import;
         // domain
         PostgresDomainConfig.class,
         H2DomainConfig.class,
-        //security
+        // security
         AutoSecurityConfig.class,
         MethodAutoSecurityConfig.class,
 //      AdvancedSecurityConfig.class,
@@ -41,6 +42,8 @@ import org.springframework.context.annotation.Import;
         HttpSessionConfig.class,
         RestTemplateConfig.class,
         WebClientConfig.class,
+        // aws
+        AmazonS3Config.class,
         // utils
         UtilitiesConfig.class,
         MailGatewayConfig.class,

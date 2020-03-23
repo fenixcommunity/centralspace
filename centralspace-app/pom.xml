@@ -108,6 +108,11 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
         </dependency>
+        <!-- AWS DEPENDENCIES -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+        </dependency>
         <!-- COMMONS DEPENDENCIES -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

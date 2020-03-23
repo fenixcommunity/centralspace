@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.HIGH;
+import static com.fenixcommunity.centralspace.utilities.web.WebTool.getCurrentURI;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
 import static lombok.AccessLevel.PACKAGE;
@@ -94,10 +95,10 @@ public class AccountController {
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BasicResponse> update(
-            @PathVariable(name = "id") final Long id, @Valid @RequestBody final Account requestAccount)
+            @PathVariable(name = "id") final Long id, @Valid @RequestBody final AccountDto requestAccountDto)
             throws ResourceNotFoundException {
         isRecordExistElseThrowEx(id);
-        //todo account exist
+        final Account requestAccount = new AccountMapper().mapFromDto(requestAccountDto, OperationLevel.LOW);
         final Account updatedAccount = accountService.save(requestAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
@@ -128,10 +129,5 @@ public class AccountController {
 //todo        checkNotNull(id) or @Nullable?
         accountService.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
-    }
-
-    //todo remove?
-    private URI getCurrentURI() {
-        return ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
     }
 }

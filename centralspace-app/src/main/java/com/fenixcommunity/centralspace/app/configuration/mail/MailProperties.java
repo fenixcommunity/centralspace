@@ -14,9 +14,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "mailgateway")
-@PropertySource("classpath:mail-gateway.properties")
+@ConfigurationProperties(prefix = "mailgateway") @PropertySource("classpath:mail-gateway.properties")
 @Getter @Setter @FieldDefaults(level = PRIVATE)
+@Deprecated // no immutable object!! // example case to show many options // linkTo AmazonProperties
 class MailProperties {
 
     private String host;
@@ -28,6 +28,4 @@ class MailProperties {
     private String password;
 
     private MailContent content;
-
-//todo we can also set properties value
 }

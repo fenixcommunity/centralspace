@@ -52,6 +52,8 @@
         <aws-java-sdk.version>1.11.735</aws-java-sdk.version>
         <!-- UTILITIES DEPENDENCIES -->
         <spring-boot-devtools.version>2.2.2.RELEASE</spring-boot-devtools.version>
+        <spring-retry.version>1.2.5.RELEASE</spring-retry.version>
+        <micrometer-core.version>1.4.0</micrometer-core.version>
         <jwttoken.version>0.9.1</jwttoken.version>
         <lombok.version>1.18.4</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
@@ -267,6 +269,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-devtools</artifactId>
                 <version>${spring-boot-devtools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>${spring-retry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-core</artifactId>
+                <version>${micrometer-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openjdk.jmh</groupId>

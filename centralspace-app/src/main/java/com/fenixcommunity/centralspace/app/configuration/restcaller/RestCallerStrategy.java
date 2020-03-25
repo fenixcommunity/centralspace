@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.configuration.restcaller;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.retrywrapper.RestTemplateRetryWrapper;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,17 +16,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 @FieldDefaults(level = PRIVATE, makeFinal = true) @AllArgsConstructor(access = PACKAGE)
 public class RestCallerStrategy {
 
-    private final RestTemplateBuilder basicAuthRestTemplateBuilder;
-
     @Qualifier("basicAuthWebClientBuilder")
     private final WebClient.Builder basicAuthWebClientBuilder;
+    private final RestTemplateBuilder basicAuthRestTemplateBuilder;
+    private final RestTemplateRetryWrapper restCallerRetryWrapper;
 
-    public RestTemplate buildRestTemplate() {
+    public WebClient getWebClient() {
+        return basicAuthWebClientBuilder.build();
+    }
+
+    public RestTemplate getRestTemplate() {
         return basicAuthRestTemplateBuilder.build();
     }
 
-    public WebClient buildWebClient() {
-        return basicAuthWebClientBuilder.build();
+    public RestTemplateRetryWrapper getRestTemplateRetryWrapper() {
+        return restCallerRetryWrapper;
     }
 
 }

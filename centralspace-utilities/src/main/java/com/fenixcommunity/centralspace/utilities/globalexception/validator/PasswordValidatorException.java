@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.utilities.exception.validator;
+package com.fenixcommunity.centralspace.utilities.globalexception.validator;
 
 import static lombok.AccessLevel.PRIVATE;
 

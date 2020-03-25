@@ -37,6 +37,10 @@
             <groupId>com.fenixcommunity.centralspace</groupId>
             <artifactId>centralspace-utilities</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fenixcommunity.centralspace</groupId>
+            <artifactId>centralspace-benchmark</artifactId>
+        </dependency>
 
         <!-- SPRING DEPENDENCIES -->
         <dependency>
@@ -113,7 +117,7 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
         </dependency>
-        <!-- COMMONS DEPENDENCIES -->
+        <!-- UTILITIES DEPENDENCIES -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -121,6 +125,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
         </dependency>
         <!-- TEST DEPENDENCIES -->
         <dependency>

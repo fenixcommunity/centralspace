@@ -90,7 +90,7 @@ class WebClientTest {
     void testBeans() {
         assertNotNull(adminClient);
         assertNotNull(basicClient);
-        assertNotNull(restCallerStrategy.buildWebClient());
+        assertNotNull(restCallerStrategy.getWebClient());
     }
 
     @Test

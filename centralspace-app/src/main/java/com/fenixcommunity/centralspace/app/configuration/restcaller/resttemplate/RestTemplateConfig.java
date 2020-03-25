@@ -4,6 +4,7 @@ import static com.fenixcommunity.centralspace.app.configuration.security.autosec
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
 
+import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.retrywrapper.RestTemplateRetryWrapper;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -25,4 +26,12 @@ public class RestTemplateConfig {
     public AppRestTemplateCustomizer appRestTemplateCustomizer() {
         return new AppRestTemplateCustomizer(BASIC.name(), PASSWORD);
     }
+
+    @Bean
+    @DependsOn(value = {"restTemplateBuilder"})
+    public RestTemplateRetryWrapper restTemplateRetryWrapper() {
+        return new RestTemplateRetryWrapper(restTemplateBuilder().build());
+    }
+
+
 }

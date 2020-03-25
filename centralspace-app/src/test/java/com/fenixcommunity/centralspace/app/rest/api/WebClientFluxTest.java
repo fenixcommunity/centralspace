@@ -15,7 +15,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.Optional;
 
 import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
@@ -101,7 +100,7 @@ class WebClientLuxTest {
     void testBeans() {
         assertNotNull(adminClient);
         assertNotNull(basicClient);
-        assertNotNull(restCallerStrategy.buildWebClient());
+        assertNotNull(restCallerStrategy.getWebClient());
     }
 
     private void initAccount() {
@@ -118,7 +117,7 @@ class WebClientLuxTest {
 
     @Test
     void testLoggerAsBasic() {
-        LoggerResponseDto loggerResponseDto = restCallerStrategy.buildWebClient().post()
+        LoggerResponseDto loggerResponseDto = restCallerStrategy.getWebClient().post()
                 .uri("http://localhost:" + port + APP_PATH + BASE_LOGGER_URL + "query")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL)

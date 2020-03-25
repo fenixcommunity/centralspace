@@ -38,7 +38,7 @@ public class MailGatewayConfig {
     private final Validator validator;
     private final MailProperties mailProperties;
 /*    @Autowired -> to resolve Circular dependencies.
-            But for me ugly, refactoring required. Another solution is @Lazy in constructor*/
+      But for me ugly, refactoring required. Another solution is @Lazy in constructor */
 
     @Autowired
     MailGatewayConfig(final ValidatorFactory validatorFactory, final MailProperties mailProperties) {
@@ -54,7 +54,7 @@ public class MailGatewayConfig {
         mailSender.setProtocol(mailProperties.getProtocol());
         mailSender.setUsername(mailProperties.getUsername());
         mailSender.setPassword(mailProperties.getPassword());
-//tip: how to check connection -> telnet smtp.gmail.com 587
+//tip: how to check connection -> console: telnet smtp.gmail.com 587
         final Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");

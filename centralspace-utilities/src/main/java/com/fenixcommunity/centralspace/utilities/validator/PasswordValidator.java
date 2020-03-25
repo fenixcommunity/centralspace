@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
-import com.fenixcommunity.centralspace.utilities.exception.validator.PasswordValidatorException;
+import com.fenixcommunity.centralspace.utilities.globalexception.validator.PasswordValidatorException;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PRIVATE)

@@ -1,4 +1,4 @@
-package benchmark;
+package com.fenixcommunity.centralspace.benchmark.runner;
 
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;

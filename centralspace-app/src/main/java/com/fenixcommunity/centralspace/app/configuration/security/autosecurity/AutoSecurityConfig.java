@@ -51,7 +51,8 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/doc/**",
             API_PATH + "/mail/**",
             API_PATH + "/password/**",
-            API_PATH + "/register/**"
+            API_PATH + "/register/**",
+            API_PATH + "/metrics/**"
     };
     private static final String[] BASIC_API_AUTH_LIST = {
             API_PATH + "/resource/**"

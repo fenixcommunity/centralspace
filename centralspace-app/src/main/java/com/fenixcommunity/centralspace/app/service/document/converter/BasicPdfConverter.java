@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
-import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
+import com.fenixcommunity.centralspace.app.appexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;

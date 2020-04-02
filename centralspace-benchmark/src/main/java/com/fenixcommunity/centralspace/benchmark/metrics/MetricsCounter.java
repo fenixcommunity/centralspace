@@ -1,0 +1,40 @@
+package com.fenixcommunity.centralspace.benchmark.metrics;
+
+import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsName.FAILED_HTTP_REQUESTS;
+import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.HOST;
+import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.STATUS_CODE;
+import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.URI;
+import static java.lang.String.valueOf;
+import static java.util.Optional.ofNullable;
+import static lombok.AccessLevel.PRIVATE;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+@AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
+class MetricsCounter {
+    private final MeterRegistry meterRegistry;
+
+    void counterRestCall(final MetricsName metricsName, final Integer statusCode) {
+        final List<Tag> tags = new ArrayList<>(1);
+        ofNullable(statusCode).filter(id -> id > 0).ifPresent(id -> tags.add(Tag.of(STATUS_CODE.getTagName(), valueOf(id))));
+        meterRegistry.counter(metricsName.toString(), tags).increment();
+    }
+
+    void counterFailedRestCall(final URI uri) {
+        final List<Tag> tags = new ArrayList<>(2);
+        tags.add(Tag.of(HOST.getTagName(), uri.getHost()));
+        tags.add(Tag.of(URI.getTagName(), uri.getPath()));
+        meterRegistry.counter(FAILED_HTTP_REQUESTS.toString(), tags).increment();
+    }
+
+}

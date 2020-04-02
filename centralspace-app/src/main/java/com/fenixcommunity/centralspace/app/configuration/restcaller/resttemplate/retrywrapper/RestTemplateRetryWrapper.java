@@ -1,13 +1,17 @@
 package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.retrywrapper;
 
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
+
 import java.io.IOException;
 import java.net.URI;
 
-import com.fenixcommunity.centralspace.app.globalexception.RestCallerException;
+import com.fenixcommunity.centralspace.app.appexception.RestCallerException;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
-import metrics.Metrics;
-import metrics.MetricsName;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fenixcommunity.centralspace.benchmark.metrics.MetricsName;
+import com.fenixcommunity.centralspace.benchmark.metrics.MetricsService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +21,12 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-
 @Log4j2
+@AllArgsConstructor(access = PUBLIC) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class RestTemplateRetryWrapper {
 
-    @Autowired
-    private Metrics metrics;
-
     private final RestTemplate restTemplate;
-
-    public RestTemplateRetryWrapper(final RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    private final MetricsService metricsService;
 
     @Retryable(
             include = {IOException.class, ResourceAccessException.class},
@@ -39,14 +37,13 @@ public class RestTemplateRetryWrapper {
     public <T> ResponseEntity<T> exchange(URI uri, HttpMethod method, HttpEntity<?> requestEntity, Class<T> responseType) {
         log.debug("Trying to call [{}] with method [{}]", uri, method.name());
         try {
-            ResponseEntity<T> responseEntity  = restTemplate.exchange(uri, method, requestEntity, responseType);
-            metrics.counterRestCall(MetricsName.GENERAL_HTTP_REQUESTS, responseEntity.getStatusCodeValue());
+            ResponseEntity<T> responseEntity = restTemplate.exchange(uri, method, requestEntity, responseType);
+            metricsService.counterRestCall(MetricsName.GENERAL_HTTP_REQUESTS, responseEntity.getStatusCodeValue());
             return responseEntity;
-        } catch (Exception e){
+        } catch (Exception e) {
             log.warn("Calling [{}] with method [{}] failed with exception: {}", uri.toString(), method.name(), e.getMessage());
-            metrics.counterFailedRestCall(uri);
+            metricsService.counterFailedRestCall(uri);
             throw new RestCallerException("exchange call fail for URL: " + uri.toString());
         }
     }
-    todo
 }

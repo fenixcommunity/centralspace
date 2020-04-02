@@ -15,6 +15,7 @@ import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfi
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.WebConfig;
+import com.fenixcommunity.centralspace.benchmark.config.BenchmarkConfig;
 import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
 import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
@@ -48,7 +49,8 @@ import org.springframework.context.annotation.Import;
         UtilitiesConfig.class,
         MailGatewayConfig.class,
         AopConfg.class,
-        SwaggerConfig.class
+        SwaggerConfig.class,
+        BenchmarkConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

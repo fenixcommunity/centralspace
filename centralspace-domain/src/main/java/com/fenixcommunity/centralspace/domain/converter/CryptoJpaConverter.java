@@ -14,7 +14,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import javax.persistence.Transient;
 
-import com.fenixcommunity.centralspace.domain.exception.cenverter.CryptoJpaConverterException;
+import com.fenixcommunity.centralspace.domain.exception.converter.CryptoJpaConverterException;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.codec.Base64;

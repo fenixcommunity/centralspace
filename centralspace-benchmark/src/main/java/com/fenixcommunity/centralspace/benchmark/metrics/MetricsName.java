@@ -1,5 +1,10 @@
-package metrics;
+package com.fenixcommunity.centralspace.benchmark.metrics;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import lombok.experimental.FieldDefaults;
+
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public enum MetricsName {
 
     GENERAL_HTTP_REQUESTS("http.client.requests.calls"),

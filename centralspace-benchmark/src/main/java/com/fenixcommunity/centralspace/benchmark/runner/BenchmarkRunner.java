@@ -1,4 +1,4 @@
-package benchmark;
+package com.fenixcommunity.centralspace.benchmark.runner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 public class BenchmarkRunner {
     private List<String> dataForBenchmarkTest;
 
-    @Param({"10", "100"})
+    @Param({"10", "100", "1 000 000"})
     public int iterations;
 
     public static void main(String[] args) throws RunnerException {
@@ -39,6 +39,7 @@ public class BenchmarkRunner {
                 .forks(1)
                 .build();
         new Runner(opt).run();
+
     }
 
     @Setup

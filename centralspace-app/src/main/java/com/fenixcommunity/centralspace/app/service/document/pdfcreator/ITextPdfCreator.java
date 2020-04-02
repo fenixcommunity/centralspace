@@ -17,7 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
 
-import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
+import com.fenixcommunity.centralspace.app.appexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;

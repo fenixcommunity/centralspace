@@ -1,9 +1,9 @@
-package com.fenixcommunity.centralspace.benchmark.metrics;
+package com.fenixcommunity.centralspace.metrics.service;
 
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsName.FAILED_HTTP_REQUESTS;
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.HOST;
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.STATUS_CODE;
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.URI;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsName.FAILED_HTTP_REQUESTS;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsTags.HOST;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsTags.STATUS_CODE;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsTags.URI;
 import static java.lang.String.valueOf;
 import static java.util.Optional.ofNullable;
 import static lombok.AccessLevel.PRIVATE;
@@ -16,7 +16,6 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

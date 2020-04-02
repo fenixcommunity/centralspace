@@ -1,7 +1,7 @@
-package com.fenixcommunity.centralspace.benchmark.metrics;
+package com.fenixcommunity.centralspace.metrics.service;
 
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsName.FAILED_HTTP_REQUESTS;
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsName.GENERAL_HTTP_REQUESTS;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsName.FAILED_HTTP_REQUESTS;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsName.GENERAL_HTTP_REQUESTS;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 import static lombok.AccessLevel.PRIVATE;
 

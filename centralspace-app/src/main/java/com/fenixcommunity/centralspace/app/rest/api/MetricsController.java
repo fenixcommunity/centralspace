@@ -7,8 +7,8 @@ import javax.websocket.server.PathParam;
 
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import com.fenixcommunity.centralspace.benchmark.metrics.MetricsService;
-import com.fenixcommunity.centralspace.benchmark.metrics.MetricsName;
+import com.fenixcommunity.centralspace.metrics.service.MetricsService;
+import com.fenixcommunity.centralspace.metrics.service.MetricsName;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

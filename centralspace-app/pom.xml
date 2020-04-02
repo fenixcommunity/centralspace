@@ -39,7 +39,7 @@
         </dependency>
         <dependency>
             <groupId>com.fenixcommunity.centralspace</groupId>
-            <artifactId>centralspace-benchmark</artifactId>
+            <artifactId>centralspace-metrics</artifactId>
         </dependency>
 
         <!-- SPRING DEPENDENCIES -->

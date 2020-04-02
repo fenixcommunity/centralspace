@@ -1,9 +1,9 @@
-package com.fenixcommunity.centralspace.benchmark.metrics;
+package com.fenixcommunity.centralspace.metrics.service;
 
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsName.FAILED_HTTP_REQUESTS;
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsName.GENERAL_HTTP_REQUESTS;
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.HOST;
-import static com.fenixcommunity.centralspace.benchmark.metrics.MetricsTags.STATUS_CODE;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsName.FAILED_HTTP_REQUESTS;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsName.GENERAL_HTTP_REQUESTS;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsTags.HOST;
+import static com.fenixcommunity.centralspace.metrics.service.MetricsTags.STATUS_CODE;
 import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PRIVATE;

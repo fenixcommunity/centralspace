@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.benchmark.runner;
+package com.fenixcommunity.centralspace.metrics.benchmark;
 
 import java.util.ArrayList;
 import java.util.List;

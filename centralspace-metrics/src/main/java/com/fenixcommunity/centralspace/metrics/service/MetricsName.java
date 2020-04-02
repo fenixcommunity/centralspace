@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.benchmark.metrics;
+package com.fenixcommunity.centralspace.metrics.service;
 
 import static lombok.AccessLevel.PRIVATE;
 

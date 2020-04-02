@@ -5,7 +5,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.retrywrapper.RestTemplateRetryWrapper;
-import com.fenixcommunity.centralspace.benchmark.metrics.MetricsService;
+import com.fenixcommunity.centralspace.metrics.service.MetricsService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.client.RestTemplateBuilder;

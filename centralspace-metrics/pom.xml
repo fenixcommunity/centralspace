@@ -11,8 +11,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>centralspace-benchmark</artifactId>
-    <name>Centralspace Benchmark</name>
+    <artifactId>centralspace-metrics</artifactId>
+    <name>Centralspace Metrics</name>
     <packaging>jar</packaging>
 
     <properties>

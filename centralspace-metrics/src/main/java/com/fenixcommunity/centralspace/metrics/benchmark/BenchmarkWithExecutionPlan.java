@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.benchmark.runner;
+package com.fenixcommunity.centralspace.metrics.benchmark;
 
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;

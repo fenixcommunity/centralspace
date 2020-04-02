@@ -87,7 +87,7 @@
         <module>centralspace-domain</module>
         <module>centralspace-app</module>
         <module>centralspace-utilities</module>
-        <module>centralspace-benchmark</module>
+        <module>centralspace-metrics</module>
         <module>centralspace-training</module>
     </modules>
 
@@ -111,7 +111,7 @@
             </dependency>
             <dependency>
                 <groupId>com.fenixcommunity.centralspace</groupId>
-                <artifactId>centralspace-benchmark</artifactId>
+                <artifactId>centralspace-metrics</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

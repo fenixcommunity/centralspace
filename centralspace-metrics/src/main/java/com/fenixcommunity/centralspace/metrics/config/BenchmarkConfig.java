@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.benchmark.config;
+package com.fenixcommunity.centralspace.metrics.config;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.DependsOn;
 
 @Configuration
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ComponentScan(value = {"com.fenixcommunity.centralspace.benchmark"})
+@ComponentScan(value = {"com.fenixcommunity.centralspace.metrics"})
 public class BenchmarkConfig {
 
     @Bean

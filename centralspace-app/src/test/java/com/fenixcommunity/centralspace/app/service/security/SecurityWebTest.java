@@ -43,7 +43,6 @@ class SecurityWebTest {
     void setUp() {
     }
 
-
     @Test
 //    @Ignore  //todo waiting for new swagger release, problem with 3.0.0 version
     void whenUserRequestsLoginPageWithoutAuthorisation_ThenSuccess()

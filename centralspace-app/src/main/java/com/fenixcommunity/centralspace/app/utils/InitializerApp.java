@@ -33,9 +33,9 @@ public class InitializerApp implements CommandLineRunner {
         String pluginIdeInfo = "Please look at interesting IntelliJ plugins:" + LINE +
                 "README.md file";
         String swaggerInfo = format("Please look at SWAGGER UI page:" + LINE +
-                "http://%s/app/swagger-ui.html#/", swagger2Host);
+                "%s/app/swagger-ui.html#/", swagger2Host);
         String h2Info = format("Please look at H2 database console:" + LINE +
-                "http://%s/app/h2-console", h2Host);
+                "%s/app/h2-console", h2Host);
         String sonarServerInfo = "Please run SONAR analyzer console:" + LINE +
                 "http://localhost:9000/dashboard?id=centralspace";
         String sonarInfo = "Please run SONAR build maven:" + LINE + "mvn sonar:sonar" + LINE +

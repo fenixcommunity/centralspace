@@ -39,7 +39,6 @@ public class BenchmarkRunner {
                 .forks(1)
                 .build();
         new Runner(opt).run();
-
     }
 
     @Setup
@@ -63,4 +62,4 @@ public class BenchmarkRunner {
     }
 }
 
-todo centralspace
+//todo centralspace

@@ -4,7 +4,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 
 import com.fenixcommunity.centralspace.app.rest.dto.aws.InternalResourceDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
@@ -30,10 +30,12 @@ public class ResourceService {
     public boolean isInternalResourceExists(final String extractedPath) {
         try {
             return resourceTool.loadResourceByPath(extractedPath).getFile().exists();
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             log.warn("Problem with finding the file");
+            return false;
+        } catch (Exception e) {
+            throw new ServiceFailedException("Problem during finding resource");
         }
-        throw new ServiceFailedException("Problem with finding the file");
     }
 
     public String getInternalImagePath(final InternalResourceDto internalResourceDto) {

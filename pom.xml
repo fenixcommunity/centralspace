@@ -35,8 +35,8 @@
         <spring-boot-tomcat.version>2.2.5.RELEASE</spring-boot-tomcat.version>
         <spring-boot-mail.version>2.2.5.RELEASE</spring-boot-mail.version>
         <spring-boot-thymeleaf.version>2.2.5.RELEASE</spring-boot-thymeleaf.version>
-        <spring-context-support.version>5.2.2.RELEASE</spring-context-support.version>
-        <spring-core.version>5.2.2.RELEASE</spring-core.version>
+        <spring-context-support.version>5.2.4.RELEASE</spring-context-support.version>
+        <spring-core.version>5.2.4.RELEASE</spring-core.version>
         <spring-boot-security.version>2.2.5.RELEASE</spring-boot-security.version>
         <spring-log4j2.version>2.2.5.RELEASE</spring-log4j2.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>

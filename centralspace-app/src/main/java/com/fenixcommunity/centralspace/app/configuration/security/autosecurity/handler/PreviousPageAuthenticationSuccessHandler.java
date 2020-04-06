@@ -17,8 +17,9 @@ public class PreviousPageAuthenticationSuccessHandler implements AuthenticationS
 
     @Override
     public void onAuthenticationSuccess(
-            final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication)
-            throws IOException, ServletException {
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            final Authentication authentication) throws IOException, ServletException {
         final AuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
         handler.onAuthenticationSuccess(request, response, authentication);
 

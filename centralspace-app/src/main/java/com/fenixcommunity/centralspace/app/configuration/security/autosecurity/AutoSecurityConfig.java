@@ -13,6 +13,8 @@ import static lombok.AccessLevel.PRIVATE;
 import javax.sql.DataSource;
 
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationFailureHandler;
+import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationSuccessHandler;
+import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppLogoutSuccessHandler;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.PreviousPageAuthenticationSuccessHandler;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
 @EnableWebSecurity // (debug = true)
 //@EnableWebFluxSecurity todo https://www.baeldung.com/spring-security-5-reactive
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
-//todo FieldDefaults private final??
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public abstract class AutoSecurityConfig {
 
@@ -42,8 +44,7 @@ public abstract class AutoSecurityConfig {
     private static final String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
     private static final String REMEMBER_ME_COOKIE = "remembermecookie";
     private static final int TOKEN_VALIDITY_SECONDS = 60 * 60;
-    // https://stackoverflow.com/questions/50486314/how-to-solve-403-error-in-spring-boot-post-request
-    //API
+
     private static final String[] ADMIN_API_AUTH_LIST = {
             API_PATH + "/account/**",
             API_PATH + "/aws/**",
@@ -102,7 +103,7 @@ public abstract class AutoSecurityConfig {
                 .withUser(SWAGGER.name())
                 .password(passwordEncoder().encode(PASSWORD))
                 .roles(listsTo1Array(SWAGGER.getRoles()))
-/*              .and()
+/*              .and()   -> we do this step by jdbcAuthentication
                 .withUser(DB_USER.name())
                 .password(passwordEncoder().encode(PASSWORD))
                 .roles(listsTo1Array(DB_USER.getRoles()))*/
@@ -132,8 +133,7 @@ public abstract class AutoSecurityConfig {
 /*    @Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager() {
         return new JdbcUserDetailsManager(dataSource);
-    }
-  ->  in service we can: jdbcUserDetailsManager.createUser(
+    }  ->  in service we can: jdbcUserDetailsManager.createUser(
       new User(myUser.getUserName(), encodededPassword, singletonList(new SimpleGrantedAuthority(myUser.getRoles()))))*/
 
     private String getUserQuery() {
@@ -159,27 +159,6 @@ public abstract class AutoSecurityConfig {
 
     @Configuration
     @Order(1)
-    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(final HttpSecurity http) throws Exception {
-            http
-                    .exceptionHandling()
-                    .and()
-                    .antMatcher(API_PATH + "/**").authorizeRequests()
-                    .antMatchers(BASIC_API_AUTH_LIST).hasRole(BASIC.name())
-                    .antMatchers(ADMIN_API_AUTH_LIST).hasRole(ADMIN.name())
-                    .antMatchers(FLUX_API_AUTH_LIST).hasRole(FLUX_GETTER.name())
-                    .antMatchers(NO_AUTH_API_LIST).permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                    .csrf().disable() //todo read more about this
-                    .httpBasic();
-        }
-
-    }
-
-    @Configuration
-    @Order(2)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private final DataSource dataSource;
 
@@ -193,48 +172,63 @@ public abstract class AutoSecurityConfig {
                     .exceptionHandling()
 //                  .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
                     .and()
+                    //API
+//                  .antMatcher(API_PATH + "/**").authorizeRequests()
                     .authorizeRequests()
+                    .antMatchers(BASIC_API_AUTH_LIST).hasRole(BASIC.name())
+                    .antMatchers(ADMIN_API_AUTH_LIST).hasRole(ADMIN.name())
+                    .antMatchers(FLUX_API_AUTH_LIST).hasRole(FLUX_GETTER.name())
+                    .antMatchers(NO_AUTH_API_LIST).permitAll()
+                    //FORM
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
                     .antMatchers(mergeStringArrays(ADMIN_FORM_AUTH_LIST)).hasRole(ADMIN.name())
-                    .antMatchers(NO_AUTH_FORM_LIST).permitAll() // or hasAnyRole
-                    .anyRequest().authenticated()
+                    .antMatchers(NO_AUTH_FORM_LIST).permitAll()
+                    .anyRequest().hasRole(SWAGGER.name())
                     .and()
                     .csrf().disable()
                     .headers()
                     .frameOptions().sameOrigin()
                     .and()
-                    .formLogin()
+                    .formLogin().permitAll()
                     .successHandler(appAuthenticationSuccessHandler())
                     .failureHandler(appAuthenticationFailureHandler())
+                    .and()
+                    .logout().logoutUrl("/logout") //todo frontend handle
+                    .logoutSuccessHandler(logoutSuccessHandler())
+                    .invalidateHttpSession(true)
+                    .deleteCookies(REMEMBER_ME_COOKIE)
                     .and()
                     .rememberMe().key(REMEMBER_ME_KEY)
                     .rememberMeCookieName(REMEMBER_ME_COOKIE)
                     .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
                     .tokenRepository(tokenRepository())
                     .and()
-                    .logout()
-                    .logoutUrl("/logout")
-                    .and()
                     .sessionManagement().maximumSessions(1)
                     .expiredUrl("/login?expired");
-            //todo String to static final
-/*               .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
+                 /*
+                 .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
                  .deleteCookies("JSESSIONID");
                  .loginPage("/login")
                  .failureUrl("/login-error")
                  .loginProcessingUrl("/security_check")
                  .usernameParameter("username").passwordParameter("password")
-                 .permitAll();*/
+                 .permitAll();
+                  */
         }
 
         @Bean
         AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
-            return new PreviousPageAuthenticationSuccessHandler();
+            return new AppAuthenticationSuccessHandler("/app/swagger-ui.html");
         }
 
         @Bean
         AuthenticationFailureHandler appAuthenticationFailureHandler() {
             return new AppAuthenticationFailureHandler();
+        }
+
+        @Bean
+        public LogoutSuccessHandler logoutSuccessHandler() {
+            return new AppLogoutSuccessHandler();
         }
 
         @Bean

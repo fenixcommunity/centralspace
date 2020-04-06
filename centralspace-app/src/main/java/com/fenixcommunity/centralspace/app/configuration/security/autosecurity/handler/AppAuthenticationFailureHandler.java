@@ -24,18 +24,13 @@ public class AppAuthenticationFailureHandler implements AuthenticationFailureHan
     public void onAuthenticationFailure(
             final HttpServletRequest request,
             final HttpServletResponse response,
-            final AuthenticationException exception)
-            throws IOException {
+            final AuthenticationException exception) throws IOException {
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         //todo change date format
         final Map<String, Object> data = new HashMap<>();
-        data.put(
-                "timestamp",
-                Calendar.getInstance().getTime());
-        data.put(
-                "exception",
-                exception.getMessage());
+        data.put("timestamp", Calendar.getInstance().getTime());
+        data.put("exception", exception.getMessage());
 
         response.getOutputStream()
                 .println(objectMapper.writeValueAsString(data));

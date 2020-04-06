@@ -28,15 +28,16 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(
-            final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication)
-            throws IOException, ServletException {
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            final Authentication authentication) throws IOException {
+
         final Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect(forwardUrl);
-//          response.sendRedirect("/admin.html");
-//          todo implement
+//todo          response.sendRedirect("/admin.html");
         } else {
-            response.sendRedirect(getPreviousPageByRequest(request).orElse("/login"));
+            response.sendRedirect(getPreviousPageByRequest(request).orElse(forwardUrl));
         }
     }
 }

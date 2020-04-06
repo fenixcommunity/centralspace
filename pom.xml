@@ -284,7 +284,7 @@
             <dependency>
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-registry-prometheus</artifactId>
-                <version>${micrometer.version}</version>
+                <version>${micrometer-registry.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openjdk.jmh</groupId>

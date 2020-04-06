@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate;
+package com.fenixcommunity.centralspace.app.configuration.restcaller;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -11,12 +11,11 @@ import org.springframework.web.client.RestTemplate;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 class AppRestTemplateCustomizer implements RestTemplateCustomizer {
-    private final String username;
-    private final String password;
+    private final BasicAuthenticationInterceptor basicAuthenticationInterceptor;
 
     @Override
     public void customize(final RestTemplate restTemplate) {
         restTemplate.getInterceptors().add(new AppClientHttpRequestInterceptor());
-        restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(username, password));
+        restTemplate.getInterceptors().add(basicAuthenticationInterceptor);
     }
 }

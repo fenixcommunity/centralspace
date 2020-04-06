@@ -12,10 +12,14 @@ import org.springframework.http.MediaType;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class RestTemplateHelper {
 
-    public static HttpEntity<Object> createHttpEntityWithHeaders(final MediaType mediaType) {
+    public static HttpEntity<Object> createBasicHttpEntityWithHeaders(final MediaType mediaType) {
         final HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(mediaType));
         return new HttpEntity<>(headers);
+    }
+
+    public static <E> HttpEntity<E> createRestEntity(E entity) {
+        return new HttpEntity<>(entity);
     }
 
 }

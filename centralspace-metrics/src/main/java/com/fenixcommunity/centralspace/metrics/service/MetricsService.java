@@ -44,6 +44,6 @@ public class MetricsService {
         } else if (metricsName == GENERAL_HTTP_REQUESTS) {
             return metricsSummary.getRestCallSummary();
         }
-        throw new NotSupportedArgumentTypeException(metricsName.toString());
+        throw new NotSupportedArgumentTypeException(metricsName.name());
     }
 }

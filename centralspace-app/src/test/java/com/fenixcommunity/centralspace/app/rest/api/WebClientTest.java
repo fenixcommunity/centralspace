@@ -14,7 +14,6 @@ import java.time.ZonedDateTime;
 
 import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
-import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import org.junit.FixMethodOrder;
@@ -37,8 +36,7 @@ import org.springframework.web.reactive.function.client.WebClientException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT,
-        classes = {CentralspaceApplicationConfig.class, WebClientConfig.class})
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = {CentralspaceApplicationConfig.class})
 //todo replace from CentralspaceApplicationConfig to CentralspaceApplicationConfigTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class WebClientTest {

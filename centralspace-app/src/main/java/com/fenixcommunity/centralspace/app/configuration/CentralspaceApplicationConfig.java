@@ -7,8 +7,6 @@ import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuring
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
 import com.fenixcommunity.centralspace.app.configuration.aws.s3.AmazonS3Config;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
-import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.RestTemplateConfig;
-import com.fenixcommunity.centralspace.app.configuration.restcaller.webclient.WebClientConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.MethodAutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
@@ -41,8 +39,7 @@ import org.springframework.context.annotation.Import;
         WebConfig.class,
         FilterApiConfig.class,
         HttpSessionConfig.class,
-        RestTemplateConfig.class,
-        WebClientConfig.class,
+//      RestCallerStrategy.class, WebClientConfig.class -> hidden config
         // aws
         AmazonS3Config.class,
         // utils

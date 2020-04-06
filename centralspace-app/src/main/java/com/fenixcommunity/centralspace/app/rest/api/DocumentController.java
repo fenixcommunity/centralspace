@@ -10,6 +10,7 @@ import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,27 +41,27 @@ public class DocumentController {
     }
 
     @GetMapping("/html-to-pdf")
-    public String htmlToPdf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
+    public ResponseEntity<String> htmlToPdf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
         documentService.convertHtmlToPdf(htmlFileName, BASIC);
-        return "STANDARD DONE";
+        return ResponseEntity.ok("STANDARD DONE");
     }
 
     @GetMapping("/html-to-pdf-thymeleaf")
-    public String htmlToPdfByThymeleaf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
+    public ResponseEntity<String> htmlToPdfByThymeleaf(@RequestParam(value = "htmlFile", defaultValue = "html_to_pdf") final String htmlFileName) {
         documentService.convertHtmlToPdf(htmlFileName, THYMELEAF);
-        return "THYMELEAF DONE";
+        return ResponseEntity.ok("THYMELEAF DONE");
     }
 
     @GetMapping("/pdf-to-html")
-    public String pdfToHtml(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") final String pdfFileName) {
+    public ResponseEntity<String> pdfToHtml(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") final String pdfFileName) {
         documentService.convertPdfToHtml(pdfFileName, BASIC);
-        return "STANDARD DONE";
+        return ResponseEntity.ok("STANDARD DONE");
     }
 
     @GetMapping("/pdf-to-html-thymeleaf")
-    public String pdfToHtmlByThymeleaf(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") final String pdfFileName) {
+    public ResponseEntity<String> pdfToHtmlByThymeleaf(@RequestParam(value = "pdfFile", defaultValue = "pdf_to_html") final String pdfFileName) {
         documentService.convertPdfToHtml(pdfFileName, THYMELEAF);
-        return "THYMELEAF DONE";
+        return ResponseEntity.ok("THYMELEAF DONE");
     }
 
     @GetMapping("/html-body")

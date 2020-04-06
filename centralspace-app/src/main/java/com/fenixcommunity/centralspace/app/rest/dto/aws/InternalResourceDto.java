@@ -1,8 +1,10 @@
 package com.fenixcommunity.centralspace.app.rest.dto.aws;
 
+import static java.util.Objects.requireNonNull;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
@@ -23,5 +25,11 @@ public final class InternalResourceDto {
     public InternalResourceDto(@JsonProperty("fileName") String fileName, @JsonProperty("fileFormat") FileFormat fileFormat) {
         this.fileName = fileName;
         this.fileFormat = fileFormat;
+    }
+
+    @JsonIgnore
+    public String getFileSubType() {
+        requireNonNull(fileName);
+        return fileFormat.getSubtype();
     }
 }

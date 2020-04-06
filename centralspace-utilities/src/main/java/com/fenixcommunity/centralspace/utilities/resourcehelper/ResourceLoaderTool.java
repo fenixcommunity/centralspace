@@ -8,6 +8,7 @@ import com.fenixcommunity.centralspace.utilities.configuration.properties.Resour
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -18,15 +19,18 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ResourceLoaderTool {
 
+    private final String resourcePath;
     private final ResourceLoader resourceLoader;
     private final ResourceProperties resourceProperties;
     private final Validator validator;
 
     ResourceLoaderTool
-            (final ResourceLoader resourceLoader, final ResourceProperties resourceProperties, final ValidatorFactory validatorFactory) {
+            (final ResourceLoader resourceLoader, final ResourceProperties resourceProperties, final ValidatorFactory validatorFactory,
+             @Value("${resource.path}") String resourcePath) {
         this.resourceLoader = resourceLoader;
         this.resourceProperties = resourceProperties;
         this.validator = validatorFactory.getInstance(NOT_NULL);
+        this.resourcePath = resourcePath;
     }
 
     public Resource loadResourceFile(final InternalResource resource) {
@@ -46,6 +50,10 @@ public class ResourceLoaderTool {
 
     public ResourceProperties getResourceProperties() {
         return resourceProperties;
+    }
+
+    public String getAbsoluteImagePath() {
+        return resourcePath + resourceProperties.getImageUrl();
     }
 
     private String resolveResourcePrefix(final InternalResource resource) {

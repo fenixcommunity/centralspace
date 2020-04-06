@@ -22,6 +22,7 @@ import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTo
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
@@ -56,7 +57,7 @@ public class DocumentService {
 
     public void convertHtmlToPdf(final String htmlFileName, final HtmlPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
-            final Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getResourceProperties().getImageUrl());
+            final Map<String, String> thymeleafVariables = singletonMap("imageUrl",  resourceTool.getAbsoluteImagePath());
             final HtmlPdfConverterStrategy converter = new ThymeleafPdfConverter(htmlFileName, thymeleafVariables, templateEngine, resourceTool);
             converter.convertHtmlToPdf();
         } else if (BASIC == strategyType) {
@@ -77,7 +78,7 @@ public class DocumentService {
 
     public String getHtmlBody(final String htmlFileName, final HtmlPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
-            final Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getResourceProperties().getImageUrl());
+            final Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getAbsoluteImagePath());
             final HtmlPdfConverterStrategy converter = new ThymeleafPdfConverter(htmlFileName, thymeleafVariables, templateEngine, resourceTool);
             return converter.getHtmlBody();
         } else if (BASIC == strategyType) {

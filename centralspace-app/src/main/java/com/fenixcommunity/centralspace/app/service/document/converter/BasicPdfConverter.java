@@ -95,7 +95,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
 
     @Override
     public void convertImageToPdf(final FileFormat fileFormat, final RestCallerStrategy restCallerStrategy) {
-        final var inputImageUrl = resourceTool.getResourceProperties().getImageUrl()
+        final var inputImageUrl = resourceTool.getAbsoluteImagePath()
                 + fileName + DOT + fileFormat.getSubtype();
         final var outputPdfPath = resourceTool.getResourceProperties().getConvertedPdfPath()
                 + fileName + DOT + PDF.getSubtype();
@@ -111,7 +111,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
             document.open();
 
             final ResponseEntity<byte[]> responseRestTemplate = restCallerStrategy.getRestTemplate()
-                    .exchange(inputImageUrl, HttpMethod.GET, RestTemplateHelper.createHttpEntityWithHeaders(MediaType.ALL), byte[].class);
+                    .exchange(inputImageUrl, HttpMethod.GET, RestTemplateHelper.createBasicHttpEntityWithHeaders(MediaType.ALL), byte[].class);
 //            or
 //            ResponseEntity<byte[]> response2 =restTemplate.getForEntity(inputImageUrl, byte[].class);
 //            or

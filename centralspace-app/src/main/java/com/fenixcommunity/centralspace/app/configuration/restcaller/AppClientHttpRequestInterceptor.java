@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate;
+package com.fenixcommunity.centralspace.app.configuration.restcaller;
 
 import static lombok.AccessLevel.PRIVATE;
 

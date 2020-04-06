@@ -1,12 +1,12 @@
-package com.fenixcommunity.centralspace.app.configuration.restcaller.webclient;
+package com.fenixcommunity.centralspace.app.configuration.restcaller;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
 
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -16,18 +16,28 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
+@EnableConfigurationProperties(RestCallerProperties.class)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Log4j2
-public class WebClientConfig {
+class WebClientConfig {
     //good performance - better than RestTemplate -> non-blocking
+
+    private final RestCallerProperties restCallerProperties;
+    private final String serverHost;
+
+    WebClientConfig(final RestCallerProperties restCallerProperties, @Value("${server.host}") String serverHost) {
+        this.restCallerProperties = restCallerProperties;
+        this.serverHost = serverHost;
+    }
+
     @Bean
     @Qualifier("basicAuthWebClientBuilder")
-    public WebClient.Builder basicAuthWebClientBuilder() {
+    WebClient.Builder basicAuthWebClientBuilder() {
         return WebClient.builder()
-                .baseUrl("http://localhost:8088")
+                .baseUrl(serverHost)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .filter(ExchangeFilterFunctions
-                        .basicAuthentication(BASIC.name(), PASSWORD))
+                        .basicAuthentication(restCallerProperties.getUsername(), restCallerProperties.getPassword()))
                 .filter(logRequest());
         //todo     ...passwordEncoder().encode(PASSWORD)
     }

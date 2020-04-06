@@ -45,6 +45,14 @@ create table group_members
     group_id bigint      not null,
     constraint fk_group_members_group foreign key (group_id) references groups (id)
 );
+--
+create table persistent_logins
+(
+    username  varchar(64) not null,
+    series    varchar(64) primary key,
+    token     varchar(64) not null,
+    last_used timestamp   not null
+);
 
 -- INSERT
 insert into users(username, password, enabled)
@@ -63,6 +71,8 @@ insert into group_authorities(group_id, authority)
 VALUES (2, 'ROLE_DB_USER');
 insert into group_authorities(group_id, authority)
 VALUES (2, 'ROLE_SWAGGER');
+insert into group_authorities(group_id, authority)
+VALUES (2, 'ROLE_BASIC');
 
 
 

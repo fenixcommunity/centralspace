@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.retrywrapper;
+package com.fenixcommunity.centralspace.app.configuration.restcaller;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PUBLIC;
@@ -15,6 +15,7 @@ import com.fenixcommunity.centralspace.metrics.service.MetricsService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -23,10 +24,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Log4j2
 @AllArgsConstructor(access = PUBLIC) @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class RestTemplateRetryWrapper {
-
-    private final RestTemplate restTemplate;
+class RestTemplateRetryWrapper extends RestTemplate {
     private final MetricsService metricsService;
+
+    public RestTemplateRetryWrapper(final BasicAuthenticationInterceptor basicAuthenticationInterceptor, MetricsService metricsService) {
+        super.getInterceptors().add(basicAuthenticationInterceptor);
+        this.metricsService = metricsService;
+    }
 
     @Retryable(
             include = {IOException.class, ResourceAccessException.class},
@@ -34,10 +38,11 @@ public class RestTemplateRetryWrapper {
             maxAttempts = 3,
             backoff = @Backoff(delay = 500)
     )
-    public <T> ResponseEntity<T> exchange(URI uri, HttpMethod method, HttpEntity<?> requestEntity, Class<T> responseType) {
+    public <T> ResponseEntity<T> exchange(final URI uri, final HttpMethod method, final HttpEntity<?> requestEntity, final Class<T> responseType) {
         log.debug("Trying to call [{}] with method [{}]", uri, method.name());
         try {
-            ResponseEntity<T> responseEntity = restTemplate.exchange(uri, method, requestEntity, responseType);
+            final ResponseEntity<T> responseEntity = super.exchange(uri, method, requestEntity, responseType);
+            metricsService.counterFailedRestCall(uri);
             metricsService.counterRestCall(MetricsName.GENERAL_HTTP_REQUESTS, responseEntity.getStatusCodeValue());
             return responseEntity;
         } catch (Exception e) {

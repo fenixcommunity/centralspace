@@ -11,22 +11,27 @@ import static lombok.AccessLevel.PRIVATE;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
-import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 class MetricsSummary {
     private final MeterRegistry meterRegistry;
+    private final String serverHost;
+
+    public MetricsSummary(final MeterRegistry meterRegistry, @Value("${server.host}") final String serverHost) {
+        this.meterRegistry = meterRegistry;
+        this.serverHost = serverHost;
+    }
 
     DistributionSummary getFailedRestCallSummary() {
-        final Iterable<Tag> tags = asList(Tag.of(HOST.getTagName(), "localhost"));
-        return meterRegistry.summary(FAILED_HTTP_REQUESTS.toString(), tags);
+        final Iterable<Tag> tags = asList(Tag.of(HOST.getTagName(), serverHost));
+        return meterRegistry.summary(FAILED_HTTP_REQUESTS.name(), tags);
     }
 
     DistributionSummary getRestCallSummary() {
-        final Iterable<Tag> tags = asList(Tag.of(STATUS_CODE.getTagName(), valueOf(200)));
-        return meterRegistry.summary(GENERAL_HTTP_REQUESTS.toString(), tags);
+        final Iterable<Tag> tags = asList(Tag.of(STATUS_CODE.getTagName(), valueOf(HttpStatus.OK.value())));
+        return meterRegistry.summary(GENERAL_HTTP_REQUESTS.name(), tags);
     }
 }

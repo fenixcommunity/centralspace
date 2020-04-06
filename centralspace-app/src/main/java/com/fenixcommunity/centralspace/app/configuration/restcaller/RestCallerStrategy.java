@@ -3,7 +3,6 @@ package com.fenixcommunity.centralspace.app.configuration.restcaller;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
-import com.fenixcommunity.centralspace.app.configuration.restcaller.resttemplate.retrywrapper.RestTemplateRetryWrapper;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,7 +28,7 @@ public class RestCallerStrategy {
         return basicAuthRestTemplateBuilder.build();
     }
 
-    public RestTemplateRetryWrapper getRestTemplateRetryWrapper() {
+    public RestTemplate getRetryRestTemplate() {
         return restCallerRetryWrapper;
     }
 

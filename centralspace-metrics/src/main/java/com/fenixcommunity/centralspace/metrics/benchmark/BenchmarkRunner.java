@@ -30,7 +30,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 public class BenchmarkRunner {
     private List<String> dataForBenchmarkTest;
 
-    @Param({"10", "100", "1 000 000"})
+    @Param({"10", "100"})
     public int iterations;
 
     public static void main(String[] args) throws RunnerException {

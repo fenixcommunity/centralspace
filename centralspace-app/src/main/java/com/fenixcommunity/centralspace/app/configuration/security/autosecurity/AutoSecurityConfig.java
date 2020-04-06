@@ -240,7 +240,7 @@ public abstract class AutoSecurityConfig {
         @Bean
         JdbcTokenRepositoryImpl tokenRepository() {
             final JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-            tokenRepository.setCreateTableOnStartup(true);
+            tokenRepository.setCreateTableOnStartup(false);
             tokenRepository.setDataSource(dataSource);
             return tokenRepository;
         }

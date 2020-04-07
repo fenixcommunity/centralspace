@@ -16,8 +16,9 @@ import org.springframework.http.client.ClientHttpResponse;
 class AppClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 
     @Override
-    public ClientHttpResponse intercept
-            (final HttpRequest request, final byte[] body, final ClientHttpRequestExecution execution) throws IOException {
+    public ClientHttpResponse intercept(final HttpRequest request,
+                                        final byte[] body,
+                                        final ClientHttpRequestExecution execution) throws IOException {
         logRequestDetails(request);
         return execution.execute(request, body);
     }

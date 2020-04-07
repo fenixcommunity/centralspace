@@ -186,6 +186,8 @@ public abstract class AutoSecurityConfig {
                     .anyRequest().hasRole(SWAGGER.name())
                     .and()
                     .csrf().disable()
+                    .httpBasic()
+                    .and()
                     .headers()
                     .frameOptions().sameOrigin()
                     .and()

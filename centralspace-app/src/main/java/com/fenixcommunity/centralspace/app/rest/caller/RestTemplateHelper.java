@@ -19,7 +19,8 @@ public class RestTemplateHelper {
     }
 
     public static <E> HttpEntity<E> createRestEntity(E entity) {
-        return new HttpEntity<>(entity);
+        final HttpHeaders headers = new HttpHeaders();
+        return new HttpEntity<>(entity, headers);
     }
 
 }

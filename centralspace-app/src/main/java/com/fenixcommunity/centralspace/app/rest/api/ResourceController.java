@@ -62,8 +62,8 @@ public class ResourceController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Boolean> test(@PathVariable("fileName") final String fileName, @PathVariable("fileFormat") final FileFormat fileFormat) {
         final InternalResourceDto internalResourceDto = new InternalResourceDto(fileName, fileFormat);
-        final RestTemplate restTemplateRetryWrapper = restCallerStrategy.getRetryRestTemplate();
-        final Boolean response = restTemplateRetryWrapper
+        final RestTemplate restTemplate = restCallerStrategy.getRetryRestTemplate();
+        final Boolean response = restTemplate
                 .exchange(URI.create(restPath + "/resource/available"), HttpMethod.POST, createRestEntity(internalResourceDto), Boolean.class)
                 .getBody();
 

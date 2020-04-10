@@ -26,14 +26,14 @@ class MetricsCounter {
     void counterRestCall(final MetricsName metricsName, final Integer statusCode) {
         final List<Tag> tags = new ArrayList<>(1);
         ofNullable(statusCode).filter(id -> id > 0).ifPresent(id -> tags.add(Tag.of(STATUS_CODE.getTagName(), valueOf(id))));
-        meterRegistry.counter(metricsName.name(), tags).increment();
+        meterRegistry.counter(metricsName.name(), tags).increment(1.0);
     }
 
     void counterFailedRestCall(final URI uri) {
         final List<Tag> tags = new ArrayList<>(2);
         tags.add(Tag.of(HOST.getTagName(), uri.getScheme()));
         tags.add(Tag.of(URI.getTagName(), uri.toString()));
-        meterRegistry.counter(FAILED_HTTP_REQUESTS.toString(), tags).increment();
+        meterRegistry.counter(FAILED_HTTP_REQUESTS.toString(), tags).increment(1.0);
     }
 
 }

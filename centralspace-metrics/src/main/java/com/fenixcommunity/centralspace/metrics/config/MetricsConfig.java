@@ -13,7 +13,7 @@ import org.springframework.context.annotation.DependsOn;
 @Configuration
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ComponentScan(value = {"com.fenixcommunity.centralspace.metrics"})
-public class BenchmarkConfig {
+public class MetricsConfig {
 
     @Bean
     @DependsOn("meterRegistry")

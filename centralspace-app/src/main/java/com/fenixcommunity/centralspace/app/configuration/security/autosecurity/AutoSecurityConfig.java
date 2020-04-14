@@ -68,7 +68,8 @@ public abstract class AutoSecurityConfig {
     //FORM
     private static final String[] ADMIN_FORM_AUTH_LIST = {
             "/h2-console/**",
-            "/actuator/**"
+            "/actuator/**",
+            "/prometheus/**"
     };
     private static final String[] NO_AUTH_FORM_LIST = {
             API_PATH + "/logger/run"

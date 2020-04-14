@@ -12,6 +12,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.aws.InternalResourceDto;
 import com.fenixcommunity.centralspace.app.service.resource.ResourceService;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.web.WebTool;
+import io.micrometer.core.annotation.Timed;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 @Controller @RequestMapping("/api/resource")
+@Timed
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ResourceController {
     private final ResourceService resourceService;

@@ -30,8 +30,7 @@ class WebClientConfig {
         this.serverHost = serverHost;
     }
 
-    @Bean
-    @Qualifier("basicAuthWebClientBuilder")
+    @Bean @Qualifier("basicAuthWebClientBuilder")
     WebClient.Builder basicAuthWebClientBuilder() {
         return WebClient.builder()
                 .baseUrl(serverHost)

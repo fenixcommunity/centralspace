@@ -3,17 +3,19 @@ package com.fenixcommunity.centralspace.app.configuration;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
+import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorConfig;
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
 import com.fenixcommunity.centralspace.app.configuration.aws.s3.AmazonS3Config;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
+import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorSwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.MethodAutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.WebConfig;
-import com.fenixcommunity.centralspace.metrics.config.BenchmarkConfig;
+import com.fenixcommunity.centralspace.metrics.config.MetricsConfig;
 import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
 import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
@@ -47,7 +49,9 @@ import org.springframework.context.annotation.Import;
         MailGatewayConfig.class,
         AopConfg.class,
         SwaggerConfig.class,
-        BenchmarkConfig.class
+        MetricsConfig.class,
+        ActuatorConfig.class,
+        ActuatorSwaggerConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

@@ -22,8 +22,7 @@ import org.springframework.context.annotation.Configuration;
 public class AmazonS3Config {
     private final AmazonS3Properties amazonS3Properties;
 
-    @Bean
-    @Qualifier("amazonS3Client")
+    @Bean @Qualifier("amazonS3Client")
     public AmazonS3 getAmazonS3Client() {
         final AWSCredentials credentials = new BasicAWSCredentials(amazonS3Properties.getKeyId(), amazonS3Properties.getSecretKey());
         return AmazonS3ClientBuilder

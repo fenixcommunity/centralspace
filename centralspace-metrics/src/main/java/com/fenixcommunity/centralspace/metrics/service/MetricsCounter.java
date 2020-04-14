@@ -16,11 +16,13 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 class MetricsCounter {
+    @Qualifier("appMeterRegistry")
     private final MeterRegistry meterRegistry;
 
     void counterRestCall(final MetricsName metricsName, final Integer statusCode) {

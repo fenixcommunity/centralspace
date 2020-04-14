@@ -32,12 +32,10 @@ public class MailServiceBean implements MailService {
     private final ResourceLoaderTool resourceLoaderTool;
     private final DocumentService documentService;
 
-    @Autowired
-    @Qualifier("basicMailMessage")
+    @Autowired @Qualifier("basicMailMessage")
     private MailMessageTemplate basicMailMessage;
 
-    @Autowired
-    @Qualifier("registrationMailMessage")
+    @Autowired @Qualifier("registrationMailMessage")
     private MailMessageTemplate registrationMailMessage;
 
     @Autowired

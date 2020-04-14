@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +40,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig implements WebMvcConfigurer {
 
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
+    private static final String ACTUATOR_PACKAGE = "org.springframework.boot.actuate";
 
     @Value("${api.path}")
     private String API_PATH;
@@ -56,7 +58,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .globalResponseMessage(RequestMethod.PUT, errorList())
                 .globalResponseMessage(RequestMethod.DELETE, errorList())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(REST_PACKAGE))
+                .apis(Predicates.or(RequestHandlerSelectors.basePackage(REST_PACKAGE),
+                                    RequestHandlerSelectors.basePackage(ACTUATOR_PACKAGE)))
                 .paths(pathsFilter())
                 .build()
                 .apiInfo(metadata());
@@ -80,7 +83,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         input.matches(API_PATH + "/logger/.*") ||
                         input.matches(API_PATH + "/cross/.*") ||
                         input.matches(API_PATH + "/metrics/.*") ||
-                        input.matches(API_PATH + "/resource/.*");
+                        input.matches(API_PATH + "/resource/.*") ||
+                        input.matches("/actuator/.*");
     }
 
     private ApiInfo metadata() {

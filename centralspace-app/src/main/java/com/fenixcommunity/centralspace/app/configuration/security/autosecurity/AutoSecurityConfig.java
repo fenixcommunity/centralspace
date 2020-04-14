@@ -67,12 +67,14 @@ public abstract class AutoSecurityConfig {
     };
     //FORM
     private static final String[] ADMIN_FORM_AUTH_LIST = {
-            "/h2-console/**"
+            "/h2-console/**",
+            "/actuator/**"
     };
     private static final String[] NO_AUTH_FORM_LIST = {
             API_PATH + "/logger/run"
     };
     private static final String[] SWAGGER_AUTH_LIST = {
+            "/swagger",
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources",

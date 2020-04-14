@@ -10,11 +10,13 @@ import io.micrometer.core.instrument.LongTaskTimer;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 class MetricsUtils {
+    @Qualifier("appMeterRegistry")
     private final MeterRegistry meterRegistry;
 
     LongTaskTimer registerRestTimer() {

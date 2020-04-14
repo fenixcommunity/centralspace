@@ -17,11 +17,13 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.search.Search;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 class MetricsSummary {
+    @Qualifier("appMeterRegistry")
     private final MeterRegistry meterRegistry;
 
     String getGlobalRestCallSummary() {

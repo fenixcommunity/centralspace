@@ -36,7 +36,9 @@ public class LoggingController {
     @GetMapping("/run")
     public ResponseEntity<ErrorDetails> runLogsAndRegisterErrorDetails() {
         log.trace("TRACE Message");
-        log.debug("DEBUG Message");
+        if (log.isDebugEnabled()) {
+            log.debug("DEBUG Message");
+        }
         log.info("INFO Message");
         log.warn("WARN Message");
         log.error("ERROR Message");

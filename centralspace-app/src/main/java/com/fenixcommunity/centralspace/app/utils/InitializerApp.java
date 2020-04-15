@@ -20,6 +20,7 @@ public class InitializerApp implements CommandLineRunner {
     private final String swaggerEndpoint;
     private final String h2Endpoint;
     private final String actuatorEndpoint;
+    private final String prometheusEndpoint;
 
     private final List<String> actuatorEndpoints = List.of(
             "auditevents", "beans", "conditions", "configprops", "env",
@@ -27,16 +28,18 @@ public class InitializerApp implements CommandLineRunner {
             "loggers", "metrics", "prometheus", "scheduledtasks", "sessions",
             "shutdown", "threaddump");
 
-    public InitializerApp(@Value("${h2-console.host}") String swagger2Host,
-                          @Value("${springfox.swagger2.host}") String h2Host,
-                          @Value("${actuator-console.host}") String actuatorHost) {
+    public InitializerApp(@Value("${h2-console.host}") final String swagger2Host,
+                          @Value("${springfox.swagger2.host}") final String h2Host,
+                          @Value("${actuator-console.host}") final String actuatorHost,
+                          @Value("${prometheus.url}") final String prometheusUrl) {
         this.swaggerEndpoint = format("%s/app/swagger-ui.html#/", swagger2Host);
         this.h2Endpoint = format("%s/app/h2-console/", h2Host);
         this.actuatorEndpoint = format("%s/app/actuator/", actuatorHost);
+        this.prometheusEndpoint = prometheusUrl;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         final String appInfo = "Fenix community application has been launched";
 
         final String pluginIdeInfo = "Please look at interesting IntelliJ plugins:" + LINE + "README.md file";
@@ -56,6 +59,8 @@ public class InitializerApp implements CommandLineRunner {
                 .add("Please look at spring actuator app live status:");
         actuatorEndpoints.forEach(endpoint -> actuatorInfo.add(actuatorEndpoint + endpoint));
 
+        final String prometheusInfo = "Please run prometheus metrics server:" + LINE + prometheusEndpoint;
+
         log.info(new StringJoiner(LINE)
                 .add(appInfo)
                 .add(pluginIdeInfo)
@@ -64,6 +69,7 @@ public class InitializerApp implements CommandLineRunner {
                 .add(sonarServerInfo)
                 .add(sonarInfo)
                 .add(actuatorInfo.toString())
+                .add(prometheusInfo)
                 .toString());
     }
 }

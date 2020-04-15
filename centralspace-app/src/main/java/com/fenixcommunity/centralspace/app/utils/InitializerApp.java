@@ -30,7 +30,7 @@ public class InitializerApp implements CommandLineRunner {
 
     public InitializerApp(@Value("${h2-console.host}") final String swagger2Host,
                           @Value("${springfox.swagger2.host}") final String h2Host,
-                          @Value("${actuator-console.host}") final String actuatorHost,
+                          @Value("${actuator.host}") final String actuatorHost,
                           @Value("${prometheus.url}") final String prometheusUrl) {
         this.swaggerEndpoint = format("%s/app/swagger-ui.html#/", swagger2Host);
         this.h2Endpoint = format("%s/app/h2-console/", h2Host);

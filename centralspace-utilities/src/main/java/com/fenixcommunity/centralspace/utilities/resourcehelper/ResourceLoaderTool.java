@@ -26,7 +26,7 @@ public class ResourceLoaderTool {
 
     ResourceLoaderTool
             (final ResourceLoader resourceLoader, final ResourceProperties resourceProperties, final ValidatorFactory validatorFactory,
-             @Value("${resource.path}") String resourcePath) {
+             @Value("${path.resource}") String resourcePath) {
         this.resourceLoader = resourceLoader;
         this.resourceProperties = resourceProperties;
         this.validator = validatorFactory.getInstance(NOT_NULL);

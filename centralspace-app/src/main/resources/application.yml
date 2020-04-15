@@ -1,0 +1,55 @@
+#App
+server:
+  port: 8088
+  servlet:
+    context-path: /app
+  host: http://localhost:${server.port}
+
+#Spring
+spring:
+  jpa:
+    open-in-view: false
+
+#Base paths
+path:
+  app: ${server.servlet.context-path}
+  api: /api
+  rest: ${server.host}${path.app}${path.api}
+  resource: ${path.rest}/resource
+
+#H2 console
+h2-console:
+  host: ${server.host}
+
+#Swagger console
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /swagger
+  swagger2:
+    host: ${server.host}
+
+#Actuator console
+actuator:
+  swagger:
+    fix:
+      enabled: true
+  host: ${server.host}
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: shutdown
+        include: *
+springdoc:
+  show:
+    actuator: true
+
+#Prometheus metrics
+prometheus:
+  endpoint: /prometheus
+  port: 8887
+  user: admin
+  password: password
+  url: http://localhost:${prometheus.port}${prometheus.endpoint}

@@ -1,0 +1,9 @@
+resource:
+  convertedDocxPath: ${temp.dir}converted-docx/
+  convertedHtmlPath: ${temp.dir}converted-html/
+  convertedImagePath: ${temp.dir}converted-image/
+  convertedPdfPath: ${temp.dir}converted-pdf/
+  convertedTxtPath: ${temp.dir}converted-txt/
+  imageUrl: /static/img/
+temp:
+  dir: C:/Projects/centralspace-temp/

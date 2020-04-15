@@ -1,0 +1,92 @@
+# Property
+property:
+  basePath: C:/Projects/centralspace-temp/logs
+  fileName: logs
+
+# Root logger
+rootLogger:
+  appenderRef:
+    stdout:
+      ref: LogToConsole
+  level: info
+
+appender:
+  # Console logger
+  console:
+    layout:
+      pattern: %style{%d{dd-MM-yyyy HH:mm:ss.SSS}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable
+      type: PatternLayout
+    name: LogToConsole
+    type: Console
+  # Rotate log file
+  rolling:
+    fileName: ${basePath}/${fileName}.log
+    filePattern: ${basePath}/$${date:yyyy-MM}/${fileName}-%d{MM-dd-yyyy}-%i.log.gz
+    layout:
+      pattern: %style{%d{dd-MM-yyyy HH:mm:ss.SSS}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable
+      type: PatternLayout
+    name: LogToRollingFile
+    # Rotate log file each day and keep 30 days worth
+    policies:
+      size:
+        size: 50MB
+        type: SizeBasedTriggeringPolicy
+      time:
+        interval: 1
+        modulate: true
+        type: TimeBasedTriggeringPolicy
+      type: Policies
+    strategy:
+      delete:
+        basePath: ${basePath}
+        ifLastModified:
+          # Delete files older than 30 days
+          age: 30d
+          type: IfLastModified
+        maxDepth: 1
+        type: Delete
+      max: 10
+      type: DefaultRolloverStrategy
+    type: RollingFile
+
+# Log to console and rolling file
+logger:
+  app:
+    additivity: false
+    appenderRef:
+      console:
+        ref: LogToConsole
+      rolling:
+        ref: LogToRollingFile
+    level: trace
+    name: com.fenixcommunity.centralspace
+#change custom level
+  #1
+  rolling:
+    additivity: false
+    appenderRef:
+      rolling:
+        ref: RollingFile
+    level: warn
+    name: org.mabb.fontverter
+
+logging:
+  #2
+  level:
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
+    #3
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+      springframework:
+        security:
+          web:
+            FilterChainProxy: DEBUG
+

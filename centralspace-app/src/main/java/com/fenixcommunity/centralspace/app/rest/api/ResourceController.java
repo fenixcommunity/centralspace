@@ -39,7 +39,7 @@ public class ResourceController {
     private final String restPath;
 
     public ResourceController(final ResourceService resourceService, final RestCallerStrategy restCallerStrategy,
-                              @Value("${rest.path}") final String restPath) {
+                              @Value("${path.rest}") final String restPath) {
         this.resourceService = resourceService;
         this.restCallerStrategy = restCallerStrategy;
         this.restPath = restPath;

@@ -42,7 +42,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
     private static final String ACTUATOR_PACKAGE = "org.springframework.boot.actuate";
 
-    @Value("${api.path}")
+    @Value("${path.api}")
     private String API_PATH;
 
     @Value("${springfox.swagger2.host}")

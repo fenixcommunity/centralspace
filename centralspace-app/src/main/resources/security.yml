@@ -1,0 +1,25 @@
+#TODO public credentials, no problem to show it
+
+#16 BYTES
+encryption:
+  algorithm: AES
+  key: 2f#k*28FG9%d&829
+
+#jwt adancedsecurity token
+jwt:
+  clocksec: 400
+  expirationsec: 86400
+  issuer: fenixcommunity
+  secret: d)kfd&2kfff
+
+#aws
+aws:
+  app:
+    keyid :  xxx
+    secretkey :  xxx
+
+#restcaller
+restcaller:
+  credentials:
+    password: password
+    username: BASIC

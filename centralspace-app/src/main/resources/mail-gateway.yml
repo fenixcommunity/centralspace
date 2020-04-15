@@ -1,0 +1,17 @@
+#TODO public credentials, no problem to show it
+
+#mail gateway
+mailgateway:
+  host: smtp.gmail.com
+  password: HermesDelivery1
+  port: 587
+  protocol: smtp
+  username: hermes.delivery.noreply@gmail.com
+  #mail content
+  content:
+    domain: www.fenixcommunity.pl
+    emailfrom: hermes.delivery.noreply@gmail.com
+    registrationcontent: ${mailgateway.content.domain}?domain=${domain-id}&token=account_token
+
+#mail domain id
+domain-id: JNNodok3Zfj87z439Kf83

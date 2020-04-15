@@ -4,6 +4,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fenixcommunity.centralspace.utilities.common.YamlFetcher;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "resource")
-@PropertySource("classpath:resource.yml")
+@PropertySource(value = "classpath:resource.yml", factory = YamlFetcher.class)
 @Getter @Setter @FieldDefaults(level = PRIVATE)
 public class ResourceProperties {
 

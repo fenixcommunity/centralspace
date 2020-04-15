@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import com.fenixcommunity.centralspace.utilities.common.YamlFetcher;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "mailgateway") @PropertySource("classpath:mail-gateway.yml")
+@PropertySource(value = "classpath:mail-gateway.yml", factory = YamlFetcher.class)
+@ConfigurationProperties(prefix = "mailgateway")
 @Getter @Setter @FieldDefaults(level = PRIVATE)
 @Deprecated // no immutable object!! // example case to show many options // linkTo AmazonProperties
 class MailProperties {

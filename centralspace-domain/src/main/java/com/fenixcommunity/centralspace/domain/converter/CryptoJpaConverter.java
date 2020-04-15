@@ -2,12 +2,12 @@ package com.fenixcommunity.centralspace.domain.converter;
 
 import static com.fenixcommunity.centralspace.utilities.logger.MarkersVar.GENERAL_USER;
 import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang.StringUtils.isBlank;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.Map;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.persistence.AttributeConverter;
@@ -18,28 +18,36 @@ import com.fenixcommunity.centralspace.domain.exception.converter.CryptoJpaConve
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.codec.Base64;
+import org.yaml.snakeyaml.Yaml;
 
 @Converter
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CryptoJpaConverter implements AttributeConverter<String, String> {
-
     private static final String ALGORITHM;
     private static final byte[] KEY;
-    private static final String algorithm_property_key = "encryption.algorithm";
-    private static final String secret_property_key = "encryption.key";
-    private static final String security_file = "security.yml";
-    private static final Properties properties;
+    private static final String SECURITY_FILE = "security.yml";
+    private static final String ENCRYPTION_PROPERTY_KEY = "encryption";
+    private static final String ALGORITHM_PROPERTY_KEY = "algorithm";
+    private static final String SECRET_PROPERTY_KEY = "key";
 
     static {
-        properties = new Properties();
-        try {
-            properties.load(Objects.requireNonNull(CryptoJpaConverter.class.getClassLoader().getResourceAsStream(security_file)));
-        } catch (IOException e) {
-            log.error(GENERAL_USER, "Unsuccessful loading the properties to converter", e);
+        final Yaml yaml = new Yaml();
+        final InputStream inputStream = CryptoJpaConverter.class.getClassLoader().getResourceAsStream(SECURITY_FILE);
+//      final Encryption encryption = yaml.load(inputStream); if only matched data -> security_encryption.yml
+        final Map<String, Object> properties = yaml.load(inputStream);
+        if (properties.isEmpty()) {
+            throw new CryptoJpaConverterException("Invalid properties");
         }
-        ALGORITHM = (String) properties.get(algorithm_property_key);
-        KEY = ((String) properties.get(secret_property_key)).getBytes();
+        final Map<String, String> encryptionYaml = (Map) properties.get(ENCRYPTION_PROPERTY_KEY);
+        final Encryption encryption = new Encryption(encryptionYaml.get(ALGORITHM_PROPERTY_KEY), encryptionYaml.get(SECRET_PROPERTY_KEY));
+
+        if (isBlank(encryption.getKey()) || isBlank(encryption.getAlgorithm())) {
+            log.error(GENERAL_USER, "Unsuccessful loading the properties to converter");
+            throw new CryptoJpaConverterException("Invalid parameters of properties");
+        }
+        ALGORITHM = encryption.getAlgorithm();
+        KEY = encryption.getKey().getBytes();
     }
 
     @Override

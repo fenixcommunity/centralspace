@@ -41,7 +41,7 @@ management:
     web:
       exposure:
         exclude: shutdown
-        include: *
+        include: "*"
 springdoc:
   show:
     actuator: true

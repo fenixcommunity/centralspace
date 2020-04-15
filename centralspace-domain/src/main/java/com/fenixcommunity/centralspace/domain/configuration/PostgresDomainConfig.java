@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import com.fenixcommunity.centralspace.utilities.common.YamlFetcher;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +40,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         basePackages = {"com.fenixcommunity.centralspace.domain.repository.mounted"})
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model.mounted"})
-@PropertySource(value = {"classpath:domain.yml"})
+@PropertySource(value = {"classpath:domain.yml"}, factory = YamlFetcher.class)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PostgresDomainConfig {
 

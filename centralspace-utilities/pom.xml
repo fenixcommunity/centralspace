@@ -31,6 +31,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
+        <!-- UTILITIES DEPENDENCIES -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
         <!-- DOCUMENT CONVERTER DEPENDENCIES -->
         <dependency>
             <groupId>com.itextpdf</groupId>

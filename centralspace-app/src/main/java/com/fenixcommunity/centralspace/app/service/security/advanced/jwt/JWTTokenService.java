@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import com.fenixcommunity.centralspace.utilities.common.YamlFetcher;
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import com.google.common.collect.ImmutableMap;
 import io.jsonwebtoken.Claims;
@@ -25,7 +26,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 @Service
-@PropertySource("classpath:security.yml")
+@PropertySource(value = "classpath:security.yml", factory = YamlFetcher.class)
 @FieldDefaults(level = PRIVATE, makeFinal = true) final class JWTTokenService implements Clock, TokenService {
     private static final String DOT = ".";
     private static final GzipCompressionCodec COMPRESSION_CODEC = new GzipCompressionCodec();

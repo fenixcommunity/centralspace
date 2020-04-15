@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         basePackages = {"com.fenixcommunity.centralspace.domain.repository.mounted"})
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model.mounted"})
-@PropertySource(value = {"classpath:domain.properties"})
+@PropertySource(value = {"classpath:domain.yml"})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PostgresDomainConfig {
 

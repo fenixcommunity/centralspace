@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@PropertySource(value = {"classpath:domain-test.properties"})
+@PropertySource(value = {"classpath:domain-test.yml"})
 @EnableTransactionManagement
 @EnableJpaAuditing // uwzględnia @PrePersist, @PreRemove
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})

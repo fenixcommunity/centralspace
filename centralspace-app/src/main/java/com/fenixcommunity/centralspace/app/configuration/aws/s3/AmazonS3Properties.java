@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.context.annotation.PropertySource;
 
-@ConfigurationProperties(prefix = "aws.app") @PropertySource("classpath:security.properties")
+@ConfigurationProperties(prefix = "aws.app") @PropertySource("classpath:security.yml")
 @Getter @FieldDefaults(level = PRIVATE)
 class AmazonS3Properties {
     private String keyId;

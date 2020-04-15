@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         basePackages = {"com.fenixcommunity.centralspace.domain.repository.memory"})
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
 @EntityScan({"com.fenixcommunity.centralspace.domain.model.memory"})
-@PropertySource(value = {"classpath:domain.properties"})
+@PropertySource(value = {"classpath:domain.yml"})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class H2DomainConfig {
 

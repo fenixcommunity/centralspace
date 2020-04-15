@@ -28,7 +28,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
     private static final byte[] KEY;
     private static final String algorithm_property_key = "encryption.algorithm";
     private static final String secret_property_key = "encryption.key";
-    private static final String security_file = "security.properties";
+    private static final String security_file = "security.yml";
     private static final Properties properties;
 
     static {

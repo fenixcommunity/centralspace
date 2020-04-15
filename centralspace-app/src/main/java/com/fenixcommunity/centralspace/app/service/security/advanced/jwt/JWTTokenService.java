@@ -25,7 +25,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 @Service
-@PropertySource("classpath:security.properties")
+@PropertySource("classpath:security.yml")
 @FieldDefaults(level = PRIVATE, makeFinal = true) final class JWTTokenService implements Clock, TokenService {
     private static final String DOT = ".";
     private static final GzipCompressionCodec COMPRESSION_CODEC = new GzipCompressionCodec();

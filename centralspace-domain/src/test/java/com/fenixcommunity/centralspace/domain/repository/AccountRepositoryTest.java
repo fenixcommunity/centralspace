@@ -43,7 +43,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 /*If you want to use Spring Custom Method ..findByLogin please extend to:
 @AutoConfigureTestEntityManager
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)*/
-@TestPropertySource(locations = {"classpath:domain-test.properties"})
+@TestPropertySource(locations = {"classpath:domain-test.yml"})
 @ContextConfiguration(classes = DomainConfigForTest.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SqlGroup({

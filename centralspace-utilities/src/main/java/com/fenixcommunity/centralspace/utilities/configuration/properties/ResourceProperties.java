@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "resource")
-@PropertySource("classpath:resource.properties")
+@PropertySource("classpath:resource.yml")
 @Getter @Setter @FieldDefaults(level = PRIVATE)
 public class ResourceProperties {
 

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.TestPropertySource;
 
-@TestPropertySource(locations = {"classpath:security.properties"})
+@TestPropertySource(locations = {"classpath:security.yml"})
 @ExtendWith(MockitoExtension.class)
 class CryptoJpaConverterTest {
 

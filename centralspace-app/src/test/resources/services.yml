@@ -1,0 +1,11 @@
+mailgateway:
+  content:
+    domain: www.fenixcommunity.pl
+    registrationcontent: ${mailgateway.content.domain}?domain=${domain-id}&token=account_token
+  port: 587
+  protocol: smtp
+  usermail: max31123112@gmail.com
+  username: username
+  password: password
+
+domain-id: JNNodok3Zfsd3

@@ -3,10 +3,10 @@
 #mail gateway
 mailgateway:
   host: smtp.gmail.com
-  password: HermesDelivery1
   port: 587
   protocol: smtp
   username: hermes.delivery.noreply@gmail.com
+  password: HermesDelivery1
   #mail content
   content:
     domain: www.fenixcommunity.pl

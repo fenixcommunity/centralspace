@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.appexception;
+package com.fenixcommunity.centralspace.app.globalexception;
 
 import static lombok.AccessLevel.PRIVATE;
 

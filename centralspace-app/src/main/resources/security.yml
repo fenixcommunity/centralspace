@@ -5,7 +5,7 @@ encryption:
   algorithm: AES
   key: 2f#k*28FG9%d&829
 
-#jwt adancedsecurity token
+#jwt advanced security token
 jwt:
   clocksec: 400
   expirationsec: 86400

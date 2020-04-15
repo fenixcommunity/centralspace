@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fenixcommunity.centralspace.app.appexception.RestCallerException;
+import com.fenixcommunity.centralspace.app.globalexception.RestCallerException;
 import io.micrometer.core.instrument.LongTaskTimer;
 import io.micrometer.core.instrument.LongTaskTimer.Sample;
 import lombok.AllArgsConstructor;

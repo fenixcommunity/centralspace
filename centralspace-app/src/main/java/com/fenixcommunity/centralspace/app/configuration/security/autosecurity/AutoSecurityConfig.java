@@ -91,46 +91,41 @@ public abstract class AutoSecurityConfig {
     }
 
     @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(final AuthenticationManagerBuilder auth, final PasswordEncoder passwordEncoder) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(getUserQuery())
                 .authoritiesByUsernameQuery(getAuthoritiesQuery())
                 .groupAuthoritiesByUsername(groupAuthoritiesByUsername())
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
 //              .withUser(User.withUsername(DB_USER.name())
 //                        .password(passwordEncoder().encode(PASSWORD))
 //                        .roles(DB_USER.name())
 //                        .authorities(listsTo1Array(DB_USER.getRoles()))
         auth.inMemoryAuthentication()
                 .withUser(SWAGGER.name())
-                .password(passwordEncoder().encode(PASSWORD))
+                .password(passwordEncoder.encode(PASSWORD))
                 .roles(listsTo1Array(SWAGGER.getRoles()))
 /*              .and()   -> we do this step by jdbcAuthentication
                 .withUser(DB_USER.name())
-                .password(passwordEncoder().encode(PASSWORD))
+                .password(passwordEncoder.encode(PASSWORD))
                 .roles(listsTo1Array(DB_USER.getRoles()))*/
                 .and()
                 .withUser(FLUX_GETTER.name())
-                .password(passwordEncoder().encode(PASSWORD))
+                .password(passwordEncoder.encode(PASSWORD))
                 .roles(listsTo1Array(FLUX_GETTER.getRoles()))
                 .and()
                 .withUser(FLUX_EDITOR.name())
-                .password(passwordEncoder().encode(PASSWORD))
+                .password(passwordEncoder.encode(PASSWORD))
                 .roles(listsTo1Array(FLUX_EDITOR.getRoles()))
                 .and()
                 .withUser(BASIC.name())
-                .password(passwordEncoder().encode(PASSWORD))
+                .password(passwordEncoder.encode(PASSWORD))
                 .roles(listsTo1Array(BASIC.getRoles()))
                 .and()
                 .withUser(ADMIN.name())
-                .password(passwordEncoder().encode(PASSWORD))
+                .password(passwordEncoder.encode(PASSWORD))
                 .roles(listsTo1Array(ADMIN.getRoles()));
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 /*    @Bean
@@ -243,6 +238,10 @@ public abstract class AutoSecurityConfig {
             tokenRepository.setDataSource(dataSource);
             return tokenRepository;
         }
+    }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

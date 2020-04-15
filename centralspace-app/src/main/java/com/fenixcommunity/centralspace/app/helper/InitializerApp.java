@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.utils;
+package com.fenixcommunity.centralspace.app.helper;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
 import static java.lang.String.format;

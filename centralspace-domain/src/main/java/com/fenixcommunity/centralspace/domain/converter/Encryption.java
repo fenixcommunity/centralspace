@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PACKAGE) @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class Encryption {
+class Encryption {
     private String algorithm;
     private String key;
 }

@@ -56,7 +56,7 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/metrics/**"
     };
     private static final String[] BASIC_API_AUTH_LIST = {
-            API_PATH + "/resource/**"
+            API_PATH + "/resource-cache/**"
     };
     private static final String[] FLUX_API_AUTH_LIST = {
             API_PATH + "/account-flux/**"

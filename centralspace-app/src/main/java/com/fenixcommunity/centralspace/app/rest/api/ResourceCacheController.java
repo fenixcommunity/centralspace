@@ -13,6 +13,7 @@ import com.fenixcommunity.centralspace.app.service.resource.ResourceService;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.web.WebTool;
 import io.micrometer.core.annotation.Timed;
+import io.swagger.annotations.ApiOperation;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -30,22 +31,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-@Controller @RequestMapping("/api/resource")
+@Controller @RequestMapping("/api/resource-cache")
 @Timed
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class ResourceController {
+public class ResourceCacheController {
     private final ResourceService resourceService;
     private final RestCallerStrategy restCallerStrategy;
     private final String restPath;
 
-    public ResourceController(final ResourceService resourceService, final RestCallerStrategy restCallerStrategy,
-                              @Value("${path.rest}") final String restPath) {
+    public ResourceCacheController(final ResourceService resourceService, final RestCallerStrategy restCallerStrategy,
+                                   @Value("${path.rest}") final String restPath) {
         this.resourceService = resourceService;
         this.restCallerStrategy = restCallerStrategy;
         this.restPath = restPath;
     }
 
     @GetMapping("/**")
+    @ApiOperation(value = "Get resource: example path http://localhost:8088/app/api/resource-cache/static/img/Top.png")
     public @ResponseBody
     byte[] getFileByPath(final HttpServletRequest request) throws IOException {
         final String extractedPath = WebTool.extractUriPath(request);
@@ -59,16 +61,32 @@ public class ResourceController {
         return ResponseEntity.ok(resourceService.isInternalResourceExists(inputImageUrl));
     }
 
-
     @GetMapping("/test/{fileName}.{fileFormat}")
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Boolean> test(@PathVariable("fileName") final String fileName, @PathVariable("fileFormat") final FileFormat fileFormat) {
         final InternalResourceDto internalResourceDto = new InternalResourceDto(fileName, fileFormat);
         final RestTemplate restTemplate = restCallerStrategy.getRetryRestTemplate();
         final Boolean response = restTemplate
-                .exchange(URI.create(restPath + "/resource/available"), HttpMethod.POST, createRestEntity(internalResourceDto), Boolean.class)
+                .exchange(URI.create(restPath + "/resource-cache/available"), HttpMethod.POST, createRestEntity(internalResourceDto), Boolean.class)
                 .getBody();
 
         return response != null ? ResponseEntity.ok(response) : ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/clear-all-cache")
+    public ResponseEntity<Boolean> clearAllCache() {
+        return ResponseEntity.ok(resourceService.clearAllCache());
+    }
+
+    @GetMapping("/clear-internal-resource/{pathOfResource}")
+    @ApiOperation(value = "Clear resource in cache: example path -> /static/img/Top.png")
+    public ResponseEntity<Boolean> clearInternalResource(@PathVariable("pathOfResource") final String pathOfResource) {
+        return ResponseEntity.ok(resourceService.clearInternalResource(pathOfResource));
+    }
+
+    @GetMapping("/show-all-caches/{cacheObject}/{storeCacheName}")
+    public ResponseEntity<Boolean> showAllCaches(@PathVariable("cacheObject") final Object cacheObject,
+                                                 @PathVariable("pathOfResource") final String storeCacheName) {
+        return ResponseEntity.ok(resourceService.isCacheObjectExist(cacheObject, storeCacheName));
     }
 }

@@ -15,7 +15,7 @@ path:
   app: ${server.servlet.context-path}
   api: /api
   rest: ${server.host}${path.app}${path.api}
-  resource: ${path.rest}/resource
+  resource: ${path.rest}/resource-cache
 
 #H2 console
 h2-console:

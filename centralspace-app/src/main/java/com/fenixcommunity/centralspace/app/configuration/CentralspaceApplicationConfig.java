@@ -7,6 +7,7 @@ import com.fenixcommunity.centralspace.app.configuration.actuatormanager.Actuato
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
 import com.fenixcommunity.centralspace.app.configuration.aws.s3.AmazonS3Config;
+import com.fenixcommunity.centralspace.app.configuration.caching.CachingConfig;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorSwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AutoSecurityConfig;
@@ -51,7 +52,8 @@ import org.springframework.context.annotation.Import;
         SwaggerConfig.class,
         MetricsConfig.class,
         ActuatorConfig.class,
-        ActuatorSwaggerConfig.class
+        ActuatorSwaggerConfig.class,
+        CachingConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

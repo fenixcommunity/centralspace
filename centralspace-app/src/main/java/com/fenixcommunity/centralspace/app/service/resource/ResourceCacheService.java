@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Log4j2
 @CacheConfig(cacheNames = CachingConfig.CENTRALSPACE_CACHE)
-public class ResourceService {
+public class ResourceCacheService {
     private static final String CENTRALSPACE_CACHE = CachingConfig.CENTRALSPACE_CACHE;
     private final ResourceLoaderTool resourceTool;
     private final CacheManager cacheManager;

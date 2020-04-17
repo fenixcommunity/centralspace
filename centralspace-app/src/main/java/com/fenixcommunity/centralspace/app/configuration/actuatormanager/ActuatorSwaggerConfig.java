@@ -94,7 +94,7 @@ public class ActuatorSwaggerConfig {
         private List<Parameter> getParameters(final OperationContext context) {
             final OperationBuilder operationBuilder = context.operationBuilder();
             try {
-                Field paramField = OperationBuilder.class.getDeclaredField("parameters");
+                final Field paramField = OperationBuilder.class.getDeclaredField("parameters");
                 paramField.setAccessible(true);
                 return (List<Parameter>) paramField.get(operationBuilder);
             } catch (NoSuchFieldException | IllegalAccessException e) {

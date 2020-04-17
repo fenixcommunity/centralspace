@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController @RequestMapping(value = "/api/authorize", produces = {MediaType.ALL_VALUE})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class LoginController {
-
+//todo
     @PostMapping("/init")
     public String authorize() {
         return "error";

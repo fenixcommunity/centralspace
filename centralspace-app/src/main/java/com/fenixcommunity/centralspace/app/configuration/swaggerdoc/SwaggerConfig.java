@@ -81,6 +81,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         input.matches(API_PATH + "/password/.*") ||
                         input.matches(API_PATH + "/register/.*") ||
                         input.matches(API_PATH + "/logger/.*") ||
+                        input.matches(API_PATH + "/async/.*") ||
                         input.matches(API_PATH + "/cross/.*") ||
                         input.matches(API_PATH + "/metrics/.*") ||
                         input.matches(API_PATH + "/resource-cache/.*") ||

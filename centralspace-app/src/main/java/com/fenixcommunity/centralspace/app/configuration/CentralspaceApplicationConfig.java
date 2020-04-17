@@ -6,6 +6,7 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorConfig;
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfg;
+import com.fenixcommunity.centralspace.app.configuration.async.AsyncConfig;
 import com.fenixcommunity.centralspace.app.configuration.aws.s3.AmazonS3Config;
 import com.fenixcommunity.centralspace.app.configuration.caching.CachingConfig;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
@@ -53,7 +54,8 @@ import org.springframework.context.annotation.Import;
         MetricsConfig.class,
         ActuatorConfig.class,
         ActuatorSwaggerConfig.class,
-        CachingConfig.class
+        CachingConfig.class,
+        AsyncConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

@@ -23,13 +23,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 //todo useless? EnableScheduling EnableAsync
 @Configuration
-@EnableScheduling
-@EnableAsync
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.mail"})
 @EnableConfigurationProperties(MailProperties.class)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

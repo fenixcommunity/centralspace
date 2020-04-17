@@ -86,7 +86,7 @@ public class ResourceCacheController {
 
     @GetMapping("/show-all-caches/{cacheObject}/{storeCacheName}")
     public ResponseEntity<Boolean> showAllCaches(@PathVariable("cacheObject") final Object cacheObject,
-                                                 @PathVariable("pathOfResource") final String storeCacheName) {
+                                                 @PathVariable("storeCacheName") final String storeCacheName) {
         return ResponseEntity.ok(resourceCacheService.isCacheObjectExist(cacheObject, storeCacheName));
     }
 }

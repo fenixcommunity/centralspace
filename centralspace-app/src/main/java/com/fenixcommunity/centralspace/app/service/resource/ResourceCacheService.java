@@ -34,8 +34,7 @@ public class ResourceCacheService {
 
 //  @CachePut(value="Resource", condition="#extractedPath=='correctPath'")
 //  @CachePut always invoke method and updates cache, cacheable only once for key
-    @Cacheable(key = "#a0", unless = "#result.exists() != true", sync = true)
-    //@Cacheable(key = "#root.methodName", sync = true, unless = "result != null")
+    @Cacheable(key = "#a0", unless = "#result.exists() != true") // sync = true not works, I think that should be selected @EnableCaching(proxyTargetClass = true)
     @Transactional(readOnly = true)
     public Resource getInternalResource(final String extractedPath) {
         return resourceTool.loadResourceByPath(extractedPath);

@@ -19,6 +19,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 //TODO in all places should be interface with IBean?
@@ -47,17 +48,18 @@ public class MailServiceBean implements MailService {
         this.documentService = documentService;
     }
 
+    @Async
     @Override
     public void sendBasicMail(final String to) throws MailException {
         final MailBuilder mailBuilder = new MailBuilder(basicMailMessage);
         mailBuilder.addTo(to);
-//        mailBuilder.setHtmlBody(true);
         if (mailBuilder.isHtmlBody()) {
             mailBuilder.setBody(documentService.getHtmlBody(TEMPLATE_BASIC_MAIL, THYMELEAF));
         }
         sendBasicMail(mailBuilder);
     }
 
+    @Async
     @Override
     public void sendRegistrationMailWithAttachment(final String to) throws MailException {
         final MailBuilder mailBuilder = new MailBuilder(registrationMailMessage);

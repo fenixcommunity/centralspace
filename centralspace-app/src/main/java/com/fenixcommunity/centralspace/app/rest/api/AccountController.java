@@ -81,8 +81,9 @@ public class AccountController {
         final List<AccountDto> responseAccounts = accountMapper.mapToDtoList(accounts);
         return ResponseEntity.ok(responseAccounts);
     }
-
-nie dziala mapowanie ???
+    dziala mapowanie ??? test!
+    + future
+    + puść testy
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)

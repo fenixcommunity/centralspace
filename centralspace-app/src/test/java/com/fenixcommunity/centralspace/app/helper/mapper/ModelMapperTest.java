@@ -16,8 +16,8 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fenixcommunity.centralspace.app.helper.mapper.AccountDtoToTest.AccountDtoToTestBuilder;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
-import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto.AccountDtoBuilder;
 import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
@@ -42,7 +42,7 @@ public class ModelMapperTest {
     private ZonedDateTime dateTime;
 
     private ModelMapper modelMapperBasic;
-    private ModelMapper modelMapperForBuilder;
+    private ModelMapper modelMapperFromBuilder;
     private Account initAccount;
 
     @BeforeEach
@@ -50,8 +50,8 @@ public class ModelMapperTest {
         modelMapperBasic = new ModelMapperBuilder()
                 .withMatchingStrategy(MatchingStrategies.STANDARD)
                 .build();
-        modelMapperForBuilder = new ModelMapperBuilder()
-                .withUsingLombokBuilder()
+        modelMapperFromBuilder = new ModelMapperBuilder()
+                .withUsingLombokBuilderForDestination()
                 .withMethodAccessLevelToMapping(AccessLevel.PUBLIC)
                 .withNameConvention(NameTokenizers.CAMEL_CASE, NameTokenizers.UNDERSCORE)
                 .build();
@@ -69,7 +69,7 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest1() {
-        AccountDtoWithoutBuilder resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilder.class);
+        AccountDtoWithoutBuilderToTest resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilderToTest.class);
         ContactDetailsDto resultContactDetailsDto = modelMapperBasic.map(initAccount.getAddress(), ContactDetailsDto.class);
         assertEquals(ID, resultAccountDto.getId());
         assertEquals(LOGIN, resultAccountDto.getLogin());
@@ -79,21 +79,21 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest2() {
-        var typeMap = modelMapperBasic.createTypeMap(Account.class, AccountDtoWithoutBuilder.class);
+        var typeMap = modelMapperBasic.createTypeMap(Account.class, AccountDtoWithoutBuilderToTest.class);
 
         Converter<List<Password>, String> firstPasswordConverter = ctx -> ctx.getSource() == null ? null : ctx.getSource().get(0)
                 .getPasswordType().toString().toLowerCase() + "_converter";
 
         typeMap.addMappings(mapper -> {
             mapper.using(firstPasswordConverter)
-                    .map(Account::getPasswords, AccountDtoWithoutBuilder::setPasswordType);
+                    .map(Account::getPasswords, AccountDtoWithoutBuilderToTest::setPasswordType);
             mapper.using(ctx -> ctx.getSource() == null ? null : ctx.getSource() + "_converter")
-                    .map(Account::getLogin, AccountDtoWithoutBuilder::setLogin);
-            mapper.skip(AccountDtoWithoutBuilder::setContactDetailsDto);
-            mapper.map(Account::getId, AccountDtoWithoutBuilder::setIdString);
+                    .map(Account::getLogin, AccountDtoWithoutBuilderToTest::setLogin);
+            mapper.skip(AccountDtoWithoutBuilderToTest::setContactDetailsDto);
+            mapper.map(Account::getId, AccountDtoWithoutBuilderToTest::setIdString);
         });
 
-        AccountDtoWithoutBuilder resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilder.class);
+        AccountDtoWithoutBuilderToTest resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilderToTest.class);
 
         assertEquals(ID, resultAccountDto.getId());
         assertEquals(ID.toString(), resultAccountDto.getIdString());
@@ -104,11 +104,11 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest3() {
-        var typeMap = modelMapperBasic.createTypeMap(Account.class, AccountDtoWithoutBuilder.class);
+        var typeMap = modelMapperBasic.createTypeMap(Account.class, AccountDtoWithoutBuilderToTest.class);
 
         typeMap.addMapping(src -> src.getAddress().getCountry(), (dest, v) -> dest.getContactDetailsDto().setCountry((String) v));
 
-        AccountDtoWithoutBuilder resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilder.class);
+        AccountDtoWithoutBuilderToTest resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilderToTest.class);
 
         assertNotNull(resultAccountDto.getContactDetailsDto());
         assertEquals(COUNTRY, resultAccountDto.getContactDetailsDto().getCountry());
@@ -116,7 +116,7 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest4() {
-        var typeMap = modelMapperBasic.createTypeMap(Account.class, AccountDtoWithoutBuilder.class);
+        var typeMap = modelMapperBasic.createTypeMap(Account.class, AccountDtoWithoutBuilderToTest.class);
 
         Condition notNull = ctx -> ctx.getSource() != null;
         Converter<List<Password>, String> firstPasswordConverter = ctx -> ctx.getSource() == null ? null : ctx.getSource().get(0)
@@ -125,14 +125,14 @@ public class ModelMapperTest {
         typeMap.addMappings(mapper -> {
             mapper.when(notNull)
                     .using(firstPasswordConverter)
-                    .map(Account::getPasswords, AccountDtoWithoutBuilder::setPasswordType);
+                    .map(Account::getPasswords, AccountDtoWithoutBuilderToTest::setPasswordType);
             mapper.when(ctx -> {
                 Long accountId = (Long) ctx.getSource();
                 return accountId == 1L;
-            }).map(Account::getId, AccountDtoWithoutBuilder::setMail);
+            }).map(Account::getId, AccountDtoWithoutBuilderToTest::setMail);
         });
 
-        AccountDtoWithoutBuilder resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilder.class);
+        AccountDtoWithoutBuilderToTest resultAccountDto = modelMapperBasic.map(initAccount, AccountDtoWithoutBuilderToTest.class);
 
         assertEquals(ID.toString(), resultAccountDto.getMail());
         assertEquals(PasswordType.TO_CENTRALSPACE.toString().toLowerCase() + "_converter", resultAccountDto.getPasswordType());
@@ -150,9 +150,10 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest1Builder() {
-        AccountDtoBuilder accountDtoBuilder = modelMapperForBuilder.map(initAccount, AccountDtoBuilder.class);
+        AccountDtoToTestBuilder accountDtoBuilder = modelMapperFromBuilder.map(initAccount, AccountDtoToTestBuilder.class);
         accountDtoBuilder.contactDetailsDto(modelMapperBasic.map(initAccount.getAddress(), ContactDetailsDto.class));
-        AccountDto accountDto = accountDtoBuilder.build();
+        AccountDtoToTest accountDto = accountDtoBuilder.build();
+
         assertEquals(ID, accountDto.getId());
         assertEquals(LOGIN, accountDto.getLogin());
         assertEquals(MAIL, accountDto.getMail());
@@ -161,21 +162,21 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest2Builder() {
-        var typeMap = modelMapperForBuilder.createTypeMap(Account.class, AccountDtoBuilder.class);
+        var typeMap = modelMapperFromBuilder.createTypeMap(Account.class, AccountDtoToTestBuilder.class);
 
         Converter<List<Password>, PasswordType> firstPasswordConverter = ctx -> ctx.getSource() == null ? null : ctx.getSource().get(0)
                 .getPasswordType();
 
         typeMap.addMappings(mapper -> {
             mapper.using(firstPasswordConverter)
-                    .map(Account::getPasswords, AccountDtoBuilder::passwordType);
+                    .map(Account::getPasswords, AccountDtoToTestBuilder::passwordType);
             mapper.using(ctx -> ctx.getSource() == null ? null : ctx.getSource() + "_converter")
-                    .map(Account::getLogin, AccountDtoBuilder::login);
-            mapper.skip(AccountDtoBuilder::contactDetailsDto);
-            mapper.map(Account::getId, AccountDtoBuilder::idString);
+                    .map(Account::getLogin, AccountDtoToTestBuilder::login);
+            mapper.skip(AccountDtoToTestBuilder::contactDetailsDto);
+            mapper.map(Account::getId, AccountDtoToTestBuilder::idString);
         });
 
-        AccountDto resultAccountDto = modelMapperForBuilder.map(initAccount, AccountDtoBuilder.class).build();
+        AccountDtoToTest resultAccountDto = modelMapperFromBuilder.map(initAccount, AccountDtoToTestBuilder.class).build();
 
         assertEquals(ID, resultAccountDto.getId());
         assertEquals(ID.toString(), resultAccountDto.getIdString());
@@ -186,11 +187,11 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest3Builder() {
-        var typeMap = modelMapperForBuilder.createTypeMap(Account.class, AccountDtoBuilder.class);
+        var typeMap = modelMapperFromBuilder.createTypeMap(Account.class, AccountDtoToTestBuilder.class);
 
-        typeMap.addMapping(Account::getAddress, AccountDtoBuilder::contactDetailsDtoFromAddress);
+        typeMap.addMapping(Account::getAddress, AccountDtoToTestBuilder::contactDetailsDtoFromAddress);
 
-        AccountDto resultAccountDto = modelMapperForBuilder.map(initAccount, AccountDtoBuilder.class).build();
+        AccountDtoToTest resultAccountDto = modelMapperFromBuilder.map(initAccount, AccountDtoToTestBuilder.class).build();
 
         assertNotNull(resultAccountDto.getContactDetailsDto());
         assertEquals(COUNTRY, resultAccountDto.getContactDetailsDto().getCountry());
@@ -198,7 +199,7 @@ public class ModelMapperTest {
 
     @Test
     void exampleTest4Builder() {
-        var typeMap = modelMapperForBuilder.createTypeMap(Account.class, AccountDtoBuilder.class);
+        var typeMap = modelMapperFromBuilder.createTypeMap(Account.class, AccountDtoToTestBuilder.class);
 
         Condition notNull = ctx -> ctx.getSource() != null;
         Converter<List<Password>, PasswordType> firstPasswordConverter = ctx -> ctx.getSource() == null ? null : ctx.getSource().get(0)
@@ -207,14 +208,14 @@ public class ModelMapperTest {
         typeMap.addMappings(mapper -> {
             mapper.when(notNull)
                     .using(firstPasswordConverter)
-                    .map(Account::getPasswords, AccountDtoBuilder::passwordType);
+                    .map(Account::getPasswords, AccountDtoToTestBuilder::passwordType);
             mapper.when(ctx -> {
                 Long accountId = (Long) ctx.getSource();
                 return accountId == 1L;
-            }).map(Account::getId, AccountDtoBuilder::mail);
+            }).map(Account::getId, AccountDtoToTestBuilder::mail);
         });
 
-        AccountDto resultAccountDto = modelMapperForBuilder.map(initAccount, AccountDtoBuilder.class).build();
+        AccountDtoToTest resultAccountDto = modelMapperFromBuilder.map(initAccount, AccountDtoToTestBuilder.class).build();
 
         assertEquals(ID.toString(), resultAccountDto.getMail());
         assertEquals(PasswordType.TO_CENTRALSPACE, resultAccountDto.getPasswordType());
@@ -222,8 +223,8 @@ public class ModelMapperTest {
 
     @Test
     void mapToDtoTestLevelLowTest() {
-        AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
-        AccountDto resultDto = accountMapper.mapToDto(initAccount);
+        AccountMapperToTest accountMapper = new AccountMapperToTest(OperationLevel.LOW);
+        AccountDtoToTest resultDto = accountMapper.mapToDto(initAccount);
 
         assertNull(resultDto.getId());
         assertEquals(MAIL, resultDto.getMail());
@@ -232,11 +233,56 @@ public class ModelMapperTest {
 
     @Test
     void mapToDtoTestLevelHighTest() {
-        AccountMapper accountMapper = new AccountMapper(OperationLevel.HIGH);
-        AccountDto resultDto = accountMapper.mapToDto(initAccount);
+        AccountMapperToTest accountMapper = new AccountMapperToTest(OperationLevel.HIGH);
+        AccountDtoToTest resultDto = accountMapper.mapToDto(initAccount);
 
         assertEquals(ID, resultDto.getId());
         assertEquals(MAIL, resultDto.getMail());
         assertEquals(LOGIN, resultDto.getLogin());
+    }
+
+    @Test
+    void mapFromDtoAndToDtoTest() {
+        AccountDtoToTest accountDtoToTest = AccountDtoToTest.builder()
+                .id(ID)
+                .login(LOGIN)
+                .mail("max@o2.pl")
+                .build();
+
+        AccountMapperToTest accountMapper = new AccountMapperToTest(OperationLevel.LOW);
+
+        Account resultAccount = accountMapper.mapFromDto(accountDtoToTest);
+        AccountDtoToTest resultDto = accountMapper.mapToDto(initAccount);
+
+        assertNotNull(resultAccount);
+        assertEquals(LOGIN, resultAccount.getLogin());
+        assertEquals("max@o2.pl", resultAccount.getMail());
+
+        assertNotNull(resultDto);
+        assertEquals(initAccount.getLogin(), resultDto.getLogin());
+        assertEquals(initAccount.getMail(), resultDto.getMail());
+    }
+
+    @Test
+    void mapFromDtoAndToDtoWithContactDetailsTest() {
+        AccountDto accountDto = AccountDto.builder()
+                .id(ID)
+                .mail(MAIL)
+                .contactDetailsDto(new ContactDetailsDto("England", "+555444666"))
+                .build();
+        AccountMapper accountMapper = new AccountMapper(OperationLevel.HIGH);
+        Account resultAccount = accountMapper.mapFromDto(accountDto);
+        AccountDto resultDto = accountMapper.mapToDto(initAccount);
+
+        assertNotNull(resultAccount);
+        assertEquals(ID, resultAccount.getId());
+        assertEquals(MAIL, resultAccount.getMail());
+        assertNotNull(resultAccount.getAddress());
+        assertEquals("England", resultAccount.getAddress().getCountry());
+
+        assertNotNull(resultDto);
+        assertEquals(initAccount.getId(), resultDto.getId());
+        assertEquals(initAccount.getLogin(), resultDto.getLogin());
+        assertEquals(COUNTRY, resultDto.getContactDetailsDto().getCountry());
     }
 }

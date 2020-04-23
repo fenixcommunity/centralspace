@@ -1,8 +1,6 @@
-package com.fenixcommunity.centralspace.app.rest.dto.account;
+package com.fenixcommunity.centralspace.app.helper.mapper;
 
-import static com.fenixcommunity.centralspace.utilities.time.TimeFormatter.toIsoZonedDateTime;
 import static lombok.AccessLevel.PRIVATE;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.time.ZonedDateTime;
 import javax.validation.constraints.Email;
@@ -13,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
 import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
 import io.swagger.annotations.ApiModel;
@@ -24,12 +23,13 @@ import lombok.experimental.FieldDefaults;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel
 @Data @FieldDefaults(level = PRIVATE)
-public class AccountDto {
+class AccountDtoToTest {
     //todo utils
-    private static final String MAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    public static final String MAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
-    @ApiModelProperty(hidden = true)
     private Long id;
+
+    private String idString;
 
     @NotNull
     @Size(min = 1, max = 15, message = "login should not be less than 3 and not be greater than 15")
@@ -48,23 +48,25 @@ public class AccountDto {
 
     @JsonCreator
     @Builder
-    public AccountDto(@JsonProperty("id") Long id,
-                      @JsonProperty("login") String login,
-                      @JsonProperty("mail") String mail,
-                      @JsonProperty("passwordType") PasswordType passwordType,
-                      @JsonProperty("contactDetailsDto") ContactDetailsDto contactDetailsDto,
-                      @JsonProperty("dataBaseConsentExpiredDate") ZonedDateTime dataBaseConsentExpiredDate) {
+    public AccountDtoToTest(@JsonProperty("id") Long id,
+                            @JsonProperty("idString") String idString,
+                            @JsonProperty("login") String login,
+                            @JsonProperty("mail") String mail,
+                            @JsonProperty("passwordType") PasswordType passwordType,
+                            @JsonProperty("contactDetailsDto") ContactDetailsDto contactDetailsDto,
+                            @JsonProperty("dataBaseConsentExpiredDate") ZonedDateTime dataBaseConsentExpiredDate) {
 //        @NotNull -> only info for compiler, requireNonNull(id) -> runtime
         this.id = id;
+        this.idString = idString;
         this.login = login;
         this.mail = mail;
         this.passwordType = passwordType;
         this.contactDetailsDto = contactDetailsDto;
     }
 
-    public static class AccountDtoBuilder {
+    public static class AccountDtoToTestBuilder {
 
-        public AccountDtoBuilder contactDetailsDtoFromAddress(Address address) {
+        public AccountDtoToTestBuilder contactDetailsDtoFromAddress(Address address) {
             this.contactDetailsDto = new ContactDetailsDto(address.getCountry(), null);
             return this;
         }

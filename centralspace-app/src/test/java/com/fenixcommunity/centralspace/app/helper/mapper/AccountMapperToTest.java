@@ -1,13 +1,11 @@
-package com.fenixcommunity.centralspace.app.rest.mapper;
-
+package com.fenixcommunity.centralspace.app.helper.mapper;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 
-import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
-import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto.AccountDtoBuilder;
+import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import lombok.experimental.FieldDefaults;
@@ -15,30 +13,35 @@ import org.modelmapper.Condition;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTokenizers;
-import org.modelmapper.spi.DestinationSetter;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class AccountMapper {
+class AccountMapperToTest {
     private final ModelMapper mapToDtoStrategy;
     private final ModelMapper mapFromDtoStrategy;
 
-    public AccountMapper(OperationLevel operationLevel) {
+    public AccountMapperToTest(OperationLevel operationLevel) {
         mapToDtoStrategy = prepareMapToDtoStrategy(operationLevel);
         mapFromDtoStrategy = prepareMapFromDtoStrategy(operationLevel);
     }
 
-    public AccountDto mapToDto(final Account account) {
-        return mapToDtoStrategy.map(account, AccountDtoBuilder.class).build();
-    }
-    public List<AccountDto> mapToDtoList(final List<Account> accounts) {
-        return accounts.stream().map(this::mapToDto).collect(toUnmodifiableList());
+    public AccountDtoToTest mapToDto(final Account account) {
+        return mapToDtoStrategy.map(account, AccountDtoToTest.AccountDtoToTestBuilder.class).build();
     }
 
-    public Account mapFromDto(final AccountDto accountDto) {
+    public List<AccountDtoToTest> mapToDtoList(final List<Account> accounts) {
+        return accounts.stream()
+                .map(this::mapToDto)
+                .collect(toUnmodifiableList());
+    }
+
+    public Account mapFromDto(final AccountDtoToTest accountDto) {
         return mapFromDtoStrategy.map(accountDto, Account.class);
     }
-    public List<Account> mapFromDtoList(final List<AccountDto> accountsDto) {
-        return accountsDto.stream().map(this::mapFromDto).collect(toUnmodifiableList());
+
+    public List<Account> mapFromDtoList(final List<AccountDtoToTest> accountsDto) {
+        return accountsDto.stream()
+                .map(this::mapFromDto)
+                .collect(toUnmodifiableList());
     }
 
     private ModelMapper prepareMapToDtoStrategy(final OperationLevel operationLevel) {
@@ -48,11 +51,9 @@ public class AccountMapper {
                 .withNameConvention(NameTokenizers.CAMEL_CASE, NameTokenizers.UNDERSCORE)
                 .build();
 
-        var typeMap = modelMapper.createTypeMap(Account.class, AccountDtoBuilder.class);
+        var typeMap = modelMapper.createTypeMap(Account.class, AccountDtoToTest.AccountDtoToTestBuilder.class);
         final Condition shouldMapId = ctx -> OperationLevel.HIGH == operationLevel;
-        typeMap.addMappings(m -> m.when(shouldMapId).map(Account::getId, AccountDtoBuilder::id));
-
-        typeMap.addMapping(Account::getAddress, AccountDtoBuilder::contactDetailsDtoFromAddress);
+        typeMap.addMappings(m -> m.when(shouldMapId).map(Account::getId, AccountDtoToTest.AccountDtoToTestBuilder::id));
 
         return modelMapper;
     }
@@ -64,12 +65,9 @@ public class AccountMapper {
                 .withNameConvention(NameTokenizers.CAMEL_CASE, NameTokenizers.UNDERSCORE)
                 .build();
 
-        var typeMap = modelMapper.createTypeMap(AccountDto.class, Account.class);
+        var typeMap = modelMapper.createTypeMap(AccountDtoToTest.class, Account.class);
         final Condition shouldMapId = ctx -> OperationLevel.HIGH == operationLevel;
-        typeMap.addMappings(m -> m.when(shouldMapId).map(AccountDto::getId, Account::setId));
-
-        final DestinationSetter<Account, Object> setContactDetails =  AccountMapperHelper::mapContactDetails;
-        typeMap.addMapping(AccountDto::getContactDetailsDto, setContactDetails);
+        typeMap.addMappings(m -> m.when(shouldMapId).map(AccountDtoToTest::getId, Account::setId));
 
         return modelMapper;
     }

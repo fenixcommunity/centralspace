@@ -33,8 +33,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
         //todo to other, to avoid variables withot access level
 class SecurityWebTest {
 
-    to nie działa
-
     private TestRestTemplate restTemplate;
     private URL baseUrl;
 

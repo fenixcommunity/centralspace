@@ -6,7 +6,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
 import lombok.Data;
 
 @Data
-public class AccountDtoWithoutBuilder {
+class AccountDtoWithoutBuilderToTest {
     private Long id;
     private String idString;
     private String login;

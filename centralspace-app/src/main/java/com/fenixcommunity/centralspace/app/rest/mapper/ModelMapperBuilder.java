@@ -10,7 +10,20 @@ import org.modelmapper.spi.PropertyType;
 public class ModelMapperBuilder {
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public ModelMapperBuilder withUsingLombokBuilder() {
+    public ModelMapperBuilder withUsingLombokBuilderForBothSide() {
+        withUsingLombokBuilderForSource();
+        withUsingLombokBuilderForDestination();
+        return this;
+    }
+
+    public ModelMapperBuilder withUsingLombokBuilderForSource() {
+        modelMapper.getConfiguration()
+                .setSourceNamingConvention((propertyName, propertyType) -> PropertyType.METHOD.equals(propertyType))
+                .setSourceNameTransformer((name, nameableType) -> Strings.decapitalize(name));
+        return this;
+    }
+
+    public ModelMapperBuilder withUsingLombokBuilderForDestination() {
         modelMapper.getConfiguration()
                 .setDestinationNamingConvention((propertyName, propertyType) -> PropertyType.METHOD.equals(propertyType))
                 .setDestinationNameTransformer((name, nameableType) -> Strings.decapitalize(name));

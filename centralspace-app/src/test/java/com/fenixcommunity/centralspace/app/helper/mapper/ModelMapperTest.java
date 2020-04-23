@@ -222,8 +222,8 @@ public class ModelMapperTest {
 
     @Test
     void mapToDtoTestLevelLowTest() {
-        AccountMapper accountMapper = new AccountMapper();
-        AccountDto resultDto = accountMapper.mapToDto(initAccount, OperationLevel.LOW);
+        AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
+        AccountDto resultDto = accountMapper.mapToDto(initAccount);
 
         assertNull(resultDto.getId());
         assertEquals(MAIL, resultDto.getMail());
@@ -232,8 +232,8 @@ public class ModelMapperTest {
 
     @Test
     void mapToDtoTestLevelHighTest() {
-        AccountMapper accountMapper = new AccountMapper();
-        AccountDto resultDto = accountMapper.mapToDto(initAccount, OperationLevel.HIGH);
+        AccountMapper accountMapper = new AccountMapper(OperationLevel.HIGH);
+        AccountDto resultDto = accountMapper.mapToDto(initAccount);
 
         assertEquals(ID, resultDto.getId());
         assertEquals(MAIL, resultDto.getMail());

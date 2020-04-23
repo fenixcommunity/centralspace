@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.exception;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
 import static lombok.AccessLevel.PRIVATE;
 
+import com.fenixcommunity.centralspace.utilities.globalexception.FutureAsyncException;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -67,5 +68,16 @@ public class GlobalRestExceptionHandler {
         log.error("Error from WebClient - Status {}, Body {}", ex.getRawStatusCode(), ex.getResponseBodyAsString(), ex);
         return ResponseEntity.status(ex.getRawStatusCode()).body(ex.getResponseBodyAsString());
     }
+
+    @ExceptionHandler(FutureAsyncException.class)
+    public ResponseEntity<?> futureAsyncException(FutureAsyncException ex, WebRequest request) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .message(ex.getMessage())
+                .details(request.getDescription(false))
+                .build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 
 }

@@ -100,7 +100,7 @@ class AccountControllerTest {
 
         ).andReturn().getResponse();
         String responseContent = removeLinks(response.getContentAsString());
-        String accountJson = jacksonTester.write(new AccountMapper().mapToDto(account, HIGH)).getJson();
+        String accountJson = jacksonTester.write(new AccountMapper(HIGH).mapToDto(account)).getJson();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertTrue(removeLinks(accountJson).contains(responseContent));

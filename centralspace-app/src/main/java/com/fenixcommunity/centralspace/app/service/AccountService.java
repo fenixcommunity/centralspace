@@ -1,11 +1,16 @@
 package com.fenixcommunity.centralspace.app.service;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
+import static java.util.concurrent.CompletableFuture.completedFuture;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
 import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
@@ -13,6 +18,7 @@ import com.fenixcommunity.centralspace.domain.repository.mounted.AccountReposito
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Log4j2
@@ -35,16 +41,21 @@ public class AccountService {
     }
 
     public Optional<Account> findById(final Long id) {
-        //TODO of null co zrobic?
         return accountRepository.findById(id);
     }
 
     @MethodMonitoring
-    public List<Account> findAll() {
-        return unmodifiableList(accountRepository.findAll());
+    @Async
+    public CompletableFuture<List<Account>> findAll() {
+        final CompletableFuture<List<Account>> completableFuture = new CompletableFuture<>();
+        return completableFuture
+                .completeAsync(() -> unmodifiableList(accountRepository.findAll()))
+                .exceptionally(exception -> emptyList())
+                .thenApply(Collections::unmodifiableList);
     }
 
-    public Account findByLogin(final String login) {
-        return accountRepository.findByLogin(login);
+    @Async
+    public CompletableFuture<Account> findByLogin(final String login) {
+        return completedFuture(accountRepository.findByLogin(login));
     }
 }

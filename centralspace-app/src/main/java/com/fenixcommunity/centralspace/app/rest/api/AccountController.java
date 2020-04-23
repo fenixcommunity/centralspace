@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.fenixcommunity.centralspace.utilities.async.AsyncFutureHelper;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
@@ -73,17 +74,20 @@ public class AccountController {
             @ApiResponse(code = 501, message = "Not implemented for given extraction type")
     })
     @ApiOperation(value = "Get all Accounts")
-    public ResponseEntity<List<Account>> getAll() {
-        final List<Account> accounts = accountService.findAll();
+    public ResponseEntity<List<AccountDto>> getAll() {
+        final List<Account> accounts = AsyncFutureHelper.get(accountService.findAll());
         //todo password add
-        //todo AccountDto
-        return ResponseEntity.ok(accounts);
+        final AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
+        final List<AccountDto> responseAccounts = accountMapper.mapToDtoList(accounts);
+        return ResponseEntity.ok(responseAccounts);
     }
+
+nie dziala mapowanie ???
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
-        final Account createdAccount = new AccountMapper().mapFromDto(accountDto, OperationLevel.LOW);
+        final Account createdAccount = new AccountMapper(OperationLevel.LOW).mapFromDto(accountDto);
         final Long generatedId = accountService.save(createdAccount).getId();
         final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
@@ -96,7 +100,7 @@ public class AccountController {
             @PathVariable(name = "id") final Long id, @Valid @RequestBody final AccountDto requestAccountDto)
             throws ResourceNotFoundException {
         isRecordExistElseThrowEx(id);
-        final Account requestAccount = new AccountMapper().mapFromDto(requestAccountDto, OperationLevel.LOW);
+        final Account requestAccount = new AccountMapper(OperationLevel.LOW).mapFromDto(requestAccountDto);
         final Account updatedAccount = accountService.save(requestAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
@@ -118,7 +122,7 @@ public class AccountController {
     }
 
     private AccountDto findByIdAndMapToDto(final Long id) throws ResourceNotFoundException {
-        return accountService.findById(id).map(x -> new AccountMapper().mapToDto(x, HIGH))
+        return accountService.findById(id).map(x -> new AccountMapper(HIGH).mapToDto(x))
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }
 

@@ -108,7 +108,7 @@ class WebClientLuxTest {
                 .mail(MAIL)
                 .address(new Address(8L, "Poland", "Cracow", null))
                 .build();
-        accountDto = new AccountMapper().mapToDto(account, OperationLevel.HIGH);
+        accountDto = new AccountMapper(OperationLevel.HIGH).mapToDto(account);
         when(accountService.findById(ID)).thenReturn(Optional.of(account));
         when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
     }

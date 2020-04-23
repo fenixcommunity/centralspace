@@ -63,10 +63,10 @@ public class AccountFluxController {
     @Secured({"ROLE_FLUX_EDITOR"})
     public Mono<AccountDto> createFlux(@Valid @RequestBody final AccountDto accountDto) {
 //         Mono<Void> or Flux<AccountDto>
-        final Account createdAccount = new AccountMapper().mapFromDto(accountDto, LOW);
+        final Account createdAccount = new AccountMapper(LOW).mapFromDto(accountDto);
         final Long generatedId = accountService.save(createdAccount).getId();
         createdAccount.setId(generatedId);
-        return Mono.just(new AccountMapper().mapToDto(createdAccount, HIGH))
+        return Mono.just(new AccountMapper(HIGH).mapToDto(createdAccount))
                 .doOnNext(dto -> System.out.println(dto.getLogin()))
                 .defaultIfEmpty(AccountDto.builder().build())
                 .log("AccountFluxController", Level.INFO, SignalType.ON_COMPLETE)

@@ -12,11 +12,11 @@ jwt:
   issuer: fenixcommunity
   secret: d)kfd&2kfff
 
-#aws
-aws:
-  app:
-    keyid :  xxx
-    secretkey :  xxx
+#aws credentials from spring cloud vault
+#aws:
+#  app:
+#    keyid :  xxx
+#    secretkey :  xxx
 
 #restcaller
 restcaller:

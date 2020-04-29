@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.model.mounted.account;
+package com.fenixcommunity.centralspace.domain.model.permanent.account;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -18,8 +18,8 @@ import javax.persistence.Table;
 
 import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
 import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
-import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
-import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
+import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
+import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

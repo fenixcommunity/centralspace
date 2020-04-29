@@ -6,7 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.List;
 
 import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.Condition;

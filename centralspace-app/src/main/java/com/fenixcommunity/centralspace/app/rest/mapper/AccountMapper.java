@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto.AccountDtoBuilder;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.Condition;

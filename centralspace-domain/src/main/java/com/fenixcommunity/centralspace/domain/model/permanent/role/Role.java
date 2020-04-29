@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.model.mounted.role;
+package com.fenixcommunity.centralspace.domain.model.permanent.role;
 
 import static lombok.AccessLevel.PRIVATE;
 

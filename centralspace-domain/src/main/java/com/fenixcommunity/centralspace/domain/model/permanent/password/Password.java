@@ -1,8 +1,7 @@
-package com.fenixcommunity.centralspace.domain.model.mounted.password;
+package com.fenixcommunity.centralspace.domain.model.permanent.password;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -16,8 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fenixcommunity.centralspace.domain.converter.CryptoJpaConverter;
-import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

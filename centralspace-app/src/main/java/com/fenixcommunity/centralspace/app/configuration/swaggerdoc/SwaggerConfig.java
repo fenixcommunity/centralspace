@@ -51,7 +51,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket getDocumentation() {
         return new Docket(DocumentationType.SWAGGER_2)
-//                .host(swagger2Host)
+//              .host(swagger2Host)
                 .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET, errorList())
                 .globalResponseMessage(RequestMethod.POST, errorList())
@@ -63,6 +63,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .paths(pathsFilter())
                 .build()
                 .apiInfo(metadata());
+        //todo swagger security config https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
     }
 
 //    3.0.0v

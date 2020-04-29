@@ -1,6 +1,6 @@
-package com.fenixcommunity.centralspace.domain.repository.mounted;
+package com.fenixcommunity.centralspace.domain.repository.permanent;
 
-import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
+import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

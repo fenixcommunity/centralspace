@@ -6,8 +6,8 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 
-import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
-import com.fenixcommunity.centralspace.domain.repository.mounted.PasswordRepository;
+import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
+import com.fenixcommunity.centralspace.domain.repository.permanent.PasswordRepository;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;

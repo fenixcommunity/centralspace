@@ -37,9 +37,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(
         entityManagerFactoryRef = "postgresEntityManagerFactory",
         transactionManagerRef = "postgresTransactionManager",
-        basePackages = {"com.fenixcommunity.centralspace.domain.repository.mounted"})
+        basePackages = {"com.fenixcommunity.centralspace.domain.repository.permanent"})
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
-@EntityScan({"com.fenixcommunity.centralspace.domain.model.mounted"})
+@EntityScan({"com.fenixcommunity.centralspace.domain.model.permanent"})
 @PropertySource(value = {"classpath:domain.yml"}, factory = YamlFetcher.class)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PostgresDomainConfig {

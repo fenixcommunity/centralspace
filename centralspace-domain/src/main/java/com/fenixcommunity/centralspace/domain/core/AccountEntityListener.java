@@ -9,7 +9,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 

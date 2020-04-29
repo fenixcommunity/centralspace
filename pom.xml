@@ -54,6 +54,8 @@
         <!-- UTILITIES DEPENDENCIES -->
         <spring-boot-devtools.version>2.2.5.RELEASE</spring-boot-devtools.version>
         <spring-retry.version>1.2.5.RELEASE</spring-retry.version>
+        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+        <spring-cloud-starter-vault-config.version>2.2.2.RELEASE</spring-cloud-starter-vault-config.version>
         <micrometer-core.version>1.4.0</micrometer-core.version>
         <micrometer-registry.version>1.4.0</micrometer-registry.version>
         <jwttoken.version>0.9.1</jwttoken.version>
@@ -283,6 +285,18 @@
                 <groupId>org.springframework.retry</groupId>
                 <artifactId>spring-retry</artifactId>
                 <version>${spring-retry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-vault-config</artifactId>
+                <version>${spring-cloud-starter-vault-config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.micrometer</groupId>

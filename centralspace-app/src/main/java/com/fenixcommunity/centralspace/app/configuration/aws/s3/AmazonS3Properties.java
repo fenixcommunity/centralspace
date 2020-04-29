@@ -9,17 +9,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.context.annotation.PropertySource;
 
-@PropertySource(value = "classpath:security.yml", factory = YamlFetcher.class)
+//@PropertySource(value = "classpath:security.yml", factory = YamlFetcher.class)
 @ConfigurationProperties(prefix = "aws.app")
 @Getter @FieldDefaults(level = PRIVATE)
 class AmazonS3Properties {
-    // or use Yaml -> snakeyaml
+    // or use Yaml fetcher -> snakeyaml
     private String keyId;
     private String secretKey;
 
     @ConstructorBinding
-    public AmazonS3Properties(String keyId, String secretKey) {
-        this.keyId = keyId;
+    public AmazonS3Properties(String keyId, String secretKey) { this.keyId = keyId;
         this.secretKey = secretKey;
     }
 }

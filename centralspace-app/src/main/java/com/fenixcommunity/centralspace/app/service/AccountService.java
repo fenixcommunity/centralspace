@@ -1,7 +1,6 @@
 package com.fenixcommunity.centralspace.app.service;
 
 import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 import static lombok.AccessLevel.PACKAGE;
@@ -13,8 +12,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
-import com.fenixcommunity.centralspace.domain.repository.mounted.AccountRepository;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
+import com.fenixcommunity.centralspace.domain.repository.permanent.AccountRepository;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;

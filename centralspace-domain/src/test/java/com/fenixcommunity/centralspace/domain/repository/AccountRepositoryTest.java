@@ -19,11 +19,11 @@ import java.util.Optional;
 import javax.sql.DataSource;
 
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
-import com.fenixcommunity.centralspace.domain.model.mounted.password.Password;
-import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
-import com.fenixcommunity.centralspace.domain.repository.mounted.AccountRepository;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
+import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
+import com.fenixcommunity.centralspace.domain.model.permanent.password.PasswordType;
+import com.fenixcommunity.centralspace.domain.repository.permanent.AccountRepository;
 import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Test;

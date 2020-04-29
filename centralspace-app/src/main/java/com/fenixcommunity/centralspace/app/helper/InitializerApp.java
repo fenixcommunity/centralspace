@@ -61,6 +61,11 @@ public class InitializerApp implements CommandLineRunner {
 
         final String prometheusInfo = "Please run prometheus metrics server:" + LINE + prometheusEndpoint;
 
+        final String vaultInfo = "Please run vault server:" + LINE + "vault server --dev --dev-root-token-id=\"00000000-0000-0000-0000-000000000000\""
+                + LINE + "and run command: set VAULT_ADDR=http://127.0.0.1:8200"
+                + LINE + "and put keys: vault kv put secret/centralspace-vault-config aws.app.keyId=xxx aws.app.secretKey=xxx"
+                + LINE + "and get/delete keys: vault kv get secret/centralspace-vault-config" + LINE + "or go to: http://localhost:8200/ui" + LINE;
+
         log.info(new StringJoiner(LINE)
                 .add(appInfo)
                 .add(pluginIdeInfo)
@@ -70,6 +75,7 @@ public class InitializerApp implements CommandLineRunner {
                 .add(sonarInfo)
                 .add(actuatorInfo.toString())
                 .add(prometheusInfo)
+                .add(vaultInfo)
                 .toString());
     }
 }

@@ -13,7 +13,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailServiceBean;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Account;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.async.AsyncFutureHelper;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import lombok.AllArgsConstructor;

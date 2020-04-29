@@ -1,8 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.dto.account;
 
-import static com.fenixcommunity.centralspace.utilities.time.TimeFormatter.toIsoZonedDateTime;
 import static lombok.AccessLevel.PRIVATE;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.time.ZonedDateTime;
 import javax.validation.constraints.Email;
@@ -13,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fenixcommunity.centralspace.domain.model.mounted.account.Address;
-import com.fenixcommunity.centralspace.domain.model.mounted.password.PasswordType;
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
+import com.fenixcommunity.centralspace.domain.model.permanent.password.PasswordType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;

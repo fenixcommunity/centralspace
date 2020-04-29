@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.model.mounted.account;
+package com.fenixcommunity.centralspace.domain.model.permanent.account;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fenixcommunity.centralspace.domain.model.mounted.AbstractBaseEntity;
+import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

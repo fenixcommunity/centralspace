@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto.AccountDtoBuilder;
@@ -15,7 +16,6 @@ import org.modelmapper.Condition;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTokenizers;
-import org.modelmapper.spi.DestinationSetter;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountMapper {
@@ -50,9 +50,10 @@ public class AccountMapper {
 
         var typeMap = modelMapper.createTypeMap(Account.class, AccountDtoBuilder.class);
         final Condition shouldMapId = ctx -> OperationLevel.HIGH == operationLevel;
-        typeMap.addMappings(m -> m.when(shouldMapId).map(Account::getId, AccountDtoBuilder::id));
-
-        typeMap.addMapping(Account::getAddress, AccountDtoBuilder::contactDetailsDtoFromAddress);
+        typeMap.addMappings(m -> {
+            m.when(shouldMapId).map(Account::getId, AccountDtoBuilder::id);
+            m.when(Objects::nonNull).map(Account::getAddress, AccountDtoBuilder::contactDetailsDtoFromAddress);
+        });
 
         return modelMapper;
     }
@@ -66,10 +67,13 @@ public class AccountMapper {
 
         var typeMap = modelMapper.createTypeMap(AccountDto.class, Account.class);
         final Condition shouldMapId = ctx -> OperationLevel.HIGH == operationLevel;
-        typeMap.addMappings(m -> m.when(shouldMapId).map(AccountDto::getId, Account::setId));
 
-        final DestinationSetter<Account, Object> setContactDetails =  AccountMapperHelper::mapContactDetails;
-        typeMap.addMapping(AccountDto::getContactDetailsDto, setContactDetails);
+        typeMap.addMappings(m -> {
+            m.when(shouldMapId).map(AccountDto::getId, Account::setId);
+            m.when(Objects::nonNull)
+                    .using(AccountMapperHelper.mapContactDetailsToAddress())
+                    .map(AccountDto::getContactDetailsDto, Account::setAddress);
+        });
 
         return modelMapper;
     }

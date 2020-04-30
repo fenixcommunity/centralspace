@@ -63,7 +63,9 @@ public class AccountDto {
     public static class AccountDtoBuilder {
 
         public AccountDtoBuilder contactDetailsDtoFromAddress(Address address) {
-            this.contactDetailsDto = new ContactDetailsDto(address.getCountry(), null);
+            if (address != null) {
+                this.contactDetailsDto = new ContactDetailsDto(address.getCountry(), null);
+            }
             return this;
         }
     }

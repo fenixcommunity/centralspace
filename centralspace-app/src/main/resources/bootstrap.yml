@@ -2,13 +2,14 @@
 spring:
   application:
     name: centralspace-vault-config
-
-cloud:
-  vault:
-    host: localhost
-    port: 8200
-    scheme: http
-    authentication: token
-    token: 00000000-0000-0000-0000-000000000000
-    kv:
-      enabled: true
+  cloud:
+    vault:
+      enabled: false
+      host: localhost
+      port: 8200
+      scheme: http
+      authentication: token
+      # run vault server, set enabled as true and paste token
+      token: 00000000-0000-0000-0000-000000000000
+      kv:
+        enabled: true

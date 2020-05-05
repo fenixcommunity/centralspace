@@ -51,6 +51,8 @@ import org.springframework.web.bind.annotation.RestController;
         final String password = requestedUserDto.getPassword();
         return authentication
                 .login(username, password)
-                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+                .orElseThrow(() -> {
+                    throw new ServiceFailedException(format("requested username:%s not exist", username));
+                });
     }
 }

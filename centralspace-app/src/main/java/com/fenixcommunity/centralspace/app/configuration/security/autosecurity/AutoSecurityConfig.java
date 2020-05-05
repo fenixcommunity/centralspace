@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationFailureHandler;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationSuccessHandler;
 import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppLogoutSuccessHandler;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.PreviousPageAuthenticationSuccessHandler;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -63,7 +62,7 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/account-flux/**"
     };
     private static final String[] NO_AUTH_API_LIST = {
-            API_PATH + "/logger/post",
+            API_PATH + "/logger/query",
             API_PATH + "/cross/**"
     };
     //FORM
@@ -73,7 +72,8 @@ public abstract class AutoSecurityConfig {
             "/prometheus/**"
     };
     private static final String[] NO_AUTH_FORM_LIST = {
-            API_PATH + "/logger/run"
+            API_PATH + "/logger/run",
+            "/public/**"
     };
     private static final String[] SWAGGER_AUTH_LIST = {
             "/swagger",

@@ -27,7 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.cache.CacheCookieApiFilter;
-import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import org.junit.jupiter.api.BeforeEach;

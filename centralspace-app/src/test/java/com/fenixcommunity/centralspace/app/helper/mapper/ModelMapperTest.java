@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fenixcommunity.centralspace.app.helper.mapper.AccountDtoToTest.AccountDtoToTestBuilder;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
-import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
 import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;

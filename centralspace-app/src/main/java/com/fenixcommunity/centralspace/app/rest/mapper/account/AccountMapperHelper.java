@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.mapper;
+package com.fenixcommunity.centralspace.app.rest.mapper.account;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;

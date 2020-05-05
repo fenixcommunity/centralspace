@@ -17,7 +17,7 @@ class AmazonS3Properties {
 
     @ConstructorBinding
     public AmazonS3Properties(String keyId, String secretKey) {
-        this.keyId = keyId;
-        this.secretKey = secretKey;
+        this.keyId = keyId != null ? keyId : "empty";
+        this.secretKey = secretKey != null ? secretKey : "empty";
     }
 }

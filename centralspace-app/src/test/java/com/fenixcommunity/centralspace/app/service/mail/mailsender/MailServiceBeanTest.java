@@ -45,7 +45,7 @@ import org.springframework.test.util.ReflectionTestUtils;
         ValidatorFactory.class,
         ResourceLoaderTool.class
 })
-@TestPropertySource(locations = {"classpath:mail-gateway.yml"})
+@TestPropertySource(locations = {"classpath:mail-gateway-test.properties"})
 @SpringBootTest
 //todo  what is it? @ActiveProfiles("mail")
 class MailServiceBeanTest {

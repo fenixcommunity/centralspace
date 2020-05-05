@@ -18,13 +18,16 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ComponentScan(value = {"com.fenixcommunity.centralspace.metrics"})
+//@ConditionalOnProperty(value="otpConfig", havingValue="test")
 public class MetricsConfig {
     //todo integrate Prometheus with Grafana by Docker -> https://technology.amis.nl/2018/11/01/monitoring-spring-boot-applications-with-prometheus-and-grafana/
 
@@ -32,7 +35,7 @@ public class MetricsConfig {
     private final String prometheusEndpoint;
     private final String prometheusUser;
     private final String prometheusPassword;
-
+//todo test profile
     public MetricsConfig(@Value("${prometheus.port}") int prometheusPort,
                          @Value("${prometheus.endpoint}") String prometheusEndpoint,
                          @Value("${prometheus.user}") String prometheusUser,
@@ -42,7 +45,7 @@ public class MetricsConfig {
         this.prometheusUser = prometheusUser;
         this.prometheusPassword = prometheusPassword;
     }
-
+// https://blog.inspeerity.com/spring/setting-default-spring-profile-for-tests-with-override-option/
     @Bean
     @Qualifier("appMeterRegistry")
     public MeterRegistry appMeterRegistry() {
@@ -52,6 +55,7 @@ public class MetricsConfig {
     }
 
     @Bean
+    @Profile("!test")
     PrometheusMeterRegistry prometheusMeterRegistry() {
         final PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
         try {
@@ -81,6 +85,7 @@ public class MetricsConfig {
     }
 
     @Bean
+    @Profile("!test")
     MeterRegistryCustomizer<MeterRegistry> metricsCommonTags() {
         return registry -> registry.config().commonTags("application", "Centralspace App");
     }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.security.SecuredUserDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.app.rest.mapper.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
 import com.fenixcommunity.centralspace.app.service.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import lombok.AccessLevel;

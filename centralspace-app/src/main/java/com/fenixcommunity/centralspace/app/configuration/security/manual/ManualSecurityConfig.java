@@ -1,13 +1,13 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.manual;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static java.util.Objects.requireNonNull;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import com.fenixcommunity.centralspace.app.service.security.advanced.InMemoryUserDetailsService;
+import com.fenixcommunity.centralspace.app.service.security.manual.InMemoryUserDetailsService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +33,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Deprecated // info: alternative to auto security config
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
+public class ManualSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/public/**")
     );
@@ -41,7 +41,7 @@ public class AdvancedSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AbstractUserDetailsAuthenticationProvider provider;
     private final InMemoryUserDetailsService userService;
 
-    AdvancedSecurityConfig(final AbstractUserDetailsAuthenticationProvider provider, InMemoryUserDetailsService userService) {
+    ManualSecurityConfig(final AbstractUserDetailsAuthenticationProvider provider, InMemoryUserDetailsService userService) {
         super();
         this.provider = requireNonNull(provider);
         //todo requireNonNull all place

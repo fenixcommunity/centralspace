@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.manual;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;

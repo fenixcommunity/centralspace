@@ -1,11 +1,10 @@
-package com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler;
+package com.fenixcommunity.centralspace.app.configuration.security.auto.handler;
 
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.getPreviousPageByRequest;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.IOException;
 import java.util.Set;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

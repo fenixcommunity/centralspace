@@ -1,10 +1,10 @@
-package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.auto;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.FLUX_EDITOR;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.FLUX_GETTER;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.SWAGGER;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.FLUX_EDITOR;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.FLUX_GETTER;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.SWAGGER;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
@@ -12,9 +12,9 @@ import static lombok.AccessLevel.PRIVATE;
 
 import javax.sql.DataSource;
 
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationFailureHandler;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppAuthenticationSuccessHandler;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.handler.AppLogoutSuccessHandler;
+import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppAuthenticationFailureHandler;
+import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppAuthenticationSuccessHandler;
+import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppLogoutSuccessHandler;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

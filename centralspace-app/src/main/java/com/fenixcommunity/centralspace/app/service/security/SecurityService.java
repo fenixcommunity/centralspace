@@ -7,8 +7,8 @@ import static org.apache.commons.lang3.EnumUtils.isValidEnum;
 
 import javax.annotation.PostConstruct;
 
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AuthenticationFacade;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole;
+import com.fenixcommunity.centralspace.app.configuration.security.auto.AuthenticationFacade;
+import com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.AllArgsConstructor;

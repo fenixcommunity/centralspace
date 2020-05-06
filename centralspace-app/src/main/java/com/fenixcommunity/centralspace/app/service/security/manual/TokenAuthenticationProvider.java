@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.security.advanced;
+package com.fenixcommunity.centralspace.app.service.security.manual;
 
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;

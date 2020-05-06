@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;

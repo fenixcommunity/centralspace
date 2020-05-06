@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.security.advanced.jwt;
+package com.fenixcommunity.centralspace.app.service.security.manual.jwt;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import static io.jsonwebtoken.impl.TextCodec.BASE64;

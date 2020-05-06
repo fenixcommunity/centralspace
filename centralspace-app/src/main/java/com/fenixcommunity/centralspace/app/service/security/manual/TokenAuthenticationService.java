@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.security.advanced;
+package com.fenixcommunity.centralspace.app.service.security.manual;
 
 
 import static lombok.AccessLevel.PACKAGE;
@@ -7,7 +7,7 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.fenixcommunity.centralspace.app.service.security.advanced.jwt.TokenService;
+import com.fenixcommunity.centralspace.app.service.security.manual.jwt.TokenService;
 import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
 import com.fenixcommunity.centralspace.app.service.security.user.SecuredUserCrudService;
 import com.google.common.collect.ImmutableMap;

@@ -11,8 +11,8 @@ import com.fenixcommunity.centralspace.app.configuration.aws.s3.AmazonS3Config;
 import com.fenixcommunity.centralspace.app.configuration.caching.CachingConfig;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorSwaggerConfig;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.AutoSecurityConfig;
-import com.fenixcommunity.centralspace.app.configuration.security.autosecurity.MethodAutoSecurityConfig;
+import com.fenixcommunity.centralspace.app.configuration.security.auto.AutoSecurityConfig;
+import com.fenixcommunity.centralspace.app.configuration.security.auto.MethodAutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
@@ -38,7 +38,7 @@ import org.springframework.context.annotation.Import;
         // security
         AutoSecurityConfig.class,
         MethodAutoSecurityConfig.class,
-//      AdvancedSecurityConfig.class,
+//      ManualSecurityConfig.class,
         // web
         WebConfig.class,
         FilterApiConfig.class,

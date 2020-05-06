@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api.adancedsecurity;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
-import com.fenixcommunity.centralspace.app.service.security.advanced.SecuredUserAuthenticationService;
+import com.fenixcommunity.centralspace.app.service.security.manual.SecuredUserAuthenticationService;
 import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;

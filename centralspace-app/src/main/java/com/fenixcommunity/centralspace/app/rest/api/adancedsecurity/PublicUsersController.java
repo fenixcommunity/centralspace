@@ -7,7 +7,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import com.fenixcommunity.centralspace.app.rest.dto.security.RequestedUserDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.app.service.security.advanced.SecuredUserAuthenticationService;
+import com.fenixcommunity.centralspace.app.service.security.manual.SecuredUserAuthenticationService;
 import com.fenixcommunity.centralspace.app.service.security.user.SecuredUser;
 import com.fenixcommunity.centralspace.app.service.security.user.SecuredUserCrudService;
 import lombok.AllArgsConstructor;

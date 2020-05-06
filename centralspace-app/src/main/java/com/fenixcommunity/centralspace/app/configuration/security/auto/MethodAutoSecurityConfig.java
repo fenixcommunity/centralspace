@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.auto;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

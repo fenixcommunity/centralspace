@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.autosecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.auto;
 
 import static lombok.AccessLevel.PRIVATE;
 

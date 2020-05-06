@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.configuration.security.advancedsecurity;
+package com.fenixcommunity.centralspace.app.configuration.security.manual;
 
 import static com.google.common.net.HttpHeaders.AUTHORIZATION;
 import static java.util.Optional.ofNullable;

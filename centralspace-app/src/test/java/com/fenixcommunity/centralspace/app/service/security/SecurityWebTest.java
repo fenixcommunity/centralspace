@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.app.service.security;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.configuration.security.autosecurity.SecurityRole.SWAGGER;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.ADMIN;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.SWAGGER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static com.fenixcommunity.centralspace.utilities.common.Var.WRONG_PASSWORD;
 import static java.lang.String.format;

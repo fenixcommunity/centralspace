@@ -20,6 +20,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -29,7 +30,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Aspect
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class AopConfg {
+@ConditionalOnProperty(value="aop.config.enabled", havingValue="true")
+public class AopConfig {
 
     @Bean
     TimePerformanceMonitorInterceptor performanceMonitorInterceptor() {
@@ -65,11 +67,12 @@ public class AopConfg {
 
     //2019-12-30 13:56:02,881 main ERROR Unable to locate appender "RollingFile" for logger config "org.mabb.fontverter"
     //time logging
-    @Around("@annotation(com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring)")
-    public void logMethod(final ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around(value ="@annotation(com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring)")
+    public Object logMethod(final ProceedingJoinPoint joinPoint) throws Throwable {
         logJoinPointBefore(joinPoint);
-        joinPoint.proceed();
+        final Object joinPointState = joinPoint.proceed();
         logJoinPointAfter(joinPoint, null);
+        return joinPointState;
     }
 
     @Pointcut("execution(public String com.fenixcommunity.centralspace.app.rest.api.LoggingController.*(..)) "
@@ -86,24 +89,24 @@ public class AopConfg {
 
 
     private void logJoinPointBefore(final JoinPoint joinPoint) {
-        log.trace("Signature declaring type : " + joinPoint.getSignature().getDeclaringTypeName());
-        log.trace("Signature name : " + joinPoint.getSignature().getName());
-        log.trace("Arguments : " + Arrays.toString(joinPoint.getArgs()));
-        log.trace("Target class : " + joinPoint.getTarget().getClass().getName());
+        log.debug("Signature declaring type : " + joinPoint.getSignature().getDeclaringTypeName());
+        log.debug("Signature name : " + joinPoint.getSignature().getName());
+        log.debug("Arguments : " + Arrays.toString(joinPoint.getArgs()));
+        log.debug("Target class : " + joinPoint.getTarget().getClass().getName());
     }
 
     private void logJoinPointAfter(final JoinPoint joinPoint, final Object result) {
-        log.trace("Exiting from Method :" + joinPoint.getSignature().getName());
+        log.debug("Exiting from Method :" + joinPoint.getSignature().getName());
         if (result != null) {
-            log.trace("Return value :" + result);
+            log.debug("Return value :" + result);
         } else {
-            log.trace("No return value");
+            log.debug("No return value");
         }
     }
 
     private void logJoinPointAfterThrowing(final JoinPoint joinPoint, final Throwable ex) {
-        log.trace("An exception has been thrown in " + joinPoint.getSignature().getName() + "()");
-        log.trace("Cause :" + ex.getCause());
+        log.debug("An exception has been thrown in " + joinPoint.getSignature().getName() + "()");
+        log.debug("Cause :" + ex.getCause());
     }
 
 //     @Pointcut("within(com.fenixcommunity.centralspace..*)") all package in package and subpackages

@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
@@ -54,7 +55,7 @@ public class AsyncController {
         final AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
         final List<AccountDto> responseAccountsFirst = accountMapper.mapToDtoList(accountsFirst);
 
-        final CompletableFuture<Account> futureAccountThird = accountService.findByLogin(LOGIN);
+        final CompletableFuture<Optional<Account>> futureAccountThird = accountService.findByLogin(LOGIN);
 
 
         CompletableFuture.allOf(futureAccountsSecond, futureAccountThird).join();
@@ -62,7 +63,7 @@ public class AsyncController {
         final List<AccountDto> results = new ArrayList<>();
         results.addAll(responseAccountsFirst);
         results.addAll(accountMapper.mapToDtoList(AsyncFutureHelper.get(futureAccountsSecond)));
-        results.add(accountMapper.mapToDto(AsyncFutureHelper.get(futureAccountThird)));
+        results.add(accountMapper.mapToDto(AsyncFutureHelper.get(futureAccountThird).orElseGet(null)));
 
         return Mono.just(results);
     }

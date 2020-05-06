@@ -80,7 +80,7 @@ class SecurityWebTest {
         ResponseEntity<String> response
                 = restTemplate.getForEntity(baseUrl.toString(), String.class);
 
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
     @Test
@@ -102,7 +102,6 @@ class SecurityWebTest {
 
         ResponseEntity<String> response
                 = restTemplate.getForEntity(baseUrl.toString(), String.class);
-        String responseBody = response.getBody();
 
         assertEquals(HttpStatus.FOUND, response.getStatusCode()); // redirect to login
     }

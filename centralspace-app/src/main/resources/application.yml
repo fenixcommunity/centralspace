@@ -53,3 +53,8 @@ prometheus:
   user: admin
   password: password
   url: http://localhost:${prometheus.port}${prometheus.endpoint}
+
+#Aop
+aop:
+  config:
+    enabled: true

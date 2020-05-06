@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.helper;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SEPARATOR;
 import static java.lang.String.format;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -64,18 +65,21 @@ public class InitializerApp implements CommandLineRunner {
         final String vaultInfo = "Please run vault server:" + LINE + "vault server --dev --dev-root-token-id=\"00000000-0000-0000-0000-000000000000\""
                 + LINE + "and run command: set VAULT_ADDR=http://127.0.0.1:8200"
                 + LINE + "and put keys: vault kv put secret/centralspace-vault-config aws.app.keyId=xxx aws.app.secretKey=xxx"
-                + LINE + "and get/delete keys: vault kv get secret/centralspace-vault-config" + LINE + "or go to: http://localhost:8200/ui" + LINE;
+                + LINE + "and get/delete keys: vault kv get secret/centralspace-vault-config" + LINE + "or go to: http://localhost:8200/ui";
 
-        log.info(new StringJoiner(LINE)
+        final String testInfo = "Please run tests with profile 'test'(run with env. variables -> spring.profiles.active=test)";
+
+        log.info(new StringJoiner(SEPARATOR)
                 .add(appInfo)
                 .add(pluginIdeInfo)
-                .add(swaggerInfo)
                 .add(h2Info)
                 .add(sonarServerInfo)
                 .add(sonarInfo)
                 .add(actuatorInfo.toString())
                 .add(prometheusInfo)
                 .add(vaultInfo)
+                .add(testInfo)
+                .add(LINE+ swaggerInfo)
                 .toString());
     }
 }

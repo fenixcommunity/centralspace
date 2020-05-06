@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.permanent.AccountRepository;
+import com.fenixcommunity.centralspace.domain.repository.permanent.AddressRepository;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
@@ -26,8 +27,13 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final AddressRepository addressRepository;
 
+    @MethodMonitoring
     public Account save(final Account account) {
+        if (account.getAddress() != null) {
+            addressRepository.save(account.getAddress());
+        }
         return accountRepository.save(account);
     }
 
@@ -43,8 +49,8 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
-    @MethodMonitoring
     @Async
+    @MethodMonitoring
     public CompletableFuture<List<Account>> findAll() {
         final CompletableFuture<List<Account>> completableFuture = new CompletableFuture<>();
         return completableFuture
@@ -54,7 +60,7 @@ public class AccountService {
     }
 
     @Async
-    public CompletableFuture<Account> findByLogin(final String login) {
-        return completedFuture(accountRepository.findByLogin(login));
+    public CompletableFuture<Optional<Account>> findByLogin(final String login) {
+        return completedFuture(Optional.of(accountRepository.findByLogin(login)));
     }
 }

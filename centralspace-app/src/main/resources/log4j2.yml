@@ -1,12 +1,12 @@
 Configuration:
-  status: info
+  status: debug
   properties:
     property:
       name: filename
       value: logs
       property:
         name: basePath
-        value: C:/Projects/centralspace-temp/logs
+        value: C:/Projects/MK/centralspace-temp/logs
 
   appenders:
     # Console logger
@@ -54,6 +54,6 @@ Configuration:
 
     # Root logger
     Root:
-      level: info
+      level: debug
       AppenderRef:
         ref: LogToConsole

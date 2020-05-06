@@ -33,14 +33,14 @@ import lombok.experimental.FieldDefaults;
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class Account extends AbstractBaseEntity {
 
-    //  TODO  AuditingEntityListener co to?
+    //todo AuditingEntityListener add some things
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
     @Convert(converter = UppercaseConverter.class)
-    @Column(name = "login", nullable = false)
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
 
     //TODO walidacja i opakowac

@@ -6,4 +6,4 @@ resource:
   convertedTxtPath: ${temp.dir}converted-txt/
   imageUrl: /static/img/
 temp:
-  dir: C:/Projects/centralspace-temp/
+  dir: C:/Projects/MK/centralspace-temp/

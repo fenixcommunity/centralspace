@@ -6,6 +6,7 @@ import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareRespo
 import static java.util.Collections.singletonMap;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -64,10 +65,22 @@ public class AccountController {
                 .body(accountDto);
     }
 
+    @GetMapping(value = "/login/{login}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<AccountDto> getByLogin(@PathVariable(value = "login") final String login) throws ResourceNotFoundException {
+        final AccountDto accountDto = AsyncFutureHelper.get(accountService.findByLogin(login)).map(x -> new AccountMapper(HIGH).mapToDto(x))
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found for this login: " + login));
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
+                .headers(prepareResponseHeaders(singletonMap("Custom-Header", String.valueOf(accountDto.getId()))))
+                .body(accountDto);
+    }
+
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses(value = {
             @ApiResponse(code = 200, response = BasicResponse.class, message = "OK"),
+            @ApiResponse(code = 204, message = "Empty accounts result"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, response = ServiceFailedException.class, message = "xxx"),
@@ -77,23 +90,19 @@ public class AccountController {
     public ResponseEntity<List<AccountDto>> getAll() {
         final List<Account> accounts = AsyncFutureHelper.get(accountService.findAll());
         //todo password add
-        if (accounts == null) {
-            return ResponseEntity.notFound().build();
+        if (isEmpty(accounts)) {
+            return ResponseEntity.noContent().build();
         }
         final AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
         final List<AccountDto> responseAccounts = accountMapper.mapToDtoList(accounts);
         return ResponseEntity.ok(responseAccounts);
     }
-    dziala mapowanie ??? test!
-    + future
-    + puść testy
-            + dodaj kilku userow
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
-        final Account createdAccount = new AccountMapper(OperationLevel.LOW).mapFromDto(accountDto);
-        final Long generatedId = accountService.save(createdAccount).getId();
+        final Account requestAccount = new AccountMapper(OperationLevel.LOW).mapFromDto(accountDto);
+        final Long generatedId = accountService.save(requestAccount).getId();
         final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
     }

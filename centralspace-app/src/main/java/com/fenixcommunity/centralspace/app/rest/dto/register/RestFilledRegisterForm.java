@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Value @Builder @FieldDefaults(level = PRIVATE, makeFinal = true)

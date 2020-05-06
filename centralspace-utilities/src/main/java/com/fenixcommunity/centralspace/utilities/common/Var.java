@@ -1,8 +1,10 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
 import static lombok.AccessLevel.PUBLIC;
+import static org.apache.commons.lang3.RandomUtils.nextLong;
 
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.RandomStringUtils;
 
 @FieldDefaults(level = PUBLIC, makeFinal = true)
 public class Var {
@@ -30,6 +32,7 @@ public class Var {
     public static final String UNDERSCORE = "_";
     public static final String SLASH = "/";
     public static final String LINE = "\n";
+    public static final String SEPARATOR = "\n|~~~~~~~~~~|\n";
     public static final String SPACE = " ";
     public static final String OR = "||";
     public static final String UTF_8 = "UTF-8";
@@ -46,5 +49,21 @@ public class Var {
     public static final String MAIL = "text@gmail.com";
     public static final String COUNTRY = "Poland";
     public static final String CITY = "Cracow";
+
+    public static long anyLongFrom(long from) {
+        return nextLong(from, 10000);
+    }
+
+    public static long anyLong() {
+        return nextLong(1, 10000);
+    }
+
+    public static String anyString() {
+        return RandomStringUtils.random(10);
+    }
+
+    public static String anyString(int count) {
+        return RandomStringUtils.random(count);
+    }
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.collect.Lists;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +22,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.ResponseMessage;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -41,6 +47,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private static final String REST_PACKAGE = "com.fenixcommunity.centralspace.app.rest";
     private static final String ACTUATOR_PACKAGE = "org.springframework.boot.actuate";
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String DEFAULT_INCLUDE_PATTERN = "/.*";
 
     @Value("${path.api}")
     private String API_PATH;
@@ -62,7 +70,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
                                     RequestHandlerSelectors.basePackage(ACTUATOR_PACKAGE)))
                 .paths(pathsFilter())
                 .build()
-                .apiInfo(metadata());
+                //.pathMapping(API_PATH)
+                .apiInfo(metadata())
+                .securityContexts(List.of(securityContext()))
+                .securitySchemes(List.of(apiKey()));
         //todo swagger security config https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
     }
 
@@ -121,5 +132,27 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.regex(DEFAULT_INCLUDE_PATTERN))
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        final AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        final AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Lists.newArrayList(
+                new SecurityReference("JWT", authorizationScopes));
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+    }
+
+
 
 }

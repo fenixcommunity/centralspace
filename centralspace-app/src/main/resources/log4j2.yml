@@ -3,7 +3,7 @@ Configuration:
   properties:
     property:
       name: fileName
-      value: C:/Projects/MK/centralspace/logs2/logs
+      value: C:/Projects/MK/centralspace-temp/logger/logs
 
   appenders:
     # Console logger

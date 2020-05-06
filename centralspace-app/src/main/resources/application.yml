@@ -9,6 +9,8 @@ server:
 spring:
   jpa:
     open-in-view: false
+  codec:
+        max-in-memory-size: 10MB
 
 #Base paths
 path:

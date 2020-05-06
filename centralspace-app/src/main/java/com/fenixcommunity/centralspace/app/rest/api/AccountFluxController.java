@@ -76,7 +76,7 @@ public class AccountFluxController {
 
     @PostMapping("/check-secured-user") @ResponseStatus(HttpStatus.OK)
     @Secured({"ROLE_FLUX_EDITOR"})
-    @PreFilter(value = "filterObject != authentication.principal.username", filterTarget = "securedUserNames")
+    @PreFilter(value = "filterObject == authentication.principal.username", filterTarget = "securedUserNames")
     // after -> [FLUX_GETTER]
     public Mono<SecuredUserDto> postToCheckSecuredUser(@NotNull @RequestParam(value = "securedUserNames") final List<String> securedUserNames) {
         final SecurityContext securityContext = SecurityContextHolder.getContext();

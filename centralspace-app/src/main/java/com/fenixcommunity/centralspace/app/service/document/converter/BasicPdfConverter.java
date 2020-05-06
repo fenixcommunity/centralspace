@@ -112,10 +112,8 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
 
             final ResponseEntity<byte[]> responseRestTemplate = restCallerStrategy.getRestTemplate()
                     .exchange(inputImageUrl, HttpMethod.GET, RestTemplateHelper.createBasicHttpEntityWithHeaders(MediaType.ALL), byte[].class);
-//            or
-//            ResponseEntity<byte[]> response2 =restTemplate.getForEntity(inputImageUrl, byte[].class);
-//            or
-            final String responseWebClientUri = inputImageUrl + "{file}";
+//            or another example
+            final String responseWebClientUri = resourceTool.getAbsoluteImagePath() + "{file}";
             final Mono<byte[]> responseWebClient = restCallerStrategy.getWebClient()
                     .get()
                     .uri(responseWebClientUri, fileName + DOT + fileFormat.getSubtype()) // or builder if queryParam

@@ -55,7 +55,7 @@ public class AsyncController {
         final AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
         final List<AccountDto> responseAccountsFirst = accountMapper.mapToDtoList(accountsFirst);
 
-        final CompletableFuture<Optional<Account>> futureAccountThird = accountService.findByLogin(LOGIN);
+        final CompletableFuture<Optional<Account>> futureAccountThird = accountService.findByLogin("LOGINQUERY");
 
 
         CompletableFuture.allOf(futureAccountsSecond, futureAccountThird).join();

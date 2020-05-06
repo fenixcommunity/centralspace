@@ -24,7 +24,6 @@
 /.nb-gradle/
 /build/
 
-//TODO!!! remove comment if prod
 ### *.properties ###
 *.lst
 *.log*

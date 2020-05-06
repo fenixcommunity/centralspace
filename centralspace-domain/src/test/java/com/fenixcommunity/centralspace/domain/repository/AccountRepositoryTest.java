@@ -125,7 +125,7 @@ public class AccountRepositoryTest {
     @Test
     public void repoFromExecutedQueryTest() {
         Optional<Account> foundAccount = accountRepository.findById(ACCOUNT_ID_FROM_QUERY);
-//      assertNotNull(accountRepository.findByLogin("loginQuery"));  // no works, only when we persist in code
+        assertNotNull(accountRepository.findByLogin("LOGINQUERY"));
         assertNotNull(foundAccount.orElse(null));
     }
 }

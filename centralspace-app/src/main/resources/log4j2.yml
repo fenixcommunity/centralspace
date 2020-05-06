@@ -1,12 +1,9 @@
 Configuration:
-  status: debug
+  status: info
   properties:
     property:
-      name: filename
-      value: logs
-      property:
-        name: basePath
-        value: C:/Projects/MK/centralspace-temp/logs
+      name: fileName
+      value: C:/Projects/MK/centralspace/logs2/logs
 
   appenders:
     # Console logger
@@ -16,17 +13,20 @@ Configuration:
       PatternLayout:
         Pattern: "%style{%d{dd-MM-yyyy HH:mm:ss.SSS}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable"
         type: PatternLayout
-
-    #File:
-    #  name: File
-    #  fileName: logs/app.log
-    #  PatternLayout:
-    #    Pattern: "%d %p %C{1.} [%t] %m%n"
+#    File:
+#      name: File
+#      fileName: ${fileName}.log
+#      PatternLayout:
+#        Pattern: "%style{%d{dd-MM-yyyy HH:mm:ss.SSS}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable"
+#        type: PatternLayout
+#      Filters:
+#        ThresholdFilter:
+#          level: info
 
     RollingFile:
       - name: LogToRollingFile
-        fileName: ${basePath}/${fileName}.log
-        filePattern: ${basePath}/$${date:yyyy-MM}/${fileName}-%d{MM-dd-yyyy}-%i.log.gz
+        fileName: ${fileName}.log
+        filePattern: ${fileName}-%d{MM-dd-yyyy}-%i.log.gz
         PatternLayout:
           pattern: "%style{%d{dd-MM-yyyy HH:mm:ss.SSS}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable"
         # Rotate log file each day and keep 30 days worth
@@ -54,6 +54,6 @@ Configuration:
 
     # Root logger
     Root:
-      level: debug
+      level: info
       AppenderRef:
         ref: LogToConsole

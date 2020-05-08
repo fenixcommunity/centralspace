@@ -54,3 +54,6 @@ https://plugins.jetbrains.com/plugin/11349-aws-toolkit
 
 YAML File Generator
 https://plugins.jetbrains.com/plugin/11069-yaml-file-generator
+
+SLINT 
+format rules for react code

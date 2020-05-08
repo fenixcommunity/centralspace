@@ -60,27 +60,18 @@ class RestTemplateConfig {
         return new BasicAuthenticationInterceptor(restCallerProperties.getUsername(), restCallerProperties.getPassword());
     }
 
-    // RequestConfig
+    // ~~~~~~~~~~~~~~~~~~~~ RequestConfigs ~~~~~~~~~~~~~~~~~~~~
     @Bean
     @Primary
-    public HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory(CloseableHttpClient httpClient) {
+    HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory(CloseableHttpClient httpClient) {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setHttpClient(httpClient);
         return requestFactory;
     }
 
     @Bean
-    public RequestConfig requestConfig() {
-        return RequestConfig.custom()
-                .setConnectionRequestTimeout(60000)
-                .setConnectTimeout(60000)
-                .setSocketTimeout(60000)
-                .build();
-    }
-
-    @Bean
     @Primary
-    public CloseableHttpClient defaultHttpClient(final PoolingHttpClientConnectionManager connectionManager, final RequestConfig requestConfig) {
+    CloseableHttpClient defaultHttpClient(final PoolingHttpClientConnectionManager connectionManager, final RequestConfig requestConfig) {
         return HttpClientBuilder.create()
                 .disableCookieManagement()
                 .disableAuthCaching()
@@ -91,11 +82,20 @@ class RestTemplateConfig {
     }
 
     @Bean
-    public PoolingHttpClientConnectionManager defaultConnectionManager() {
+    PoolingHttpClientConnectionManager defaultConnectionManager() {
         final PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
         connectionManager.setDefaultMaxPerRoute(10);
         connectionManager.setMaxTotal(50);
         return connectionManager;
+    }
+
+    @Bean
+    RequestConfig requestConfig() {
+        return RequestConfig.custom()
+                .setConnectionRequestTimeout(60000)
+                .setConnectTimeout(60000)
+                .setSocketTimeout(60000)
+                .build();
     }
 
     private static class FullRedirect extends LaxRedirectStrategy {

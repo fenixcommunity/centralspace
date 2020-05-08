@@ -4,6 +4,9 @@ server:
   servlet:
     context-path: /app
   host: http://localhost:${server.port}
+centralspace-view:
+  port: 7773
+  origin: http://localhost:${centralspace-view.port}
 
 #Spring
 spring:

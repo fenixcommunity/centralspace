@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig {
     private final String appViewOrigin;
 
-    public WebConfig(@Value("centralspace-view.origin") String appViewOrigin) {
+    public WebConfig(@Value("${centralspace-view.origin}") String appViewOrigin) {
         this.appViewOrigin = appViewOrigin;
     }
 
@@ -23,8 +23,11 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(final CorsRegistry registry) {
-                registry.addMapping("/api/**").allowedOrigins(appViewOrigin);
-                registry.addMapping("/api/cross/**").allowedOrigins("http://localhost:9000");
+                registry.addMapping("/**")
+                        .allowedOrigins(appViewOrigin, "http://localhost:9000")
+                        .allowedMethods("*")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

@@ -20,16 +20,20 @@ public class CrossOriginController {
 
     private final AtomicLong counter = new AtomicLong();
 
-    @CrossOrigin(origins = "http://localhost:9000")
-    @GetMapping("/for9000")
+    @GetMapping("/centralspace-view-test")
+    public CrossOriginResponse getCrossOriginTestForCentralspaceView(@RequestParam(required=false, defaultValue="localhost:7773") String calledFrom) {
+        return new CrossOriginResponse(calledFrom, "Number of requests: " + counter.incrementAndGet());
+    }
+
+    @CrossOrigin(origins = "http://localhost:9000", allowedHeaders = "*")
+    @GetMapping("/for-9000")
     public CrossOriginResponse getCrossOriginFor9000(@RequestParam(required=false, defaultValue="localhost:9000") String calledFrom) {
         return new CrossOriginResponse(calledFrom, "Number of requests: " + counter.incrementAndGet());
     }
 
      /*
      TEST:
-     curl -H "Origin: http://localhost:9000" --verbose \
-     http://localhost:8088/app/api/cross/for9000?calledFrom=localhost:9000
+     curl -H "Origin: http://localhost:9000" http://localhost:8088/app/api/cross/for-9000
      or
      centralspace-utilities/src/main/resources/js/jscaller.html
      */

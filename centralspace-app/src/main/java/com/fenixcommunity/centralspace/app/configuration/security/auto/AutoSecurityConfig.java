@@ -184,6 +184,8 @@ public abstract class AutoSecurityConfig {
                     .antMatchers(NO_AUTH_FORM_LIST).permitAll()
                     .anyRequest().hasRole(SWAGGER.name())
                     .and()
+                    .cors()//.configurationSource(corsConfigurationSource())
+                    .and()
                     .csrf().disable()
                     .httpBasic()
                     .and()

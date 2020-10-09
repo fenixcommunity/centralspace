@@ -56,4 +56,6 @@ public class Account extends AbstractBaseEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "addressId", nullable = false)
     private Address address;
+
+    private String createdBy; //todo add Admin
 }

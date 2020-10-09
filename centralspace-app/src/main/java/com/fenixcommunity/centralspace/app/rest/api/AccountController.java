@@ -68,8 +68,12 @@ public class AccountController {
     @GetMapping(value = "/login/{login}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AccountDto> getByLogin(@PathVariable(value = "login") final String login) throws ResourceNotFoundException {
-        final AccountDto accountDto = AsyncFutureHelper.get(accountService.findByLogin(login)).map(x -> new AccountMapper(HIGH).mapToDto(x))
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found for this login: " + login));
+        final AccountDto accountDto = AsyncFutureHelper.get(accountService.findByLogin(login))
+                .map(x -> new AccountMapper(HIGH).mapToDto(x))
+                .orElse(null); // .orElseThrow(() -> new ResourceNotFoundException("Account not found for this login: " + login));
+        if (accountDto == null) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
                 .headers(prepareResponseHeaders(singletonMap("Custom-Header", String.valueOf(accountDto.getId()))))

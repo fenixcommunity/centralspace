@@ -15,7 +15,7 @@ public class CentralspaceApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
-//todo        application.profiles(Profiles.STANDALONE_PROFILE, Profiles.SWAGGER_ENABLED_PROFILE);
+//todo  application.profiles(Profiles.STANDALONE_PROFILE, Profiles.SWAGGER_ENABLED_PROFILE);
         return application.sources(CentralspaceApplication.class);
     }
 

@@ -69,6 +69,7 @@
         <jmh-generator-annprocess.version>1.23</jmh-generator-annprocess.version>
         <jackson-dataformat-yaml.version>2.10.3</jackson-dataformat-yaml.version>
         <snakeyaml.version>1.26</snakeyaml.version>
+        <json.version>20200518</json.version>
         <!-- DOCUMENT CONVERTER DEPENDENCIES -->
         <pdfbox-tools.version>2.0.17</pdfbox-tools.version>
         <pdf2dom.version>1.7</pdf2dom.version>
@@ -327,6 +328,11 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.version}</version>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

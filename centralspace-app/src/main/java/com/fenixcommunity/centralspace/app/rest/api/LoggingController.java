@@ -2,6 +2,8 @@ package com.fenixcommunity.centralspace.app.rest.api;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import java.util.Map;
+
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
@@ -9,6 +11,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,9 +60,13 @@ public class LoggingController {
     public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto) {
         log.info(loggerDto.toString());
 
+        JSONObject jsonObject = new JSONObject(Map.of("logMap", "logValue"));
+        jsonObject.put("log", "warning");
+        JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
+        jsonArray.put(Boolean.TRUE);
         return Mono.just(LoggerResponseDto.builder()
-                .log("query log")
-                .details("query details")
+                .log(jsonObject.toString())
+                .details(jsonArray.toString())
                 .loggerType(loggerDto.getLoggerType()).build());
     }
 }

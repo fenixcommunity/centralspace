@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-@Entity @Table(name = "address")
+@Entity @Table(name = "address") // , schema = "contact_info" -> we should add schema manually
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class Address extends AbstractBaseEntity {
 

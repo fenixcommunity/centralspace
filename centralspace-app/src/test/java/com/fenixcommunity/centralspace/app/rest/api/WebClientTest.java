@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 
 import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
-import com.fenixcommunity.centralspace.app.service.AccountService;
+import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;

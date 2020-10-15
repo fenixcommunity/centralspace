@@ -76,7 +76,7 @@ public class AopConfig {
     }
 
     @Pointcut("execution(public String com.fenixcommunity.centralspace.app.rest.api.LoggingController.*(..)) "
-            + OR + " execution(public * com.fenixcommunity.centralspace.app.service.AccountService.findById(..)) "
+            + OR + " execution(public * com.fenixcommunity.centralspace.app.service.account.AccountService.findById(..)) "
             + OR + " execution(public * com.fenixcommunity.centralspace.app.service.document.DocumentService.*(..))")
     @SuppressWarnings("unused")
     public void timeMonitor() {

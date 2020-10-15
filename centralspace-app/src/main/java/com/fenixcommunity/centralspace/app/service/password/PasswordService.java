@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service;
+package com.fenixcommunity.centralspace.app.service.password;
 
 import static java.util.Collections.unmodifiableList;
 import static lombok.AccessLevel.PACKAGE;

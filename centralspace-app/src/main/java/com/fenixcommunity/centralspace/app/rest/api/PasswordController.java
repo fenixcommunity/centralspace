@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
-import com.fenixcommunity.centralspace.app.service.PasswordService;
+import com.fenixcommunity.centralspace.app.service.password.PasswordService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.RequestMapping;

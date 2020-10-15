@@ -52,7 +52,7 @@ public class H2DomainConfig {
                          @Qualifier("h2DataSource") final DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.fenixcommunity.centralspace.domain")
+                .packages("com.fenixcommunity.centralspace.domain.model.memory")
                 .persistenceUnit("h2")
                 .build();
     }

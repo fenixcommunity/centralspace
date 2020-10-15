@@ -58,7 +58,7 @@ public class PostgresDomainConfig {
                          @Qualifier("postgresDataSource") final DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.fenixcommunity.centralspace.domain")
+                .packages("com.fenixcommunity.centralspace.domain.model.permanent")
                 .persistenceUnit("postgres")
                 .build();
     }

@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service;
+package com.fenixcommunity.centralspace.app.service.account;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;

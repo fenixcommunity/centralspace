@@ -24,7 +24,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
-import com.fenixcommunity.centralspace.app.service.AccountService;
+import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;

@@ -53,7 +53,7 @@ postgres:
 h2:
   datasource:
     driverClassName: org.h2.Driver
-    jdbc-url: jdbc:h2:mem:centralspacedb
+    jdbc-url: jdbc:h2:mem:centralspacedb_h2
     password: admin
     platform: h2
     username: h2

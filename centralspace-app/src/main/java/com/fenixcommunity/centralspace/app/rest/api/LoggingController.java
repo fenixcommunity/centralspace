@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.Map;
@@ -7,8 +8,11 @@ import java.util.Map;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
+import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
+import com.fenixcommunity.centralspace.domain.model.memory.SessionAppInfo;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
@@ -25,8 +29,10 @@ import reactor.core.publisher.Mono;
 
 @RestController @RequestMapping("/api/logger")
 @Log4j2
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class LoggingController {
+
+    private final AppStatusService appStatusService;
 
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses(value = {
@@ -60,10 +66,15 @@ public class LoggingController {
     public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto) {
         log.info(loggerDto.toString());
 
-        JSONObject jsonObject = new JSONObject(Map.of("logMap", "logValue"));
-        jsonObject.put("log", "warning");
-        JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
+        // h2 memory records test
+        final SessionAppInfo sessionAppInfo = appStatusService.createSessionAppInfo("warning");
+
+        final JSONObject jsonObject = new JSONObject(Map.of("sessionAppInfoId", sessionAppInfo.getId()));
+        jsonObject.put("sessionAppInfoSomeInfo", sessionAppInfo.getSomeInfo());
+
+        final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
         jsonArray.put(Boolean.TRUE);
+
         return Mono.just(LoggerResponseDto.builder()
                 .log(jsonObject.toString())
                 .details(jsonArray.toString())

@@ -28,7 +28,7 @@ import lombok.experimental.FieldDefaults;
 // Builder gdy mamy pola final i chcemy je tworzyc w elastycznym konstruktorze
 // Builder stosujemy gdy tworzymy obiekt raz i nie zmianiamy go potem przez sety
 //@Setter(value = AccessLevel.PACKAGE)
-@Entity @Table(name = "password")
+@Entity @Table(name = "password") // , schema = "security" -> we should add schema manually
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @FieldDefaults(level = PRIVATE)
 public class Password extends AbstractBaseEntity {
 

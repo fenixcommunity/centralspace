@@ -1,6 +1,5 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -12,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
-import com.fenixcommunity.centralspace.app.service.AccountService;
+import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailServiceBean;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.async.AsyncFutureHelper;

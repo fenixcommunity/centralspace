@@ -13,11 +13,12 @@ import java.util.concurrent.CompletableFuture;
 
 import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
-import com.fenixcommunity.centralspace.domain.repository.permanent.AccountRepository;
+import com.fenixcommunity.centralspace.domain.repository.permanent.account.AccountRepository;
 import com.fenixcommunity.centralspace.domain.repository.permanent.AddressRepository;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +54,9 @@ public class AccountService {
     @MethodMonitoring
     public CompletableFuture<List<Account>> findAll() {
         final CompletableFuture<List<Account>> completableFuture = new CompletableFuture<>();
+        final Sort sort = Sort.by("login").descending().and(Sort.by("mail")); // JpaSort.unsafe("LENGTH(name)"
         return completableFuture
-                .completeAsync(() -> unmodifiableList(accountRepository.findAll()))
+                .completeAsync(() -> unmodifiableList(accountRepository.findAll(sort)))
                 .exceptionally(exception -> emptyList())
                 .thenApply(Collections::unmodifiableList);
     }

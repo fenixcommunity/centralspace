@@ -13,7 +13,7 @@ import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.PasswordType;
-import com.fenixcommunity.centralspace.domain.repository.permanent.AccountRepository;
+import com.fenixcommunity.centralspace.domain.repository.permanent.account.AccountRepository;
 import com.fenixcommunity.centralspace.utilities.async.AsyncFutureHelper;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.FileUtils;
 import org.junit.jupiter.api.BeforeAll;

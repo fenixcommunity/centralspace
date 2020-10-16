@@ -54,7 +54,7 @@ public class Account extends AbstractBaseEntity {
 
     @ToString.Exclude
     @ManyToOne(optional = false)
-    @JoinColumn(name = "addressId", nullable = false)
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
     private String createdBy; //todo add Admin

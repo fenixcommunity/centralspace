@@ -27,6 +27,6 @@ INSERT INTO address(id, creation_date, update_date, city, country)
 SELECT 888, NOW(), NOW(), 'Berlin', 'Germany'
 WHERE NOT EXISTS ( SELECT id FROM address WHERE id = 888 );
 
-INSERT INTO account(id, login, mail, creation_date, update_date, addressid)
+INSERT INTO account(id, login, mail, creation_date, update_date, address_id)
 SELECT 999, 'LOGINQUERY', 'text@mail.com', NOW(), NOW(), 888
 WHERE NOT EXISTS ( SELECT id FROM account WHERE id = 999 );

@@ -35,6 +35,7 @@ class WebClientConfig {
         return WebClient.builder()
                 .baseUrl(serverHost)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//              .filter(ThrowingPredicate.unchecked(...) -> throwing exception if false
                 .filter(ExchangeFilterFunctions
                         .basicAuthentication(restCallerProperties.getUsername(), restCallerProperties.getPassword()))
                 .filter(logRequest());

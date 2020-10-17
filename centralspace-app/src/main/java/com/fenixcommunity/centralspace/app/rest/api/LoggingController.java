@@ -3,13 +3,17 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
 import com.fenixcommunity.centralspace.domain.model.memory.SessionAppInfo;
+import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController @RequestMapping("/api/logger")
 @Log4j2
@@ -33,6 +38,7 @@ import reactor.core.publisher.Mono;
 public class LoggingController {
 
     private final AppStatusService appStatusService;
+    private final TimeTool timeTool;
 
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses(value = {
@@ -63,7 +69,7 @@ public class LoggingController {
     //todo from elastic search
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/query")
-    public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto) {
+    public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto, @ApiIgnore HttpSession httpSession) {
         log.info(loggerDto.toString());
 
         // h2 memory records test
@@ -71,6 +77,14 @@ public class LoggingController {
 
         final JSONObject jsonObject = new JSONObject(Map.of("sessionAppInfoId", sessionAppInfo.getId()));
         jsonObject.put("sessionAppInfoSomeInfo", sessionAppInfo.getSomeInfo());
+
+        jsonObject.put("sessionId", httpSession.getId());
+        jsonObject.put("sessionCreationTime",
+                timeTool.FROM_MILLISECONDS(httpSession.getCreationTime())
+                .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        jsonObject.put("sessionLastAccessedTime",
+                timeTool.FROM_MILLISECONDS(httpSession.getLastAccessedTime())
+                        .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 
         final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
         jsonArray.put(Boolean.TRUE);

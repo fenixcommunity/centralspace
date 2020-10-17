@@ -30,6 +30,9 @@ import lombok.experimental.FieldDefaults;
 
 
 @Entity @Table(name = "account") @EntityListeners(AccountEntityListener.class)
+// @DynamicUpdate -> when we update login then update Account set login=?, mail=? ... where id=?
+// if we want update only login column then @DynamicUpdate -> update Account set name=? where id=?
+// use only when we have a lot of columns -> in other cases performance overhead
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class Account extends AbstractBaseEntity {
 

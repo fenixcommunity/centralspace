@@ -22,9 +22,9 @@ public interface AccountRepository extends JpaRepository<Account, Long>, Account
                                final Sort sort);
 
     @Modifying
-    @Query("UPDATE Account a SET a.login = :login WHERE a.id = :accountId")
-    int updateLogin(@Param("accountId") final Long accountId,
-                    @Param("login") final String login);
+    @Query("UPDATE Account a SET a.login = ?2 WHERE a.id = ?1")
+    int updateLogin(final Long accountId,
+                    final String login);
 
     @Query(value = "SELECT * FROM Account ORDER BY id",
             countQuery = "SELECT count(*) FROM Account",

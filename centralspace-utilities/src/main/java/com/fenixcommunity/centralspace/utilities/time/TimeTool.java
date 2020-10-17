@@ -3,7 +3,10 @@ package com.fenixcommunity.centralspace.utilities.time;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
@@ -31,5 +34,9 @@ public class TimeTool {
 
     public Date TO_OLD_DATE(final ZonedDateTime dateTime) {
         return Date.from(dateTime.toInstant());
+    }
+
+    public ZonedDateTime FROM_MILLISECONDS(long timeInMilliseconds) {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(timeInMilliseconds), ZoneOffset.UTC);
     }
 }

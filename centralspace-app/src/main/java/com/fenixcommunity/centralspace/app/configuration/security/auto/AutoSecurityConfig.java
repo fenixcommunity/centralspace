@@ -32,6 +32,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @EnableWebSecurity // (debug = true)
 //@EnableWebFluxSecurity todo https://www.baeldung.com/spring-security-5-reactive
@@ -206,7 +207,7 @@ public abstract class AutoSecurityConfig {
                     .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
                     .tokenRepository(tokenRepository())
                     .and()
-                    .sessionManagement().maximumSessions(1)
+                    .sessionManagement().maximumSessions(2)
                     .expiredUrl("/login?expired");
                  /*
                  .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
@@ -240,6 +241,11 @@ public abstract class AutoSecurityConfig {
             tokenRepository.setCreateTableOnStartup(false);
             tokenRepository.setDataSource(dataSource);
             return tokenRepository;
+        }
+
+        @Bean
+        public HttpSessionEventPublisher httpSessionEventPublisher() {
+            return new HttpSessionEventPublisher();
         }
     }
 

@@ -47,6 +47,11 @@
             <artifactId>junit-jupiter-api</artifactId>
 <!--            scope global, we have test utils-->
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

@@ -89,6 +89,8 @@ public class LoggingController {
         final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
         jsonArray.put(Boolean.TRUE);
 
+//    reversing    JsonNode rootNode = new ObjectMapper().readTree(jsonObject.toString());
+
         return Mono.just(LoggerResponseDto.builder()
                 .log(jsonObject.toString())
                 .details(jsonArray.toString())

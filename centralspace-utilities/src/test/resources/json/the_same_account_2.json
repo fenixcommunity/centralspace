@@ -1,0 +1,18 @@
+{
+  "account": {
+    "id": 1212,
+    "score": 3,
+    "login": "max3112",
+    "mail": "max@o2.pl",
+    "skills": [
+      "Java",
+      "C++",
+      "Python"
+    ],
+    "contact":
+    {
+      "email": "john@xyz.com",
+      "phone": "9999999999"
+    }
+  }
+}

@@ -1,13 +1,16 @@
-package com.fenixcommunity.centralspace.app.service.credential;
+package com.fenixcommunity.centralspace.app.service.serviceconnector.google;
 
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.time.ZonedDateTime;
 
+import com.fenixcommunity.centralspace.app.service.serviceconnector.credential.Credential;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class GoogleCredential implements Credential {
 
     @Override

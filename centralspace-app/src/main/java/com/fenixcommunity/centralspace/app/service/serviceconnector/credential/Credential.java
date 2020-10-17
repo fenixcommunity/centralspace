@@ -1,6 +1,6 @@
-package com.fenixcommunity.centralspace.app.service.credential;
+package com.fenixcommunity.centralspace.app.service.serviceconnector.credential;
 
-interface Credential {
+public interface Credential {
     String getAccessToken();
 
     String getRefreshToken();

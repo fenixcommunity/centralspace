@@ -27,9 +27,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.fenixcommunity.centralspace.utilities.common.Var;
+import com.fenixcommunity.centralspace.utilities.test.ReplaceCamelCaseAndUnderscore;
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,6 +47,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @DisplayName("Test to check PasswordValidator")
+@DisplayNameGeneration(ReplaceCamelCaseAndUnderscore.class)
 @ExtendWith(MockitoExtension.class)
 class PasswordValidatorTest {
 
@@ -61,54 +65,57 @@ class PasswordValidatorTest {
         timeTool = new TimeTool(validatorFactory);
     }
 
-    @DisplayName("We have correct password and should be true")
-    @ParameterizedTest(name = "For example, password {0} is correct.")
-    @ValueSource(strings = {Var.PASSWORD_HIGH, "Password1&23"})
-    public void shouldValidate_CorrectHighPassword(String password) {
-        // given
-        Validator validator = validatorFactory.getInstance(ValidatorType.PASSWORD_HIGH);
-        // when
-        boolean result = validator.isValid(password);
-        // then
-        isTrue(password.length() > 1, "password must longer than 1");
-        isAssignable(Validator.class, PasswordValidator.class);
-        isInstanceOf(PasswordValidator.class, validator);
-        hasLength(password, "password must not be null and must not the empty");
-        hasText(password, "key must not be null and must contain at least one non-whitespace  character");
-        doesNotContain(password, "123", "key mustn't contain 123");
-        List<String> list = new ArrayList<>(Arrays.asList(password, password, password));
-        notEmpty(list, "collection mustn't be empty");
-        noNullElements(list, "collection  mustn't contain null elements");
+    @Nested
+    class whenValidatorIsValid {
+        @DisplayName("We have correct password and then true")
+        @ParameterizedTest(name = "For example, password {0} is correct.")
+        @ValueSource(strings = {Var.PASSWORD_HIGH, "Password1&23"})
+        public void givenCorrectHighPassword_thenValidate(String password) {
+            // given
+            Validator validator = validatorFactory.getInstance(ValidatorType.PASSWORD_HIGH);
+            // when
+            boolean result = validator.isValid(password);
+            // then
+            isTrue(password.length() > 1, "password must longer than 1");
+            isAssignable(Validator.class, PasswordValidator.class);
+            isInstanceOf(PasswordValidator.class, validator);
+            hasLength(password, "password must not be null and must not the empty");
+            hasText(password, "key must not be null and must contain at least one non-whitespace  character");
+            doesNotContain(password, "123", "key mustn't contain 123");
+            List<String> list = new ArrayList<>(Arrays.asList(password, password, password));
+            notEmpty(list, "collection mustn't be empty");
+            noNullElements(list, "collection  mustn't contain null elements");
 
-        assertTrue(result);
-    }
+            assertTrue(result);
+        }
 
-    @ParameterizedTest(name = "For parameter {0}")
-    @ValueSource(strings = {"", Var.PASSWORD_LOW, "  ", "password1232132 343"})
-    public void shouldNotValidate_NotCorrectHighPassword(String password) {
-        // given
-        Validator validator = validatorFactory.getInstance(ValidatorType.PASSWORD_HIGH);
-        // when
-        boolean result = validator.isValid(password);
-        // then
-        assertFalse(result);
-    }
+        @ParameterizedTest(name = "For parameter {0}")
+        @ValueSource(strings = {"", Var.PASSWORD_LOW, "  ", "password1232132 343"})
+        public void givenNotCorrectHighPassword_thenNotValidate(String password) {
+            // given
+            Validator validator = validatorFactory.getInstance(ValidatorType.PASSWORD_HIGH);
+            // when
+            boolean result = validator.isValid(password);
+            // then
+            assertFalse(result);
+        }
 
-    @ParameterizedTest
-    @NullSource
-    public void shouldNotValidate_NullPassword(String password) {
-        // given
-        Validator validator = validatorFactory.getInstance(ValidatorType.PASSWORD_HIGH);
-        // when
-        boolean result = validator.isValid(password);
-        // then
-        assertFalse(result);
+        @ParameterizedTest
+        @NullSource
+        public void givenNullPassword_thenNotValidate(String password) {
+            // given
+            Validator validator = validatorFactory.getInstance(ValidatorType.PASSWORD_HIGH);
+            // when
+            boolean result = validator.isValid(password);
+            // then
+            assertFalse(result);
+        }
     }
 
     // todo przenies
     @ParameterizedTest(name = "{index} {0} is 30 days long")
     @EnumSource(value = Month.class, names = {"APRIL", "JUNE", "SEPTEMBER", "NOVEMBER"})
-    public void shouldHave30DaysLong_SomeMonths(Month month) {
+    public void givenSomeMonths_thenHave30DaysLong(Month month) {
         final boolean isALeapYear = false;
         EnumSet<Month> enumSet = EnumSet.of(Month.APRIL, Month.JUNE, Month.SEPTEMBER, Month.NOVEMBER);
         assertTrue(enumSet.contains(month));
@@ -118,14 +125,14 @@ class PasswordValidatorTest {
     @ParameterizedTest
     @CsvSource(value = {"test:test", "tEst:test", "Java:java"}, delimiter = ':')
         // @CsvFileSource(resources = "/data.csv", numLinesToSkip = 1)
-    void shouldGenerateTheExpectedLowercaseValue_toLowerCase(String input, String expected) {
+    void givenToLowerCase_thenGenerateTheExpectedLowercaseValue(String input, String expected) {
         String actualValue = input.toLowerCase();
         assertEquals(expected, actualValue);
     }
 
     @ParameterizedTest
     @MethodSource("provideTimeArguments")
-    public void shouldBeCorrect_TimeToolIsEqualMethod(ZonedDateTime time1, ZonedDateTime time2, boolean expected) {
+    public void givenTimeToolIsEqualMethod_thenBeCorrect(ZonedDateTime time1, ZonedDateTime time2, boolean expected) {
         assertEquals(expected, timeTool.IS_EQUAL(time1, time2));
     }
 
@@ -150,7 +157,7 @@ class PasswordValidatorTest {
     }
 
     @Test
-    public void shouldDoNothing_ExampleAndLambdaInvocation() {
+    public void givenExampleAndLambdaInvocation_thenDoNothing() {
         doNothing().when(validatorFactorySpy).validateInstanceExist(null);
         assertThrows(NullPointerException.class, () -> {
             validatorFactorySpy.getInstance(null);

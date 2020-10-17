@@ -63,3 +63,11 @@ prometheus:
 aop:
   config:
     enabled: true
+
+#Sftp connection
+remoteserver:
+    knownHosts: /Jboss/server/.ssh/known_hosts
+    host: m.example.com
+    username: username
+    password: password
+    remoteFileDirection: remote_sftp/

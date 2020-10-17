@@ -70,6 +70,7 @@
         <jackson-dataformat-yaml.version>2.10.3</jackson-dataformat-yaml.version>
         <snakeyaml.version>1.26</snakeyaml.version>
         <json.version>20200518</json.version>
+        <jsh.version>0.1.55</jsh.version>
         <!-- DOCUMENT CONVERTER DEPENDENCIES -->
         <pdfbox-tools.version>2.0.17</pdfbox-tools.version>
         <pdf2dom.version>1.7</pdf2dom.version>
@@ -333,6 +334,11 @@
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
                 <version>${json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${jsh.version}</version>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

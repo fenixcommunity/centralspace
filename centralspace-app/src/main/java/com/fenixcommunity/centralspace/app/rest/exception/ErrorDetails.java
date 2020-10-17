@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.exception;
 
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.randomString;
+import static com.fenixcommunity.centralspace.utilities.common.Var.anyString;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.time.ZonedDateTime;
@@ -18,7 +18,7 @@ public class ErrorDetails {
     private String message;
     private String details;
     private List<String> collectedErrors;
-    private String logRef = randomString();
+    private String logRef = anyString(30);
     private ZonedDateTime timestamp = ZonedDateTime.now();
 
     public static String toStringModel() {

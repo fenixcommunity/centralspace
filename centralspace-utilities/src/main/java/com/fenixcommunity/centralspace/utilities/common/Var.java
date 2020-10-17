@@ -1,13 +1,15 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
 import static lombok.AccessLevel.PUBLIC;
-import static org.apache.commons.lang3.RandomUtils.nextLong;
+import java.security.SecureRandom;
 
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.RandomStringUtils;
 
 @FieldDefaults(level = PUBLIC, makeFinal = true)
 public class Var {
+    public static final SecureRandom secureRandom = new SecureRandom();
+
     public static final Long ID = 1L;
     public static final Long WRONG_ID = 999999L;
     public static final String NAME = "name";
@@ -50,12 +52,8 @@ public class Var {
     public static final String COUNTRY = "Poland";
     public static final String CITY = "Cracow";
 
-    public static long anyLongFrom(long from) {
-        return nextLong(from, 10000);
-    }
-
     public static long anyLong() {
-        return nextLong(1, 10000);
+        return secureRandom.nextLong();
     }
 
     public static String anyString() {

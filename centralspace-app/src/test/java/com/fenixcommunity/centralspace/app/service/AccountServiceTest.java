@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.anyLongFrom;
+import static com.fenixcommunity.centralspace.utilities.common.Var.anyLong;
 import static com.fenixcommunity.centralspace.utilities.common.Var.anyString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -87,7 +87,7 @@ class AccountServiceTest {
 
     private Address getAddress() {
         return Address.builder()
-                .id(anyLongFrom(200))
+                .id(anyLong())
                 .country(anyString())
                 .city(anyString())
                 .build();
@@ -95,7 +95,7 @@ class AccountServiceTest {
 
     private Password getPassword(Account account) {
         return Password.builder()
-                .id(anyLongFrom(100))
+                .id(anyLong())
                 .password(anyString())
                 .account(account)
                 .passwordType(PasswordType.TO_CENTRALSPACE)

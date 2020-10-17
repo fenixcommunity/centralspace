@@ -20,7 +20,6 @@ import org.springframework.util.ClassUtils;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class DevTool {
-
     public static final int METHOD_INVOCATION_TIME_LIMIT_mS = 100;
 
     public static String getClassPath(final Class clazz) {
@@ -51,10 +50,6 @@ public class DevTool {
             return false;
         }
         return true;
-    }
-
-    public static String randomString() {
-        return UUID.randomUUID().toString();
     }
 
     //todo generic

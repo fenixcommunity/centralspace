@@ -19,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -66,9 +67,13 @@ public class ResourceCacheController {
     public ResponseEntity<Boolean> test(@PathVariable("fileName") final String fileName, @PathVariable("fileFormat") final FileFormat fileFormat) {
         final InternalResourceDto internalResourceDto = new InternalResourceDto(fileName, fileFormat);
         final RestTemplate restTemplate = restCallerStrategy.getRetryRestTemplate();
+        final URI requestedUrl = URI.create(restPath + "/resource-cache/available");
+        final HttpEntity<InternalResourceDto> restEntity = createRestEntity(internalResourceDto);
         final Boolean response = restTemplate
-                .exchange(URI.create(restPath + "/resource-cache/available"), HttpMethod.POST, createRestEntity(internalResourceDto), Boolean.class)
-                .getBody();
+                                .exchange(requestedUrl, HttpMethod.POST, restEntity, Boolean.class)
+                                .getBody();
+        final Boolean responseOtherWay = restTemplate
+                                         .postForObject(requestedUrl, restEntity, Boolean.class);
 
         return response != null ? ResponseEntity.ok(response) : ResponseEntity.badRequest().build();
     }

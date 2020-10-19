@@ -21,7 +21,9 @@ public class RestCallerStrategy {
 
     @Qualifier("basicAuthWebClientBuilder")
     private final WebClient.Builder basicAuthWebClientBuilder;
+
     private final RestTemplateBuilder basicAuthRestTemplateBuilder;
+
     private final RestTemplateRetryWrapper restCallerRetryWrapper;
 
     public WebClient getWebClient() {

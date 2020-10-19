@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.HIGH;
 import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.LOW;
 
-import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -78,7 +78,8 @@ public class AccountFluxController {
     @Secured({"ROLE_FLUX_EDITOR"})
     @PreFilter(value = "filterObject == authentication.principal.username", filterTarget = "securedUserNames")
     // after -> [FLUX_GETTER]
-    public Mono<SecuredUserDto> postToCheckSecuredUser(@NotNull @RequestParam(value = "securedUserNames") final List<String> securedUserNames) {
+    // Set instead List because .contains searching
+    public Mono<SecuredUserDto> postToCheckSecuredUser(@NotNull @RequestParam(value = "securedUserNames") final Set<String> securedUserNames) {
         final SecurityContext securityContext = SecurityContextHolder.getContext();
         final Authentication authentication = securityContext.getAuthentication();
         final SecuredUserDto securedUserDto = new SecuredUserDto(authentication.getName(), authentication.getAuthorities().toString());

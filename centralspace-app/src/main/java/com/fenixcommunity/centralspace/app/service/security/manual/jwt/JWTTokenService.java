@@ -66,11 +66,11 @@ import org.springframework.stereotype.Service;
         final Claims claims = Jwts
                 .claims()
                 .setIssuer(issuer)
-                .setIssuedAt(timeTool.TO_OLD_DATE(now));
+                .setIssuedAt(timeTool.toOldDate(now));
 
         if (expiresInSec > 0) {
             final ZonedDateTime expiresAt = now.plusSeconds(expiresInSec);
-            claims.setExpiration(timeTool.TO_OLD_DATE(expiresAt));
+            claims.setExpiration(timeTool.toOldDate(expiresAt));
         }
         claims.putAll(attributes);
 
@@ -121,6 +121,6 @@ import org.springframework.stereotype.Service;
 
     @Override
     public Date now() {
-        return timeTool.TO_OLD_DATE(ZonedDateTime.now());
+        return timeTool.toOldDate(ZonedDateTime.now());
     }
 }

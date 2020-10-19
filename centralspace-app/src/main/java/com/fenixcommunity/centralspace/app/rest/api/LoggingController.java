@@ -80,10 +80,10 @@ public class LoggingController {
 
         jsonObject.put("sessionId", httpSession.getId());
         jsonObject.put("sessionCreationTime",
-                timeTool.FROM_MILLISECONDS(httpSession.getCreationTime())
+                timeTool.fromMilliseconds(httpSession.getCreationTime())
                 .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         jsonObject.put("sessionLastAccessedTime",
-                timeTool.FROM_MILLISECONDS(httpSession.getLastAccessedTime())
+                timeTool.fromMilliseconds(httpSession.getLastAccessedTime())
                         .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 
         final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)

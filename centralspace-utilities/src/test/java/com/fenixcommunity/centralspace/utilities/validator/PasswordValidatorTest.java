@@ -133,7 +133,7 @@ class PasswordValidatorTest {
     @ParameterizedTest
     @MethodSource("provideTimeArguments")
     public void givenTimeToolIsEqualMethod_thenBeCorrect(ZonedDateTime time1, ZonedDateTime time2, boolean expected) {
-        assertEquals(expected, timeTool.IS_EQUAL(time1, time2));
+        assertEquals(expected, timeTool.isEqual(time1, time2));
     }
 
     public static Stream<Arguments> provideTimeArguments() {

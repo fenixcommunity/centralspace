@@ -1,7 +1,7 @@
 {
   "account": {
-    "id": 1212,
     "score": 3,
+    "id": 1212,
     "login": "max3112",
     "mail": "max@o2.pl",
     "skills": [
@@ -11,8 +11,8 @@
     ],
     "contact":
     {
-      "email": "john@xyz.com",
-      "phone": "9999999999"
+      "phone": "9999999999",
+      "email": "john@xyz.com"
     }
   }
 }

@@ -18,7 +18,7 @@ public class BenchmarkWithExecutionPlan {
 //info https://javaleader.pl/2019/12/12/java-microbenchmark-harness-jmh/
 
     public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
+        final Options opt = new OptionsBuilder()
                 .include(BenchmarkWithExecutionPlan.class.getSimpleName())
                 .build();
         new Runner(opt).run();
@@ -27,7 +27,7 @@ public class BenchmarkWithExecutionPlan {
     @Fork(value = 2, warmups = 1)
     @Benchmark
     @BenchmarkMode(Mode.Throughput)
-    public void executionPlanTest(ExecutionPlan executionPlan) {
+    public void executionPlanTest(final ExecutionPlan executionPlan) {
         for (int i = executionPlan.iterations; i > 0; i--) {
             executionPlan.hasher.putString(executionPlan.password, Charset.defaultCharset());
         }

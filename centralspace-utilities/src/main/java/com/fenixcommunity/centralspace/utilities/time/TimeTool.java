@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.utilities.time;
 
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 import static lombok.AccessLevel.PRIVATE;
+import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -13,6 +14,7 @@ import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.validator.GenericValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,15 +30,23 @@ public class TimeTool {
         this.validator = validatorFactory.getInstance(NOT_NULL);
     }
 
-    public boolean IS_EQUAL(final ZonedDateTime dateFirst, final ZonedDateTime dateSecond) {
+    public boolean isDate(String value, String pattern) {
+        return GenericValidator.isDate(value, pattern, true);
+    }
+
+    public boolean isEqual(final ZonedDateTime dateFirst, final ZonedDateTime dateSecond) {
         return validator.isValidAll(dateFirst, dateSecond) && dateFirst.isEqual(dateSecond);
     }
 
-    public Date TO_OLD_DATE(final ZonedDateTime dateTime) {
+    public ZonedDateTime toZonedDateTime(String val, DateTimeFormatter formatter) {
+       return TimeFormatter.toZonedDateTime(val, formatter);
+    }
+
+    public Date toOldDate(final ZonedDateTime dateTime) {
         return Date.from(dateTime.toInstant());
     }
 
-    public ZonedDateTime FROM_MILLISECONDS(long timeInMilliseconds) {
+    public ZonedDateTime fromMilliseconds(long timeInMilliseconds) {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(timeInMilliseconds), ZoneOffset.UTC);
     }
 }

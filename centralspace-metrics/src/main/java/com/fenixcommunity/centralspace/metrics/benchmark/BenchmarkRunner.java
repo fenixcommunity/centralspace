@@ -34,11 +34,11 @@ public class BenchmarkRunner {
     public int iterations;
 
     public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
+        Options options = new OptionsBuilder()
                 .include(BenchmarkRunner.class.getSimpleName())
                 .forks(1)
                 .build();
-        new Runner(opt).run();
+        new Runner(options).run();
     }
 
     @Setup
@@ -47,6 +47,7 @@ public class BenchmarkRunner {
     }
 
     @Benchmark
+    @SuppressWarnings("unused")
     public void loopForEach(Blackhole blackhole) {
         for (String s : dataForBenchmarkTest) {
             blackhole.consume(s);

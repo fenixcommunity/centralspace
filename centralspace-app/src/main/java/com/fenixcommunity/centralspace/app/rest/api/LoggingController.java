@@ -91,7 +91,7 @@ public class LoggingController {
         final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
         jsonArray.put(Boolean.TRUE);
 
-        AutoServiceLoader<RemoteService> autoServiceLoader = new AutoServiceLoader<>();
+        final AutoServiceLoader<RemoteService> autoServiceLoader = new AutoServiceLoader<>();
         autoServiceLoader.getMetadataInformation(RemoteService.class);
 
 

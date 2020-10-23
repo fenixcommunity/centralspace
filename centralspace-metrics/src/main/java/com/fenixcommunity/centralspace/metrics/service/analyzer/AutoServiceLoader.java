@@ -5,8 +5,8 @@ import java.util.stream.StreamSupport;
 
 public class AutoServiceLoader<T> {
 
-    public MetadataInformation getMetadataInformation(Class<T> className) {
-        ServiceLoader<T> loader = ServiceLoader.load(className);
+    public MetadataInformation getMetadataInformation(final Class<T> className) {
+        final ServiceLoader<T> loader = ServiceLoader.load(className);
         long serviceRepresentation = StreamSupport.stream(loader.spliterator(), false).count();
 
         return MetadataInformation.builder()

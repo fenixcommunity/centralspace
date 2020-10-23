@@ -15,6 +15,7 @@ import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 public class MailServiceBean implements MailService {
 
     private static final String TEMPLATE_BASIC_MAIL = "template_basic_mail";
+    private final ApplicationContext context;
     private final JavaMailSender mailSender;
     private final Validator validator;
     private final ResourceLoaderTool resourceLoaderTool;
@@ -41,16 +43,19 @@ public class MailServiceBean implements MailService {
 
     @Autowired
     MailServiceBean(final JavaMailSender mailSender, final ValidatorFactory validatorFactory,
-                    final ResourceLoaderTool resourceLoaderTool, final DocumentService documentService) {
+                    final ResourceLoaderTool resourceLoaderTool, final DocumentService documentService,
+                    final ApplicationContext context) {
         this.mailSender = mailSender;
         this.validator = validatorFactory.getInstance(MAIL);
         this.resourceLoaderTool = resourceLoaderTool;
         this.documentService = documentService;
+        this.context = context;
     }
 
     @Async
     @Override
     public void sendBasicMail(final String to) throws MailException {
+        final MailMessageTemplate basicTemplate =  context.getBean("basicMailMessage", MailMessageTemplate.class);  // example
         final MailBuilder mailBuilder = new MailBuilder(basicMailMessage);
         mailBuilder.addTo(to);
         if (mailBuilder.isHtmlBody()) {

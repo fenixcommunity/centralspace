@@ -12,7 +12,9 @@ import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
+import com.fenixcommunity.centralspace.app.service.serviceconnector.RemoteService;
 import com.fenixcommunity.centralspace.domain.model.memory.SessionAppInfo;
+import com.fenixcommunity.centralspace.metrics.service.analyzer.AutoServiceLoader;
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -89,7 +91,9 @@ public class LoggingController {
         final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
         jsonArray.put(Boolean.TRUE);
 
-//    reversing    JsonNode rootNode = new ObjectMapper().readTree(jsonObject.toString());
+        AutoServiceLoader<RemoteService> autoServiceLoader = new AutoServiceLoader<>();
+        autoServiceLoader.getMetadataInformation(RemoteService.class);
+
 
         return Mono.just(LoggerResponseDto.builder()
                 .log(jsonObject.toString())

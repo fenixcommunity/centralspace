@@ -24,7 +24,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <spring-plugin.version>1.2.0.RELEASE</spring-plugin.version>
         <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
         <!-- SPRING DEPENDENCIES -->
@@ -63,6 +63,7 @@
         <apache-commons.version>3.9</apache-commons.version>
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>
+        <google-auto-service.version>1.0-rc7</google-auto-service.version>
         <javassist.version>3.23.1-GA</javassist.version>
         <modelmapper.version>2.3.5</modelmapper.version>
         <jmh-core.version>1.23</jmh-core.version>
@@ -351,6 +352,12 @@
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
                 <version>${commons-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.auto.service</groupId>
+                <artifactId>auto-service</artifactId>
+                <version>${google-auto-service.version}</version>
+                <optional>true</optional>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

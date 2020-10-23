@@ -150,6 +150,10 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+        </dependency>
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>com.icegreen</groupId>

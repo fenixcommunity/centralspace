@@ -87,6 +87,7 @@ public class Other {
         List<Customer> list = Customer.getAllEmps();
         Customer customer = null;
 
+        // skip and limit operations are complementary, and if we combine them, they can be very helpful in some cases
         list.stream().skip(2).limit(3).findFirst().ifPresent(out::println);
 
         list.stream().sorted((c1, c2) -> c1.getName().compareTo(c2.getName())).findFirst().ifPresent(out::println);

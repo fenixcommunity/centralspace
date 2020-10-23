@@ -32,6 +32,7 @@ import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -56,6 +57,8 @@ class MailServiceBeanTest {
 
     //todo MockBean and ReflectionTestUtils.setField vs Autowired?
 
+    @MockBean
+    private ApplicationContext applicationContext;
 
     @MockBean
     private ResourceLoaderTool resourceLoaderTool;
@@ -101,7 +104,7 @@ class MailServiceBeanTest {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
 
-        mailServiceBean = new MailServiceBean(mailSender, validatorFactory, resourceLoaderTool, documentService);
+        mailServiceBean = new MailServiceBean(mailSender, validatorFactory, resourceLoaderTool, documentService, applicationContext);
         setUpTemplateEngine();
         setUpResourceProperties();
         setUpBasicMailTemplate();

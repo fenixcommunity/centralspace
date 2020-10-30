@@ -3,11 +3,13 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper.createRestEntity;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
+import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
 import com.fenixcommunity.centralspace.app.rest.dto.aws.InternalResourceDto;
 import com.fenixcommunity.centralspace.app.service.resource.ResourceCacheService;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
@@ -67,13 +69,16 @@ public class ResourceCacheController {
     public ResponseEntity<Boolean> test(@PathVariable("fileName") final String fileName, @PathVariable("fileFormat") final FileFormat fileFormat) {
         final InternalResourceDto internalResourceDto = new InternalResourceDto(fileName, fileFormat);
         final RestTemplate restTemplate = restCallerStrategy.getRetryRestTemplate();
-        final URI requestedUrl = URI.create(restPath + "/resource-cache/available");
+        final URI requestedAvailableUrl = URI.create(restPath + "/resource-cache/available");
         final HttpEntity<InternalResourceDto> restEntity = createRestEntity(internalResourceDto);
         final Boolean response = restTemplate
-                                .exchange(requestedUrl, HttpMethod.POST, restEntity, Boolean.class)
+                                .exchange(requestedAvailableUrl, HttpMethod.POST, restEntity, Boolean.class)
                                 .getBody();
         final Boolean responseOtherWay = restTemplate
-                                         .postForObject(requestedUrl, restEntity, Boolean.class);
+                                         .postForObject(requestedAvailableUrl, restEntity, Boolean.class);
+        // download large file
+        final URI requestedFileUrl = URI.create(restPath + "/resource-cache/static/img/Top.png");
+        final File fileResponse = RestTemplateHelper.getLargeFileRequest(restTemplate, requestedFileUrl);
 
         return response != null ? ResponseEntity.ok(response) : ResponseEntity.badRequest().build();
     }

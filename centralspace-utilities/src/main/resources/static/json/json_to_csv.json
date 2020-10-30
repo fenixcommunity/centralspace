@@ -1,0 +1,12 @@
+[
+  {
+    "result": "converted",
+    "converted": true,
+    "score": 4.0
+  },
+  {
+    "result": "not converted",
+    "converted": false,
+    "score": 1.1
+  }
+]

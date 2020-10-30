@@ -4,6 +4,8 @@ resource:
   convertedImagePath: ${temp.dir}converted-image/
   convertedPdfPath: ${temp.dir}converted-pdf/
   convertedTxtPath: ${temp.dir}converted-txt/
+  convertedCsvPath: ${temp.dir}converted-csv/
+  convertedJsonPath: ${temp.dir}converted-json/
   imageUrl: /static/img/
 temp:
   dir: C:/Projects/MK/centralspace-temp/

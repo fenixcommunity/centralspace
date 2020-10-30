@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.document.converter;
+package com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;

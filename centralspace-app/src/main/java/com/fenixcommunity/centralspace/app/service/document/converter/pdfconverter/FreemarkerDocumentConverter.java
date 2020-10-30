@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.document.converter;
+package com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter;
 
 import static lombok.AccessLevel.PRIVATE;
 

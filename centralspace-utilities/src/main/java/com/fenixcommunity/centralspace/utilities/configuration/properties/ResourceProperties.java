@@ -30,4 +30,8 @@ public class ResourceProperties {
     private String convertedTxtPath;
     @NotBlank
     private String convertedDocxPath;
+    @NotBlank
+    private String convertedCsvPath;
+    @NotBlank
+    private String convertedJsonPath;
 }

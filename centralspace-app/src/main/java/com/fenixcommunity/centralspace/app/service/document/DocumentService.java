@@ -1,28 +1,32 @@
 package com.fenixcommunity.centralspace.app.service.document;
 
-import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.BASIC;
-import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
+import static com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategyType.BASIC;
+import static com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategyType.THYMELEAF;
 import static java.util.Collections.singletonMap;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.io.IOException;
 import java.util.Map;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
+import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
+import com.fenixcommunity.centralspace.app.service.document.converter.jsonconverter.FromJsonConverter;
+import com.fenixcommunity.centralspace.app.service.document.converter.jsonconverter.ToJsonConverter;
 import com.fenixcommunity.centralspace.app.service.security.SecurityService;
-import com.fenixcommunity.centralspace.app.service.document.converter.BasicPdfConverter;
-import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategy;
-import com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType;
-import com.fenixcommunity.centralspace.app.service.document.converter.IPdfConverter;
-import com.fenixcommunity.centralspace.app.service.document.converter.ThymeleafPdfConverter;
+import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.BasicPdfConverter;
+import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategy;
+import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategyType;
+import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.IPdfConverter;
+import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.ThymeleafPdfConverter;
 import com.fenixcommunity.centralspace.app.service.document.pdfcreator.IPdfCreator;
 import com.fenixcommunity.centralspace.app.service.document.pdfcreator.ITextPdfCreator;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
@@ -101,6 +105,27 @@ public class DocumentService {
     public void convertPdfToDocx(final String pdfFileName) {
         final IPdfConverter converter = new BasicPdfConverter(pdfFileName, resourceTool);
         converter.convertPdfToDocx();
+    }
+
+    public void convertJsonToCsv(final String jsonFileName) {
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(jsonFileName, FileFormat.JSON));
+        final FromJsonConverter converter = new FromJsonConverter(resourceTool);
+        try {
+            converter.fromJsonTo(resource, FileFormat.CSV);
+        } catch (IOException e) {
+            throw new ServiceFailedException("Conversion error", e);
+        }
+    }
+
+    public <T> void convertCsvToJson(final String csvFileName, final Class<T> jsonClass) {
+        final FileFormat fileFormat = FileFormat.CSV;
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(csvFileName, fileFormat));
+        final ToJsonConverter<T> converter = new ToJsonConverter<>(resourceTool);
+        try {
+            converter.toJsonFrom(resource, fileFormat, jsonClass);
+        } catch (IOException e) {
+            throw new ServiceFailedException("Conversion error", e);
+        }
     }
 
 }

@@ -9,6 +9,8 @@ import lombok.Getter;
 public enum FileFormat {
 
     PDF("PDF", "pdf"),
+    CSV("CSV", "csv"),
+    JSON("JSON", "json"),
     HTML("HTML", "html"),
     TXT("TXT", "txt"),
     DOCX("DOCX", "docx"),

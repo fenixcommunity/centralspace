@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.document.converter;
+package com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter;
 
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;

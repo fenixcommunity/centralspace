@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.mail.mailsender;
 
-import static com.fenixcommunity.centralspace.app.service.document.converter.HtmlPdfConverterStrategyType.THYMELEAF;
+import static com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategyType.THYMELEAF;
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.MAIL;
 import static lombok.AccessLevel.PRIVATE;
 

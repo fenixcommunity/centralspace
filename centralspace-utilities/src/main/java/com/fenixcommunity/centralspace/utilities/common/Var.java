@@ -22,6 +22,8 @@ public class Var {
     public static final String PASSWORD_LOW = "password1";
     public static final String PASSWORD = "password";
     public static final String WRONG_PASSWORD = "wrongpassword";
+    public static final String PESEL = "91201045021";
+    public static final String NIP = "682-114-39-79";
     public static final String USER = "user";
     public static final String ADMIN = "admin";
 

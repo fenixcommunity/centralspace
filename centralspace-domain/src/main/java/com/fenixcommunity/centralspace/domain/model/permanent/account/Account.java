@@ -27,6 +27,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.pl.NIP;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 
 @Entity @Table(name = "account") @EntityListeners(AccountEntityListener.class)
@@ -43,12 +46,21 @@ public class Account extends AbstractBaseEntity {
     private Long id;
 
     @Convert(converter = UppercaseConverter.class)
+    @Length(min = 2, max = 15)
     @Column(name = "login", nullable = false, unique = true)
     private String login;
 
     //TODO walidacja i opakowac
     @Column(name = "mail", nullable = false)
     private String mail;
+
+    @PESEL
+    @Column(name = "pesel")
+    private String pesel;
+
+    @NIP
+    @Column(name = "nip")
+    private String nip;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)

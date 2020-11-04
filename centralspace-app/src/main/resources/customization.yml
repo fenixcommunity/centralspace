@@ -1,0 +1,7 @@
+#locale
+user:
+  locate:
+    language: en
+    region: IE
+
+globalCurrency: EUR

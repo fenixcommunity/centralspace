@@ -18,7 +18,7 @@ import org.yaml.snakeyaml.Yaml;
 
 @Converter
 public class MonetaryAmountConverter implements AttributeConverter<Money, BigDecimal> {
-    private static final String GLOBAL_CUSTOMIZATION_FILE = "globalcustomization.yml";
+    private static final String GLOBAL_CUSTOMIZATION_FILE = "customization.yml";
     private static final String GLOBAL_CURRENCY_PROPERTY_KEY = "globalCurrency";
     private static final String defaultCurrency;
 

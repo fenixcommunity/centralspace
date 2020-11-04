@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
+//@PropertySource(value = "classpath:security.yml", factory = YamlFetcher.class)  removed -> values from spring cloud vault
 @EnableConfigurationProperties(AmazonS3Properties.class)
 @AllArgsConstructor(access = PUBLIC) @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Profile("!test")

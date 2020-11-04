@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-//@PropertySource(value = "classpath:security.yml", factory = YamlFetcher.class)  removed -> values from spring cloud vault
 @ConfigurationProperties(prefix = "aws.app")
 @Getter @FieldDefaults(level = PRIVATE)
 class AmazonS3Properties {

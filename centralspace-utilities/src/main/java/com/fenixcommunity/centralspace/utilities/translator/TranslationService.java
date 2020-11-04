@@ -17,8 +17,7 @@ public class TranslationService {
     public static final String MESSAGES_PROPERTY = "messages";
 
     //TODO create map with keys?
-    public String getMessage(final AppLabel label, final AppLocate locate, final Object... formatArguments) {
-        final Locale locale = Locale.forLanguageTag(locate.getTag());
+    public String getMessage(final AppLabel label, final Locale locale, final Object... formatArguments) {
         final var bundle = PropertyResourceBundle.getBundle(MESSAGES_PROPERTY, locale);
         final String rawMessage = bundle.getString(label.getName());
 

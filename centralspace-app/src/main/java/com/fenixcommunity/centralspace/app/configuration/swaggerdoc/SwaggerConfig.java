@@ -97,6 +97,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         input.matches(API_PATH + "/cross/.*") ||
                         input.matches(API_PATH + "/metrics/.*") ||
                         input.matches(API_PATH + "/resource-cache/.*") ||
+                        input.matches(API_PATH + "/customization/.*") ||
                         input.matches("/actuator/.*");
     }
 

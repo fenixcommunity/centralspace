@@ -67,7 +67,7 @@ import reactor.core.publisher.Mono;
 @Log4j2
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrategy {
-
+// file handling: https://www.baeldung.com/java-write-to-file
     private static final int IMAGE_DPI = 500;
     private static final String READ_MODE = "r";
 

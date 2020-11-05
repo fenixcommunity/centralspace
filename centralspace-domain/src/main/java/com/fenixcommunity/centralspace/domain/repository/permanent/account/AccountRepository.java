@@ -24,13 +24,19 @@ public interface AccountRepository extends JpaRepository<Account, Long>, Account
     List<Account> findByLogins(@Param("logins") final Collection<String> logins,
                                final Sort sort);
 
+    @Query(value = "SELECT * FROM Account ORDER BY id",
+            countQuery = "SELECT count(*) FROM Account",
+            nativeQuery = true)
+    Page<Account> findAllWithPagination(final Pageable pageable);
+
     @Modifying
     @Query("UPDATE Account a SET a.login = ?2 WHERE a.id = ?1")
     int updateLogin(final Long accountId,
                     final String login);
 
-    @Query(value = "SELECT * FROM Account ORDER BY id",
-            countQuery = "SELECT count(*) FROM Account",
-            nativeQuery = true)
-    Page<Account> findAllWithPagination(final Pageable pageable);
+    long deleteByLogin(final String login);
+
+    @Modifying
+    @Query("DELETE from Account a WHERE a.id = :accountId")
+    long deleteByIdWhereLoginIsEmpty(@Param("accountId") final Long accountId);
 }

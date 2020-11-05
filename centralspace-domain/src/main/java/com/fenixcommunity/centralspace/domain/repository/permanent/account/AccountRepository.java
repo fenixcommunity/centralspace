@@ -7,6 +7,7 @@ import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>, AccountCustomRepository {
+
+    @EntityGraph(attributePaths = {"address"}) // if we want to dynamically change fetchType from Lazy to Eager
     Account findByLogin(final String login);
 
     @Query("SELECT a FROM Account a WHERE a.login IN :logins")

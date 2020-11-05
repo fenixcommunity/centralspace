@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import it.unimi.dsi.fastutil.longs.AbstractLong2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;
@@ -35,6 +37,8 @@ public class ExperimentalBenchmark {
     public static class MyState {
         private final Set<Item> itemSet = new HashSet<>();
         private final List<Item> itemList = new ArrayList<>();
+        private final AbstractLong2ObjectMap<Item> bigAndGoodPerformanceList = new Long2ObjectOpenHashMap<>();
+
 
         private long iterations = 1000;
 
@@ -46,10 +50,12 @@ public class ExperimentalBenchmark {
             for (long i = 0; i < iterations; i++) {
                 itemSet.add(new Item(i, "Ryszard"));
                 itemList.add(new Item(i, "John"));
+                bigAndGoodPerformanceList.put(i, new Item(i, "Max"));
             }
 
             itemList.add(item);
             itemSet.add(item);
+            bigAndGoodPerformanceList.put(item.getId(), item);
         }
     }
 
@@ -63,5 +69,11 @@ public class ExperimentalBenchmark {
     @SuppressWarnings("unused")
     public boolean testHashSet(MyState state) {
         return state.itemSet.contains(state.item);
+    }
+
+    @Benchmark
+    @SuppressWarnings("unused")
+    public boolean testBigMap(MyState state) {
+        return state.bigAndGoodPerformanceList.containsKey(state.item.getId());
     }
 }

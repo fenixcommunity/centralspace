@@ -93,6 +93,7 @@ public class AccountController {
     @ApiOperation(value = "Get all Accounts")
     public ResponseEntity<List<AccountDto>> getAll() {
         final List<Account> accounts = AsyncFutureHelper.get(accountService.findAll());
+        //   fast map <Long, Account> -> AbstractLong2ObjectMap<Account> bigAndGoodPerformanceList = new Long2ObjectOpenHashMap<>();
         //todo password add
         if (isEmpty(accounts)) {
             return ResponseEntity.noContent().build();

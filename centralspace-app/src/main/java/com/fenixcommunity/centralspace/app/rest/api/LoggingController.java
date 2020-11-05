@@ -5,16 +5,16 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
+import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
 import com.fenixcommunity.centralspace.app.service.serviceconnector.RemoteService;
 import com.fenixcommunity.centralspace.domain.model.memory.SessionAppInfo;
-import com.fenixcommunity.centralspace.metrics.service.analyzer.AutoServiceLoader;
+import com.fenixcommunity.centralspace.metrics.service.analyzer.AppMetadataLoader;
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -83,7 +83,7 @@ public class LoggingController {
         jsonObject.put("sessionId", httpSession.getId());
         jsonObject.put("sessionCreationTime",
                 timeTool.fromMilliseconds(httpSession.getCreationTime())
-                .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                        .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         jsonObject.put("sessionLastAccessedTime",
                 timeTool.fromMilliseconds(httpSession.getLastAccessedTime())
                         .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -91,8 +91,11 @@ public class LoggingController {
         final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)
         jsonArray.put(Boolean.TRUE);
 
-        final AutoServiceLoader<RemoteService> autoServiceLoader = new AutoServiceLoader<>();
-        autoServiceLoader.getMetadataInformation(RemoteService.class);
+        final AppMetadataLoader<RemoteService> appMetadataLoaderForRemoteService = new AppMetadataLoader<>();
+        appMetadataLoaderForRemoteService.getMetadataInformation(RemoteService.class);
+
+        final AppMetadataLoader<MethodMonitoring> appMetadataLoaderForMethodMonitoring = new AppMetadataLoader<>();
+        appMetadataLoaderForMethodMonitoring.getClassGraphScanResultForAnnotation(MethodMonitoring.class);
 
 
         return Mono.just(LoggerResponseDto.builder()

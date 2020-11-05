@@ -65,6 +65,7 @@
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>
         <google-auto-service.version>1.0-rc7</google-auto-service.version>
+        <classgraph.version>4.8.90</classgraph.version>
         <javamoney.version>1.1</javamoney.version>
         <javassist.version>3.23.1-GA</javassist.version>
         <modelmapper.version>2.3.5</modelmapper.version>
@@ -371,6 +372,11 @@
                 <artifactId>auto-service</artifactId>
                 <version>${google-auto-service.version}</version>
                 <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>io.github.classgraph</groupId>
+                <artifactId>classgraph</artifactId>
+                <version>${classgraph.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.javamoney</groupId>

@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.FieldDefaults;
 import org.springframework.util.ClassUtils;
 
@@ -69,6 +69,16 @@ public class DevTool {
         final List<String> result = new ArrayList<>();
         Arrays.stream(lists).forEach(result::addAll);
         return unmodifiableList(result);
+    }
+
+
+    public static boolean isJSONValid(final String jsonInString) {
+        try {
+            new ObjectMapper().readTree(jsonInString);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
 }

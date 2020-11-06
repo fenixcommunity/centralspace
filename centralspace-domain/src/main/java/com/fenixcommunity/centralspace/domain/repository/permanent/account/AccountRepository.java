@@ -12,6 +12,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -27,7 +29,9 @@ public interface AccountRepository extends JpaRepository<Account, Long>, Account
     @Query(value = "SELECT * FROM Account ORDER BY id",
             countQuery = "SELECT count(*) FROM Account",
             nativeQuery = true)
-    Page<Account> findAllWithPagination(final Pageable pageable);
+    Page<Account> findAllWithPagination(@PageableDefault(size = 5, page = 0)
+                                        @SortDefault(sort = "login", direction = Sort.Direction.DESC)
+                                        final Pageable pageable);
 
     @Modifying
     @Query("UPDATE Account a SET a.login = ?2 WHERE a.id = ?1")

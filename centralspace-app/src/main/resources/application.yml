@@ -1,9 +1,34 @@
 #App
 server:
   port: 8088
+  address: 127.0.0.1
+  tomcat:
+    max-threads: 200
+    connection-timeout: 5s
+    max-swallow-size: 2MB  #The maximum size of a request body:
+    accesslog:
+      enabled: true
+      directory: C:/Projects/MK/centralspace-temp/tomcat-logs
+      file-date-format: yyyy-MM-dd
+      prefix: access_log
+      suffix: .log
+  #  ssl:
+#    enabled: true
+#    protocol: TLS
+#    key-store-password: ..
+#    key-store-type: ...
+#    key-store: ...
+#    key-alias: ...
   servlet:
     context-path: /app
   host: http://localhost:${server.port}
+  error:
+    whitelabel:
+      enabled: false
+    path: /centralspace-error
+    include-exception: true
+    include-stacktrace: always
+
 centralspace-view:
   port: 7773
   origin: http://localhost:${centralspace-view.port}

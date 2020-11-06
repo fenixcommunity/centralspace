@@ -19,6 +19,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>, AccountCustomRepository {
 
+
+ czemu serwer nie smiga? ustawienia?
+
     @EntityGraph(attributePaths = {"address"}) // if we want to dynamically change fetchType from Lazy to Eager
     Account findByLogin(final String login);
 

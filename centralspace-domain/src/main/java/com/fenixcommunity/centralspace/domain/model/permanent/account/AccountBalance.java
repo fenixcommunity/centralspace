@@ -34,6 +34,8 @@ import org.javamoney.moneta.Money;
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class AccountBalance extends AbstractBaseEntity {
 
+    //todo add to account
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true)

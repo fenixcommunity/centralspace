@@ -37,6 +37,9 @@ centralspace-view:
 spring:
   jpa:
     open-in-view: false
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
   codec:
         max-in-memory-size: 10MB
 

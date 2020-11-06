@@ -17,6 +17,7 @@ public class ErrorDetails {
     @ApiModelProperty(notes = "Debug information (e.g., stack trace), not visible if runtime environment is 'production'", required = true)
     private String message;
     private String details;
+    private String fullStack;
     private List<String> collectedErrors;
     private String logRef = anyString(30);
     private ZonedDateTime timestamp = ZonedDateTime.now();
@@ -28,6 +29,7 @@ public class ErrorDetails {
                 "\ntimestamp: String" +
                 "\nmessage: String" +
                 "\ndetails: String" +
+                "\nfullStack: String" +
                 "\nlogRef: random String" +
                 "\n}";
     }

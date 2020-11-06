@@ -31,6 +31,17 @@ public class GlobalRestExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    //todo test
+    @ExceptionHandler(ServiceFailedException.class)
+    public ResponseEntity<?> internalServerException(ServiceFailedException ex, WebRequest request) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .message(ex.getRootCause())
+                .details(request.getDescription(false))
+                .fullStack(ex.getFullStackTrace())
+                .build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<?> handleHttpMediaTypeNotSupported
             (HttpMediaTypeNotSupportedException ex, WebRequest request) {
@@ -51,16 +62,6 @@ public class GlobalRestExceptionHandler {
                 .details(request.getDescription(false))
                 .build();
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-
-    //todo test
-    @ExceptionHandler(ServiceFailedException.class)
-    public ResponseEntity<?> internalServerException(ServiceFailedException ex, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .message(ex.getMessage())
-                .details(request.getDescription(false))
-                .build();
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(WebClientResponseException.class)

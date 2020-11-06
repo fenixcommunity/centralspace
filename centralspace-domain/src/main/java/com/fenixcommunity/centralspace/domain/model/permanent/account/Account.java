@@ -68,6 +68,10 @@ public class Account extends AbstractBaseEntity {
     //todo Set<...  sort by ...
     private List<Password> passwords;
 
+//     TODO [!] TO Avoid lazyInitException:
+//    - @Transactional
+//    - spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true
+//    - " JOIN FETCH a.address " +
     @ToString.Exclude
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", nullable = false)

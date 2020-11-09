@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.thread;
+package com.fenixcommunity.centralspace.app.service.threadexecutor;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;

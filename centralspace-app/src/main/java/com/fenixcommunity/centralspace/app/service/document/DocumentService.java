@@ -25,6 +25,7 @@ import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -47,19 +48,19 @@ public class DocumentService {
         pdfCreator.createPdf();
     }
 
-    public void convertPdfToImage(final String pdfFileName, final FileFormat fileFormat) {
+    public void convertPdfToImage(final String pdfFileName, @NonNull final FileFormat fileFormat) {
         final IPdfConverter converter = new BasicPdfConverter(pdfFileName, resourceTool);
         converter.convertPdfToImage(fileFormat);
     }
 
-    public void convertImageToPdfAsAdminByWebClientAndRestTemplate(final String imageFileName, final FileFormat fileFormat) {
+    public void convertImageToPdfAsAdminByWebClientAndRestTemplate(final String imageFileName, @NonNull  final FileFormat fileFormat) {
         final IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
         if (securityService.isValidSecurityRole()) {
             converter.convertImageToPdf(fileFormat, restCallerStrategy);
         }
     }
 
-    public void convertHtmlToPdf(final String htmlFileName, final HtmlPdfConverterStrategyType strategyType) {
+    public void convertHtmlToPdf(final String htmlFileName, @NonNull final HtmlPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
             final Map<String, String> thymeleafVariables = singletonMap("imageUrl",  resourceTool.getAbsoluteImagePath());
             final HtmlPdfConverterStrategy converter = new ThymeleafPdfConverter(htmlFileName, thymeleafVariables, templateEngine, resourceTool);
@@ -70,7 +71,7 @@ public class DocumentService {
         }
     }
 
-    public void convertPdfToHtml(final String pdfFileName, final HtmlPdfConverterStrategyType strategyType) {
+    public void convertPdfToHtml(final String pdfFileName, @NonNull final HtmlPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
             final HtmlPdfConverterStrategy converter = new ThymeleafPdfConverter(pdfFileName, null, templateEngine, resourceTool);
             converter.convertPdfToHtml();
@@ -80,7 +81,7 @@ public class DocumentService {
         }
     }
 
-    public String getHtmlBody(final String htmlFileName, final HtmlPdfConverterStrategyType strategyType) {
+    public String getHtmlBody(final String htmlFileName, @NonNull final HtmlPdfConverterStrategyType strategyType) {
         if (THYMELEAF == strategyType) {
             final Map<String, String> thymeleafVariables = singletonMap("imageUrl", resourceTool.getAbsoluteImagePath());
             final HtmlPdfConverterStrategy converter = new ThymeleafPdfConverter(htmlFileName, thymeleafVariables, templateEngine, resourceTool);
@@ -117,7 +118,7 @@ public class DocumentService {
         }
     }
 
-    public <T> void convertCsvToJson(final String csvFileName, final Class<T> jsonClass) {
+    public <T> void convertCsvToJson(final String csvFileName, @NonNull final Class<T> jsonClass) {
         final FileFormat fileFormat = FileFormat.CSV;
         final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(csvFileName, fileFormat));
         final ToJsonConverter<T> converter = new ToJsonConverter<>(resourceTool);

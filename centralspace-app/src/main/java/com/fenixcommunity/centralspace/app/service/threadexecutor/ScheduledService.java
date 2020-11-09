@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.service.thread;
+package com.fenixcommunity.centralspace.app.service.threadexecutor;
 
 
 import static lombok.AccessLevel.PACKAGE;
@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ScheduledService {
 
-    public void delayInSeconds(final Runnable runnable, final long delay) {
-        Executors.newSingleThreadScheduledExecutor().schedule(runnable, delay, TimeUnit.SECONDS);
+    public void delayInSeconds(final Runnable command, final long delay) {
+        Executors.newSingleThreadScheduledExecutor().schedule(command, delay, TimeUnit.SECONDS);
     }
 
-    public void repeatInSeconds(final Runnable runnable, final long delay) {
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(runnable, 0, delay, TimeUnit.SECONDS);
+    public void repeatInSeconds(final Runnable command, final long delay) {
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(command, 0, delay, TimeUnit.SECONDS);
     }
 }

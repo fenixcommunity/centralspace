@@ -12,6 +12,7 @@ import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,7 +55,7 @@ public class MailServiceBean implements MailService {
 
     @Async
     @Override
-    public void sendBasicMail(final String to) throws MailException {
+    public void sendBasicMail(@NonNull final String to) throws MailException {
         final MailMessageTemplate basicTemplate =  context.getBean("basicMailMessage", MailMessageTemplate.class);  // example
         final MailBuilder mailBuilder = new MailBuilder(basicMailMessage);
         mailBuilder.addTo(to);
@@ -66,7 +67,7 @@ public class MailServiceBean implements MailService {
 
     @Async
     @Override
-    public void sendRegistrationMailWithAttachment(final String to) throws MailException {
+    public void sendRegistrationMailWithAttachment(@NonNull final String to) throws MailException {
         final MailBuilder mailBuilder = new MailBuilder(registrationMailMessage);
         mailBuilder.addTo(to);
         final InternalResource attachment = getRegistrationAttachment();

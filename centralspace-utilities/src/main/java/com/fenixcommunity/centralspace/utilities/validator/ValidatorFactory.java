@@ -45,15 +45,13 @@ public class ValidatorFactory {
     }
 
     public Validator getInstance(final ValidatorType type) {
-//TODO        usun Assert   / Level level
         validateInstanceExist(type);
         final Validator validator = cache.get(type);
         return validator == null ? initValidator(type) : validator;
     }
 
-    //to test
     public void validateInstanceExist(final ValidatorType type) {
-        Assert.notNull(type, "ValidatorType cannot be null");
+        throw new IllegalArgumentException("ValidatorType cannot be null");
     }
 
 }

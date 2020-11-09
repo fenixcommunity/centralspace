@@ -19,6 +19,7 @@ import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +34,7 @@ public class S3Service {
     private final AmazonS3 amazonS3Client;
     private final ResourceLoaderTool resourceTool;
 
-    public Bucket createBucket(final String bucketName) {
+    public Bucket createBucket(@NonNull final String bucketName) {
         final CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName, amazonS3Client.getRegion());
         return amazonS3Client.createBucket(createBucketRequest);
     }
@@ -42,7 +43,7 @@ public class S3Service {
         return amazonS3Client.listBuckets();
     }
 
-    public PutObjectResult putObjectToBucket(final PutObjectToBucketDto putObjectToBucketDto) {
+    public PutObjectResult putObjectToBucket(@NonNull final PutObjectToBucketDto putObjectToBucketDto) {
         final InternalResourceDto internalResourceDto = putObjectToBucketDto.getInternalResourceDto();
         final File resourceFile;
         final var resource = resourceTool.loadResourceFile(InternalResource

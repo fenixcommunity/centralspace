@@ -9,6 +9,7 @@ import java.util.List;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
 import com.fenixcommunity.centralspace.domain.repository.permanent.PasswordRepository;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class PasswordService {
 
     private final PasswordRepository passwordRepository;
 
-    public Password save(final Password password) {
+    public Password save(@NonNull final Password password) {
         return passwordRepository.save(password);
     }
 

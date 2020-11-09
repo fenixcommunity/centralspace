@@ -60,7 +60,7 @@
         <micrometer-core.version>1.4.0</micrometer-core.version>
         <micrometer-registry.version>1.4.0</micrometer-registry.version>
         <jwttoken.version>0.9.1</jwttoken.version>
-        <lombok.version>1.18.4</lombok.version>
+        <lombok.version>1.18.16</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>

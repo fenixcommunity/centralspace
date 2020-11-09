@@ -16,6 +16,7 @@ import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.repository.permanent.account.AccountRepository;
 import com.fenixcommunity.centralspace.domain.repository.permanent.AddressRepository;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Sort;
@@ -31,22 +32,22 @@ public class AccountService {
     private final AddressRepository addressRepository;
 
     @MethodMonitoring
-    public Account save(final Account account) {
+    public Account save(@NonNull final Account account) {
         if (account.getAddress() != null) {
             addressRepository.save(account.getAddress());
         }
         return accountRepository.save(account);
     }
 
-    public void delete(final Account account) {
+    public void delete(@NonNull final Account account) {
         accountRepository.delete(account);
     }
 
-    public void deleteById(final Long id) {
+    public void deleteById(final long id) {
         accountRepository.deleteById(id);
     }
 
-    public Optional<Account> findById(final Long id) {
+    public Optional<Account> findById(final long id) {
         return accountRepository.findById(id);
     }
 

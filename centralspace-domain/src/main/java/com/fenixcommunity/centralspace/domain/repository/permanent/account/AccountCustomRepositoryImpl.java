@@ -1,5 +1,7 @@
 package com.fenixcommunity.centralspace.domain.repository.permanent.account;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +23,9 @@ public class AccountCustomRepositoryImpl implements AccountCustomRepository {
 
     @Override
     public List<Account> findAccountsByEmails(final Set<String> emails) {
+        if (isEmpty(emails)) {
+            return null;
+        }
         final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         final CriteriaQuery<Account> query = cb.createQuery(Account.class);
         final Root<Account> account = query.from(Account.class);

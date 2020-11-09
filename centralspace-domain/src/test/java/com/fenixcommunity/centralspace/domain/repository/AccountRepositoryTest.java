@@ -11,6 +11,7 @@ import static java.util.Collections.singletonList;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.DEFAULT;
@@ -22,6 +23,7 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
+import com.fenixcommunity.centralspace.domain.dto.AccountDataDto;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
@@ -35,7 +37,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,6 +66,7 @@ public class AccountRepositoryTest {
 
     private static final long ACCOUNT_ID_FROM_QUERY = 99L;
     public static final String ACCOUNT_LOGIN_FROM_QUERY = "LOGINQUERY";
+    public static final String TEST_MAIL = "text@gmail.com";
 
     @Autowired
     private TestEntityManager testEntityManager;
@@ -154,6 +156,27 @@ public class AccountRepositoryTest {
         foundAccounts.sort(idComparator.thenComparing(Account::getMail).reversed());
 
         assertThat(foundAccounts.get(0).getLogin()).isEqualTo("LOGIN_OTHER_2");
+    }
+
+    @Test
+    public void findByLoginWithNullArgReturnsNullTest() {
+        // then where login is null
+        assertDoesNotThrow(() -> accountRepository.findByLogin(null));
+        assertDoesNotThrow(() -> accountRepository.findAccountsByEmails(null));
+        assertDoesNotThrow(() -> {
+            accountRepository.findAllWithPagination(null);
+            accountRepository.findByLogins(null, Sort.by("login").descending());
+        });
+    }
+
+    @Test
+    public void findByLoginDynamicProjectionsTest() {
+            Account account = accountRepository.findByLogin(LOGIN_UPPER);
+            AccountDataDto accountDataDto = accountRepository.findByMail(AccountDataDto.class, TEST_MAIL);
+            assertThat(account).isNotNull();
+            assertThat(accountDataDto).isNotNull();
+            assertThat(account.getLogin()).isEqualTo(LOGIN_UPPER);
+            assertThat(accountDataDto.getMail()).isEqualTo(TEST_MAIL);
     }
 
     private void createAccount(String login, String mail, String providedPassword) {

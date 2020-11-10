@@ -4,9 +4,10 @@ import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailService;
+import com.fenixcommunity.centralspace.utilities.common.Var;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +16,10 @@ public class SchedulerServiceBean implements SchedulerService {
 
     private final MailService mailService;
 
-    //    @Scheduled(fixedDelay = 60 * 60 * 1000)
-    public void mailReminder(@NonNull final String to) {
-        mailService.sendBasicMail(to);
+//  @Scheduled(cron = "0 15 10 16 * ?", zone = "Europe/Dublin") // 10:15 AM on the 16th day of every month in Paris time
+    @Scheduled(fixedDelay = 1000, initialDelay = 1000)
+    public void mailReminder() {
+        // todo getting mails with repository
+        mailService.sendBasicMail(Var.EMAIL);
     }
-
 }

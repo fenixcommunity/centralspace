@@ -90,6 +90,7 @@
         <!-- TEST DEPENDENCIES -->
         <spring-boot-test.version>2.2.5.RELEASE</spring-boot-test.version>
         <spring-security-test.version>5.2.1.RELEASE</spring-security-test.version>
+        <awaitility-test.version>4.0.3</awaitility-test.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <junit-jupiter-api.version>${junit-jupiter.version}</junit-jupiter-api.version>
         <junit-jupiter-params.version>${junit-jupiter.version}</junit-jupiter-params.version>
@@ -400,6 +401,12 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-test</artifactId>
                 <version>${spring-security-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility-test.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

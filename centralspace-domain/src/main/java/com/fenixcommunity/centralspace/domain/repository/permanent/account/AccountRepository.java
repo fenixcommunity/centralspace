@@ -1,7 +1,12 @@
 package com.fenixcommunity.centralspace.domain.repository.permanent.account;
 
+import static org.hibernate.annotations.QueryHints.CACHEABLE;
+import static org.hibernate.annotations.QueryHints.COMMENT;
+
 import java.util.Collection;
 import java.util.List;
+
+import javax.persistence.QueryHint;
 
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import org.springframework.data.domain.Page;
@@ -11,6 +16,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
@@ -26,8 +32,12 @@ public interface AccountRepository extends JpaRepository<Account, Long>, Account
     <T> T findByMail(final Class<T> dataType, final String login);
 
     @Query("SELECT a FROM Account a WHERE a.login IN :logins")
+    @QueryHints({
+            @QueryHint(name = CACHEABLE, value = "true"),
+            @QueryHint(name = COMMENT, value = "findByLogins query")
+    })
     List<Account> findByLogins(@Param("logins") final Collection<String> logins,
-                               final Sort sort);
+                                                final Sort sort);
 
     @Query(value = "SELECT * FROM Account ORDER BY id",
             countQuery = "SELECT count(*) FROM Account",

@@ -26,13 +26,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.pl.NIP;
 import org.hibernate.validator.constraints.pl.PESEL;
 
-
+// @NamedQuery(name = "Account.findByAccountId" ...
 @Entity @Table(name = "account") @EntityListeners(AccountEntityListener.class)
 // @DynamicUpdate -> when we update login then update Account set login=?, mail=? ... where id=?
 // if we want update only login column then @DynamicUpdate -> update Account set name=? where id=?
@@ -63,7 +64,7 @@ public class Account extends AbstractBaseEntity {
     @Column(name = "nip")
     private String nip;
 
-    @ToString.Exclude
+    @Singular @ToString.Exclude
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     //todo Set<...  sort by ...
     private List<Password> passwords;

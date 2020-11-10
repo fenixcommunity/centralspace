@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
+import lombok.Singular;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
@@ -18,6 +19,7 @@ public class ErrorDetails {
     private String message;
     private String details;
     private String fullStack;
+    @Singular("collectedError")
     private List<String> collectedErrors;
     private String logRef = anyString(30);
     private ZonedDateTime timestamp = ZonedDateTime.now();

@@ -158,8 +158,8 @@ class PasswordValidatorTest {
 
     @Test
     public void givenExampleAndLambdaInvocation_thenDoNothing() {
-        doNothing().when(validatorFactorySpy).validateInstanceExist(null);
-        assertThrows(NullPointerException.class, () -> {
+        doNothing().when(validatorFactorySpy).validateAllowedValidatorTypes(null);
+        assertThrows(IllegalArgumentException.class, () -> {
             validatorFactorySpy.getInstance(null);
         });
         // would work fine

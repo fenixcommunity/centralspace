@@ -28,6 +28,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,7 +93,8 @@ public class AccountController {
             @ApiResponse(code = 501, message = "Not implemented for given extraction type")
     })
     @ApiOperation(value = "Get all Accounts")
-    public ResponseEntity<List<AccountDto>> getAll() {
+    public ResponseEntity<List<AccountDto>> getAll(@RequestHeader HttpHeaders headers) {
+        headers.add("headerAppRest", "getAllAccounts");
         final List<Account> accounts = AsyncFutureHelper.get(accountService.findAll());
         //   fast map <Long, Account> -> AbstractLong2ObjectMap<Account> bigAndGoodPerformanceList = new Long2ObjectOpenHashMap<>();
         //todo password add
@@ -114,7 +117,7 @@ public class AccountController {
 
     //    todo RestErrorHandler apply
     @PutMapping("/update/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<BasicResponse> update(
             @PathVariable(name = "id") final Long id, @Valid @RequestBody final AccountDto requestAccountDto)
             throws ResourceNotFoundException {
@@ -122,7 +125,7 @@ public class AccountController {
         final Account requestAccount = new AccountMapper(OperationLevel.LOW).mapFromDto(requestAccountDto);
         final Account updatedAccount = accountService.save(requestAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
-        return ResponseEntity.created(getCurrentURI()).body(response);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{id}")

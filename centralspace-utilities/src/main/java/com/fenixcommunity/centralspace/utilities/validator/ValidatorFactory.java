@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 
 // @Component???
@@ -45,13 +45,15 @@ public class ValidatorFactory {
     }
 
     public Validator getInstance(final ValidatorType type) {
-        validateInstanceExist(type);
+        validateAllowedValidatorTypes(type);
         final Validator validator = cache.get(type);
         return validator == null ? initValidator(type) : validator;
     }
 
-    public void validateInstanceExist(final ValidatorType type) {
-        throw new IllegalArgumentException("ValidatorType cannot be null");
+    public void validateAllowedValidatorTypes(final ValidatorType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("ValidatorType cannot be null");
+        }
     }
 
 }

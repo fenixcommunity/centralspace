@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
@@ -36,7 +37,7 @@ public class Address extends AbstractBaseEntity {
     @Column(name = "city")
     private String city;
 
-    @ToString.Exclude
+    @Singular @ToString.Exclude
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<Account> accounts;
 }

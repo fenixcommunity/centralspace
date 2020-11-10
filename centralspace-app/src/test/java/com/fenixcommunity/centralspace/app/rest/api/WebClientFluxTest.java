@@ -50,6 +50,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = {CentralspaceApplicationConfig.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class WebClientLuxTest {
+    // we can use also Rest-Assured
+    // https://www.baeldung.com/rest-assured-authentication
+    // https://www.baeldung.com/rest-assured-response
 
     private static final String BASE_ACCOUNT_FLUX_URL = "/api/account-flux/";
     private static final String BASE_LOGGER_URL = "/api/logger/";

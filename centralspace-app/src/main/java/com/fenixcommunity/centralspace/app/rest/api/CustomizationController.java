@@ -11,10 +11,12 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController @RequestMapping("/api/customization")
 @Log4j2
@@ -24,7 +26,8 @@ public class CustomizationController {
     private final CustomizationService customizationService;
 
     @PostMapping("/switch-user-locale")
-    public Mono<String> getInfo(@RequestParam(value = "locale", defaultValue = "PL") final AppLocale locale) {
+    public Mono<String> getInfo(@RequestParam(value = "locale", defaultValue = "PL") final AppLocale locale,
+                                @RequestHeader(value = "accept-language", required = false, defaultValue = "pl-PL") @ApiIgnore String language) {
         final Locale switchedLocale = customizationService.switchUserLocale(locale);
 
         return Mono.just(switchedLocale.toLanguageTag());

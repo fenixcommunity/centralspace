@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,6 +51,12 @@ public class DevTool {
             return false;
         }
         return true;
+    }
+
+    public static Set<String> listFilesForDirectory(final String dir) throws IOException {
+        final FileVisitor visitor = new FileVisitor();
+        Files.walkFileTree(Paths.get(dir), visitor);
+        return visitor.getFileList();
     }
 
     //todo generic

@@ -9,6 +9,8 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +52,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController @RequestMapping(value = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Validated
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
@@ -66,10 +70,10 @@ public class AccountController {
                 .headers(prepareResponseHeaders(singletonMap("Custom-Header", String.valueOf(accountDto.getId()))))
                 .body(accountDto);
     }
-
     @GetMapping(value = "/login/{login}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AccountDto> getByLogin(@PathVariable(value = "login") final String login) throws ResourceNotFoundException {
+    public ResponseEntity<AccountDto> getByLogin(@PathVariable(value = "login") @NotBlank(message = "not blank") @Size(max = 10) final String login)
+            throws ResourceNotFoundException {
         final AccountDto accountDto = AsyncFutureHelper.get(accountService.findByLogin(login))
                 .map(x -> new AccountMapper(HIGH).mapToDto(x))
                 .orElse(null); // .orElseThrow(() -> new ResourceNotFoundException("Account not found for this login: " + login));

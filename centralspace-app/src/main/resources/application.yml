@@ -42,6 +42,9 @@ spring:
         enable_lazy_load_no_trans: true
   codec:
         max-in-memory-size: 10MB
+  jackson:
+    time-zone: Europe/Dublin
+    date-format: yyyy-MM-dd HH:mm:ss
 
 #Base paths
 path:
@@ -99,3 +102,6 @@ remoteserver:
     username: username
     password: password
     remoteFileDirection: remote_sftp/
+
+#Analyze VM:
+#https://www.baeldung.com/native-memory-tracking-in-jvm

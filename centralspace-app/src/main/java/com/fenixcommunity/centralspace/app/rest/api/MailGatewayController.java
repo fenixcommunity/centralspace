@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.concurrent.TimeUnit;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailService;
@@ -14,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController @RequestMapping("/api/mail")
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Validated
 public class MailGatewayController {
     //todo account/mail/
     private final MailService mailService;
 
     @PostMapping("/basic/{to}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity sendBasicMail(@PathVariable("to") @NotBlank final String to) {
+    public ResponseEntity sendBasicMail(@PathVariable("to") @NotBlank @Email final String to) {
         mailService.sendBasicMail(to);
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
@@ -38,7 +41,7 @@ public class MailGatewayController {
 
     @PostMapping("/registration/{to}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity sendMailWithAttachment(@PathVariable("to") @NotBlank final String to) {
+    public ResponseEntity sendMailWithAttachment(@PathVariable("to") @NotBlank @Email final String to) {
         mailService.sendRegistrationMailWithAttachment(to);
         return ResponseEntity.ok().build();
     }

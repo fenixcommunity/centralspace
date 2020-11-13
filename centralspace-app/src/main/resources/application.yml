@@ -72,12 +72,19 @@ actuator:
     fix:
       enabled: true
   host: ${server.host}
+
 management:
   endpoints:
     web:
       exposure:
-        exclude: shutdown
         include: "*"
+        exclude: restart, refresh
+  endpoint:
+    restart:
+      enabled: true
+    refresh:
+      enabled: true
+
 springdoc:
   show:
     actuator: true

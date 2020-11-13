@@ -16,8 +16,8 @@ public class SchedulerServiceBean implements SchedulerService {
 
     private final MailService mailService;
 
-//  @Scheduled(cron = "0 15 10 16 * ?", zone = "Europe/Dublin") // 10:15 AM on the 16th day of every month in Paris time
-    @Scheduled(fixedDelay = 1000, initialDelay = 1000)
+//  @Scheduled(fixedDelay = 1000, initialDelay = 1000)
+    @Scheduled(cron = "0 15 10 16 * ?", zone = "Europe/Dublin") // 10:15 AM on the 16th day of every month in Paris time
     public void mailReminder() {
         // todo getting mails with repository
         mailService.sendBasicMail(Var.EMAIL);

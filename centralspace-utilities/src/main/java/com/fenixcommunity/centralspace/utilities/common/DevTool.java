@@ -1,16 +1,16 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.SPACE;
 import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toMap;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -36,29 +36,6 @@ public class DevTool {
         return clazz.getName();
     }
 
-    public static File createNewOutputFile(final String filePath) {
-        if (createFileDirectories(filePath)) {
-            return new File(filePath);
-        }
-        return null;
-    }
-
-    public static boolean createFileDirectories(final String filePath) {
-        Path path = Paths.get(filePath);
-        try {
-            Files.createDirectories(path.getParent());
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
-    }
-
-    public static Set<String> listFilesForDirectory(final String dir) throws IOException {
-        final FileVisitor visitor = new FileVisitor();
-        Files.walkFileTree(Paths.get(dir), visitor);
-        return visitor.getFileList();
-    }
-
     //todo generic
     public static String[] mergeStringArrays(final String[]... arrays) {
         String[] result = new String[0];
@@ -78,6 +55,11 @@ public class DevTool {
         return unmodifiableList(result);
     }
 
+    public static Map<String, String> mapStringToMap(String mapAsString) {
+        return Arrays.stream(mapAsString.split(","))
+                .map(entry -> entry.split("="))
+                .collect(toMap(entry -> entry[0], entry -> entry[1]));
+    }
 
     public static boolean isJSONValid(final String jsonInString) {
         try {
@@ -86,6 +68,26 @@ public class DevTool {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static boolean checkStringContainsWords(final String inputString, final String[] words) {
+        return List.of(inputString.split(SPACE)).containsAll(List.of(words));
+    }
+
+    public static File createNewOutputFile(final String filePath) {
+        return FileDevTool.createNewOutputFile(filePath);
+    }
+
+    public static boolean createFileDirectories(final String filePath) {
+        return FileDevTool.createFileDirectories(filePath);
+    }
+
+    public static Set<String> listFilesForDirectory(final String dir) throws IOException {
+        return FileDevTool.listFilesForDirectory(dir);
+    }
+
+    public static boolean deleteFileContent(final String filePath) {
+        return FileDevTool.deleteFileContent(filePath);
     }
 
 }

@@ -22,6 +22,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
@@ -55,29 +56,36 @@ public class MetricsConfig {
     }
 
     @Bean
+    @Qualifier("prometheusHttpServer")
     @Profile("!test")
-    PrometheusMeterRegistry prometheusMeterRegistry() {
-        final PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+    public HttpServer prometheusHttpServer() {
         try {
-            final HttpServer server = HttpServer.create(new InetSocketAddress(prometheusPort), 0);
-            final HttpContext httpContext = server.createContext(prometheusEndpoint, httpExchange -> {
-                final String response = prometheusRegistry.scrape();
-                httpExchange.sendResponseHeaders(200, response.getBytes().length);
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    os.write(response.getBytes());
-                }
-            });
-            httpContext.setAuthenticator(new BasicAuthenticator("demo-auth") {
-                @Override
-                public boolean checkCredentials(final String user, final String pwd) {
-                    return user.equals(prometheusUser) && pwd.equals(prometheusPassword);
-                }
-            });
-
-            new Thread(server::start).start();
+            return HttpServer.create(new InetSocketAddress(prometheusPort), 0);
         } catch (IOException e) {
             throw new PrometheusMeterRegistryException(e);
         }
+    }
+
+    @Bean
+    @DependsOn("prometheusHttpServer")
+    @Profile("!test")
+    PrometheusMeterRegistry prometheusMeterRegistry(HttpServer prometheusHttpServer) {
+        final PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+        final HttpContext httpContext = prometheusHttpServer.createContext(prometheusEndpoint, httpExchange -> {
+            final String response = prometheusRegistry.scrape();
+            httpExchange.sendResponseHeaders(200, response.getBytes().length);
+            try (OutputStream os = httpExchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
+        });
+        httpContext.setAuthenticator(new BasicAuthenticator("demo-auth") {
+            @Override
+            public boolean checkCredentials(final String user, final String pwd) {
+                return user.equals(prometheusUser) && pwd.equals(prometheusPassword);
+            }
+        });
+
+        new Thread(prometheusHttpServer::start).start();
 
         prometheusRegistry.config().meterFilter(new PrometheusRenameFilter());
 

@@ -24,8 +24,8 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
-#      naming: <- to uppercase
-#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      naming:
+        physical-strategy: com.fenixcommunity.centralspace.domain.configuration.DomainNamingStrategy
     properties:
       hibernate:
         bytecode:

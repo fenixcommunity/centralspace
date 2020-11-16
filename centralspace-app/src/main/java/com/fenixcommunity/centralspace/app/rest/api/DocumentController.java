@@ -5,6 +5,8 @@ import static com.fenixcommunity.centralspace.app.service.document.converter.pdf
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.util.List;
+
 import com.fenixcommunity.centralspace.app.rest.dto.converter.JsonConverterResultDto;
 import com.fenixcommunity.centralspace.app.service.document.DocumentService;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
@@ -25,20 +27,23 @@ public class DocumentController {
     private final DocumentService documentService;
 
     @GetMapping("/create-pdf")
-    public void createPdf(@RequestParam(value = "pdfFileName", defaultValue = "created_pdf") final String pdfFileName) {
+    public ResponseEntity createPdf(@RequestParam(value = "pdfFileName", defaultValue = "created_pdf") final String pdfFileName) {
         documentService.createPdf(pdfFileName);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/pdf-to-image")
-    public void convertPdfToImage(@RequestParam(value = "pdfFileName", defaultValue = "pdf_to_image") final String pdfFileName,
+    public ResponseEntity convertPdfToImage(@RequestParam(value = "pdfFileName", defaultValue = "pdf_to_image") final String pdfFileName,
                                   @RequestParam(value = "fileFormat", defaultValue = "png") final String fileFormat) {
         documentService.convertPdfToImage(pdfFileName, FileFormat.parseFileFormat(fileFormat));
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/image-to-pdf-as-admin-by-web-client-and-rest-template")
-    public void convertImageToPdfAsAdminByWebClient(@RequestParam(value = "imageFileName", defaultValue = "image_to_pdf") final String imageFileName,
+    public ResponseEntity convertImageToPdfAsAdminByWebClient(@RequestParam(value = "imageFileName", defaultValue = "image_to_pdf") final String imageFileName,
                                                     @RequestParam(value = "fileFormat", defaultValue = "png") final String fileFormat) {
         documentService.convertImageToPdfAsAdminByWebClientAndRestTemplate(imageFileName, FileFormat.parseFileFormat(fileFormat));
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/html-to-pdf")
@@ -78,27 +83,39 @@ public class DocumentController {
     }
 
     @GetMapping("/pdf-to-txt")
-    public void convertPdfToText(@RequestParam(value = "pdfFileName", defaultValue = "pdf_to_txt") final String pdfFileName) {
+    public ResponseEntity convertPdfToText(@RequestParam(value = "pdfFileName", defaultValue = "pdf_to_txt") final String pdfFileName) {
         documentService.convertPdfToText(pdfFileName);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/txt-to-pdf")
-    public void convertTextToPdf(@RequestParam(value = "textFileName", defaultValue = "txt_to_pdf") final String textFileName) {
+    public ResponseEntity convertTextToPdf(@RequestParam(value = "textFileName", defaultValue = "txt_to_pdf") final String textFileName) {
         documentService.convertTextToPdf(textFileName);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/pdf-to-docx")
-    public void convertPdfToDocx(@RequestParam(value = "pdfFileName", defaultValue = "pdf_to_docx") final String pdfFileName) {
+    public ResponseEntity convertPdfToDocx(@RequestParam(value = "pdfFileName", defaultValue = "pdf_to_docx") final String pdfFileName) {
         documentService.convertPdfToDocx(pdfFileName);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/json-to-csv")
-    public void convertJsonToCsv(@RequestParam(value = "jsonFileName", defaultValue = "json_to_csv") final String jsonFileName) {
+    public ResponseEntity convertJsonToCsv(@RequestParam(value = "jsonFileName", defaultValue = "json_to_csv") final String jsonFileName) {
         documentService.convertJsonToCsv(jsonFileName);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/csv-to-json")
-    public void convertCsvToJson(@RequestParam(value = "csvFileName", defaultValue = "csv_to_json") final String csvFileName) {
+    public ResponseEntity convertCsvToJson(@RequestParam(value = "csvFileName", defaultValue = "csv_to_json") final String csvFileName) {
         documentService.convertCsvToJson(csvFileName, JsonConverterResultDto.class);
+        return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/csv-to-list")
+    public ResponseEntity<String> convertCsvToList(@RequestParam(value = "csvFileName", defaultValue = "csv_to_json") final String csvFileName) {
+        final List<List<String>> results = documentService.convertCsvToList(csvFileName);
+        return ResponseEntity.ok(results.toString());
+    }
+
 }

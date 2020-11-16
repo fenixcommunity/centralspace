@@ -74,6 +74,7 @@
         <jmh-generator-annprocess.version>1.23</jmh-generator-annprocess.version>
         <jackson-dataformat-yaml.version>2.10.3</jackson-dataformat-yaml.version>
         <jackson-dataformat-csv.version>2.11.1</jackson-dataformat-csv.version>
+        <opencsv.version>5.2</opencsv.version>
         <jackson-databind.version>2.11.2</jackson-databind.version>
         <snakeyaml.version>1.26</snakeyaml.version>
         <json.version>20200518</json.version>
@@ -343,6 +344,11 @@
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-csv</artifactId>
                 <version>${jackson-dataformat-csv.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.opencsv</groupId>
+                <artifactId>opencsv</artifactId>
+                <version>${opencsv.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

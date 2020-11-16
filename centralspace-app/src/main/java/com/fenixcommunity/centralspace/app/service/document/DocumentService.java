@@ -2,11 +2,15 @@ package com.fenixcommunity.centralspace.app.service.document;
 
 import static com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategyType.BASIC;
 import static com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategyType.THYMELEAF;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonMap;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
@@ -24,6 +28,8 @@ import com.fenixcommunity.centralspace.app.service.document.pdfcreator.ITextPdfC
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
@@ -127,6 +133,25 @@ public class DocumentService {
         } catch (IOException e) {
             throw new ServiceFailedException("Conversion error", e);
         }
+    }
+
+    public List<List<String>> convertCsvToList(final String csvFileName) {
+        final FileFormat fileFormat = FileFormat.CSV;
+        final var resource = resourceTool.loadResourceFile(InternalResource.resourceByNameAndType(csvFileName, fileFormat));
+        if (!resource.exists()) {
+            return emptyList();
+        }
+
+        final List<List<String>> records = new LinkedList<>();
+        try (CSVReader csvReader = new CSVReader(new FileReader(resource.getFile()))) {
+            String[] values;
+            while ((values = csvReader.readNext()) != null) {
+                records.add(List.of(values));
+            }
+        } catch (CsvValidationException | IOException e) {
+            throw new ServiceFailedException("Conversion error", e);
+        }
+        return records;
     }
 
 }

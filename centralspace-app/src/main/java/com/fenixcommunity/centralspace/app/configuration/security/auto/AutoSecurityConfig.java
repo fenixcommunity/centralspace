@@ -43,8 +43,8 @@ public abstract class AutoSecurityConfig {
     private static final String API_PATH = "/api";
     private static final String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
     private static final String REMEMBER_ME_COOKIE = "remembermecookie";
-    private static final int SESSION_TIMEOUT_SECONDS = 60 * 5;
-    private static final int TOKEN_VALIDITY_SECONDS = 60 * 60;
+    private static final int SESSION_TIMEOUT_SECONDS = 60 * 10; //todo to properties
+    private static final int TOKEN_VALIDITY_SECONDS = 60 * 45;
 
     private static final String[] ADMIN_API_AUTH_LIST = {
             API_PATH + "/account/**",

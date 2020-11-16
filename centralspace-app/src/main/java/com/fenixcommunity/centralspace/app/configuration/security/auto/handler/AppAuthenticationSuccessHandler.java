@@ -17,21 +17,21 @@ import org.springframework.util.Assert;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    private final int sessionTimeout;
     private final String forwardUrl;
 
-    public AppAuthenticationSuccessHandler(final String forwardUrl) {
+    public AppAuthenticationSuccessHandler(final int sessionTimeout, final String forwardUrl) {
         Assert.isTrue(UrlUtils.isValidRedirectUrl(forwardUrl), () -> "'" + forwardUrl + "' is not a valid forward URL");
-//        todo isTrue
         this.forwardUrl = forwardUrl;
+        this.sessionTimeout = sessionTimeout;
     }
 
     @Override
-    public void onAuthenticationSuccess(
-            final HttpServletRequest request,
-            final HttpServletResponse response,
-            final Authentication authentication) throws IOException {
-
+    public void onAuthenticationSuccess(final HttpServletRequest request,
+                                        final HttpServletResponse response,
+                                        final Authentication authentication) throws IOException {
         final Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        request.getSession(false).setMaxInactiveInterval(sessionTimeout);
         if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect(forwardUrl);
 //todo          response.sendRedirect("/admin.html");

@@ -9,14 +9,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.util.ClassUtils;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
@@ -90,4 +93,25 @@ public class DevTool {
         return FileDevTool.deleteFileContent(filePath);
     }
 
+    public static String generateSecurePassword() {
+        final String upperCaseLetters = RandomStringUtils.random(2, 65, 90, true, true);
+        final String lowerCaseLetters = RandomStringUtils.random(2, 97, 122, true, true);
+        final String numbers = RandomStringUtils.randomNumeric(2);
+        final String specialChar = RandomStringUtils.random(2, 33, 47, false, false);
+        final String totalChars = RandomStringUtils.randomAlphanumeric(2);
+
+        final String combinedChars = upperCaseLetters
+                .concat(lowerCaseLetters)
+                .concat(numbers)
+                .concat(specialChar).concat(totalChars);
+
+        final List<Character> charsList = combinedChars.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.toList());
+        Collections.shuffle(charsList);
+
+        return charsList.stream()
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+    }
 }

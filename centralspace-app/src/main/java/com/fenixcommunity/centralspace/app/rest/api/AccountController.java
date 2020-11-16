@@ -10,6 +10,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -63,7 +64,7 @@ public class AccountController {
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") final Long id) throws ResourceNotFoundException {
+    public ResponseEntity<AccountDto> getById(@PathVariable(value = "id") @PositiveOrZero final Long id) throws ResourceNotFoundException {
         final AccountDto accountDto = findByIdAndMapToDto(id);
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))

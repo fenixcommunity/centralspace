@@ -68,7 +68,7 @@ public class InitializerApp implements CommandLineRunner {
                 + LINE + "and get/delete keys: vault kv get secret/centralspace-vault-config" + LINE + "or go to: http://localhost:8200/ui";
 
         final String testInfo = "Please run tests with profile 'test'(run with env. variables -> spring.profiles.active=test)";
-        final String analyzeVMInfo = "Analyze VM working (not for Open JDK):"
+        final String analyzeVMInfo = "Analyze VM working (the same provided by Prometheus server. Not for Open JDK)"
                 + LINE + "-XX:NativeMemoryTracking=summary"
                 + LINE + "command: jcmd -> jcmd <pid> VM.native_memory";
 

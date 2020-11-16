@@ -30,6 +30,7 @@ public class TimeTool {
         this.validator = validatorFactory.getInstance(NOT_NULL);
     }
 
+    //annotations @Past @Future
     public boolean isDate(String value, String pattern) {
         return GenericValidator.isDate(value, pattern, true);
     }
@@ -48,5 +49,13 @@ public class TimeTool {
 
     public ZonedDateTime fromMilliseconds(long timeInMilliseconds) {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(timeInMilliseconds), ZoneOffset.UTC);
+    }
+
+    public long toMilliseconds(ZonedDateTime zonedDateTime) {
+        return zonedDateTime.toInstant().toEpochMilli();
+    }
+
+    public ZonedDateTime fromSeconds(long timeInSeconds) {
+        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(timeInSeconds), ZoneOffset.UTC);
     }
 }

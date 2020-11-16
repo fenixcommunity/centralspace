@@ -172,11 +172,28 @@ public class AccountRepositoryTest {
     @Test
     public void findByLoginDynamicProjectionsTest() {
             Account account = accountRepository.findByLogin(LOGIN_UPPER);
-            AccountDataDto accountDataDto = accountRepository.findByMail(AccountDataDto.class, TEST_MAIL);
+            AccountDataDto accountDataDto = accountRepository.findByMailOrderByMailAsc(AccountDataDto.class, TEST_MAIL);
             assertThat(account).isNotNull();
             assertThat(accountDataDto).isNotNull();
             assertThat(account.getLogin()).isEqualTo(LOGIN_UPPER);
             assertThat(accountDataDto.getMail()).isEqualTo(TEST_MAIL);
+    }
+
+    @Test
+    public void findFirstAndTopTest() {
+        Optional<Account> accountFirst = accountRepository.findFirstByOrderByLoginDesc();
+        Optional<Account> accountTop = accountRepository.findTopByOrderByLogin();
+        assertThat(accountFirst.isPresent()).isTrue();
+        assertThat(accountTop.isPresent()).isTrue();
+        assertThat(accountFirst.get().getLogin()).isNotEqualTo(accountTop.get().getLogin());
+    }
+
+    @Test
+    public void findFirst10ByLoginId() {
+        List<Account> accounts = accountRepository.findFirst10ByOrderById();
+        assertThat(accounts).isNotEmpty();
+        assertThat(accounts.size()).isGreaterThan(1);
+
     }
 
     private void createAccount(String login, String mail, String providedPassword) {

@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -51,7 +52,7 @@ public class LoggingController {
             @ApiResponse(code = 500, response = ErrorDetails.class, message = "Internal server error"),
             @ApiResponse(code = 501, response = ErrorDetails.class, message = "Not implemented for given extraction type")
     })
-    @GetMapping("/run")
+    @GetMapping("/test")
     public ResponseEntity<ErrorDetails> runLogsAndRegisterErrorDetails() {
         log.trace("TRACE Message");
         if (log.isDebugEnabled()) {
@@ -70,7 +71,7 @@ public class LoggingController {
     //todo info about system
     //todo from elastic search
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PostMapping("/query")
+    @PostMapping("/basic-info")
     public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto, @ApiIgnore HttpSession httpSession) {
         log.info(loggerDto.toString());
 
@@ -81,11 +82,21 @@ public class LoggingController {
         jsonObject.put("sessionAppInfoSomeInfo", sessionAppInfo.getSomeInfo());
 
         jsonObject.put("sessionId", httpSession.getId());
+        final long creationTime = httpSession.getCreationTime();
         jsonObject.put("sessionCreationTime",
-                timeTool.fromMilliseconds(httpSession.getCreationTime())
+                timeTool.fromMilliseconds(creationTime)
                         .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        final long lastAccessedTime = httpSession.getLastAccessedTime();
         jsonObject.put("sessionLastAccessedTime",
-                timeTool.fromMilliseconds(httpSession.getLastAccessedTime())
+                timeTool.fromMilliseconds(lastAccessedTime)
+                        .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        final int sessionTimeoutPeriod = httpSession.getMaxInactiveInterval();
+        jsonObject.put("sessionTimeoutPeriod", sessionTimeoutPeriod);
+        long now = timeTool.toMilliseconds(ZonedDateTime.now());
+        final long sessionRemainingTime = ((sessionTimeoutPeriod * 1000) - (now - lastAccessedTime)) / 1000;
+        jsonObject.put("sessionRemainingTime - seconds", sessionRemainingTime);
+        jsonObject.put("now",
+                timeTool.fromMilliseconds(now)
                         .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 
         final JSONArray jsonArray = new JSONArray(); // CDL.toJSONArray(stingJson)

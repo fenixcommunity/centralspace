@@ -8,13 +8,13 @@ curl -o out.json -H "Origin: http://localhost:9000" http://localhost:8088/app/ap
 curl -v http://localhost:8088/app/api/cross/for-9000
 
 4) post json with path
-curl 'http://localhost:8088/app/api/logger/query' \
+curl 'http://localhost:8088/app/api/logger/basic-info' \
   -H 'Content-Type: application/json' \
   --data-binary $'{\n  "log": "string",\n  "loggerType": "string"\n}' \
   --compressed
 
 5) post with json file
-curl -d @request.json -H "Content-Type: application/json" http://localhost:8088/app/api/logger/query
+curl -d @request.json -H "Content-Type: application/json" http://localhost:8088/app/api/logger/basic-info
 
 6) put
 curl -d @request.json -H 'Content-Type: application/json' -X PUT http://localhost:8088/app/api/aws/bucket/object/put

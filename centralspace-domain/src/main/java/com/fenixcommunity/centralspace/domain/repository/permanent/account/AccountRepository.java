@@ -5,6 +5,7 @@ import static org.hibernate.annotations.QueryHints.COMMENT;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.QueryHint;
 
@@ -29,7 +30,13 @@ public interface AccountRepository extends JpaRepository<Account, Long>, Account
     Account findByLogin(final String login);
 
     // not works for @EntityGraph
-    <T> T findByMail(final Class<T> dataType, final String login);
+    <T> T findByMailOrderByMailAsc(final Class<T> dataType, final String login);
+
+    Optional<Account> findFirstByOrderByLoginDesc();
+
+    List<Account> findFirst10ByOrderById();
+
+    Optional<Account> findTopByOrderByLogin();
 
     @Query("SELECT a FROM Account a WHERE a.login IN :logins")
     @QueryHints({

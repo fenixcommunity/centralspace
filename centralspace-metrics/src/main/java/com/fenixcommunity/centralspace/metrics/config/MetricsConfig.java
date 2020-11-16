@@ -69,7 +69,7 @@ public class MetricsConfig {
     @Bean
     @DependsOn("prometheusHttpServer")
     @Profile("!test")
-    PrometheusMeterRegistry prometheusMeterRegistry(HttpServer prometheusHttpServer) {
+    PrometheusMeterRegistry prometheusMeterRegistry(final HttpServer prometheusHttpServer) {
         final PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
         final HttpContext httpContext = prometheusHttpServer.createContext(prometheusEndpoint, httpExchange -> {
             final String response = prometheusRegistry.scrape();

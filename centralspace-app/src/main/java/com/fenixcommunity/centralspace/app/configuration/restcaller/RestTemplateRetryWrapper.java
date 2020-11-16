@@ -9,6 +9,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fenixcommunity.centralspace.app.globalexception.RestCallerException;
 import io.micrometer.core.instrument.LongTaskTimer;
 import io.micrometer.core.instrument.LongTaskTimer.Sample;
@@ -31,7 +33,7 @@ import org.springframework.web.client.RestTemplate;
 @AllArgsConstructor(access = PUBLIC) @FieldDefaults(level = PRIVATE, makeFinal = true)
 class RestTemplateRetryWrapper extends RestTemplate {
     private final MetricsService metricsService;
-    private final List<String> items;
+    private final List<@NotBlank String> items;
 
     public RestTemplateRetryWrapper(final BasicAuthenticationInterceptor basicAuthenticationInterceptor, MetricsService metricsService) {
         super.getInterceptors().add(basicAuthenticationInterceptor);

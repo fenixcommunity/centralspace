@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 
 import com.fenixcommunity.centralspace.app.configuration.security.auto.AuthenticationFacade;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole;
+import com.fenixcommunity.centralspace.utilities.common.DevTool;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.AllArgsConstructor;
@@ -39,5 +40,10 @@ public class SecurityService {
         validator.validateAllWithException(authentication, authentication.getName());
         final var role = authentication.getName();
         return isValidEnum(SecurityRole.class, role);
+    }
+
+    //or to char array
+    public String generateSecurePassword() {
+        return DevTool.generateSecurePassword();
     }
 }

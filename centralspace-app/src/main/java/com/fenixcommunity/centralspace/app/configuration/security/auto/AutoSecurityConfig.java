@@ -43,6 +43,7 @@ public abstract class AutoSecurityConfig {
     private static final String API_PATH = "/api";
     private static final String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
     private static final String REMEMBER_ME_COOKIE = "remembermecookie";
+    private static final int SESSION_TIMEOUT_SECONDS = 60 * 5;
     private static final int TOKEN_VALIDITY_SECONDS = 60 * 60;
 
     private static final String[] ADMIN_API_AUTH_LIST = {
@@ -65,7 +66,7 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/account-flux/**"
     };
     private static final String[] NO_AUTH_API_LIST = {
-            API_PATH + "/logger/query",
+            API_PATH + "/logger/basic-info",
             API_PATH + "/cross/**"
     };
     //FORM
@@ -75,7 +76,7 @@ public abstract class AutoSecurityConfig {
             "/prometheus/**"
     };
     private static final String[] NO_AUTH_FORM_LIST = {
-            API_PATH + "/logger/run",
+            API_PATH + "/logger/test",
             "/public/**"
     };
     private static final String[] SWAGGER_AUTH_LIST = {
@@ -224,7 +225,7 @@ public abstract class AutoSecurityConfig {
 
         @Bean
         AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
-            return new AppAuthenticationSuccessHandler("/app/swagger-ui.html");
+            return new AppAuthenticationSuccessHandler(SESSION_TIMEOUT_SECONDS, "/app/swagger-ui.html");
         }
 
         @Bean

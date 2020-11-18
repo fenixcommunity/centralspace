@@ -6,12 +6,15 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@EnableRedisHttpSession
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class WebConfig {
+public class WebConfig extends AbstractHttpSessionApplicationInitializer {
     private final String appViewOrigin;
 
     public WebConfig(@Value("${centralspace-view.origin}") String appViewOrigin) {

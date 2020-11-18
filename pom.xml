@@ -32,6 +32,8 @@
         <spring-boot-web.version>2.2.5.RELEASE</spring-boot-web.version>
         <spring-boot-webflux.version>2.2.5.RELEASE</spring-boot-webflux.version>
         <spring-boot-data.version>2.2.5.RELEASE</spring-boot-data.version>
+        <spring-boot-data-redis.version>2.2.5.RELEASE</spring-boot-data-redis.version>
+        <spring-session-data-redis.version>2.2.4.RELEASE</spring-session-data-redis.version>
         <spring-boot-tomcat.version>2.2.5.RELEASE</spring-boot-tomcat.version>
         <spring-boot-mail.version>2.2.5.RELEASE</spring-boot-mail.version>
         <spring-boot-thymeleaf.version>2.2.5.RELEASE</spring-boot-thymeleaf.version>
@@ -48,6 +50,7 @@
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.8</postgresql.version>
         <h2database.version>1.4.199</h2database.version>
+        <jedis.version>3.1.0</jedis.version>
         <hikariCP.version>2.6.1</hikariCP.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
         <!-- AWS DEPENDENCIES -->
@@ -173,6 +176,16 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot-data-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-data-redis</artifactId>
+                <version>${spring-session-data-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-tomcat</artifactId>
                 <version>${spring-boot-tomcat.version}</version>
             </dependency>
@@ -270,6 +283,11 @@
                 <artifactId>h2</artifactId>
                 <scope>runtime</scope>
                 <version>${h2database.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zaxxer</groupId>

@@ -7,6 +7,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static com.fenixcommunity.centralspace.utilities.common.Var.WRONG_PASSWORD;
 import static java.lang.String.format;
 import static lombok.AccessLevel.PRIVATE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -14,6 +15,7 @@ import static org.springframework.util.Assert.hasText;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Set;
 
 import com.fenixcommunity.centralspace.app.configuration.CentralspaceApplicationConfig;
 import com.fenixcommunity.centralspace.app.rest.dto.security.RequestedUserDto;
@@ -27,6 +29,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import redis.clients.jedis.Jedis;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT,
@@ -37,12 +40,15 @@ class SecurityWebTest {
 
     private TestRestTemplate restTemplate;
     private URL baseUrl;
+    private Jedis jedis;
 
     @LocalServerPort
     private String port;
 
     @BeforeEach
     void setUp() {
+        jedis = new Jedis("localhost", 6379);
+        jedis.flushAll();
     }
 
     @Test
@@ -80,6 +86,8 @@ class SecurityWebTest {
         ResponseEntity<String> response
                 = restTemplate.getForEntity(baseUrl.toString(), String.class);
 
+        Set<String> jedisKeysWithSession = jedis.keys("*");
+        assertThat(jedisKeysWithSession).isNotEmpty();
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 

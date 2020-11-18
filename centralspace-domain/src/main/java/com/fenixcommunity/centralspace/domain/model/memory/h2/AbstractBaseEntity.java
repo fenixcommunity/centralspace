@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.model.memory;
+package com.fenixcommunity.centralspace.domain.model.memory.h2;
 
 import static lombok.AccessLevel.PRIVATE;
 

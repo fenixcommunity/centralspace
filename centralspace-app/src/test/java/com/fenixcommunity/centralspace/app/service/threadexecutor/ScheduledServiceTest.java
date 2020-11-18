@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
-import com.fenixcommunity.centralspace.domain.model.memory.SessionAppInfo;
+import com.fenixcommunity.centralspace.domain.model.memory.h2.SessionAppInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

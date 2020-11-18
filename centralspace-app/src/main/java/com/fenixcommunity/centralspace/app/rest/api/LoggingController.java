@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
@@ -14,7 +15,9 @@ import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
 import com.fenixcommunity.centralspace.app.service.serviceconnector.RemoteService;
-import com.fenixcommunity.centralspace.domain.model.memory.SessionAppInfo;
+import com.fenixcommunity.centralspace.domain.core.RedisService;
+import com.fenixcommunity.centralspace.domain.model.memory.h2.SessionAppInfo;
+import com.fenixcommunity.centralspace.domain.model.memory.redis.UserSession;
 import com.fenixcommunity.centralspace.metrics.service.analyzer.AppMetadataLoader;
 import com.fenixcommunity.centralspace.utilities.time.TimeTool;
 import io.swagger.annotations.ApiResponse;
@@ -41,6 +44,7 @@ import springfox.documentation.annotations.ApiIgnore;
 public class LoggingController {
 
     private final AppStatusService appStatusService;
+    private final RedisService redisService;
     private final TimeTool timeTool;
 
     @ResponseStatus(HttpStatus.OK)
@@ -68,8 +72,8 @@ public class LoggingController {
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorDetails);
     }
 
-    //todo info about system
     //todo from elastic search
+    //todo info about system controller and refactoring
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/basic-info")
     public Mono<LoggerResponseDto> getInfo(@RequestBody LoggerQueryDto loggerDto, @ApiIgnore HttpSession httpSession) {
@@ -78,13 +82,20 @@ public class LoggingController {
         // h2 memory records test
         final SessionAppInfo sessionAppInfo = appStatusService.createSessionAppInfo("warning");
 
+
         final JSONObject jsonObject = new JSONObject(Map.of("sessionAppInfoId", sessionAppInfo.getId()));
         jsonObject.put("sessionAppInfoSomeInfo", sessionAppInfo.getSomeInfo());
 
-        jsonObject.put("sessionId", httpSession.getId());
-        final long creationTime = httpSession.getCreationTime();
+        final String sessionId = httpSession.getId();
+        appStatusService.createUserSession(sessionId);
+        final UserSession userSession = appStatusService.findUserSession(sessionId);
+        final Set<String> redisUserSessionKeys = redisService.getRedisKeys("user_session");
+        final Set<String> redisSessionKeys = redisService.getUsersSessionKeys();
+
+        jsonObject.put("sessionId", sessionId);
+        final long sessionCreationTime = httpSession.getCreationTime();
         jsonObject.put("sessionCreationTime",
-                timeTool.fromMilliseconds(creationTime)
+                timeTool.fromMilliseconds(sessionCreationTime)
                         .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         final long lastAccessedTime = httpSession.getLastAccessedTime();
         jsonObject.put("sessionLastAccessedTime",

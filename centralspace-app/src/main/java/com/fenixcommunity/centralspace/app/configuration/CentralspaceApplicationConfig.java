@@ -18,6 +18,7 @@ import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfi
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.WebConfig;
+import com.fenixcommunity.centralspace.domain.configuration.RedisConfig;
 import com.fenixcommunity.centralspace.metrics.config.MetricsConfig;
 import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
 import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
@@ -36,6 +37,7 @@ import org.springframework.context.annotation.Import;
         // domain
         PostgresDomainConfig.class,
         H2DomainConfig.class,
+        RedisConfig.class,
         // security
         AutoSecurityConfig.class,
         MethodAutoSecurityConfig.class,

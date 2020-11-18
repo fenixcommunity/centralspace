@@ -61,3 +61,10 @@ h2:
     username: h2
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
+#REDIS
+redis:
+  hostName: localhost
+  port: 6379
+  jedisAvailable: true
+  lettuceAvailable: false

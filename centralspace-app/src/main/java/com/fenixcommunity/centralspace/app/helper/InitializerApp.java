@@ -71,6 +71,7 @@ public class InitializerApp implements CommandLineRunner {
         final String analyzeVMInfo = "Analyze VM working (the same provided by Prometheus server. Not for Open JDK)"
                 + LINE + "-XX:NativeMemoryTracking=summary"
                 + LINE + "command: jcmd -> jcmd <pid> VM.native_memory";
+        final String redisInfo = LINE;
 
         log.info(new StringJoiner(SEPARATOR)
                 .add(appInfo)

@@ -33,9 +33,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(
         entityManagerFactoryRef = "h2EntityManagerFactory",
         transactionManagerRef = "h2TransactionManager",
-        basePackages = {"com.fenixcommunity.centralspace.domain.repository.memory"})
+        basePackages = {"com.fenixcommunity.centralspace.domain.repository.memory.h2"})
 @ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
-@EntityScan({"com.fenixcommunity.centralspace.domain.model.memory"})
+@EntityScan({"com.fenixcommunity.centralspace.domain.model.memory.h2"})
 @PropertySource(value = {"classpath:domain.yml"}, factory = YamlFetcher.class)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class H2DomainConfig {
@@ -52,7 +52,7 @@ public class H2DomainConfig {
                          @Qualifier("h2DataSource") final DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.fenixcommunity.centralspace.domain.model.memory")
+                .packages("com.fenixcommunity.centralspace.domain.model.memory.h2")
                 .persistenceUnit("h2")
                 .build();
     }

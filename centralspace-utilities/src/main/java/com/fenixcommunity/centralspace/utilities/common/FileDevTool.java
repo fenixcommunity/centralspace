@@ -12,9 +12,15 @@ import java.nio.file.StandardOpenOption;
 import java.util.Set;
 
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.io.FilenameUtils;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class FileDevTool {
+
+    public static String getFileExtension(final String filename) {
+        return FilenameUtils.getExtension(filename);
+//   or return Files.getFileExtension(filename);
+    }
 
     public static File createNewOutputFile(final String filePath) {
         if (createFileDirectories(filePath)) {

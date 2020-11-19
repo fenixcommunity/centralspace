@@ -14,5 +14,8 @@
       "email": "john@xyz.com",
       "phone": "9999999999"
     }
+  },
+  "password": {
+    "id": 23
   }
 }

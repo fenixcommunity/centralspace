@@ -16,11 +16,13 @@ import com.fenixcommunity.centralspace.domain.model.permanent.password.PasswordT
 import com.fenixcommunity.centralspace.domain.repository.permanent.account.AccountRepository;
 import com.fenixcommunity.centralspace.utilities.async.AsyncFutureHelper;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.FileUtils;
+import com.fenixcommunity.centralspace.utilities.test.PrepareTestExtension;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -34,6 +36,10 @@ class AccountServiceTest {
 
     @InjectMocks
     private AccountService accountService;
+
+    @RegisterExtension
+    @SuppressWarnings("unused")
+    static PrepareTestExtension prepareTestExtension = new PrepareTestExtension("some info");
 
     private static final String MAPPINGS_PATH = "json/accountMappings.json";
     private static String loadedAccountMappings;

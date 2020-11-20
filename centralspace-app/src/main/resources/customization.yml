@@ -1,6 +1,7 @@
 #locale
 user:
-  locate:
+  allowedLocaleLanguages: en, pl
+  locale:
     language: en
     region: IE
 

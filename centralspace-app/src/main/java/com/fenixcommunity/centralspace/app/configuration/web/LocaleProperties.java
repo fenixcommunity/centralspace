@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-@ConfigurationProperties(prefix = "user.locate")
+@ConfigurationProperties(prefix = "user.locale")
 @Getter @FieldDefaults(level = PRIVATE)
 public class LocaleProperties {
     private String language;

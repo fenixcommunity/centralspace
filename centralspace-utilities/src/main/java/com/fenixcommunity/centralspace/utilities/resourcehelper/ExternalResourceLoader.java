@@ -19,6 +19,7 @@ import com.fenixcommunity.centralspace.utilities.globalexception.ResourceLoading
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +27,10 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Log4j2
 public class ExternalResourceLoader {
-
     final int downloadFileTimeout;
 
-    public ExternalResourceLoader(@Value("${web.downloadFileTimeout}") int downloadFileTimeout) {
+    @Autowired
+    public ExternalResourceLoader(@Value("${web.downloadFileTimeout}") final int downloadFileTimeout) {
         this.downloadFileTimeout = downloadFileTimeout;
     }
 

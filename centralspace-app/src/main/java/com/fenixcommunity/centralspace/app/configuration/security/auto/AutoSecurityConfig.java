@@ -57,6 +57,7 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/metrics/**",
             API_PATH + "/async/**",
             API_PATH + "/customization/**",
+            API_PATH + "/sms-sender/**",
             API_PATH + "/app-control/**"
     };
     private static final String[] BASIC_API_AUTH_LIST = {

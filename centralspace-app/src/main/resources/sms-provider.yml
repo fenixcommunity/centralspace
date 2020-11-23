@@ -1,0 +1,6 @@
+#credential
+provider:
+  twilio:
+    sid: ACeacc637e03d24f3635bdcb6edc2b1231
+    oAuthToken: f8b44cab14d1dbbb12897f010488c2e0
+    phoneNo: +17606153546

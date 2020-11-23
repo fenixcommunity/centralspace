@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.mapper.account;
+package com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper;
 
 
 import static java.util.stream.Collectors.toUnmodifiableList;
@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto.AccountDtoBuilder;
+import com.fenixcommunity.centralspace.app.rest.mapper.Mappable;
 import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
@@ -19,11 +20,11 @@ import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTokenizers;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class AccountMapper {
+public class AccountModelMapper implements Mappable<Account, AccountDto> {
     private final ModelMapper mapToDtoStrategy;
     private final ModelMapper mapFromDtoStrategy;
 
-    public AccountMapper(OperationLevel operationLevel) {
+    public AccountModelMapper(OperationLevel operationLevel) {
         mapToDtoStrategy = prepareMapToDtoStrategy(operationLevel);
         mapFromDtoStrategy = prepareMapFromDtoStrategy(operationLevel);
     }
@@ -72,7 +73,7 @@ public class AccountMapper {
         typeMap.addMappings(m -> {
             m.when(shouldMapId).map(AccountDto::getId, Account::setId);
             m.when(Objects::nonNull)
-                    .using(AccountMapperHelper.mapContactDetailsToAddress())
+                    .using(AccountModelMapperHelper.mapContactDetailsToAddress())
                     .map(AccountDto::getContactDetailsDto, Account::setAddress);
         });
 

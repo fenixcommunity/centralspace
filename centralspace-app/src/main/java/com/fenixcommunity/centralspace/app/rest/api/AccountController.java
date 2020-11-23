@@ -20,7 +20,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
 import com.fenixcommunity.centralspace.app.rest.exception.ResourceNotFoundException;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
 import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
@@ -76,7 +76,7 @@ public class AccountController {
     public ResponseEntity<AccountDto> getByLogin(@PathVariable(value = "login") @NotBlank(message = "not blank") @Size(max = 10) final String login)
             throws ResourceNotFoundException {
         final AccountDto accountDto = AsyncFutureHelper.get(accountService.findByLogin(login))
-                .map(x -> new AccountMapper(HIGH).mapToDto(x))
+                .map(x -> new AccountModelMapper(HIGH).mapToDto(x))
                 .orElse(null); // .orElseThrow(() -> new ResourceNotFoundException("Account not found for this login: " + login));
         if (accountDto == null) {
             return ResponseEntity.noContent().build();
@@ -106,15 +106,15 @@ public class AccountController {
         if (isEmpty(accounts)) {
             return ResponseEntity.noContent().build();
         }
-        final AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
-        final List<AccountDto> responseAccounts = accountMapper.mapToDtoList(accounts);
+        final AccountModelMapper accountModelMapper = new AccountModelMapper(OperationLevel.LOW);
+        final List<AccountDto> responseAccounts = accountModelMapper.mapToDtoList(accounts);
         return ResponseEntity.ok(responseAccounts);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
-        final Account requestAccount = new AccountMapper(OperationLevel.LOW).mapFromDto(accountDto);
+        final Account requestAccount = new AccountModelMapper(OperationLevel.LOW).mapFromDto(accountDto);
         final Long generatedId = accountService.save(requestAccount).getId();
         final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
@@ -127,7 +127,7 @@ public class AccountController {
             @PathVariable(name = "id") final Long id, @Valid @RequestBody final AccountDto requestAccountDto)
             throws ResourceNotFoundException {
         isRecordExistElseThrowEx(id);
-        final Account requestAccount = new AccountMapper(OperationLevel.LOW).mapFromDto(requestAccountDto);
+        final Account requestAccount = new AccountModelMapper(OperationLevel.LOW).mapFromDto(requestAccountDto);
         final Account updatedAccount = accountService.save(requestAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
         return ResponseEntity.ok(response);
@@ -149,7 +149,7 @@ public class AccountController {
     }
 
     private AccountDto findByIdAndMapToDto(final Long id) throws ResourceNotFoundException {
-        return accountService.findById(id).map(x -> new AccountMapper(HIGH).mapToDto(x))
+        return accountService.findById(id).map(x -> new AccountModelMapper(HIGH).mapToDto(x))
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + id));
     }
 

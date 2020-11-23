@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
-import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
 import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.app.service.mail.mailsender.MailServiceBean;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
@@ -51,8 +51,8 @@ public class AsyncController {
 
         final CompletableFuture<List<Account>> futureAccountsSecond = accountService.findAll();
 
-        final AccountMapper accountMapper = new AccountMapper(OperationLevel.LOW);
-        final List<AccountDto> responseAccountsFirst = accountMapper.mapToDtoList(accountsFirst);
+        final AccountModelMapper accountModelMapper = new AccountModelMapper(OperationLevel.LOW);
+        final List<AccountDto> responseAccountsFirst = accountModelMapper.mapToDtoList(accountsFirst);
 
         final CompletableFuture<Optional<Account>> futureAccountThird = accountService.findByLogin("LOGINQUERY");
 
@@ -61,8 +61,8 @@ public class AsyncController {
 
         final List<AccountDto> results = new ArrayList<>();
         results.addAll(responseAccountsFirst);
-        results.addAll(accountMapper.mapToDtoList(AsyncFutureHelper.get(futureAccountsSecond)));
-        results.add(accountMapper.mapToDto(AsyncFutureHelper.get(futureAccountThird).orElseGet(null)));
+        results.addAll(accountModelMapper.mapToDtoList(AsyncFutureHelper.get(futureAccountsSecond)));
+        results.add(accountModelMapper.mapToDto(AsyncFutureHelper.get(futureAccountThird).orElseGet(null)));
 
         return Mono.just(results);
     }

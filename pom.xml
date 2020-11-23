@@ -73,6 +73,7 @@
         <fastutil.version>8.4.2</fastutil.version>
         <javassist.version>3.23.1-GA</javassist.version>
         <modelmapper.version>2.3.5</modelmapper.version>
+        <jmapper-core.version>1.6.0</jmapper-core.version>
         <jmh-core.version>1.23</jmh-core.version>
         <jmh-generator-annprocess.version>1.23</jmh-generator-annprocess.version>
         <jackson-dataformat-yaml.version>2.10.3</jackson-dataformat-yaml.version>
@@ -80,6 +81,7 @@
         <opencsv.version>5.2</opencsv.version>
         <jackson-databind.version>2.11.2</jackson-databind.version>
         <snakeyaml.version>1.26</snakeyaml.version>
+        <json.version>20200518</json.version>
         <json-path.version>2.4.0</json-path.version>
         <jsh.version>0.1.55</jsh.version>
         <commons-validator.version>1.6</commons-validator.version>
@@ -418,6 +420,11 @@
                 <groupId>it.unimi.dsi</groupId>
                 <artifactId>fastutil</artifactId>
                 <version>${fastutil.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.jmapper-framework</groupId>
+                <artifactId>jmapper-core</artifactId>
+                <version>${jmapper-core.version}</version>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

@@ -39,6 +39,7 @@ public class AccountDto {
     @Email(regexp = MAIL_REGEX, message = "Email should be valid")
     private String mail;
 
+    private String identifier;
     private PasswordType passwordType;
     private ContactDetailsDto contactDetailsDto;
 

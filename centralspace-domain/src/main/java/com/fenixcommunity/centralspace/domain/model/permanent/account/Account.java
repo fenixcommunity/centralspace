@@ -21,6 +21,7 @@ import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
 import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
+import com.googlecode.jmapper.annotations.JMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,12 +48,14 @@ public class Account extends AbstractBaseEntity {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
+    @JMap("uniqueLogin")
     @Convert(converter = UppercaseConverter.class)
     @Length(min = 2, max = 15)
     @Column(name = "login", nullable = false, unique = true)
     private String login;
 
     //TODO walidacja i opakowac
+    @JMap
     @Column(name = "mail", nullable = false)
     private String mail;
 

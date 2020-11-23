@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fenixcommunity.centralspace.app.helper.mapper.AccountDtoToTest.AccountDtoToTestBuilder;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
-import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
 import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
@@ -270,9 +270,9 @@ public class ModelMapperTest {
                 .mail(MAIL)
                 .contactDetailsDto(new ContactDetailsDto("England", "+555444666"))
                 .build();
-        AccountMapper accountMapper = new AccountMapper(OperationLevel.HIGH);
-        Account resultAccount = accountMapper.mapFromDto(accountDto);
-        AccountDto resultDto = accountMapper.mapToDto(initAccount);
+        AccountModelMapper accountModelMapper = new AccountModelMapper(OperationLevel.HIGH);
+        Account resultAccount = accountModelMapper.mapFromDto(accountDto);
+        AccountDto resultDto = accountModelMapper.mapToDto(initAccount);
 
         assertNotNull(resultAccount);
         assertEquals(ID, resultAccount.getId());

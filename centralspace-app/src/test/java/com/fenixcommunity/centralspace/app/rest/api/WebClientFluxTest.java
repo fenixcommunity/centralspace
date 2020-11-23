@@ -23,7 +23,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
 import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
@@ -111,7 +111,7 @@ class WebClientLuxTest {
                 .mail(MAIL)
                 .address(new Address(8L, "Poland", "Cracow", null))
                 .build();
-        accountDto = new AccountMapper(OperationLevel.HIGH).mapToDto(account);
+        accountDto = new AccountModelMapper(OperationLevel.HIGH).mapToDto(account);
         when(accountService.findById(ID)).thenReturn(Optional.of(account));
         when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
     }

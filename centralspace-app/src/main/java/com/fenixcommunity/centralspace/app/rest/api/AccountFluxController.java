@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.security.SecuredUserDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.app.rest.mapper.account.AccountMapper;
+import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
 import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import lombok.AccessLevel;
@@ -63,10 +63,10 @@ public class AccountFluxController {
     @Secured({"ROLE_FLUX_EDITOR"})
     public Mono<AccountDto> createFlux(@Valid @RequestBody final AccountDto accountDto) {
 //         Mono<Void> or Flux<AccountDto>
-        final Account createdAccount = new AccountMapper(LOW).mapFromDto(accountDto);
+        final Account createdAccount = new AccountModelMapper(LOW).mapFromDto(accountDto);
         final Long generatedId = accountService.save(createdAccount).getId();
         createdAccount.setId(generatedId);
-        return Mono.just(new AccountMapper(HIGH).mapToDto(createdAccount))
+        return Mono.just(new AccountModelMapper(HIGH).mapToDto(createdAccount))
                 .doOnNext(dto -> System.out.println(dto.getLogin()))
                 .defaultIfEmpty(AccountDto.builder().build())
                 .log("AccountFluxController", Level.INFO, SignalType.ON_COMPLETE)

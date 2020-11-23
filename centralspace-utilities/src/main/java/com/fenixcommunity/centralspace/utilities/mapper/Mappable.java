@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.mapper;
+package com.fenixcommunity.centralspace.utilities.mapper;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 

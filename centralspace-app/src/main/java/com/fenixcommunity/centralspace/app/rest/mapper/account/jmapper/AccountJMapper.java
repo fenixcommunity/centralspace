@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.mapper.account.jmapper;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountJMapperDto;
-import com.fenixcommunity.centralspace.app.rest.mapper.Mappable;
+import com.fenixcommunity.centralspace.utilities.mapper.Mappable;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.googlecode.jmapper.JMapper;
 

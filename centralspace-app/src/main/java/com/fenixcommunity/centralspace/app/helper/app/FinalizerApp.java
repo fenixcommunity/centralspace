@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.helper;
+package com.fenixcommunity.centralspace.app.helper.app;
 
 import static lombok.AccessLevel.PRIVATE;
 

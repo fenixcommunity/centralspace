@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.mapper;
+package com.fenixcommunity.centralspace.app.rest.mapper.jmapper;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.CITY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COUNTRY;

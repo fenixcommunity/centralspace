@@ -9,8 +9,8 @@ import java.util.Objects;
 
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto.AccountDtoBuilder;
-import com.fenixcommunity.centralspace.app.rest.mapper.Mappable;
-import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
+import com.fenixcommunity.centralspace.utilities.mapper.Mappable;
+import com.fenixcommunity.centralspace.utilities.mapper.ModelMapperBuilder;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
 import lombok.experimental.FieldDefaults;

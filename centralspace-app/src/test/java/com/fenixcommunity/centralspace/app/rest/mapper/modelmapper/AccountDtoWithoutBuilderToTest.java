@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.helper.mapper;
+package com.fenixcommunity.centralspace.app.rest.mapper.modelmapper;
 
 import java.time.ZonedDateTime;
 

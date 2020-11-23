@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.mapper;
+package com.fenixcommunity.centralspace.utilities.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;

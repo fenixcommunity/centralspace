@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.helper.mapper;
+package com.fenixcommunity.centralspace.app.rest.mapper.modelmapper;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.CITY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COUNTRY;
@@ -16,11 +16,11 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fenixcommunity.centralspace.app.helper.mapper.AccountDtoToTest.AccountDtoToTestBuilder;
+import com.fenixcommunity.centralspace.app.rest.mapper.modelmapper.AccountDtoToTest.AccountDtoToTestBuilder;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.account.ContactDetailsDto;
 import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
-import com.fenixcommunity.centralspace.app.rest.mapper.ModelMapperBuilder;
+import com.fenixcommunity.centralspace.utilities.mapper.ModelMapperBuilder;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;

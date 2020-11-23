@@ -13,11 +13,11 @@ import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
-import com.fenixcommunity.centralspace.app.rest.dto.aws.InternalResourceDto;
+import com.fenixcommunity.centralspace.app.rest.dto.resource.InternalResourceDto;
 import com.fenixcommunity.centralspace.app.rest.dto.aws.s3.PutObjectToBucketDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResourceLoader;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
@@ -32,7 +32,7 @@ public class S3Service {
 
     @Qualifier("amazonS3Client")
     private final AmazonS3 amazonS3Client;
-    private final ResourceLoaderTool resourceTool;
+    private final InternalResourceLoader resourceTool;
 
     public Bucket createBucket(@NonNull final String bucketName) {
         final CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName, amazonS3Client.getRegion());

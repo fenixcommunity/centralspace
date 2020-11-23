@@ -1,11 +1,9 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.SPACE;
-import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toMap;
 import static lombok.AccessLevel.PRIVATE;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,7 +55,7 @@ public class DevTool {
     public static List<String> mergeLists(final List<String>... lists) {
         final List<String> result = new ArrayList<>();
         Arrays.stream(lists).forEach(result::addAll);
-        return unmodifiableList(result);
+        return List.copyOf(result); // or unmodifiableList
     }
 
     public static Map<String, String> mapStringToMap(String mapAsString) {
@@ -78,22 +75,6 @@ public class DevTool {
 
     public static boolean checkStringContainsWords(final String inputString, final String[] words) {
         return List.of(inputString.split(SPACE)).containsAll(List.of(words));
-    }
-
-    public static File createNewOutputFile(final String filePath) {
-        return FileDevTool.createNewOutputFile(filePath);
-    }
-
-    public static boolean createFileDirectories(final String filePath) {
-        return FileDevTool.createFileDirectories(filePath);
-    }
-
-    public static Set<String> listFilesForDirectory(final String dir) throws IOException {
-        return FileDevTool.listFilesForDirectory(dir);
-    }
-
-    public static boolean deleteFileContent(final String filePath) {
-        return FileDevTool.deleteFileContent(filePath);
     }
 
     public static String generateSecurePassword() {

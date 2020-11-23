@@ -5,7 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fenixcommunity.centralspace.app.rest.dto.aws.InternalResourceDto;
+import com.fenixcommunity.centralspace.app.rest.dto.resource.InternalResourceDto;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;

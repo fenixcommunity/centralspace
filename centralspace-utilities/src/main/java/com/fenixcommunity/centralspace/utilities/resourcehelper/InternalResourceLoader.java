@@ -17,14 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 //todo @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE) add to other
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class ResourceLoaderTool {
+public class InternalResourceLoader {
 
     private final String resourcePath;
     private final ResourceLoader resourceLoader;
     private final ResourceProperties resourceProperties;
     private final Validator validator;
 
-    ResourceLoaderTool
+    InternalResourceLoader
             (final ResourceLoader resourceLoader, final ResourceProperties resourceProperties, final ValidatorFactory validatorFactory,
              @Value("${path.resource}") String resourcePath) {
         this.resourceLoader = resourceLoader;

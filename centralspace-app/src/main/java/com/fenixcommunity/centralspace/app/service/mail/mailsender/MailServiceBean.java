@@ -9,7 +9,7 @@ import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.mail.MailBuilder;
 import com.fenixcommunity.centralspace.utilities.mail.template.MailMessageTemplate;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResourceLoader;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.NonNull;
@@ -33,7 +33,7 @@ public class MailServiceBean implements MailService {
     private final ApplicationContext context;
     private final JavaMailSender mailSender;
     private final Validator validator;
-    private final ResourceLoaderTool resourceLoaderTool;
+    private final InternalResourceLoader internalResourceLoader;
     private final DocumentService documentService;
 
     @Autowired @Qualifier("basicMailMessage")
@@ -44,11 +44,11 @@ public class MailServiceBean implements MailService {
 
     @Autowired
     MailServiceBean(final JavaMailSender mailSender, final ValidatorFactory validatorFactory,
-                    final ResourceLoaderTool resourceLoaderTool, final DocumentService documentService,
+                    final InternalResourceLoader internalResourceLoader, final DocumentService documentService,
                     final ApplicationContext context) {
         this.mailSender = mailSender;
         this.validator = validatorFactory.getInstance(MAIL);
-        this.resourceLoaderTool = resourceLoaderTool;
+        this.internalResourceLoader = internalResourceLoader;
         this.documentService = documentService;
         this.context = context;
     }
@@ -107,7 +107,7 @@ public class MailServiceBean implements MailService {
 
     private InternalResource getRegistrationAttachment() {
         final InternalResource attachment = InternalResource.resourceByNameAndType("attachment", FileFormat.PDF);
-        attachment.setContent(resourceLoaderTool.loadResourceFile(attachment));
+        attachment.setContent(internalResourceLoader.loadResourceFile(attachment));
         return attachment;
     }
 

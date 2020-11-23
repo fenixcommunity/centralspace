@@ -112,3 +112,7 @@ remoteserver:
 
 #Analyze VM:
 #https://www.baeldung.com/native-memory-tracking-in-jvm
+
+#Web settings
+web:
+  downloadFileTimeout: 5000

@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.app.rest.dto.aws;
+package com.fenixcommunity.centralspace.app.rest.dto.resource;
 
 import static java.util.Objects.requireNonNull;
 import static lombok.AccessLevel.PRIVATE;

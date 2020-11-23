@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter;
 
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
+import static com.fenixcommunity.centralspace.utilities.common.FileDevTool.createFileDirectories;
+import static com.fenixcommunity.centralspace.utilities.common.FileDevTool.createNewOutputFile;
 import static com.fenixcommunity.centralspace.utilities.common.FileFormat.*;
 import static com.fenixcommunity.centralspace.utilities.common.Var.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -30,7 +30,7 @@ import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResourceLoader;
 import com.itextpdf.styledxmlparser.jsoup.Jsoup;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -72,7 +72,7 @@ public class BasicPdfConverter implements IPdfConverter, HtmlPdfConverterStrateg
     private static final String READ_MODE = "r";
 
     private final String fileName;
-    private final ResourceLoaderTool resourceTool;
+    private final InternalResourceLoader resourceTool;
 
     @Override
     public void convertPdfToImage(final FileFormat fileFormat) {

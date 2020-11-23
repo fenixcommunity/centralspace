@@ -7,11 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerStrategy;
 import com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper;
-import com.fenixcommunity.centralspace.app.rest.dto.aws.InternalResourceDto;
+import com.fenixcommunity.centralspace.app.rest.dto.resource.ExternalResourceDto;
+import com.fenixcommunity.centralspace.app.rest.dto.resource.InternalResourceDto;
 import com.fenixcommunity.centralspace.app.service.resource.ResourceCacheService;
+import com.fenixcommunity.centralspace.utilities.common.FileDevTool;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.web.WebTool;
 import io.micrometer.core.annotation.Timed;
@@ -19,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
@@ -51,8 +55,7 @@ public class ResourceCacheController {
 
     @GetMapping("/**")
     @ApiOperation(value = "Get resource: example path http://localhost:8088/app/api/resource-cache/static/img/Top.png")
-    public @ResponseBody
-    byte[] getFileByPath(final HttpServletRequest request) throws IOException {
+    public @ResponseBody byte[] getFileByPath(final HttpServletRequest request) throws IOException {
         final String extractedPath = WebTool.extractUriPath(request);
         final Resource resource = resourceCacheService.getInternalResource(extractedPath);
         return IOUtils.toByteArray(FileUtils.openInputStream(resource.getFile()));
@@ -99,4 +102,18 @@ public class ResourceCacheController {
                                                  @PathVariable("storeCacheName") final String storeCacheName) {
         return ResponseEntity.ok(resourceCacheService.isCacheObjectExist(cacheObject, storeCacheName));
     }
+
+    @PostMapping(value = "/download-file-from-url", consumes={"application/json"})
+    public @ResponseBody byte[] downloadFileFromUrl(@RequestBody @NotNull final ExternalResourceDto externalResourceDto) {
+        final File file = resourceCacheService.downloadFileFromUrl(externalResourceDto.getUrlPath(), externalResourceDto.getDestinationFilePath());
+        return FileDevTool.getBytesFromFile(file);
+    }
+
+    @PostMapping(value = "/download-file-with-resume", consumes={"application/json"})
+    public @ResponseBody byte[] downloadFileWithResume(@RequestBody @NotNull final ExternalResourceDto externalResourceDto){
+        final File file = resourceCacheService.downloadFileWithResume(externalResourceDto.getUrlPath(), externalResourceDto.getDestinationFilePath());
+        return FileDevTool.getBytesFromFile(file);
+    }
+
+
 }

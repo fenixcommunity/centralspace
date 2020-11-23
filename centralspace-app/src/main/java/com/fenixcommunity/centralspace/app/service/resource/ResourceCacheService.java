@@ -4,12 +4,14 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import com.fenixcommunity.centralspace.app.configuration.caching.CachingConfig;
-import com.fenixcommunity.centralspace.app.rest.dto.aws.InternalResourceDto;
+import com.fenixcommunity.centralspace.app.rest.dto.resource.InternalResourceDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.ExternalResourceLoader;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResourceLoader;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
@@ -30,7 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 @CacheConfig(cacheNames = CachingConfig.CENTRALSPACE_CACHE)
 public class ResourceCacheService {
     private static final String CENTRALSPACE_CACHE = CachingConfig.CENTRALSPACE_CACHE;
-    private final ResourceLoaderTool resourceTool;
+    private final InternalResourceLoader internalResourceLoader;
+    private final ExternalResourceLoader externalResourceLoader;
     private final CacheManager cacheManager;
 
 //  @CachePut(value="Resource", condition="#extractedPath=='correctPath'")
@@ -38,12 +41,12 @@ public class ResourceCacheService {
     @Cacheable(key = "#a0", unless = "#result.exists() != true") // sync = true not works, I think that should be selected @EnableCaching(proxyTargetClass = true)
     @Transactional(readOnly = true)
     public Resource getInternalResource(@NonNull final String extractedPath) {
-        return resourceTool.loadResourceByPath(extractedPath);
+        return internalResourceLoader.loadResourceByPath(extractedPath);
     }
 
     public boolean isInternalResourceExists(@NonNull final String extractedPath) {
         try {
-            return resourceTool.loadResourceByPath(extractedPath).getFile().exists();
+            return internalResourceLoader.loadResourceByPath(extractedPath).getFile().exists();
         } catch (FileNotFoundException e) {
             log.warn("Problem with finding the file");
             return false;
@@ -55,7 +58,7 @@ public class ResourceCacheService {
     // now global, possible -> value = "internalImagePaths",
     @Cacheable(key = "#internalResourceDto.fileName", condition = "#internalResourceDto.fileName == 'Top'")
     public String getInternalImagePath(@NonNull final InternalResourceDto internalResourceDto) {
-        return resourceTool.getResourceProperties().getImageUrl()
+        return internalResourceLoader.getResourceProperties().getImageUrl()
                 + internalResourceDto.getFileName() + DOT + internalResourceDto.getFileSubType();
     }
 
@@ -77,5 +80,13 @@ public class ResourceCacheService {
         }
         final Cache.ValueWrapper valueWrapper = cache.get(cacheObject);
         return valueWrapper != null && valueWrapper.get() != null;
+    }
+
+    public File downloadFileFromUrl(final String urlPath, final String destinationFilePath) {
+        return externalResourceLoader.downloadFileFromUrl(urlPath, destinationFilePath);
+    }
+
+    public File downloadFileWithResume(final String downloadUrl, final String savedFilePath) {
+        return externalResourceLoader.downloadFileWithResume(downloadUrl, savedFilePath);
     }
 }

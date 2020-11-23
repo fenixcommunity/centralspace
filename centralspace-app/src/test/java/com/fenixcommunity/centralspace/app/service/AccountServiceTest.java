@@ -15,7 +15,7 @@ import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.PasswordType;
 import com.fenixcommunity.centralspace.domain.repository.permanent.account.AccountRepository;
 import com.fenixcommunity.centralspace.utilities.async.AsyncFutureHelper;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.FileUtils;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.AppFileUtils;
 import com.fenixcommunity.centralspace.utilities.test.PrepareTestExtension;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +47,7 @@ class AccountServiceTest {
 
     @BeforeAll
     void loadFiles() {
-        loadedAccountMappings = FileUtils.loadFile(MAPPINGS_PATH);
+        loadedAccountMappings = AppFileUtils.loadFile(MAPPINGS_PATH);
     }
 
     @BeforeEach

@@ -12,7 +12,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Set;
 
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class FileDevTool {
@@ -52,6 +54,18 @@ public class FileDevTool {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static byte[] getBytesFromFile(final File file) {
+        if (file != null && file.length() > 0) {
+            try {
+                return IOUtils.toByteArray(FileUtils.openInputStream(file));
+            } catch (IOException e) {
+                return new byte[0];
+            }
+        }
+
+        return new byte[0];
     }
 
 }

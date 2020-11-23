@@ -27,7 +27,7 @@ import com.fenixcommunity.centralspace.app.service.document.pdfcreator.IPdfCreat
 import com.fenixcommunity.centralspace.app.service.document.pdfcreator.ITextPdfCreator;
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResourceLoader;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ import org.thymeleaf.TemplateEngine;
 public class DocumentService {
 //todo to interface
 
-    private final ResourceLoaderTool resourceTool;
+    private final InternalResourceLoader resourceTool;
     private final TemplateEngine templateEngine;
     private final SecurityService securityService;
 

@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter;
 
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createNewOutputFile;
+import static com.fenixcommunity.centralspace.utilities.common.FileDevTool.createNewOutputFile;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DOT;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PUBLIC;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.fenixcommunity.centralspace.utilities.common.FileFormat;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResourceLoader;
 import com.itextpdf.html2pdf.HtmlConverter;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +27,7 @@ public class ThymeleafPdfConverter implements HtmlPdfConverterStrategy {
     private final Map<String, String> thymeleafVariables;
 
     private final TemplateEngine templateEngine;
-    private final ResourceLoaderTool resourceTool;
+    private final InternalResourceLoader resourceTool;
 
     @Override
     public void convertHtmlToPdf() {

@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.document.pdfcreator;
 
-import static com.fenixcommunity.centralspace.utilities.common.DevTool.createFileDirectories;
+import static com.fenixcommunity.centralspace.utilities.common.FileDevTool.createFileDirectories;
 import static com.fenixcommunity.centralspace.utilities.common.FileFormat.JPG;
 import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PDF;
 import static com.fenixcommunity.centralspace.utilities.common.FileFormat.PNG;
@@ -20,7 +20,7 @@ import java.util.Collections;
 import com.fenixcommunity.centralspace.app.globalexception.DocumentServiceException;
 import com.fenixcommunity.centralspace.utilities.document.PdfDocumentComposer;
 import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResource;
-import com.fenixcommunity.centralspace.utilities.resourcehelper.ResourceLoaderTool;
+import com.fenixcommunity.centralspace.utilities.resourcehelper.InternalResourceLoader;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -40,7 +40,7 @@ public class ITextPdfCreator implements IPdfCreator {
     private static final String ENCRYPTED_SURFIX = "encrypted";
 
     private final String fileName;
-    private final ResourceLoaderTool resourceTool;
+    private final InternalResourceLoader resourceTool;
 
     @Override
     public void createPdf() {

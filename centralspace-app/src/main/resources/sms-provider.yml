@@ -1,4 +1,4 @@
-#credential -> use spring cloud vault
+#credential -> todo use spring cloud vault
 provider:
   twilio:
     sid: xxx

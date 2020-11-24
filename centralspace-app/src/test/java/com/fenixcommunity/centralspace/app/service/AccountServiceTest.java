@@ -47,7 +47,7 @@ class AccountServiceTest {
 
     @BeforeAll
     void loadFiles() {
-        loadedAccountMappings = AppFileUtils.loadFile(MAPPINGS_PATH);
+        loadedAccountMappings = AppFileUtils.loadFileAsString(MAPPINGS_PATH);
     }
 
     @BeforeEach

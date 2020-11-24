@@ -19,8 +19,8 @@ class JsonToolTest {
     class whenCompareJsonPair {
         @Test
         void givenTheSameJsonPair_thenResultTrue() {
-            String objectsJson1 = AppFileUtils.loadFile("json/the_same_account_1.json");
-            String objectsJson2 = AppFileUtils.loadFile("json/the_same_account_2.json");
+            String objectsJson1 = AppFileUtils.loadFileAsString("json/the_same_account_1.json");
+            String objectsJson2 = AppFileUtils.loadFileAsString("json/the_same_account_2.json");
 
             boolean result = JsonTool.compareJsonPair(objectsJson1, objectsJson2);
             assertThat(result).isTrue();
@@ -29,7 +29,7 @@ class JsonToolTest {
 
     @Test
     void getJsonRootItems() {
-        String json = AppFileUtils.loadFile("json/the_same_account_1.json");
+        String json = AppFileUtils.loadFileAsString("json/the_same_account_1.json");
         Map<String, String> jsonRootItems = JsonTool.getJsonRootItems(json);
         assertThat(jsonRootItems).hasSize(2);
         JSONArray jsonObject1 = JsonTool.getJsonObject(json, "$.password.*");
@@ -38,5 +38,4 @@ class JsonToolTest {
         assertThat(jsonObject2).hasSize(3);
 
     }
-
 }

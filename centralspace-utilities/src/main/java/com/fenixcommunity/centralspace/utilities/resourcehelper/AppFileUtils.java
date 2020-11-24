@@ -9,7 +9,7 @@ import org.apache.commons.io.IOUtils;
 @Log4j2
 public class AppFileUtils {
 
-    public static String loadFile(final String path) {
+    public static String loadFileAsString(final String path) {
         try {
             return getResourceAsString(path);
         } catch (IOException e) {

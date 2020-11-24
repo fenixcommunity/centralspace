@@ -56,6 +56,7 @@ public class ResourceCacheService {
     }
 
     // now global, possible -> value = "internalImagePaths",
+   //  @Cacheable(value = CENTRALSPACE_CACHE, keyGenerator = "appKeyGenerator")
     @Cacheable(key = "#internalResourceDto.fileName", condition = "#internalResourceDto.fileName == 'Top'")
     public String getInternalImagePath(@NonNull final InternalResourceDto internalResourceDto) {
         return internalResourceLoader.getResourceProperties().getImageUrl()

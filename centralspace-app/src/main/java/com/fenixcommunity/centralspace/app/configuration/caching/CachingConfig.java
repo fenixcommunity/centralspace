@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,11 @@ public class CachingConfig {
         final ConcurrentMapCache globalMapCache = new ConcurrentMapCache(CENTRALSPACE_CACHE, false);
         cacheManager.setCaches(List.of(globalMapCache));
         return cacheManager;
+    }
+
+    @Bean("appKeyGenerator")
+    public KeyGenerator appKeyGenerator() {
+        return new AppKeyGenerator();
     }
 }
 

@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.core;
+package com.fenixcommunity.centralspace.domain.core.listener;
 
 import static lombok.AccessLevel.PRIVATE;
 

@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fenixcommunity.centralspace.domain.converter.MonetaryAmountConverter;
-import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
+import com.fenixcommunity.centralspace.domain.core.listener.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

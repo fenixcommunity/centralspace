@@ -15,7 +15,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
 import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
 import com.fenixcommunity.centralspace.app.service.serviceconnector.RemoteService;
-import com.fenixcommunity.centralspace.domain.core.RedisService;
+import com.fenixcommunity.centralspace.domain.core.redis.RedisService;
 import com.fenixcommunity.centralspace.domain.model.memory.h2.SessionAppInfo;
 import com.fenixcommunity.centralspace.domain.model.memory.redis.UserSession;
 import com.fenixcommunity.centralspace.metrics.service.analyzer.AppMetadataLoader;

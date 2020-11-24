@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.core;
+package com.fenixcommunity.centralspace.domain.core.redis;
 
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;

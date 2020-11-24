@@ -32,6 +32,8 @@
         <spring-boot-web.version>2.2.5.RELEASE</spring-boot-web.version>
         <spring-boot-webflux.version>2.2.5.RELEASE</spring-boot-webflux.version>
         <spring-boot-data.version>2.2.5.RELEASE</spring-boot-data.version>
+        <spring-boot-starter-data-rest.version>2.2.5.RELEASE</spring-boot-starter-data-rest.version>
+        <spring-security-data.version>5.2.5.RELEASE</spring-security-data.version>
         <spring-boot-data-redis.version>2.2.5.RELEASE</spring-boot-data-redis.version>
         <spring-session-data-redis.version>2.2.4.RELEASE</spring-session-data-redis.version>
         <spring-boot-tomcat.version>2.2.5.RELEASE</spring-boot-tomcat.version>
@@ -181,6 +183,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring-boot-data-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-rest</artifactId>
+                <version>${spring-boot-starter-data-rest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-data</artifactId>
+                <version>${spring-security-data.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.session</groupId>
@@ -440,12 +452,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-test</artifactId>
-                <version>${spring-security-test.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.awaitility</groupId>
                 <artifactId>awaitility</artifactId>
                 <version>${awaitility-test.version}</version>
@@ -524,6 +530,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${junit-jupiter-mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring-security-test.version}</version>
             <scope>test</scope>
         </dependency>
         <!--PLUGIN DEPENDENCIES-->

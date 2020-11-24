@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.domain.repository;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.CITY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COUNTRY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
@@ -37,10 +38,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -62,9 +66,11 @@ import org.springframework.test.context.junit4.SpringRunner;
         )
 })
 @FieldDefaults(level = PRIVATE)
+@AutoConfigureMockMvc @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
 public class AccountRepositoryTest {
 
     private static final long ACCOUNT_ID_FROM_QUERY = 99L;
+    private static final long ACCOUNT_ADMIN_ID_FROM_QUERY = 100L;
     public static final String ACCOUNT_LOGIN_FROM_QUERY = "LOGINQUERY";
     public static final String TEST_MAIL = "text@gmail.com";
 
@@ -122,9 +128,9 @@ public class AccountRepositoryTest {
     @Test
     public void updateAccountLoginTest() {
         String changed_login = "CHANGED_LOGIN";
-        int updatedAccountCount = accountRepository.updateLogin(ACCOUNT_ID_FROM_QUERY, changed_login);
+        int updatedAccountCount = accountRepository.updateLogin(ACCOUNT_ADMIN_ID_FROM_QUERY, changed_login);
         assertThat(updatedAccountCount).isEqualTo(1);
-        Optional<Account> account = accountRepository.findById(ACCOUNT_ID_FROM_QUERY);
+        Optional<Account> account = accountRepository.findById(ACCOUNT_ADMIN_ID_FROM_QUERY);
         assertNotNull(account.orElse(null));
         assertThat(account.get().getLogin()).isEqualTo(changed_login);
     }

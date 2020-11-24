@@ -5,6 +5,9 @@ insert into account(id, login, mail, creation_date, update_date, address_id)
 values (99, 'LOGINQUERY', 'text@mail.com', NOW(), NOW(), 88);
 
 insert into account(id, login, mail, creation_date, update_date, address_id)
+values (100, 'ADMIN', 'admin@mail.com', NOW(), NOW(), 88);
+
+insert into account(id, login, mail, creation_date, update_date, address_id)
 values (991, 'LOGIN_OTHER_1', 'mail_other_1@mail.com', NOW(), NOW(), 88);
 
 insert into account(id, login, mail, creation_date, update_date, address_id)

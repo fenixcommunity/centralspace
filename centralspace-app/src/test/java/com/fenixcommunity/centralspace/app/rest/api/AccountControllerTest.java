@@ -44,14 +44,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-@AutoConfigureMockMvc
 @ContextConfiguration(classes = {
         AccountController.class,
         AccountService.class,
         HeaderApiFilter.class, CacheCookieApiFilter.class
 })
 @WebMvcTest
-@WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
+@AutoConfigureMockMvc @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
 // 4 APPROACH https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/
 class AccountControllerTest {
 

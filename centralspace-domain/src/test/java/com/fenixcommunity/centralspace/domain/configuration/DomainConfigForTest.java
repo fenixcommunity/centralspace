@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource(value = {"classpath:domain-test.yml"}, factory = YamlFetcher.class)
 @EnableTransactionManagement
 @EnableJpaAuditing // uwzględnia @PrePersist, @PreRemove
-@ComponentScan({"com.fenixcommunity.centralspace.domain.core"})
-@EnableJpaRepositories({"com.fenixcommunity.centralspace.domain.repository"})
-@EntityScan({"com.fenixcommunity.centralspace.domain.model"})
+@ComponentScan({"com.fenixcommunity.centralspace.domain.core.listener"})
+@EnableJpaRepositories({"com.fenixcommunity.centralspace.domain.repository.permanent"})
+@EntityScan({"com.fenixcommunity.centralspace.domain.model.permanent"})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class DomainConfigForTest {
 }

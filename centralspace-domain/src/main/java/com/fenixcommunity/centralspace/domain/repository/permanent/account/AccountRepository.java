@@ -21,6 +21,7 @@ import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -54,13 +55,14 @@ public interface AccountRepository extends JpaRepository<Account, Long>, Account
                                         final Pageable pageable);
 
     @Modifying
-    @Query("UPDATE Account a SET a.login = ?2 WHERE a.id = ?1")
+    @Query("UPDATE Account a SET a.login = ?2 WHERE a.id = ?1 AND a.login = ?#{ principal?.username}")
     int updateLogin(final Long accountId,
                     final String login);
 
+    // secure in service -> @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     long deleteByLogin(final String login);
 
     @Modifying
-    @Query("DELETE from Account a WHERE a.id = :accountId")
+    @Query("DELETE from Account a WHERE a.id = :accountId AND ?#{ principal?.credentialsNonExpired} = true")
     long deleteByIdWhereLoginIsEmpty(@Param("accountId") final Long accountId);
 }

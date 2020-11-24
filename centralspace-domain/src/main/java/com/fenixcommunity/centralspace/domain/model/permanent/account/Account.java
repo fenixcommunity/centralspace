@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
-import com.fenixcommunity.centralspace.domain.core.AccountEntityListener;
+import com.fenixcommunity.centralspace.domain.core.listener.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
 import com.googlecode.jmapper.annotations.JMap;

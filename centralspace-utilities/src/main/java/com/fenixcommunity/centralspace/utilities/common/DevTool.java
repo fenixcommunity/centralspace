@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toMap;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.SerializationUtils;
 import org.springframework.util.ClassUtils;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
@@ -37,6 +39,10 @@ public class DevTool {
 
     public static String getClassName(final Class clazz) {
         return clazz.getName();
+    }
+
+    public static Object deepCopyOfObject(final Serializable serializableObj) {
+        return SerializationUtils.clone(serializableObj);
     }
 
     //todo generic

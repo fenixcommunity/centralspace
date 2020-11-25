@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.HIGH;
+import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.LOW;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.getCurrentURI;
 import static com.fenixcommunity.centralspace.utilities.web.WebTool.prepareResponseHeaders;
 import static java.util.Collections.singletonMap;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.fenixcommunity.centralspace.app.service.account.AccountHelper;
 import com.fenixcommunity.centralspace.utilities.async.AsyncFutureHelper;
 import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.responseinfo.BasicResponse;
@@ -58,6 +60,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;
+    private final AccountHelper accountHelper;
 
     //todo zobacz inne narzedzia jpa repo
     // Optional
@@ -114,8 +117,8 @@ public class AccountController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
-        final Account requestAccount = new AccountModelMapper(OperationLevel.LOW).mapFromDto(accountDto);
-        final Long generatedId = accountService.save(requestAccount).getId();
+        final Account requestedAccount = accountHelper.mapFromDtoAndValidate(accountDto, LOW);
+        accountService.save(requestedAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
     }
@@ -124,11 +127,11 @@ public class AccountController {
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<BasicResponse> update(
-            @PathVariable(name = "id") final Long id, @Valid @RequestBody final AccountDto requestAccountDto)
+            @PathVariable(name = "id") final Long id, @Valid @RequestBody final AccountDto accountDto)
             throws ResourceNotFoundException {
         isRecordExistElseThrowEx(id);
-        final Account requestAccount = new AccountModelMapper(OperationLevel.LOW).mapFromDto(requestAccountDto);
-        final Account updatedAccount = accountService.save(requestAccount);
+        final Account requestedAccount = accountHelper.mapFromDtoAndValidate(accountDto, LOW);
+        final Account updatedAccount = accountService.save(requestedAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
         return ResponseEntity.ok(response);
     }

@@ -32,7 +32,6 @@
         <spring-boot-web.version>2.2.5.RELEASE</spring-boot-web.version>
         <spring-boot-webflux.version>2.2.5.RELEASE</spring-boot-webflux.version>
         <spring-boot-data.version>2.2.5.RELEASE</spring-boot-data.version>
-        <spring-boot-starter-data-rest.version>2.2.5.RELEASE</spring-boot-starter-data-rest.version>
         <spring-security-data.version>5.2.5.RELEASE</spring-security-data.version>
         <spring-boot-data-redis.version>2.2.5.RELEASE</spring-boot-data-redis.version>
         <spring-session-data-redis.version>2.2.4.RELEASE</spring-session-data-redis.version>
@@ -183,11 +182,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring-boot-data-redis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-rest</artifactId>
-                <version>${spring-boot-starter-data-rest.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>

@@ -10,6 +10,8 @@ import static com.fenixcommunity.centralspace.utilities.common.DevTool.mergeStri
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.sql.DataSource;
 
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppAuthenticationFailureHandler;
@@ -27,7 +29,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -105,6 +109,9 @@ public abstract class AutoSecurityConfig {
                 .authoritiesByUsernameQuery(getAuthoritiesQuery())
                 .groupAuthoritiesByUsername(groupAuthoritiesByUsername())
                 .passwordEncoder(passwordEncoder);
+        // to testing authenticationSuccessListener
+        auth.eraseCredentials(false);
+
 //              .withUser(User.withUsername(DB_USER.name())
 //                        .password(passwordEncoder().encode(PASSWORD))
 //                        .roles(DB_USER.name())
@@ -167,6 +174,7 @@ public abstract class AutoSecurityConfig {
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         private final DataSource dataSource;
 
+        @Autowired
         public FormLoginWebSecurityConfigurerAdapter(final @Qualifier("h2DataSource") DataSource dataSource) {
             this.dataSource = dataSource;
         }
@@ -199,7 +207,7 @@ public abstract class AutoSecurityConfig {
                     .frameOptions().sameOrigin()
                     .and()
                     .formLogin().permitAll()
-                    .successHandler(appAuthenticationSuccessHandler())
+                    .successHandler(appAuthenticationSuccessHandler(loginAttemptService(), passwordEncoder()))
                     .failureHandler(appAuthenticationFailureHandler())
                     .and()
                     .logout().logoutUrl("/logout") //todo frontend handle
@@ -231,8 +239,8 @@ public abstract class AutoSecurityConfig {
         }
 
         @Bean
-        AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
-            return new AppAuthenticationSuccessHandler(SESSION_TIMEOUT_SECONDS, "/app/swagger-ui.html");
+        AuthenticationSuccessHandler appAuthenticationSuccessHandler(final LoginAttemptService loginAttemptService, final PasswordEncoder encoder) {
+            return new AppAuthenticationSuccessHandler(loginAttemptService, encoder, SESSION_TIMEOUT_SECONDS, "/app/swagger-ui.html");
         }
 
         @Bean
@@ -254,13 +262,27 @@ public abstract class AutoSecurityConfig {
         }
 
         @Bean
-        public HttpSessionEventPublisher httpSessionEventPublisher() {
+        HttpSessionEventPublisher httpSessionEventPublisher() {
             return new HttpSessionEventPublisher();
         }
-    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        @Bean
+        PasswordEncoder passwordEncoder() {
+            final PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            final Map<String, PasswordEncoder> encoders = new HashMap<>();
+            encoders.put("bcrypt", bCryptPasswordEncoder);
+            encoders.put("scrypt", new SCryptPasswordEncoder());
+
+            final DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(
+                    "bcrypt", encoders);
+            passwordEncoder.setDefaultPasswordEncoderForMatches(bCryptPasswordEncoder);
+
+            return passwordEncoder;
+        }
+
+        @Bean
+        LoginAttemptService loginAttemptService() {
+            return new LoginAttemptService();
+        }
     }
 }

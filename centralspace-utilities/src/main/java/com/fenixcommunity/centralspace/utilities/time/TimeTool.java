@@ -2,7 +2,6 @@ package com.fenixcommunity.centralspace.utilities.time;
 
 import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_NULL;
 import static lombok.AccessLevel.PRIVATE;
-import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
 import java.time.Instant;
 import java.time.ZoneOffset;

@@ -141,7 +141,7 @@ public class AccountRepositoryTest {
         Page<Account> foundAllAccountsWithPagination = accountRepository.findAllWithPagination(secondPageWithTwoElements);
 
         assertNotNull(foundAllAccountsWithPagination);
-        assertThat(foundAllAccountsWithPagination.getTotalElements()).isEqualTo(5);
+        assertThat(foundAllAccountsWithPagination.getTotalElements()).isEqualTo(6);
         assertThat(foundAllAccountsWithPagination.getTotalPages()).isEqualTo(3);
         assertThat(foundAllAccountsWithPagination.getContent())
                 .hasSize(2)

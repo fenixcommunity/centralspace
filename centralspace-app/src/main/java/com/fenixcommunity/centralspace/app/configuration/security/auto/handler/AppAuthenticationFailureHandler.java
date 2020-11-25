@@ -26,6 +26,7 @@ public class AppAuthenticationFailureHandler implements AuthenticationFailureHan
             final HttpServletResponse response,
             final AuthenticationException exception) throws IOException {
 
+        // todo AuthenticationFailureBadCredentialsEvent and to LoginAttemptService by IP
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         //todo change date format
         final Map<String, Object> data = new HashMap<>();

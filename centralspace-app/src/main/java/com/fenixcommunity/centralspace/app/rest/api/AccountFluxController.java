@@ -13,6 +13,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.dto.security.SecuredUserDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
+import com.fenixcommunity.centralspace.app.service.account.AccountHelper;
 import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import lombok.AccessLevel;
@@ -44,6 +45,7 @@ import reactor.core.publisher.SignalType;
 public class AccountFluxController {
 
     private final AccountService accountService;
+    private final AccountHelper accountHelper;
 
     @GetMapping("/check-pre-post-authentication")
     @ResponseStatus(HttpStatus.OK)
@@ -63,10 +65,10 @@ public class AccountFluxController {
     @Secured({"ROLE_FLUX_EDITOR"})
     public Mono<AccountDto> createFlux(@Valid @RequestBody final AccountDto accountDto) {
 //         Mono<Void> or Flux<AccountDto>
-        final Account createdAccount = new AccountModelMapper(LOW).mapFromDto(accountDto);
-        final Long generatedId = accountService.save(createdAccount).getId();
-        createdAccount.setId(generatedId);
-        return Mono.just(new AccountModelMapper(HIGH).mapToDto(createdAccount))
+        final Account requestedAccount = accountHelper.mapFromDtoAndValidate(accountDto, LOW);
+        final Long generatedId = accountService.save(requestedAccount).getId();
+        requestedAccount.setId(generatedId);
+        return Mono.just(new AccountModelMapper(HIGH).mapToDto(requestedAccount))
                 .doOnNext(dto -> System.out.println(dto.getLogin()))
                 .defaultIfEmpty(AccountDto.builder().build())
                 .log("AccountFluxController", Level.INFO, SignalType.ON_COMPLETE)

@@ -3,7 +3,7 @@ package com.fenixcommunity.centralspace.app.configuration.mail;
 import static lombok.AccessLevel.PRIVATE;
 
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 
 import com.fenixcommunity.centralspace.utilities.common.YamlFetcher;
 import com.fenixcommunity.centralspace.utilities.mail.properties.MailContent;
@@ -22,8 +22,7 @@ import org.springframework.stereotype.Component;
 class MailProperties {
 
     private String host;
-    @Min(25)
-    @Max(1000)
+    @Positive @Max(1000)
     private int port;
     private String protocol;
     private String username;

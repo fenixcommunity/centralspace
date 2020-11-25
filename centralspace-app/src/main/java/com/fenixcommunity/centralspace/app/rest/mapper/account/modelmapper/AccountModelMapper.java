@@ -13,18 +13,26 @@ import com.fenixcommunity.centralspace.utilities.mapper.Mappable;
 import com.fenixcommunity.centralspace.utilities.mapper.ModelMapperBuilder;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.common.OperationLevel;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.Condition;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTokenizers;
 
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@FieldDefaults(level = PRIVATE)
 public class AccountModelMapper implements Mappable<Account, AccountDto> {
     private final ModelMapper mapToDtoStrategy;
     private final ModelMapper mapFromDtoStrategy;
+    private OperationLevel operationLevel = OperationLevel.LOW;
 
-    public AccountModelMapper(OperationLevel operationLevel) {
+    public AccountModelMapper() {
+        mapToDtoStrategy = prepareMapToDtoStrategy(operationLevel);
+        mapFromDtoStrategy = prepareMapFromDtoStrategy(operationLevel);
+    }
+
+    public AccountModelMapper(@NonNull OperationLevel operationLevel) {
+        this.operationLevel = operationLevel;
         mapToDtoStrategy = prepareMapToDtoStrategy(operationLevel);
         mapFromDtoStrategy = prepareMapFromDtoStrategy(operationLevel);
     }

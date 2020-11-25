@@ -18,7 +18,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = "classpath:sms-provider.yml", factory = YamlFetcher.class)
 @EnableConfigurationProperties(SmsProviderProperties.class)
 @AllArgsConstructor(access = PUBLIC) @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class SmsConfiguration {
+public class SmsConfig {
 
     @Bean
     public TwilioRestClient smsProvider(@NonNull SmsProviderProperties smsProviderProperties) {

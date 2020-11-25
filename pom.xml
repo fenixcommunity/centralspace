@@ -40,6 +40,7 @@
         <spring-boot-thymeleaf.version>2.2.5.RELEASE</spring-boot-thymeleaf.version>
         <spring-context-support.version>5.2.4.RELEASE</spring-context-support.version>
         <spring-core.version>5.2.4.RELEASE</spring-core.version>
+        <spring-batch-core.version>4.2.4.RELEASE</spring-batch-core.version>
         <spring-boot-security.version>2.2.5.RELEASE</spring-boot-security.version>
         <spring-boot-starter-actuator.version>2.2.5.RELEASE</spring-boot-starter-actuator.version>
         <spring-log4j2.version>2.2.5.RELEASE</spring-log4j2.version>
@@ -99,6 +100,7 @@
         <spring-boot-test.version>2.2.5.RELEASE</spring-boot-test.version>
         <spring-security-test.version>5.2.1.RELEASE</spring-security-test.version>
         <awaitility-test.version>4.0.3</awaitility-test.version>
+        <spring-batch-test.version>4.2.4.RELEASE</spring-batch-test.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <junit-jupiter-api.version>${junit-jupiter.version}</junit-jupiter-api.version>
         <junit-jupiter-params.version>${junit-jupiter.version}</junit-jupiter-params.version>
@@ -217,6 +219,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring-boot-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.batch</groupId>
+                <artifactId>spring-batch-core</artifactId>
+                <version>${spring-batch-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -449,6 +456,12 @@
                 <groupId>org.awaitility</groupId>
                 <artifactId>awaitility</artifactId>
                 <version>${awaitility-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.batch</groupId>
+                <artifactId>spring-batch-test</artifactId>
+                <version>${spring-batch-test.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

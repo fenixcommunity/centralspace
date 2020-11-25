@@ -20,6 +20,10 @@ public class ServiceFailedException extends RuntimeException {
         rootCause = message;
     }
 
+    public ServiceFailedException(Exception exception) {
+        this(exception.getMessage(), exception.getCause());
+    }
+
     public ServiceFailedException(String message, Throwable throwable) {
         super(message, throwable);
         fullStackTrace = ExceptionUtils.getFullStackTrace(throwable);

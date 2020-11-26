@@ -13,6 +13,15 @@ Configuration:
       PatternLayout:
         Pattern: "%style{%d{dd-MM-yyyy HH:mm:ss.SSS}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable"
         type: PatternLayout
+#    Console:   ->>> Logger logger = LogManager.getLogger("CONSOLE_JSON_APPENDER");
+#      name: ConsoleJSONAppender
+#      target: SYSTEM_OUT
+#      JsonLayout:
+#        complete: false
+#        compact: false
+#        KeyValuePair:
+#          key: myCustomField
+#          value: myCustomValue
 #    File:
 #      name: File
 #      fileName: ${fileName}.log

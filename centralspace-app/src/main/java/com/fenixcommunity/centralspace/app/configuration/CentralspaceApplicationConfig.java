@@ -11,6 +11,7 @@ import com.fenixcommunity.centralspace.app.configuration.aws.s3.AmazonS3Config;
 import com.fenixcommunity.centralspace.app.configuration.batch.BatchConfig;
 import com.fenixcommunity.centralspace.app.configuration.caching.CachingConfig;
 import com.fenixcommunity.centralspace.app.configuration.customization.CustomizationConfig;
+import com.fenixcommunity.centralspace.app.configuration.features.FeaturesConfig;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorSwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.AutoSecurityConfig;
@@ -63,7 +64,8 @@ import org.springframework.context.annotation.Import;
         AsyncConfig.class,
         CustomizationConfig.class,
         BatchConfig.class,
-        SmsConfig.class
+        SmsConfig.class,
+        FeaturesConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)

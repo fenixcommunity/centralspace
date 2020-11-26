@@ -15,7 +15,7 @@ class AppMetadataLoaderTest {
     @Test
     void getClassGraphScanResultTest() {
         AppMetadataLoader<MethodMonitoring> appMetadataLoaderForSpringService = new AppMetadataLoader<>();
-        List<ClassInfoList> classGraphScanResultForAnnotation = appMetadataLoaderForSpringService.getClassGraphScanResultForAnnotation(MethodMonitoring.class);
+        List<ClassInfoList> classGraphScanResultForAnnotation = appMetadataLoaderForSpringService.getAllGraphScanResultForAnnotation(MethodMonitoring.class);
 
         assertThat(classGraphScanResultForAnnotation).extracting(classInfos -> classInfos.size()).contains(1);
     }

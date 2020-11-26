@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import com.fenixcommunity.centralspace.app.configuration.features.AppFeatures;
 import com.fenixcommunity.centralspace.app.service.batch.BatchLauncher;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,11 +22,15 @@ import reactor.core.publisher.Mono;
 public class BatchController {
 
     private final BatchLauncher batchLauncher;
+    private final AppFeatures appFeatures;
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/account")
     public Mono<String> runAccountBatch() {
-        final BatchStatus batchStatus = batchLauncher.launchAccountBatch();
-        return Mono.just(batchStatus.name());
+        if (appFeatures.getBatchFeature().isAccountLoginUpdater()) {
+            final BatchStatus batchStatus = batchLauncher.launchAccountBatch();
+            return Mono.just(batchStatus.name());
+        }
+        return Mono.just(BatchStatus.UNKNOWN.name());
     }
 }

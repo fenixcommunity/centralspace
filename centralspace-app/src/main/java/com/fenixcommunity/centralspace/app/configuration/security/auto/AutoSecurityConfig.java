@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppAuthenticationFailureHandler;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppAuthenticationSuccessHandler;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppLogoutSuccessHandler;
+import com.fenixcommunity.centralspace.app.service.security.auto.LoginAttemptService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -64,7 +65,8 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/customization/**",
             API_PATH + "/sms-sender/**",
             API_PATH + "/app-control/**",
-            API_PATH + "/batch/**"
+            API_PATH + "/batch/**",
+            API_PATH + "/features/**"
     };
     private static final String[] BASIC_API_AUTH_LIST = {
             API_PATH + "/resource-cache/**"

@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fenixcommunity.centralspace.app.configuration.security.auto.LoginAttemptService;
+import com.fenixcommunity.centralspace.app.service.security.auto.LoginAttemptService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

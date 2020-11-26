@@ -117,7 +117,7 @@ public class LoggingController {
         appMetadataLoaderForRemoteService.getMetadataInformation(RemoteService.class);
 
         final AppMetadataLoader<MethodMonitoring> appMetadataLoaderForMethodMonitoring = new AppMetadataLoader<>();
-        appMetadataLoaderForMethodMonitoring.getClassGraphScanResultForAnnotation(MethodMonitoring.class);
+        appMetadataLoaderForMethodMonitoring.getAllGraphScanResultForAnnotation(MethodMonitoring.class);
 
 
         return Mono.just(LoggerResponseDto.builder()

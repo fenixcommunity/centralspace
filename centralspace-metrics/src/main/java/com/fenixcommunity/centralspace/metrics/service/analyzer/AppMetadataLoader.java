@@ -1,12 +1,19 @@
 package com.fenixcommunity.centralspace.metrics.service.analyzer;
 
+import static java.util.Objects.nonNull;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ClassInfoList;
+import io.github.classgraph.FieldInfo;
+import io.github.classgraph.FieldInfoList;
 import io.github.classgraph.ScanResult;
 
 public class AppMetadataLoader<T> {
@@ -17,7 +24,8 @@ public class AppMetadataLoader<T> {
                 .enableClassInfo()
                 .enableAnnotationInfo()
                 .enableMethodInfo()
-                .enableFieldInfo();
+                .enableFieldInfo()
+                .ignoreFieldVisibility();
     }
 
     public MetadataInformation getMetadataInformation(final Class<T> className) {
@@ -35,7 +43,7 @@ public class AppMetadataLoader<T> {
         }
     }
 
-    public List<ClassInfoList> getClassGraphScanResultForAnnotation(final Class<T> annotationClass) {
+    public List<ClassInfoList> getAllGraphScanResultForAnnotation(final Class<T> annotationClass) {
         try (final ScanResult result = classGraph.scan()) {
             final String annotationClassName = annotationClass.getName();
             final ClassInfoList annotationForClasses = result.getClassesWithAnnotation(annotationClassName);
@@ -44,6 +52,17 @@ public class AppMetadataLoader<T> {
             final ClassInfoList annotationForMethodsParam = result.getClassesWithMethodParameterAnnotation(annotationClassName);
             return Arrays.asList(annotationForClasses, annotationForMethods, annotationForFields, annotationForMethodsParam);
         }
+    }
+
+    public List<FieldInfo> getFieldsOfClassForAnnotation(final Class<T> annotationClass) {
+        ClassInfoList classInfos;
+        try (final ScanResult result = classGraph.scan()) {
+            classInfos = result.getClassesWithAnnotation(annotationClass.getName());
+        }
+        return classInfos.stream()
+                .filter(classInfo -> nonNull(classInfo.getFieldInfo()))
+                .flatMap(classInfo -> classInfo.getFieldInfo().stream())
+                .collect(Collectors.toList());
     }
 
 }

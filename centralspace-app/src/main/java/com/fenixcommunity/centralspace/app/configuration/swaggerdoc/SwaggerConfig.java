@@ -101,6 +101,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         input.matches(API_PATH + "/sms-sender/.*") ||
                         input.matches(API_PATH + "/app-control/.*") ||
                         input.matches(API_PATH + "/batch/.*") ||
+                        input.matches(API_PATH + "/features/.*") ||
                         input.matches("/actuator/.*");
     }
 

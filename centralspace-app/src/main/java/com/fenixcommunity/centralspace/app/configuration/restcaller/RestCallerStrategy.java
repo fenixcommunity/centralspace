@@ -26,6 +26,8 @@ public class RestCallerStrategy {
 
     private final RestTemplateRetryWrapper restCallerRetryWrapper;
 
+    // we have also HttpClient (java 9 improvements)
+
     public WebClient getWebClient() {
         return basicAuthWebClientBuilder.build();
     }

@@ -22,12 +22,12 @@ public class RestCallerStrategy {
     @Qualifier("basicAuthWebClientBuilder")
     private final WebClient.Builder basicAuthWebClientBuilder;
 
+    // rest template with Apache HttpClient requestFactory
     private final RestTemplateBuilder basicAuthRestTemplateBuilder;
-
+    // retry rest template with metrics
     private final RestTemplateRetryWrapper restCallerRetryWrapper;
 
-    // we have also Apache HttpClient (java 9 improvements)
-    //we can use Google HTTP Client. Compared with HTTP Apache -> high-level abstraction
+    //we can use Google HTTP Client. Compared with Apache HTTP Client -> high-level abstraction
 
     public WebClient getWebClient() {
         return basicAuthWebClientBuilder.build();

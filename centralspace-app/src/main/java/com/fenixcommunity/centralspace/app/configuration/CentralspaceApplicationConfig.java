@@ -48,7 +48,7 @@ import org.springframework.context.annotation.Import;
         WebConfig.class,
         FilterApiConfig.class,
         HttpSessionConfig.class,
-//      RestCallerStrategy.class, WebClientConfig.class -> hidden config
+//      RestTemplateConfig.class, WebClientConfig.class, HttpClientConfig.class -> hidden config
         // aws
         AmazonS3Config.class,
         // utils

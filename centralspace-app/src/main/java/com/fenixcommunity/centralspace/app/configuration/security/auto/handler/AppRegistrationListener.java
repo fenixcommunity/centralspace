@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
+public class AppRegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 //    private IUserService service;
 
     @Override

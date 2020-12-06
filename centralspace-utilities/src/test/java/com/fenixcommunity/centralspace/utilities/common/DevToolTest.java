@@ -45,4 +45,13 @@ class DevToolTest {
                 serializableObjToTest.getFile(),
                 deepCopyResult.getFile());
     }
+
+    @Test
+    public void generateSecureStringChainTest() {
+        String resultWithSpecialChars = DevTool.generateSecurePassword();
+        assertThat(resultWithSpecialChars).hasSize(38);
+
+        String resultWithoutSpecialChars = DevTool.generateSecureToken();
+        assertThat(resultWithoutSpecialChars).hasSize(38);
+    }
 }

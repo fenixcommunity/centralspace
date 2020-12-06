@@ -83,12 +83,22 @@ public class DevTool {
         return List.of(inputString.split(SPACE)).containsAll(List.of(words));
     }
 
+    public static String generateSecureToken() {
+        return generateSecureStringChain(38, false);
+    }
+
     public static String generateSecurePassword() {
-        final String upperCaseLetters = RandomStringUtils.random(2, 65, 90, true, true);
-        final String lowerCaseLetters = RandomStringUtils.random(2, 97, 122, true, true);
-        final String numbers = RandomStringUtils.randomNumeric(2);
-        final String specialChar = RandomStringUtils.random(2, 33, 47, false, false);
-        final String totalChars = RandomStringUtils.randomAlphanumeric(2);
+        return generateSecureStringChain(10, true);
+    }
+
+    private static String generateSecureStringChain(int length, boolean includeSpecialChars) {
+        int eachElementCount = (length / 5);
+        int bonusCount = (length % 5) + (includeSpecialChars ? 0 : eachElementCount);
+        final String upperCaseLetters = RandomStringUtils.random(eachElementCount, 65, 90, true, true);
+        final String lowerCaseLetters = RandomStringUtils.random(eachElementCount, 97, 122, true, true);
+        final String numbers = RandomStringUtils.randomNumeric(eachElementCount);
+        final String specialChar = includeSpecialChars ? RandomStringUtils.random(eachElementCount, 33, 47, false, false) : "";
+        final String totalChars = RandomStringUtils.randomAlphanumeric(eachElementCount + bonusCount);
 
         final String combinedChars = upperCaseLetters
                 .concat(lowerCaseLetters)

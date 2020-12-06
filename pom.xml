@@ -38,10 +38,13 @@
         <spring-boot-tomcat.version>2.2.5.RELEASE</spring-boot-tomcat.version>
         <spring-boot-mail.version>2.2.5.RELEASE</spring-boot-mail.version>
         <spring-boot-thymeleaf.version>2.2.5.RELEASE</spring-boot-thymeleaf.version>
+        <spring-boot-security.version>2.2.5.RELEASE</spring-boot-security.version>
+        <spring-boot-admin-starter-server.version>2.2.2</spring-boot-admin-starter-server.version>
+        <spring-boot-admin-starter-client.version>2.2.2</spring-boot-admin-starter-client.version>
+        <spring-boot-admin-server-ui.version>2.2.2</spring-boot-admin-server-ui.version>
         <spring-context-support.version>5.2.4.RELEASE</spring-context-support.version>
         <spring-core.version>5.2.4.RELEASE</spring-core.version>
         <spring-batch-core.version>4.2.4.RELEASE</spring-batch-core.version>
-        <spring-boot-security.version>2.2.5.RELEASE</spring-boot-security.version>
         <spring-boot-starter-actuator.version>2.2.5.RELEASE</spring-boot-starter-actuator.version>
         <spring-log4j2.version>2.2.5.RELEASE</spring-log4j2.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
@@ -60,7 +63,7 @@
         <!-- UTILITIES DEPENDENCIES -->
         <spring-boot-devtools.version>2.2.5.RELEASE</spring-boot-devtools.version>
         <spring-retry.version>1.2.5.RELEASE</spring-retry.version>
-        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
         <spring-cloud-starter-vault-config.version>2.2.2.RELEASE</spring-cloud-starter-vault-config.version>
         <micrometer-core.version>1.4.0</micrometer-core.version>
         <micrometer-registry.version>1.4.0</micrometer-registry.version>
@@ -206,6 +209,27 @@
                 <version>${spring-boot-mail.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot-security.version}</version>
+            </dependency>
+            <!--        Spring Boot Admin Panel-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin-starter-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-boot-admin-starter-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui</artifactId>
+                <version>${spring-boot-admin-server-ui.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
                 <version>${spring-context-support.version}</version>
@@ -215,11 +239,7 @@
                 <artifactId>spring-core</artifactId>
                 <version>${spring-core.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-                <version>${spring-boot-security.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>org.springframework.batch</groupId>
                 <artifactId>spring-batch-core</artifactId>
@@ -568,6 +588,7 @@
                     <executions>
                         <execution>
                             <goals>
+                                <goal>build-info</goal>
                                 <goal>repackage</goal>
                             </goals>
                         </execution>

@@ -26,7 +26,8 @@ public class RestCallerStrategy {
 
     private final RestTemplateRetryWrapper restCallerRetryWrapper;
 
-    // we have also HttpClient (java 9 improvements)
+    // we have also Apache HttpClient (java 9 improvements)
+    //we can use Google HTTP Client. Compared with HTTP Apache -> high-level abstraction
 
     public WebClient getWebClient() {
         return basicAuthWebClientBuilder.build();

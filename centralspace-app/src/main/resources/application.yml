@@ -35,6 +35,22 @@ centralspace-view:
 
 #Spring
 spring:
+  boot:
+    admin:
+      contextPath: admin-panel
+      notify:
+        mail:
+          to: fenixcommunity.it@gmail.com
+      client:
+        enabled: false # false - conflicts with current actuator instance
+        url: localhost:8033
+        username: admin
+        password: password
+        instance:
+          metadata:
+            user:
+              name: admin # ${spring.security.user.name}
+              password: password # password: ${spring.security.user.password}
   jpa:
     open-in-view: false
     properties:
@@ -84,6 +100,8 @@ management:
       enabled: true
     refresh:
       enabled: true
+    health:
+      show-details: always
 
 springdoc:
   show:

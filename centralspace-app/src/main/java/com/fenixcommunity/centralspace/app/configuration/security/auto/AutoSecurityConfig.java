@@ -18,6 +18,8 @@ import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.A
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppAuthenticationSuccessHandler;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppLogoutSuccessHandler;
 import com.fenixcommunity.centralspace.app.service.security.auto.LoginAttemptService;
+import com.fenixcommunity.centralspace.utilities.common.DevTool;
+import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +27,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,7 +41,9 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity // (debug = true)
 //@EnableWebFluxSecurity todo https://www.baeldung.com/spring-security-5-reactive
@@ -47,7 +52,6 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 public abstract class AutoSecurityConfig {
 
     private static final String API_PATH = "/api";
-    private static final String REMEMBER_ME_KEY = "9D119EE5A2B7DAF6B4DC1EF871D0AC3C";
     private static final String REMEMBER_ME_COOKIE = "remembermecookie";
     private static final int SESSION_TIMEOUT_SECONDS = 60 * 10; //todo to properties
     private static final int TOKEN_VALIDITY_SECONDS = 60 * 45;
@@ -175,10 +179,13 @@ public abstract class AutoSecurityConfig {
     @Configuration
     @Order(1)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        private final AdminServerProperties adminServer;
         private final DataSource dataSource;
 
         @Autowired
-        public FormLoginWebSecurityConfigurerAdapter(final @Qualifier("h2DataSource") DataSource dataSource) {
+        public FormLoginWebSecurityConfigurerAdapter(final AdminServerProperties adminServer,
+                                                     final @Qualifier("h2DataSource") DataSource dataSource) {
+            this.adminServer = adminServer;
             this.dataSource = dataSource;
         }
 
@@ -194,6 +201,8 @@ public abstract class AutoSecurityConfig {
                     .antMatchers(BASIC_API_AUTH_LIST).hasRole(BASIC.name())
                     .antMatchers(ADMIN_API_AUTH_LIST).hasRole(ADMIN.name())
                     .antMatchers(FLUX_API_AUTH_LIST).hasRole(FLUX_GETTER.name())
+                    .antMatchers(this.adminServer.path("/assets/**")).permitAll()
+                    .antMatchers(this.adminServer.path("/login")).permitAll()
                     .antMatchers(NO_AUTH_API_LIST).permitAll()
                     //FORM
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasRole(SWAGGER.name())
@@ -203,7 +212,14 @@ public abstract class AutoSecurityConfig {
                     .and()
                     .cors()//.configurationSource(corsConfigurationSource())
                     .and()
-                    .csrf().disable()
+//                    .csrf().disable()
+                    .csrf()
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    .ignoringRequestMatchers(
+                            new AntPathRequestMatcher(this.adminServer.path("/instances"), HttpMethod.POST.toString()),
+                            new AntPathRequestMatcher(this.adminServer.path("/instances/*"), HttpMethod.DELETE.toString()),
+                            new AntPathRequestMatcher(this.adminServer.path("/actuator/**")))
+                    .and()
                     .httpBasic()
                     .and()
                     .headers()
@@ -218,7 +234,7 @@ public abstract class AutoSecurityConfig {
                     .invalidateHttpSession(true)
                     .deleteCookies(REMEMBER_ME_COOKIE)
                     .and()
-                    .rememberMe().key(REMEMBER_ME_KEY)
+                    .rememberMe().key(DevTool.generateSecureToken())
                     .rememberMeCookieName(REMEMBER_ME_COOKIE)
                     .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
                     .tokenRepository(tokenRepository())

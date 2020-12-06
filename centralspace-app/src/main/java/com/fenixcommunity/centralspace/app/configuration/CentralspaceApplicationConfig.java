@@ -1,6 +1,5 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
-import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorConfig;
@@ -26,7 +25,7 @@ import com.fenixcommunity.centralspace.metrics.config.MetricsConfig;
 import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
 import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
-import lombok.experimental.FieldDefaults;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -65,11 +64,11 @@ import org.springframework.context.annotation.Import;
         CustomizationConfig.class,
         BatchConfig.class,
         SmsConfig.class,
-        FeaturesConfig.class
+        FeaturesConfig.class,
+        SpringAdminNotifierConfig.class
 })
 //@Profile(Profiles.STANDALONE_PROFILE)
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@EnableAdminServer
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class CentralspaceApplicationConfig {
-    //todo profiles!!!
 }

@@ -2,7 +2,7 @@ package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.app.rest.caller.RestTemplateHelper.createRestEntity;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
-import static com.fenixcommunity.centralspace.utilities.common.Var.NEW_LINE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SEPARATOR;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
@@ -73,7 +73,7 @@ public class ResourceCacheController {
             return ResponseEntity.badRequest().body("NO FILE UPLOADED");
         }
         final StringJoiner joiner = new StringJoiner("").add("FILE UPLOAD STATUS:");
-        result.forEach((fileName, fileResult) -> joiner.add(NEW_LINE).add(fileName).add(LINE).add("STATUS: ").add(fileResult.toString()));
+        result.forEach((fileName, fileResult) -> joiner.add(SEPARATOR).add(fileName).add(LINE).add("STATUS: ").add(fileResult.toString()));
         return ResponseEntity.badRequest().body(joiner.toString());
     }
 

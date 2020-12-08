@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -53,5 +55,16 @@ class DevToolTest {
 
         String resultWithoutSpecialChars = DevTool.generateSecureToken();
         assertThat(resultWithoutSpecialChars).hasSize(38);
+    }
+
+    @Test
+    public void countItemsFrequencyTest() {
+        List<String> items = List.of( "China", "Australia", "India", "USA", "USSR", "UK", "China",
+                "France", "Poland", "Austria", "India", "USA", "Egypt", "China");
+
+        Map<String, ItemCounter.MutableInteger> stringMutableIntegerMap = DevTool.countItemsFrequency(items);
+
+        assertEquals(3, stringMutableIntegerMap.get("China").getCount());
+        assertEquals(2, stringMutableIntegerMap.get("India").getCount());
     }
 }

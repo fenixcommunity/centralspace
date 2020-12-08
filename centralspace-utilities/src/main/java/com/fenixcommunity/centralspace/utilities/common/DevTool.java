@@ -83,6 +83,11 @@ public class DevTool {
         return List.of(inputString.split(SPACE)).containsAll(List.of(words));
     }
 
+    public static Map<String, ItemCounter.MutableInteger> countItemsFrequency(List<String> items) {
+        ItemCounter<String> itemCounter = new ItemCounter<>();
+        return itemCounter.countItemsFrequency(items);
+    }
+
     public static String generateSecureToken() {
         return generateSecureStringChain(38, false);
     }

@@ -187,6 +187,10 @@
             <groupId>com.twilio.sdk</groupId>
             <artifactId>twilio</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>com.icegreen</groupId>

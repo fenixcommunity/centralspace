@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.service.sms;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.NEW_LINE;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
@@ -60,7 +60,7 @@ public class SmsSenderService {
     }
 
     public String checkDeliveryStatus() {
-        final StringJoiner joiner = new StringJoiner(LINE);
+        final StringJoiner joiner = new StringJoiner(NEW_LINE);
         final CompletableFuture<ResourceSet<Message>> future = Message.reader().readAsync();
 
         AsyncFutureHelper.get(future).forEach(message -> joiner.add(message.getSid() + " : " + message.getStatus()));

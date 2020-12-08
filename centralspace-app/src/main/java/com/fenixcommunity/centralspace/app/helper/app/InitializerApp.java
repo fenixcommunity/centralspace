@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.helper.app;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.NEW_LINE;
 import static com.fenixcommunity.centralspace.utilities.common.Var.SEPARATOR;
 import static java.lang.String.format;
 import static lombok.AccessLevel.PRIVATE;
@@ -43,35 +43,35 @@ public class InitializerApp implements CommandLineRunner {
     public void run(String... args) {
         final String appInfo = "Fenix community application has been launched";
 
-        final String pluginIdeInfo = "Please look at interesting IntelliJ plugins:" + LINE + "README.md file";
+        final String pluginIdeInfo = "Please look at interesting IntelliJ plugins:" + NEW_LINE + "README.md file";
 
-        final String swaggerInfo = "Please look at SWAGGER UI page:" + LINE + swaggerEndpoint;
+        final String swaggerInfo = "Please look at SWAGGER UI page:" + NEW_LINE + swaggerEndpoint;
 
-        final String h2Info = "Please look at H2 database console:" + LINE + h2Endpoint;
+        final String h2Info = "Please look at H2 database console:" + NEW_LINE + h2Endpoint;
 
-        final String sonarServerInfo = "Please run SONAR analyzer console:" + LINE + "http://localhost:9000/dashboard?id=centralspace";
+        final String sonarServerInfo = "Please run SONAR analyzer console:" + NEW_LINE + "http://localhost:9000/dashboard?id=centralspace";
 
-        final String sonarInfo = "Please run SONAR build maven:" + LINE + "mvn sonar:sonar" + LINE +
-                "-Dsonar.projectKey=centralspace" + LINE +
-                "-Dsonar.host.url=http://localhost:9000" + LINE +
+        final String sonarInfo = "Please run SONAR build maven:" + NEW_LINE + "mvn sonar:sonar" + NEW_LINE +
+                "-Dsonar.projectKey=centralspace" + NEW_LINE +
+                "-Dsonar.host.url=http://localhost:9000" + NEW_LINE +
                 "-Dsonar.login=1ea3c73b39a7f3aa2e4862bb874c8fbca7895943";
 
-        final StringJoiner actuatorInfo = new StringJoiner(LINE)
+        final StringJoiner actuatorInfo = new StringJoiner(NEW_LINE)
                 .add("Please look at spring actuator app live status:");
         actuatorEndpoints.forEach(endpoint -> actuatorInfo.add(actuatorEndpoint + endpoint));
 
-        final String prometheusInfo = "Please run prometheus metrics server:" + LINE + prometheusEndpoint;
+        final String prometheusInfo = "Please run prometheus metrics server:" + NEW_LINE + prometheusEndpoint;
 
-        final String vaultInfo = "Please run vault server:" + LINE + "vault server --dev --dev-root-token-id=\"00000000-0000-0000-0000-000000000000\""
-                + LINE + "and run command: set VAULT_ADDR=http://127.0.0.1:8200"
-                + LINE + "and put keys: vault kv put secret/centralspace-vault-config aws.app.keyId=xxx aws.app.secretKey=xxx"
-                + LINE + "and get/delete keys: vault kv get secret/centralspace-vault-config" + LINE + "or go to: http://localhost:8200/ui";
+        final String vaultInfo = "Please run vault server:" + NEW_LINE + "vault server --dev --dev-root-token-id=\"00000000-0000-0000-0000-000000000000\""
+                + NEW_LINE + "and run command: set VAULT_ADDR=http://127.0.0.1:8200"
+                + NEW_LINE + "and put keys: vault kv put secret/centralspace-vault-config aws.app.keyId=xxx aws.app.secretKey=xxx"
+                + NEW_LINE + "and get/delete keys: vault kv get secret/centralspace-vault-config" + NEW_LINE + "or go to: http://localhost:8200/ui";
 
         final String testInfo = "Please run tests with profile 'test'(run with env. variables -> spring.profiles.active=test)";
         final String analyzeVMInfo = "Analyze VM working (the same provided by Prometheus server. Not for Open JDK)"
-                + LINE + "-XX:NativeMemoryTracking=summary"
-                + LINE + "command: jcmd -> jcmd <pid> VM.native_memory";
-        final String redisInfo = LINE;
+                + NEW_LINE + "-XX:NativeMemoryTracking=summary"
+                + NEW_LINE + "command: jcmd -> jcmd <pid> VM.native_memory";
+        final String redisInfo = NEW_LINE;
 
         log.info(new StringJoiner(SEPARATOR)
                 .add(appInfo)
@@ -84,7 +84,7 @@ public class InitializerApp implements CommandLineRunner {
                 .add(vaultInfo)
                 .add(testInfo)
                 .add(analyzeVMInfo)
-                .add(LINE+ swaggerInfo)
+                .add(NEW_LINE + swaggerInfo)
                 .toString());
     }
 }

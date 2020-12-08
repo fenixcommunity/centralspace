@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 public class ResourceProperties {
 
     @NotBlank
+    private String uploadFileUrl;
+    @NotBlank
     private String imageUrl;
     @NotBlank
     private String convertedPdfPath;

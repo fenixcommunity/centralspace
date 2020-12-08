@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.exception;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.NEW_LINE;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.fenixcommunity.centralspace.utilities.globalexception.FutureAsyncException;
@@ -49,7 +49,7 @@ public class GlobalRestExceptionHandler {
         String supported = "Supported content types: " + MediaType.toString(ex.getSupportedMediaTypes());
         ErrorDetails errorDetails = ErrorDetails.builder()
                 .message(ex.getMessage())
-                .details(unsupported + LINE + supported)
+                .details(unsupported + NEW_LINE + supported)
                 .build();
         return new ResponseEntity<>(errorDetails, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }

@@ -110,9 +110,7 @@ import org.springframework.stereotype.Service;
         try {
             final Claims claims = toClaims.get();
             final ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-            for (final var e : claims.entrySet()) {
-                builder.put(e.getKey(), String.valueOf(e.getValue()));
-            }
+            claims.forEach((key, value) -> builder.put(key, String.valueOf(value)));
             return builder.build();
         } catch (final IllegalArgumentException | JwtException e) {
             return ImmutableMap.of();

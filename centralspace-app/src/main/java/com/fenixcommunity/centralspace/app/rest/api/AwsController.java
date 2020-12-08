@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.LINE;
+import static com.fenixcommunity.centralspace.utilities.common.Var.NEW_LINE;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -45,7 +45,7 @@ public class AwsController {
     public ResponseEntity<BasicResponse> createBucket(@PathVariable("bucketName") final String bucketName) {
         final Bucket bucket = s3Service.createBucket(bucketName);
         final BasicResponse response = BasicResponse.builder()
-                .description(bucket.getName() + LINE + bucket.getCreationDate() + LINE + bucket.getOwner().getDisplayName())
+                .description(bucket.getName() + NEW_LINE + bucket.getCreationDate() + NEW_LINE + bucket.getOwner().getDisplayName())
                 .status("CREATED").build();
         return ResponseEntity.created(WebTool.getCurrentURI()).body(response);
     }

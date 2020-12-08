@@ -1,9 +1,12 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
+import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
+
 import java.util.EnumSet;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.MediaType;
 
 @AllArgsConstructor @Getter
 public enum FileFormat {
@@ -26,5 +29,14 @@ public enum FileFormat {
                 .stream()
                 .filter(e -> e.getSubtype().equals(subtype))
                 .findFirst().orElse(null);
+    }
+
+    public static FileFormat getFileFormatByMediaType(final MediaType mediaType) {
+        switch (mediaType.getType()) {
+            case APPLICATION_PDF_VALUE:
+                return PDF;
+            default:
+                return null;
+        }
     }
 }

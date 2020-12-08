@@ -212,14 +212,14 @@ public abstract class AutoSecurityConfig {
                     .and()
                     .cors()//.configurationSource(corsConfigurationSource())
                     .and()
-//                    .csrf().disable()
-                    .csrf()
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                    .ignoringRequestMatchers(
-                            new AntPathRequestMatcher(this.adminServer.path("/instances"), HttpMethod.POST.toString()),
-                            new AntPathRequestMatcher(this.adminServer.path("/instances/*"), HttpMethod.DELETE.toString()),
-                            new AntPathRequestMatcher(this.adminServer.path("/actuator/**")))
-                    .and()
+                    .csrf().disable()
+//                    .csrf()
+//                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                    .ignoringRequestMatchers(
+//                            new AntPathRequestMatcher(this.adminServer.path("/instances"), HttpMethod.POST.toString()),
+//                            new AntPathRequestMatcher(this.adminServer.path("/instances/*"), HttpMethod.DELETE.toString()),
+//                            new AntPathRequestMatcher(this.adminServer.path("/actuator/**")))
+//                    .and()
                     .httpBasic()
                     .and()
                     .headers()

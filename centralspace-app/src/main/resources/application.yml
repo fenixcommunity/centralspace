@@ -51,6 +51,9 @@ spring:
             user:
               name: admin # ${spring.security.user.name}
               password: password # password: ${spring.security.user.password}
+  servlet:
+    multipart:
+      enabled: true
   jpa:
     open-in-view: false
     properties:

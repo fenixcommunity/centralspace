@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 import java.io.File;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,6 +67,25 @@ public class FileDevTool {
         }
 
         return new byte[0];
+    }
+
+    public static File copyFile(final File originalFile, final String newFilePath) {
+        final File copiedFile = new File(newFilePath);
+        try {
+            FileUtils.copyFile(originalFile, copiedFile);
+        } catch (IOException e) {
+            return null;
+        }
+        return copiedFile;
+    }
+
+    public static File appendStringToFile(final File file, final String stringToAppend) {
+        try {
+            FileUtils.writeStringToFile(file, stringToAppend, StandardCharsets.UTF_8, true);
+        } catch (IOException e) {
+            return file;
+        }
+        return file;
     }
 
 }

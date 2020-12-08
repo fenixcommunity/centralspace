@@ -35,7 +35,8 @@ public class Var {
     public static final String DOT = ".";
     public static final String UNDERSCORE = "_";
     public static final String SLASH = "/";
-    public static final String LINE = "\n";
+    public static final String LINE = "-";
+    public static final String NEW_LINE = "\n";
     public static final String SEPARATOR = "\n|~~~~~~~~~~|\n";
     public static final String SPACE = " ";
     public static final String OR = "||";

@@ -1,3 +1,5 @@
+temp:
+  dir: C:/Projects/MK/centralspace-temp/
 resource:
   convertedDocxPath: ${temp.dir}converted-docx/
   convertedHtmlPath: ${temp.dir}converted-html/
@@ -7,5 +9,4 @@ resource:
   convertedCsvPath: ${temp.dir}converted-csv/
   convertedJsonPath: ${temp.dir}converted-json/
   imageUrl: /static/img/
-temp:
-  dir: C:/Projects/MK/centralspace-temp/
+  uploadFileUrl: ${temp.dir}uploaded/

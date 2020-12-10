@@ -3,6 +3,8 @@ package com.fenixcommunity.centralspace.metrics.config;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.fenixcommunity.centralspace.metrics.config.exception.PrometheusMeterRegistryException;
 import com.sun.net.httpserver.BasicAuthenticator;
@@ -84,8 +86,8 @@ public class MetricsConfig {
                 return user.equals(prometheusUser) && pwd.equals(prometheusPassword);
             }
         });
-
-        new Thread(prometheusHttpServer::start).start();
+        prometheusHttpServer.setExecutor(Executors.newFixedThreadPool(1));
+        prometheusHttpServer.start();
 
         prometheusRegistry.config().meterFilter(new PrometheusRenameFilter());
 

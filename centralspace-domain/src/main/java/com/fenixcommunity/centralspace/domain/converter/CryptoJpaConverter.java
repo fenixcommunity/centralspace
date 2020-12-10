@@ -34,7 +34,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
     private static final String ALGORITHM_PROPERTY_KEY = "algorithm";
     private static final String SECRET_PROPERTY_KEY = "key";
 
-    static {
+    static { // avoid static brace -> not easy to testing
         final Yaml yaml = new Yaml();
         final InputStream inputStream = CryptoJpaConverter.class.getClassLoader().getResourceAsStream(SECURITY_FILE);
 //      final Encryption encryption = yaml.load(inputStream); if only matched data -> security_encryption.yml

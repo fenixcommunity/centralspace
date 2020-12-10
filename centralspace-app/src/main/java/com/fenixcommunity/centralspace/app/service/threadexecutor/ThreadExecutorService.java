@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ThreadExecutorService {
 
-    // please use ConcurrentHashMap or ConcurrentNavigableMap for ordering
+    // please use ConcurrentHashMap or ConcurrentNavigableMap(ordering)
     public void execute(final Runnable command, final int threadsNo) {
         if (threadsNo < 0 || threadsNo > 8) {
             throw new ServiceFailedException("0 < threads no < 8");

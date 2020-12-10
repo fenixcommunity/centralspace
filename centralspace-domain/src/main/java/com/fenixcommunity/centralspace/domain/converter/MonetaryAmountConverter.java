@@ -22,7 +22,7 @@ public class MonetaryAmountConverter implements AttributeConverter<Money, BigDec
     private static final String GLOBAL_CURRENCY_PROPERTY_KEY = "globalCurrency";
     private static final String defaultCurrency;
 
-    static {
+    static { // avoid static brace -> not easy to testing
         final Yaml yaml = new Yaml();
         final InputStream inputStream = MonetaryAmountConverter.class.getClassLoader().getResourceAsStream(GLOBAL_CUSTOMIZATION_FILE);
         final Map<String, Object> properties = yaml.load(inputStream);

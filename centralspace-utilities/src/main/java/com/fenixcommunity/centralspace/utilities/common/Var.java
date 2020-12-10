@@ -44,8 +44,8 @@ public class Var {
     public static final String NUMBER_WATERMARK = "%d";
     public static final String IMAGE = "IMAGE";
     //MAIL
-    public static final String EMAIL_FROM = "hermes.delivery.noreply@gmail.com";
-    public static final String EMAIL_REPLY_TO = "hermes.delivery.noreply@gmail.com";
+    public static final String EMAIL_FROM = "fenixcommunity.it@gmail.com";
+    public static final String EMAIL_REPLY_TO = "fenixcommunity.it@gmail.com";
     public static final String EMAIL = "max3112@o2.com";
     public static final String SUBJECT = "Message subject";
     public static final String MESSAGE = "Massage to you, your welcome";

@@ -1,5 +1,6 @@
 #TODO public credentials, no problem to show it
 
+# WARNING - don't ever encrypt passwords when storing them at a database
 #16 BYTES
 encryption:
   algorithm: AES

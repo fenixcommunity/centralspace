@@ -15,7 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 class CryptoJpaConverterTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {Var.PASSWORD_HIGH, Var.PASSWORD_LOW})
+    @ValueSource(strings = {Var.PESEL, Var.NIP})
     void shouldConvertAsExpected(
             @ConvertWith(CryptoJpaConverterTestHelper.class) boolean excepted) {
         assertTrue(excepted);

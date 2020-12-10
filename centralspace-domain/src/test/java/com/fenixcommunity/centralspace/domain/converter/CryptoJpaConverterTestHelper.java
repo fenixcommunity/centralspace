@@ -17,13 +17,13 @@ class CryptoJpaConverterTestHelper implements ArgumentConverter {
             throw new IllegalArgumentException("The argument should be a string: " + source);
         }
 
-        String password = (String) source;
-        String decryptedResult = cryptoJpaConverter.convertToDatabaseColumn(password);
-        if (isEmpty(decryptedResult) || password.equals(decryptedResult)) {
+        String input = (String) source;
+        String decryptedResult = cryptoJpaConverter.convertToDatabaseColumn(input);
+        if (isEmpty(decryptedResult) || input.equals(decryptedResult)) {
             return false;
         }
         String encryptedResult = cryptoJpaConverter.convertToEntityAttribute(decryptedResult);
-        return !isEmpty(encryptedResult) && password.equals(encryptedResult);
+        return !isEmpty(encryptedResult) && input.equals(encryptedResult);
     }
 }
 

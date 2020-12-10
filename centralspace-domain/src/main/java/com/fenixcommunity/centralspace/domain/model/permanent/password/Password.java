@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fenixcommunity.centralspace.domain.converter.CryptoJpaConverter;
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import lombok.AllArgsConstructor;
@@ -35,7 +34,6 @@ public class Password extends AbstractBaseEntity {
     //TODO         return Optional.ofNullable(isoCountryCode)
     //             Optional.of(nowa wartosc gdy damy geta optional);
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true)
@@ -45,10 +43,8 @@ public class Password extends AbstractBaseEntity {
     @JoinColumn(name = "accountId", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    @Convert(converter = CryptoJpaConverter.class)
     @Column(name = "password", nullable = false)
     private String password;
-    //todo replace to byte[] or char[]
 
     @Column(name = "password_type", nullable = false)
     @Enumerated(EnumType.STRING)

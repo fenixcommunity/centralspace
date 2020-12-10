@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fenixcommunity.centralspace.domain.converter.CryptoJpaConverter;
 import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
 import com.fenixcommunity.centralspace.domain.core.listener.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
@@ -60,10 +61,12 @@ public class Account extends AbstractBaseEntity {
     private String mail;
 
     @PESEL
+    @Convert(converter = CryptoJpaConverter.class)
     @Column(name = "pesel")
     private String pesel;
 
     @NIP
+    @Convert(converter = CryptoJpaConverter.class)
     @Column(name = "nip")
     private String nip;
 

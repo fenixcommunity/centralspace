@@ -24,7 +24,7 @@ public class MonetaryAmountConverter implements AttributeConverter<Money, BigDec
 
     static {
         final Yaml yaml = new Yaml();
-        final InputStream inputStream = CryptoJpaConverter.class.getClassLoader().getResourceAsStream(GLOBAL_CUSTOMIZATION_FILE);
+        final InputStream inputStream = MonetaryAmountConverter.class.getClassLoader().getResourceAsStream(GLOBAL_CUSTOMIZATION_FILE);
         final Map<String, Object> properties = yaml.load(inputStream);
         if (properties.isEmpty()) {
             throw new CryptoJpaConverterException("Invalid properties");

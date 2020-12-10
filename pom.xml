@@ -91,6 +91,7 @@
         <jsh.version>0.1.55</jsh.version>
         <commons-validator.version>1.6</commons-validator.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
+        <commons-codec.version>1.13</commons-codec.version>
         <twilio.version>8.3.0</twilio.version>
         <!-- DOCUMENT CONVERTER DEPENDENCIES -->
         <pdfbox-tools.version>2.0.17</pdfbox-tools.version>
@@ -434,6 +435,11 @@
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
                 <version>${commons-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-fileupload</groupId>

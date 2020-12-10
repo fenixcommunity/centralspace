@@ -1,11 +1,13 @@
 package com.fenixcommunity.centralspace.domain.converter;
 
 import static com.fenixcommunity.centralspace.utilities.logger.MarkersVar.GENERAL_USER;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import org.apache.commons.codec.binary.Base64;
+
 import java.security.Key;
 import java.util.Map;
 import javax.crypto.Cipher;
@@ -17,13 +19,14 @@ import javax.persistence.Transient;
 import com.fenixcommunity.centralspace.domain.exception.converter.CryptoJpaConverterException;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.crypto.codec.Base64;
 import org.yaml.snakeyaml.Yaml;
 
 @Converter
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CryptoJpaConverter implements AttributeConverter<String, String> {
+//  WARNING - don't ever encrypt passwords when storing them at a database
+
     private static final String ALGORITHM;
     private static final byte[] KEY;
     private static final String SECURITY_FILE = "security.yml";
@@ -60,9 +63,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
         try {
             final Cipher c = Cipher.getInstance(ALGORITHM);
             c.init(Cipher.ENCRYPT_MODE, key);
-            final String encrypted = new String(Base64.encode(c
-                    .doFinal(ccData.getBytes())), StandardCharsets.UTF_8);
-            return encrypted;
+            return new String(Base64.encodeBase64(c.doFinal(ccData.getBytes())), UTF_8);
         } catch (Exception e) {
             throw new CryptoJpaConverterException("Encrypt process has been failed", e);
         }
@@ -79,9 +80,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
             final Cipher c = Cipher.getInstance(ALGORITHM);
             c.init(Cipher.DECRYPT_MODE, key);
 
-            final String decrypted = new String(c.doFinal(Base64
-                    .decode(dbData.getBytes(StandardCharsets.UTF_8))));
-            return decrypted;
+            return new String(c.doFinal(Base64.decodeBase64(dbData.getBytes(UTF_8))));
         } catch (Exception e) {
             throw new CryptoJpaConverterException("Decrypt process has been failed", e);
         }

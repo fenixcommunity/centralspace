@@ -1,11 +1,14 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
+import static java.util.Objects.requireNonNullElse;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileStore;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,17 +16,15 @@ import java.nio.file.StandardOpenOption;
 import java.util.Set;
 
 import lombok.experimental.FieldDefaults;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FileSystemUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Log4j2
 public class FileDevTool {
-
-    public static String getFileExtension(final String filename) {
-        return FilenameUtils.getExtension(filename);
-//   or return Files.getFileExtension(filename);
-    }
 
     public static File createNewOutputFile(final String filePath) {
         if (createFileDirectories(filePath)) {
@@ -79,6 +80,14 @@ public class FileDevTool {
         return copiedFile;
     }
 
+    public static void copyFileToDirectory(final File file, final File directory) {
+        try {
+            FileUtils.copyFileToDirectory(file, directory);
+        } catch (IOException e) {
+            log.warn("copyFileToDirectory failed");
+        }
+    }
+
     public static File appendStringToFile(final File file, final String stringToAppend) {
         try {
             FileUtils.writeStringToFile(file, stringToAppend, StandardCharsets.UTF_8, true);
@@ -86,6 +95,31 @@ public class FileDevTool {
             return file;
         }
         return file;
+    }
+
+    public static String readFileToString(final File file, final Charset charset) {
+        try {
+            return FileUtils.readFileToString(file, requireNonNullElse(charset, Charset.defaultCharset()));
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public static String getFileExtension(final String filename) {
+        return FilenameUtils.getExtension(filename);
+//   or return Files.getFileExtension(filename);
+    }
+
+    public static File getTemporaryFileDirectory() {
+        return FileUtils.getTempDirectory();
+    }
+
+    public static Long getFreeSpaceInDirectoryInKb(String directoryPath) {
+        try {
+            return FileSystemUtils.freeSpaceKb(directoryPath);
+        } catch (IOException e) {
+            return null;
+        }
     }
 
 }

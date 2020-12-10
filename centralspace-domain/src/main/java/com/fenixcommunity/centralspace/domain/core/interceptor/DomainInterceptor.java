@@ -14,6 +14,7 @@ import org.hibernate.type.Type;
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Log4j2
 public class DomainInterceptor extends EmptyInterceptor {
+//todo test it good
 
     @Override
     public boolean onSave(

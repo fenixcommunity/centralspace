@@ -1,6 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.utilities.common.Var.NEW_LINE;
+import static java.util.Objects.requireNonNullElseGet;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -53,7 +54,7 @@ public class AwsController {
     @GetMapping("/bucket/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<BasicResponse> getListOfBuckets() {
-        final List<Bucket> buckets = s3Service.getListOfBuckets();
+        final List<Bucket> buckets = requireNonNullElseGet(s3Service.getListOfBuckets(), List::of) ;
         final BasicResponse response = BasicResponse.builder()
                 .description(buckets.toString()).build();
         return ResponseEntity.ok(response);

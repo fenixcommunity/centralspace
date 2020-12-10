@@ -40,6 +40,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StreamUtils;
 
 @Component
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
@@ -85,7 +86,7 @@ public class ResourceCacheService {
                                 throw new IOException("init file to upload not created");
                             }
                             try (final OutputStream out = new FileOutputStream(fileToUpload)) {
-                                IOUtils.copy(uploadingFilePart.getInputStream(), out);
+                                StreamUtils.copy(uploadingFilePart.getInputStream(), out); // or IOUtils.copy
                                 resultsForFilenameUploading.put(fileName, true);
                             }
                         } catch (IOException e) {

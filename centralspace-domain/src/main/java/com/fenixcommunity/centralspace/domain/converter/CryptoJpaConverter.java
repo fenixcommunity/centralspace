@@ -57,7 +57,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
     @Transient
     public String convertToDatabaseColumn(final String ccData) {
         if (ccData == null) {
-            throw new CryptoJpaConverterException("Data to convert required");
+            return null;
         }
         final Key key = new SecretKeySpec(KEY, ALGORITHM);
         try {
@@ -73,7 +73,7 @@ public class CryptoJpaConverter implements AttributeConverter<String, String> {
     @Transient
     public String convertToEntityAttribute(final String dbData) {
         if (dbData == null) {
-            throw new CryptoJpaConverterException("Data to convert required");
+            return null;
         }
         final Key key = new SecretKeySpec(KEY, ALGORITHM);
         try {

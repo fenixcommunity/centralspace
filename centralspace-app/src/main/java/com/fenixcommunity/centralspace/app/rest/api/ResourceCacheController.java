@@ -72,7 +72,7 @@ public class ResourceCacheController {
         if (result.isEmpty()) {
             return ResponseEntity.badRequest().body("NO FILE UPLOADED");
         }
-        final StringJoiner joiner = new StringJoiner("").add("FILE UPLOAD STATUS:");
+        final StringJoiner joiner = new StringJoiner("", "[", "]").add("FILE UPLOAD STATUS:");
         result.forEach((fileName, fileResult) -> joiner.add(SEPARATOR).add(fileName).add(LINE).add("STATUS: ").add(fileResult.toString()));
         return ResponseEntity.badRequest().body(joiner.toString());
     }

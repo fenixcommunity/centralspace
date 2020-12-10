@@ -28,6 +28,7 @@ import com.fenixcommunity.centralspace.app.rest.dto.account.AccountDto;
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.cache.CacheCookieApiFilter;
 import com.fenixcommunity.centralspace.app.rest.mapper.account.modelmapper.AccountModelMapper;
+import com.fenixcommunity.centralspace.app.service.account.AccountHelper;
 import com.fenixcommunity.centralspace.app.service.account.AccountService;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +53,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest
 @AutoConfigureMockMvc @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
 // 4 APPROACH https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/
+// another approach: Hoverfly - a simulation is by using a DSL. Looks faster
 class AccountControllerTest {
 
     @Autowired
@@ -62,6 +64,8 @@ class AccountControllerTest {
 
     @MockBean
     private AccountService accountService;
+    @MockBean
+    private AccountHelper accountHelper;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     @DateTimeFormat(pattern = "dd/MM/yyyy")

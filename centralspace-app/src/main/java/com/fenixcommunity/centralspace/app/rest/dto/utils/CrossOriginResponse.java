@@ -1,6 +1,6 @@
 package com.fenixcommunity.centralspace.app.rest.dto.utils;
 
-import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElse;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,8 +16,7 @@ public class CrossOriginResponse {
     @JsonCreator
     public CrossOriginResponse(@JsonProperty("domain") String crossOriginDomain,
                                @JsonProperty("message") String message) {
-        requireNonNull(crossOriginDomain);
-        this.crossOriginDomain = crossOriginDomain;
+        this.crossOriginDomain = requireNonNullElse(crossOriginDomain, "localhost");
         this.message = message;
     }
 }

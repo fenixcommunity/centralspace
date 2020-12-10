@@ -57,3 +57,7 @@ https://plugins.jetbrains.com/plugin/11069-yaml-file-generator
 
 SLINT 
 format rules for react code
+
+Pmd
+static analysis of the code
+https://plugins.jetbrains.com/plugin/1137-pmdplugin

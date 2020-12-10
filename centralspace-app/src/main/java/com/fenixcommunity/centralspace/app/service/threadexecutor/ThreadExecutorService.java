@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,18 @@ public class ThreadExecutorService {
             throw new ServiceFailedException("0 < threads no < 8");
         }
         final ExecutorService executorService = Executors.newFixedThreadPool(threadsNo);
-        executorService.execute(command);
+        awaitTerminationAfterShutdown(executorService, 60);
+    }
+
+    public void awaitTerminationAfterShutdown(final ExecutorService executorService, final int timeoutInSec) {
         executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(timeoutInSec, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException ex) {
+            executorService.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
     }
 }

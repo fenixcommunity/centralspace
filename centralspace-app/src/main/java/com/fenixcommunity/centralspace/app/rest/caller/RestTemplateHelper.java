@@ -24,7 +24,7 @@ public class RestTemplateHelper {
         return restTemplate.execute(requestedFileUrl, HttpMethod.GET, null, clientHttpResponse -> {
             final File tempFile = File.createTempFile(TMP_FILE_PREFIX, TMP_FILE_SURFIX);
             // we can also append file content -> FileOutputStream(existentFile, true); / for example pause downloading
-            StreamUtils.copy(clientHttpResponse.getBody(), new FileOutputStream(tempFile));
+            StreamUtils.copy(clientHttpResponse.getBody(), new FileOutputStream(tempFile)); // or IOUtils.copy
             return tempFile;
         });
     }

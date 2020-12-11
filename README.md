@@ -61,3 +61,8 @@ format rules for react code
 Pmd
 static analysis of the code
 https://plugins.jetbrains.com/plugin/1137-pmdplugin
+
+JProfiler
+https://plugins.jetbrains.com/plugin/253-jprofiler
+
+HttpClient Intellij Tool

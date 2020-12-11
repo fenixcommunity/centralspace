@@ -49,6 +49,8 @@ public class InitializerApp implements CommandLineRunner {
 
         final String h2Info = "Please look at H2 database console:" + NEW_LINE + h2Endpoint;
 
+        final String jProfilerInfo = "Please run app with JProfiler coverage and check JVM parameters";
+
         final String sonarServerInfo = "Please run SONAR analyzer console:" + NEW_LINE + "http://localhost:9000/dashboard?id=centralspace";
 
         final String sonarInfo = "Please run SONAR build maven:" + NEW_LINE + "mvn sonar:sonar" + NEW_LINE +
@@ -77,6 +79,7 @@ public class InitializerApp implements CommandLineRunner {
                 .add(appInfo)
                 .add(pluginIdeInfo)
                 .add(h2Info)
+                .add(jProfilerInfo)
                 .add(sonarServerInfo)
                 .add(sonarInfo)
                 .add(actuatorInfo.toString())

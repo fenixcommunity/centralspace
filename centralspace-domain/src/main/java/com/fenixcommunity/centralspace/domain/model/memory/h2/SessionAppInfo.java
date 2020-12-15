@@ -21,6 +21,7 @@ import lombok.experimental.FieldDefaults;
 @Entity @Table(name = "session_app_info")
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @FieldDefaults(level = PRIVATE)
 public class SessionAppInfo extends AbstractBaseEntity {
+    private static final long serialVersionUID = -8030040818046941202L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

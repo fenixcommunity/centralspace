@@ -33,6 +33,7 @@ import org.javamoney.moneta.Money;
 @Entity @Table(name = "account_balance") @EntityListeners(AccountEntityListener.class)
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class AccountBalance extends AbstractBaseEntity {
+    private static final long serialVersionUID = 4226113478160491363L;
 
     //todo add to account
 

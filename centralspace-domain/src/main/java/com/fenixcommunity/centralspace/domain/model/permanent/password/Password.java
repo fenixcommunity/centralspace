@@ -30,6 +30,7 @@ import lombok.experimental.FieldDefaults;
 @Entity @Table(name = "password") // , schema = "security" -> we should add schema manually
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @FieldDefaults(level = PRIVATE)
 public class Password extends AbstractBaseEntity {
+    private static final long serialVersionUID = -8249541829616943694L;
 
     //TODO         return Optional.ofNullable(isoCountryCode)
     //             Optional.of(nowa wartosc gdy damy geta optional);

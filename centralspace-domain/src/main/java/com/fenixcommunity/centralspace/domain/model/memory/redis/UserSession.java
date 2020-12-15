@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash("user_session")
 @Value @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class UserSession implements Serializable {
+    private static final long serialVersionUID = -440065272864675750L;
 
     @Id
     private final String sessionId;

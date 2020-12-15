@@ -17,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 
 @MappedSuperclass @Getter @Setter @FieldDefaults(level = PRIVATE)
 public abstract class AbstractBaseEntity implements Serializable {
+    private static final long serialVersionUID = 4640052078694107732L;
     // Store always in UTC
     // Read from database (stored in UTC) and return with the system default.
 

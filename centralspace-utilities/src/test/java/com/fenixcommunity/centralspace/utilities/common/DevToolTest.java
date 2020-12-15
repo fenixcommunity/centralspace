@@ -50,10 +50,10 @@ class DevToolTest {
 
     @Test
     public void generateSecureStringChainTest() {
-        String resultWithSpecialChars = DevTool.generateSecurePassword();
+        String resultWithSpecialChars = StringTool.generateSecurePassword();
         assertThat(resultWithSpecialChars).hasSize(38);
 
-        String resultWithoutSpecialChars = DevTool.generateSecureToken();
+        String resultWithoutSpecialChars = StringTool.generateSecureToken();
         assertThat(resultWithoutSpecialChars).hasSize(38);
     }
 
@@ -62,7 +62,7 @@ class DevToolTest {
         List<String> items = List.of( "China", "Australia", "India", "USA", "USSR", "UK", "China",
                 "France", "Poland", "Austria", "India", "USA", "Egypt", "China");
 
-        Map<String, ItemCounter.MutableInteger> stringMutableIntegerMap = DevTool.countItemsFrequency(items);
+        Map<String, ItemCounter.MutableInteger> stringMutableIntegerMap = StringTool.countItemsFrequency(items);
 
         assertEquals(3, stringMutableIntegerMap.get("China").getCount());
         assertEquals(2, stringMutableIntegerMap.get("India").getCount());

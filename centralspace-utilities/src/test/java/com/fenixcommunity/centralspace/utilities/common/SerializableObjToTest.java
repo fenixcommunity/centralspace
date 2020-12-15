@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data @AllArgsConstructor
 public class SerializableObjToTest implements Serializable {
+    private static final long serialVersionUID = 7600996945650740532L;
+
     private String country;
     private final String city;
     private final File file;

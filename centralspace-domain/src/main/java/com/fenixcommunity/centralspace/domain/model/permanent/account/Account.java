@@ -42,6 +42,7 @@ import org.hibernate.validator.constraints.pl.PESEL;
 // use only when we have a lot of columns -> in other cases performance overhead
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class Account extends AbstractBaseEntity {
+    private static final long serialVersionUID = 2408811853604950911L;
 
     //todo AuditingEntityListener add some things
     @Id

@@ -25,6 +25,7 @@ import lombok.experimental.FieldDefaults;
 @Entity @Table(name = "address") // , schema = "contact_info" -> we should add schema manually
 @Data @Builder @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString() @FieldDefaults(level = PRIVATE)
 public class Address extends AbstractBaseEntity {
+    private static final long serialVersionUID = 4887871219877099924L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

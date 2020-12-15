@@ -70,6 +70,7 @@
         <jwttoken.version>0.9.1</jwttoken.version>
         <lombok.version>1.18.16</lombok.version>
         <apache-commons.version>3.9</apache-commons.version>
+        <apache-commons-text.version>1.9</apache-commons-text.version>
         <commons-io.version>2.6</commons-io.version>
         <google-guava.version>28.1-jre</google-guava.version>
         <google-auto-service.version>1.0-rc7</google-auto-service.version>
@@ -517,6 +518,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${apache-commons-text.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 
 import com.fenixcommunity.centralspace.app.service.security.auto.AuthenticationFacade;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole;
-import com.fenixcommunity.centralspace.utilities.common.DevTool;
+import com.fenixcommunity.centralspace.utilities.common.StringTool;
 import com.fenixcommunity.centralspace.utilities.validator.Validator;
 import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.AllArgsConstructor;
@@ -44,6 +44,6 @@ public class SecurityService {
 
     //or to char array
     public String generateSecurePassword() {
-        return DevTool.generateSecurePassword();
+        return StringTool.generateSecurePassword();
     }
 }

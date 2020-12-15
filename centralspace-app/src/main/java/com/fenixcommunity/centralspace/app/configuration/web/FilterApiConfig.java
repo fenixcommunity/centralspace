@@ -6,6 +6,7 @@ import javax.servlet.Filter;
 
 import com.fenixcommunity.centralspace.app.rest.filter.HeaderApiFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.RequestResponseLoggingFilter;
+import com.fenixcommunity.centralspace.app.rest.filter.SessionFilter;
 import com.fenixcommunity.centralspace.app.rest.filter.cache.CacheCookieApiFilter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -26,6 +27,11 @@ public class FilterApiConfig {
     @Bean
     public FilterRegistrationBean registerCacheCookieApiFilter() {
         return createFilterRegistration(new CacheCookieApiFilter(), "/account/*", 2);
+    }
+
+    @Bean
+    public FilterRegistrationBean registerSessionFilter() {
+        return createFilterRegistration(new SessionFilter(), "/*", 1);
     }
 
     @Bean

@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 
+@SuppressWarnings("unused")
 public class AccountCustomRepositoryImpl implements AccountCustomRepository {
 
     @PersistenceContext(synchronization = SynchronizationType.SYNCHRONIZED)

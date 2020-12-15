@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.BooleanSupplier;
@@ -195,6 +196,22 @@ public class Other {
                 .map(Customer::getNumbers).filter(i -> i.get(0) > 3).map(String::valueOf)
                 .orElse("NOT FOUND"));
 
+        // .or
+        String  properValue = "properValue";
+        String  defaultString = "defaultString";
+        Optional<String> value = Optional.of(properValue);
+        Optional<String> result = value.or(() -> Optional.of(defaultString));
+
+        // ifPresentOrElse
+        AtomicInteger successCounter = new AtomicInteger(0);
+        AtomicInteger onEmptyOptionalCounter = new AtomicInteger(0);
+        result.ifPresentOrElse(
+                v -> successCounter.incrementAndGet(), onEmptyOptionalCounter::incrementAndGet
+        );
+
+        // optional stream()
+        Optional<String> valueToStream = Optional.of("a");
+        List<String> collect = valueToStream.stream().map(String::toUpperCase).collect(Collectors.toList());
     }
 
     static void otherMethods() {

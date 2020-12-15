@@ -21,6 +21,11 @@ server:
 #    key-alias: ...
   servlet:
     context-path: /app
+    session:
+      trackingModes: COOKIE
+      cookie:
+        http-only: true
+        secure: true
   host: http://localhost:${server.port}
   error:
     whitelabel:

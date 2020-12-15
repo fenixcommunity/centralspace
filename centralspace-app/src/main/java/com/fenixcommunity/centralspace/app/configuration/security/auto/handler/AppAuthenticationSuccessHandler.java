@@ -53,10 +53,10 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
         loginAttemptService.loginSucceeded(webAuthenticationDetails.getRemoteAddress());
 
         final Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-        request.getSession(false).setMaxInactiveInterval(sessionTimeout);
+        request.getSession(false).setMaxInactiveInterval(sessionTimeout); // or server.servlet.session.timeout=30m
         if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect(forwardUrl);
-//todo          response.sendRedirect("/admin.html");
+//          response.sendRedirect("/admin.html");
         } else {
             response.sendRedirect(getPreviousPageByRequest(request).orElse(forwardUrl));
         }

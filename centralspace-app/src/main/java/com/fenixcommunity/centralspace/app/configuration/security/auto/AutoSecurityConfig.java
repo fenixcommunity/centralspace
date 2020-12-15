@@ -31,6 +31,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,6 +50,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 public abstract class AutoSecurityConfig {
 
     private static final String API_PATH = "/api";
+    public static final String COOKIE_SESSION_ID = "JSESSIONID";
     private static final String REMEMBER_ME_COOKIE = "remembermecookie";
     private static final int SESSION_TIMEOUT_SECONDS = 60 * 10; //todo to properties
     private static final int TOKEN_VALIDITY_SECONDS = 60 * 45;
@@ -236,7 +238,9 @@ public abstract class AutoSecurityConfig {
                     .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
                     .tokenRepository(tokenRepository())
                     .and()
-                    .sessionManagement().maximumSessions(2)
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // NEVER - if full stateless app
+                    .maximumSessions(2)
                     .expiredUrl("/login?expired");
                  /*
                  .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);

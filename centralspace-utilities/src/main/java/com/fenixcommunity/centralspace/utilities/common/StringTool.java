@@ -17,22 +17,7 @@ import org.apache.commons.text.translate.UnicodeEscaper;
 
 public class StringTool {
 
-    public static String[] mergeStringArrays(final String[]... arrays) {
-        String[] result = new String[0];
-        if (Objects.nonNull(arrays) && Stream.of(arrays).noneMatch(Objects::isNull)) {
-            return Stream.of(arrays).flatMap(Stream::of).toArray(String[]::new);
-        }
-        return result;
-    }
-
-    public static List<String> combineToStringList(final List list1, final List list2, final String separator) {
-        return IntStream
-                .range(0, Math.min(list1.size(), list2.size()))
-                .mapToObj(i -> list1.get(i) + separator + list2.get(i))
-                .collect(Collectors.toList());
-    }
-
-    public static Map<String, ItemCounter.MutableInteger> countItemsFrequency(List<String> items) {
+    public static Map<String, ItemCounter.MutableInteger> countItemsFrequency(final List<String> items) {
         ItemCounter<String> itemCounter = new ItemCounter<>();
         return itemCounter.countItemsFrequency(items);
     }

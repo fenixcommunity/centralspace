@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.configuration.security.manual;
 
 import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.utilities.common.StringTool.mergeStringArrays;
+import static com.fenixcommunity.centralspace.utilities.common.CollectionTool.mergeStringArrays;
 import static java.util.Objects.requireNonNull;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.FORBIDDEN;

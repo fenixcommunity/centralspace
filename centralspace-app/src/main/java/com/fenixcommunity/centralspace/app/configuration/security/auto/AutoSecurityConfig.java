@@ -6,7 +6,7 @@ import static com.fenixcommunity.centralspace.app.configuration.security.auto.Se
 import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.FLUX_GETTER;
 import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.SWAGGER;
 import static com.fenixcommunity.centralspace.utilities.common.DevTool.listsTo1Array;
-import static com.fenixcommunity.centralspace.utilities.common.StringTool.mergeStringArrays;
+import static com.fenixcommunity.centralspace.utilities.common.CollectionTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -18,7 +18,6 @@ import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.A
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppAuthenticationSuccessHandler;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.handler.AppLogoutSuccessHandler;
 import com.fenixcommunity.centralspace.app.service.security.auto.LoginAttemptService;
-import com.fenixcommunity.centralspace.utilities.common.DevTool;
 import com.fenixcommunity.centralspace.utilities.common.StringTool;
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import lombok.experimental.FieldDefaults;

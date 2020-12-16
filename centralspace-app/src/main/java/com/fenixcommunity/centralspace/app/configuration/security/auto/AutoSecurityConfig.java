@@ -69,7 +69,8 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/sms-sender/**",
             API_PATH + "/app-control/**",
             API_PATH + "/batch/**",
-            API_PATH + "/features/**"
+            API_PATH + "/features/**",
+            API_PATH + "/graphql/**",
     };
     private static final String[] BASIC_API_AUTH_LIST = {
             API_PATH + "/resource-cache/**"
@@ -85,7 +86,8 @@ public abstract class AutoSecurityConfig {
     private static final String[] ADMIN_FORM_AUTH_LIST = {
             "/h2-console/**",
             "/actuator/**",
-            "/prometheus/**"
+            "/prometheus/**",
+            "/graphiql/**"
     };
     private static final String[] NO_AUTH_FORM_LIST = {
             API_PATH + "/logger/test",

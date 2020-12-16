@@ -1,0 +1,25 @@
+type Account {
+    id: ID!
+}
+
+type Query {
+    findAllAccounts: [Account]!
+    countAccounts: Long!
+}
+
+type Mutation {
+    newAccount(firstName: String!, lastName: String!) : Account!
+}
+
+#TYPES:
+#String
+#Boolean
+#Int
+#Float
+#ID
+#Long
+#Short
+#Byte
+#Float
+#BigDecimal
+#BigInteger

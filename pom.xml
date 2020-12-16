@@ -58,6 +58,9 @@
         <jedis.version>3.1.0</jedis.version>
         <hikariCP.version>2.6.1</hikariCP.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
+        <graphql-spring-boot-starter.version>5.0.2</graphql-spring-boot-starter.version>
+        <graphiql-spring-boot-starter.version>5.0.2</graphiql-spring-boot-starter.version>
+        <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
         <!-- AWS DEPENDENCIES -->
         <aws-java-sdk.version>1.11.735</aws-java-sdk.version>
         <!-- UTILITIES DEPENDENCIES -->
@@ -338,6 +341,21 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.graphql-java</groupId>
+                <artifactId>graphql-spring-boot-starter</artifactId>
+                <version>${graphql-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.graphql-java</groupId>
+                <artifactId>graphiql-spring-boot-starter</artifactId>
+                <version>${graphiql-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.graphql-java</groupId>
+                <artifactId>graphql-java-tools</artifactId>
+                <version>${graphql-java-tools.version}</version>
             </dependency>
             <!-- AWS DEPENDENCIES -->
             <dependency>

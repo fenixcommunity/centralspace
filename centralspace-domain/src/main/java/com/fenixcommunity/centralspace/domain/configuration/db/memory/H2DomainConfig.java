@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.configuration;
+package com.fenixcommunity.centralspace.domain.configuration.db.memory;
 
 import static lombok.AccessLevel.PRIVATE;
 

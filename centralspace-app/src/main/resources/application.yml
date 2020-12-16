@@ -142,3 +142,14 @@ remoteserver:
 #Web settings
 web:
   downloadFileTimeout: 5000
+
+#GraphQl
+graphql:
+  servlet:
+    mapping: /api/graphql
+    enabled: true
+    corsEnabled: true
+graphiql:
+  mapping: /graphiql
+  endpoint: /api/graphql
+  urlPath: ${server.host}${path.app}${graphiql.endpoint}

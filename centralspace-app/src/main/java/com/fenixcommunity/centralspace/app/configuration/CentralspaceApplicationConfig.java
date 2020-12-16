@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.configuration;
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorConfig;
+import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorSwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
 import com.fenixcommunity.centralspace.app.configuration.aop.AopConfig;
 import com.fenixcommunity.centralspace.app.configuration.async.AsyncConfig;
@@ -12,7 +13,6 @@ import com.fenixcommunity.centralspace.app.configuration.caching.CachingConfig;
 import com.fenixcommunity.centralspace.app.configuration.customization.CustomizationConfig;
 import com.fenixcommunity.centralspace.app.configuration.features.FeaturesConfig;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
-import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorSwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.AutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.security.auto.MethodAutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.sms.SmsConfig;
@@ -21,10 +21,11 @@ import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.HttpSessionConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.WebConfig;
 import com.fenixcommunity.centralspace.domain.configuration.HibernateConfig;
-import com.fenixcommunity.centralspace.domain.configuration.RedisConfig;
+import com.fenixcommunity.centralspace.domain.configuration.db.memory.H2DomainConfig;
+import com.fenixcommunity.centralspace.domain.configuration.db.memory.RedisConfig;
+import com.fenixcommunity.centralspace.domain.configuration.db.permanent.PostgresDomainConfig;
+import com.fenixcommunity.centralspace.domain.configuration.graphql.GraphQLConfig;
 import com.fenixcommunity.centralspace.metrics.config.MetricsConfig;
-import com.fenixcommunity.centralspace.domain.configuration.H2DomainConfig;
-import com.fenixcommunity.centralspace.domain.configuration.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.utilities.configuration.UtilitiesConfig;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,6 +43,7 @@ import org.springframework.context.annotation.Import;
         H2DomainConfig.class,
         RedisConfig.class,
         HibernateConfig.class,
+        GraphQLConfig.class,
         // security
         AutoSecurityConfig.class,
         MethodAutoSecurityConfig.class,

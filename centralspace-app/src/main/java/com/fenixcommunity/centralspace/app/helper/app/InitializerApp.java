@@ -22,6 +22,7 @@ public class InitializerApp implements CommandLineRunner {
     private final String h2Endpoint;
     private final String actuatorEndpoint;
     private final String prometheusEndpoint;
+    private final String graphiQLUrlPath;
 
     private final List<String> actuatorEndpoints = List.of(
             "auditevents", "beans", "conditions", "configprops", "env",
@@ -32,11 +33,13 @@ public class InitializerApp implements CommandLineRunner {
     public InitializerApp(@Value("${h2-console.host}") final String swagger2Host,
                           @Value("${springfox.swagger2.host}") final String h2Host,
                           @Value("${actuator.host}") final String actuatorHost,
-                          @Value("${prometheus.url}") final String prometheusUrl) {
+                          @Value("${prometheus.url}") final String prometheusUrl,
+                          @Value("${graphiql.urlPath}") final String graphiQLUrlPath) {
         this.swaggerEndpoint = format("%s/app/swagger-ui.html#/", swagger2Host);
         this.h2Endpoint = format("%s/app/h2-console/", h2Host);
         this.actuatorEndpoint = format("%s/app/actuator/", actuatorHost);
         this.prometheusEndpoint = prometheusUrl;
+        this.graphiQLUrlPath = graphiQLUrlPath;
     }
 
     @Override
@@ -73,7 +76,9 @@ public class InitializerApp implements CommandLineRunner {
         final String analyzeVMInfo = "Analyze VM working (the same provided by Prometheus server. Not for Open JDK)"
                 + NEW_LINE + "-XX:NativeMemoryTracking=summary"
                 + NEW_LINE + "command: jcmd -> jcmd <pid> VM.native_memory";
-        final String redisInfo = NEW_LINE;
+
+        final String graphQLInfo = "Please test graphQL queries:" + NEW_LINE
+                + "Login and go to query console:" + graphiQLUrlPath + NEW_LINE + "Schema info:" + graphiQLUrlPath + "/schema.json";
 
         log.info(new StringJoiner(SEPARATOR)
                 .add(appInfo)
@@ -87,6 +92,7 @@ public class InitializerApp implements CommandLineRunner {
                 .add(vaultInfo)
                 .add(testInfo)
                 .add(analyzeVMInfo)
+                .add(graphQLInfo)
                 .add(NEW_LINE + swaggerInfo)
                 .toString());
     }

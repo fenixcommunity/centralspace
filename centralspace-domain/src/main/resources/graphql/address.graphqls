@@ -1,0 +1,40 @@
+type Address {
+    name: String!
+    account: Account
+}
+
+extend type Query { #we can also implement other obj -> implements
+    findAllAddresses: [Address]!
+    countAddresses: Long!
+}
+
+extend type Mutation {
+    newAddress(title: String!, isbn: String!, pageCount: Int, account: ID!) : Address!
+    deleteAddress(id: ID!) : Boolean
+    updateAddressPageCount(pageCount: Int!, id: ID!) : Address!
+}
+
+#GRAPHIQL:
+#    {
+#        findAllAddresses {
+#            name
+#            account {
+#                id
+#            }
+#        }
+#    }
+
+#OR FROM POSTMAN
+#http://localhost:8088/app/graphiql
+#    {
+#    "query":"{findAllAddresses { name account { id } } }"
+#    }
+
+#mutation {
+#    newAddress(
+#        title: "Java: The Complete Reference, Tenth Edition",
+#        isbn: "1259589331",
+#        account: 1) {
+#        name
+#    }
+#}

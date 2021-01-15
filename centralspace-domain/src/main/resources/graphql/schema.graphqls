@@ -1,0 +1,111 @@
+scalar ZonedDateTime
+scalar Locale
+
+schema {
+    query: AppQuery
+    mutation: AppMutation
+}
+
+type AppQuery {
+    findAllAccounts(limit: Int) : [Account]!
+    countAccounts: Int!
+}
+type AppMutation {
+    updateAccount(account: AccountInput! ) : Account!
+}
+
+extend type AppQuery { #we can also implement other obj -> implements
+    findAllAddresses(limit: Int): [Address]!
+    countAddresses: Int!
+}
+extend type AppMutation {
+    deleteAddress(id: ID!) : Boolean
+}
+
+type Address {
+    id: String!
+    country: String!
+    city: String
+    accounts: [Account]
+}
+
+type Account {
+    id: ID!
+    login: String!
+    mail: String!
+    identifier: String
+    passwordType: String, # or PasswordType! enum
+    dataBaseConsentExpiredDate: ZonedDateTime
+}
+input AccountInput {
+    id: ID!
+    login: String!
+    mail: String!
+    identifier: String!
+    passwordType: String!
+    dataBaseConsentExpiredDate: String
+}
+enum PasswordType {
+    TO_CENTRALSPACE,
+    TO_REPOSITORY
+}
+
+
+#TYPES:
+#String
+#Boolean
+#Int
+#Float
+#ID
+#Long
+#Short
+#Byte
+#Float
+#BigDecimal
+#BigInteger
+
+#mutation {
+#    updateAccount(
+#        account: {
+#            id: 19,
+#            login: "sds",
+#            identifier: "123-456-78-19",
+#            mail: "max3112@o2.pl",
+#            passwordType: "TO_CENTRALSPACE",
+#            dataBaseConsentExpiredDate: "2021-01-13T17:09:12.658+0100"
+#        }
+#    ) {
+#        id,
+#        login,
+#        identifier,
+#        mail,
+#        passwordType,
+#        dataBaseConsentExpiredDate
+#    }
+#}
+
+#{
+# findAllAddresses(limit: 3) {
+#  country
+#  city
+#  accounts {
+#    id
+#    login
+#    mail
+#    identifier
+#    passwordType
+#    dataBaseConsentExpiredDate
+#  }
+# }
+#}
+
+#{
+#    findAllAccounts(limit: 5) {
+#        id
+#        login
+#        mail
+#        identifier
+#        passwordType
+#        dataBaseConsentExpiredDate
+#    }
+#}

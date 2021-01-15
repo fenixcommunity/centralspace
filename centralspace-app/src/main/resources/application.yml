@@ -8,7 +8,7 @@ server:
     max-swallow-size: 2MB  #The maximum size of a request body:
     accesslog:
       enabled: true
-      directory: C:/Projects/MK/centralspace-temp/tomcat-logs
+      directory: C:/projects/MK/centralspace-temp/tomcat-logs
       file-date-format: yyyy-MM-dd
       prefix: access_log
       suffix: .log
@@ -146,10 +146,13 @@ web:
 #GraphQl
 graphql:
   servlet:
-    mapping: /api/graphql
+#   mapping: /api/graphql -> we use custom endpoint to handle request
     enabled: true
     corsEnabled: true
+  tools:
+    schemaLocationPattern: "**/*.graphqls"
 graphiql:
   mapping: /graphiql
-  endpoint: /api/graphql
-  urlPath: ${server.host}${path.app}${graphiql.endpoint}
+  endpoint: /api/graphql/query
+  urlPath: ${server.host}${path.app}${graphiql.mapping}
+

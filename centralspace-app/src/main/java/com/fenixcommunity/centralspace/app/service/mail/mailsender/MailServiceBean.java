@@ -28,8 +28,8 @@ import org.springframework.stereotype.Service;
 @Service
 @FieldDefaults(level = PRIVATE)
 public class MailServiceBean implements MailService {
-
     private static final String TEMPLATE_BASIC_MAIL = "template_basic_mail";
+
     private final ApplicationContext context;
     private final JavaMailSender mailSender;
     private final Validator validator;

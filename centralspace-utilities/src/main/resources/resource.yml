@@ -1,5 +1,5 @@
 temp:
-  dir: C:/Projects/MK/centralspace-temp/
+  dir: C:/projects/MK/centralspace-temp/
 resource:
   convertedDocxPath: ${temp.dir}converted-docx/
   convertedHtmlPath: ${temp.dir}converted-html/

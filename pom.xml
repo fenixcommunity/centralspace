@@ -61,6 +61,7 @@
         <graphql-spring-boot-starter.version>5.0.2</graphql-spring-boot-starter.version>
         <graphiql-spring-boot-starter.version>5.0.2</graphiql-spring-boot-starter.version>
         <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
+        <graphql-java-extended-scalars.version>1.0.1</graphql-java-extended-scalars.version>
         <!-- AWS DEPENDENCIES -->
         <aws-java-sdk.version>1.11.735</aws-java-sdk.version>
         <!-- UTILITIES DEPENDENCIES -->
@@ -81,9 +82,9 @@
         <classgraph.version>4.8.90</classgraph.version>
         <javamoney.version>1.1</javamoney.version>
         <fastutil.version>8.4.2</fastutil.version>
-        <javassist.version>3.23.1-GA</javassist.version>
+        <javassist.version>3.22.0-CR1</javassist.version>
         <modelmapper.version>2.3.5</modelmapper.version>
-        <jmapper-core.version>1.6.0</jmapper-core.version>
+        <jmapper-core.version>1.6.1.CR2</jmapper-core.version>
         <jmh-core.version>1.23</jmh-core.version>
         <jmh-generator-annprocess.version>1.23</jmh-generator-annprocess.version>
         <jackson-dataformat-yaml.version>2.10.3</jackson-dataformat-yaml.version>
@@ -356,6 +357,11 @@
                 <groupId>com.graphql-java</groupId>
                 <artifactId>graphql-java-tools</artifactId>
                 <version>${graphql-java-tools.version}</version>
+            </dependency>
+            <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-extended-scalars</artifactId>
+                <version>${graphql-java-extended-scalars.version}</version>
             </dependency>
             <!-- AWS DEPENDENCIES -->
             <dependency>

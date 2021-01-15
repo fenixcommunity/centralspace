@@ -1,4 +1,4 @@
-package com.fenixcommunity.centralspace.domain.core.graphql;
+package com.fenixcommunity.centralspace.domain.core.graphql.exception;
 
 import java.util.List;
 import java.util.Map;
@@ -8,11 +8,10 @@ import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
 
-public class GraphQLErrorAdapter  implements GraphQLError {
-
+public class GraphQLErrorAdapter implements GraphQLError {
     private GraphQLError error;
 
-    public GraphQLErrorAdapter(GraphQLError error) {
+    public GraphQLErrorAdapter(final GraphQLError error) {
         this.error = error;
     }
 

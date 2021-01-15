@@ -2,6 +2,7 @@ package com.fenixcommunity.centralspace.domain.model.permanent.account;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -85,5 +86,6 @@ public class Account extends AbstractBaseEntity {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    private String createdBy; //todo add Admin
+    @Column(name = "consent_expired_date")
+    private ZonedDateTime dataBaseConsentExpiredDate;
 }

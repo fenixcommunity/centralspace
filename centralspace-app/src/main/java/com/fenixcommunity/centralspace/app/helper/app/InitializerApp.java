@@ -77,8 +77,8 @@ public class InitializerApp implements CommandLineRunner {
                 + NEW_LINE + "-XX:NativeMemoryTracking=summary"
                 + NEW_LINE + "command: jcmd -> jcmd <pid> VM.native_memory";
 
-        final String graphQLInfo = "Please test graphQL queries:" + NEW_LINE
-                + "Login and go to query console:" + graphiQLUrlPath + NEW_LINE + "Schema info:" + graphiQLUrlPath + "/schema.json";
+        final String graphQLInfo = "Please test graphQL queries: " + NEW_LINE
+                + "Login and go to query console: " + graphiQLUrlPath + NEW_LINE + "Schema info:" + graphiQLUrlPath + "/schema.json";
 
         log.info(new StringJoiner(SEPARATOR)
                 .add(appInfo)

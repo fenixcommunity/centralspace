@@ -1,7 +1,5 @@
 package com.fenixcommunity.centralspace.app.configuration;
 
-import static org.springframework.context.annotation.ComponentScan.Filter;
-
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorConfig;
 import com.fenixcommunity.centralspace.app.configuration.actuatormanager.ActuatorSwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.annotation.IgnoreDuringScan;
@@ -33,6 +31,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import static org.springframework.context.annotation.ComponentScan.Filter;
 
 @Configuration
 @ComponentScan(value = {"com.fenixcommunity.centralspace.app"},

@@ -76,6 +76,14 @@
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-tools</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-extended-scalars</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.jmapper-framework</groupId>
+            <artifactId>jmapper-core</artifactId>
+        </dependency>
         <!-- UTILITIES DEPENDENCIES -->
         <dependency>
             <groupId>org.javamoney</groupId>

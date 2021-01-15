@@ -51,6 +51,10 @@ public class DevTool {
         return mergeLists(lists).toArray(String[]::new);
     }
 
+    public static <T> List<T> listsTo1List(final List<T>... lists) {
+        return Arrays.stream(lists).flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
     public static List<String> mergeLists(final List<String>... lists) {
         final List<String> result = new ArrayList<>();
         Arrays.stream(lists).forEach(result::addAll);

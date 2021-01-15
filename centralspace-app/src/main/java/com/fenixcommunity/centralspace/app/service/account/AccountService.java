@@ -12,9 +12,10 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonitoring;
+import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
-import com.fenixcommunity.centralspace.domain.repository.permanent.account.AccountRepository;
 import com.fenixcommunity.centralspace.domain.repository.permanent.AddressRepository;
+import com.fenixcommunity.centralspace.domain.repository.permanent.account.AccountRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
@@ -22,20 +23,23 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Log4j2
 @Service
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AccountService {
-
     private final AccountRepository accountRepository;
     private final AddressRepository addressRepository;
 
     @MethodMonitoring
+    @Transactional(rollbackForClassName = "ServiceFailedException", rollbackFor = RuntimeException.class)
     public Account save(@NonNull final Account account) {
-        if (account.getAddress() != null) {
-            addressRepository.save(account.getAddress());
+        if (account.getAddress() == null) {
+            throw new ServiceFailedException("Update failed. No address data for account.");
         }
+
+        addressRepository.save(account.getAddress());
         return accountRepository.save(account);
     }
 

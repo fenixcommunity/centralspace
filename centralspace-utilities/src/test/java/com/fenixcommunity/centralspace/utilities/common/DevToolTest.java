@@ -21,7 +21,7 @@ class DevToolTest {
     @Test
     public void listFilesForDirectoryTest() {
         try {
-            Set<String> filesForDirectory = FileDevTool.listFilesForDirectory("C:/Projects/MK/centralspace-temp/");
+            Set<String> filesForDirectory = FileDevTool.listFilesForDirectory("C:/projects/MK/centralspace-temp/");
             assertThat(filesForDirectory).isNotEmpty();
         } catch (IOException e) {
             fail();

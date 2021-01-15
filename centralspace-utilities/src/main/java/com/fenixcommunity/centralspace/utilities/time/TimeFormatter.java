@@ -17,6 +17,7 @@ public class TimeFormatter {
     //    ZONE_DATE_TIME
     public static final DateTimeFormatter ZONE_FORMATTER_ISO = DateTimeFormatter.ISO_ZONED_DATE_TIME;
     public static final DateTimeFormatter ZONE_FORMATTER_1 = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss z");
+    public static final DateTimeFormatter ZONE_FORMATTER_2 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     public static ZonedDateTime toZonedDateTime(String val, DateTimeFormatter formatter) {
         if (isNotEmpty(val)) {

@@ -84,6 +84,11 @@
             <groupId>com.googlecode.jmapper-framework</groupId>
             <artifactId>jmapper-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yannbriancon</groupId>
+            <artifactId>spring-hibernate-query-utils</artifactId>
+            <version>${hibernate-query-detect-n-plus.version}</version>
+        </dependency>
         <!-- UTILITIES DEPENDENCIES -->
         <dependency>
             <groupId>org.javamoney</groupId>

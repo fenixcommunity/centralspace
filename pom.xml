@@ -99,6 +99,8 @@
         <commons-fileupload.version>1.4</commons-fileupload.version>
         <commons-codec.version>1.13</commons-codec.version>
         <twilio.version>8.3.0</twilio.version>
+        <hibernate-query-detect-n-plus.version>2.0.0</hibernate-query-detect-n-plus.version>
+        <password-generator-passay.version>1.0</password-generator-passay.version>
         <!-- DOCUMENT CONVERTER DEPENDENCIES -->
         <pdfbox-tools.version>2.0.17</pdfbox-tools.version>
         <pdf2dom.version>1.7</pdf2dom.version>
@@ -502,6 +504,16 @@
                 <groupId>com.googlecode.jmapper-framework</groupId>
                 <artifactId>jmapper-core</artifactId>
                 <version>${jmapper-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yannbriancon</groupId>
+                <artifactId>spring-hibernate-query-utils</artifactId>
+                <version>${hibernate-query-detect-n-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.passay</groupId>
+                <artifactId>passay</artifactId>
+                <version>${password-generator-passay.version}</version>
             </dependency>
             <!-- TEST DEPENDENCIES -->
             <dependency>

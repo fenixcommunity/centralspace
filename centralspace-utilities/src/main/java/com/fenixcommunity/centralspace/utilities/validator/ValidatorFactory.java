@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.experimental.FieldDefaults;
-import org.apache.commons.lang3.EnumUtils;
 import org.springframework.stereotype.Component;
 
 
@@ -25,10 +24,12 @@ public class ValidatorFactory {
         Validator validator = null;
         if (type == ValidatorType.NOT_NULL) {
             validator = new NotNullValidator();
+        } else if (type == ValidatorType.PASSWORD_CUSTOM) {
+            validator = new CustomPasswordValidator();
         } else if (type == ValidatorType.PASSWORD_LOW) {
-            validator = PasswordValidator.lowValidator();
+            validator = PatternPasswordValidator.lowLevelValidator();
         } else if (type == ValidatorType.PASSWORD_HIGH) {
-            validator = PasswordValidator.highValidator();
+            validator = PatternPasswordValidator.highLevelValidator();
         } else if (type == ValidatorType.MAIL) {
             validator = new MailValidator();
         }

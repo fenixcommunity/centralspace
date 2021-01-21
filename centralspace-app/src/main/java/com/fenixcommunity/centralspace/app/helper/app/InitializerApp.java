@@ -93,7 +93,9 @@ public class InitializerApp implements CommandLineRunner {
                 .add(testInfo)
                 .add(analyzeVMInfo)
                 .add(graphQLInfo)
-                .add(NEW_LINE + swaggerInfo)
+                .add(NEW_LINE)
+                .add(swaggerInfo)
+                .add(NEW_LINE)
                 .toString());
     }
 }

@@ -49,7 +49,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @DisplayName("Test to check PasswordValidator")
 @DisplayNameGeneration(ReplaceCamelCaseAndUnderscore.class)
 @ExtendWith(MockitoExtension.class)
-class PasswordValidatorTest {
+class PatternPasswordValidatorTest {
 
     @InjectMocks
     private ValidatorFactory validatorFactory;
@@ -77,8 +77,8 @@ class PasswordValidatorTest {
             boolean result = validator.isValid(password);
             // then
             isTrue(password.length() > 1, "password must longer than 1");
-            isAssignable(Validator.class, PasswordValidator.class);
-            isInstanceOf(PasswordValidator.class, validator);
+            isAssignable(Validator.class, PatternPasswordValidator.class);
+            isInstanceOf(PatternPasswordValidator.class, validator);
             hasLength(password, "password must not be null and must not the empty");
             hasText(password, "key must not be null and must contain at least one non-whitespace  character");
             doesNotContain(password, "123", "key mustn't contain 123");

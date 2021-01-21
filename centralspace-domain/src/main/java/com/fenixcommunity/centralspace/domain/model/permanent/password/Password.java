@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
+import com.fenixcommunity.centralspace.utilities.adnotation.ValidPassword;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +46,8 @@ public class Password extends AbstractBaseEntity {
     private Account account;
 
     @Column(name = "password", nullable = false)
+    //TODO to save password use PasswordEncoder bean
+    @ValidPassword
     private String password;
 
     @Column(name = "password_type", nullable = false)

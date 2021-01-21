@@ -68,3 +68,9 @@ redis:
   port: 6379
   jedisAvailable: true
   lettuceAvailable: false
+
+# n + 1 detector
+hibernation:
+    query:
+      interceptor:
+        error-level: ERROR

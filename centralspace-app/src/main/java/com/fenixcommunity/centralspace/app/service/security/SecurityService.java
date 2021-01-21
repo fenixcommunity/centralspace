@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class SecurityService {
-
     private final AuthenticationFacade authenticationFacade;
     private final Validator validator;
 

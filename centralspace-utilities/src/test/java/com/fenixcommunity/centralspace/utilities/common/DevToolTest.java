@@ -51,7 +51,7 @@ class DevToolTest {
     @Test
     public void generateSecureStringChainTest() {
         String resultWithSpecialChars = StringTool.generateSecurePassword();
-        assertThat(resultWithSpecialChars).hasSize(38);
+        assertThat(resultWithSpecialChars).hasSize(10);
 
         String resultWithoutSpecialChars = StringTool.generateSecureToken();
         assertThat(resultWithoutSpecialChars).hasSize(38);

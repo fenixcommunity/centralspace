@@ -26,7 +26,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>, AccountCustomRepository {
 
-    @EntityGraph(attributePaths = {"address"}) // if we want to dynamically change fetchType from Lazy to Eager
+/*   if we want to dynamically change fetchType from Lazy to Eager
+     prevention of n+1 queries (or JOIN FETCH)*/
+    @EntityGraph(attributePaths = {"address"})
     Account findByLogin(final String login);
 
     // not works for @EntityGraph

@@ -12,7 +12,7 @@ import com.fenixcommunity.centralspace.utilities.globalexception.validator.Passw
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = PRIVATE)
-public class PasswordValidator implements Validator {
+class PatternPasswordValidator implements Validator {
     // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
     private static final Pattern PATTERN_HIGH = Pattern.compile("^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\\d]){1,})(?=(.*[\\W]){1,})(?!.*\\s).{8,}$");
     // Minimum eight characters, at least one letter and one number
@@ -22,23 +22,22 @@ public class PasswordValidator implements Validator {
     private Pattern pattern;
 
     //TODO test i co dać do Validatora?
-    private PasswordValidator() {
+    private PatternPasswordValidator() {
     }
 
-    static PasswordValidator lowValidator() {
-        final PasswordValidator validator = new PasswordValidator();
+    static PatternPasswordValidator lowLevelValidator() {
+        final PatternPasswordValidator validator = new PatternPasswordValidator();
         validator.operationLevel = OperationLevel.LOW;
         validator.pattern = PATTERN_LOW;
         return validator;
     }
 
-    static PasswordValidator highValidator() {
-        final PasswordValidator validator = new PasswordValidator();
+    static PatternPasswordValidator highLevelValidator() {
+        final PatternPasswordValidator validator = new PatternPasswordValidator();
         validator.pattern = PATTERN_HIGH;
         return validator;
     }
 
-    //TODO implementacja, test null
     @Override
     public boolean isValid(final Object obj) {
         if (obj instanceof String) {

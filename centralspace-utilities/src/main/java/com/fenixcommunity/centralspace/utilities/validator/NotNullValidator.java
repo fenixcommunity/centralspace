@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.util.Assert;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class NotNullValidator implements Validator {
+class NotNullValidator implements Validator {
 
     @Override
     public boolean isValid(final Object object) {

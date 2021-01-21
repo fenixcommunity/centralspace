@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.mail.MailPreparationException;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class MailValidator implements Validator {
+class MailValidator implements Validator {
 
     @Override
     public boolean isValid(final Object object) {

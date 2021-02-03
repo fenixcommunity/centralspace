@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.domain.repository;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.CITY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COUNTRY;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DB_USER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN_UPPER;
@@ -66,7 +66,7 @@ import org.springframework.test.context.junit4.SpringRunner;
         )
 })
 @FieldDefaults(level = PRIVATE)
-@AutoConfigureMockMvc @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
+@AutoConfigureMockMvc @WithMockUser(username = DB_USER, roles = {"ROLE_DB_MANAGE"}, password = PASSWORD)
 public class AccountRepositoryTest {
 
     private static final long ACCOUNT_ID_FROM_QUERY = 99L;

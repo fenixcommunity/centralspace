@@ -22,8 +22,8 @@ import lombok.Getter;
 public enum RegisterType {
     ADMIN("ADM", 0), STANDARD("STD", 1);
 
-    private String accountSignature;
-    private int accountValue;
+    private final String accountSignature;
+    private final int accountValue;
 
     public static class RegisterTypeDeserializer extends StdDeserializer<RegisterType> {
         public RegisterTypeDeserializer() {

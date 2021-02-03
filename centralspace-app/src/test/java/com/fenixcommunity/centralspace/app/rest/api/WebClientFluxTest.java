@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.FLUX_EDITOR;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.ADMIN_USER;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.BASIC_USER;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.FLUX_USER_ADVANCE;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
@@ -77,8 +77,8 @@ class WebClientLuxTest {
 
     @BeforeEach
     public void init() {
-        this.basicClient = setOptions(BASIC.name());
-        this.adminClient = setOptions(ADMIN.name());
+        this.basicClient = setOptions(BASIC_USER.name());
+        this.adminClient = setOptions(ADMIN_USER.name());
         initAccount();
     }
 
@@ -113,7 +113,7 @@ class WebClientLuxTest {
                 .build();
         accountDto = new AccountModelMapper(OperationLevel.HIGH).mapToDto(account);
         when(accountService.findById(ID)).thenReturn(Optional.of(account));
-        when(accountService.save(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
+        when(accountService.createAccount(any(Account.class))).thenReturn(account); // -> or  eq(mapToJpa(accountDto))
     }
 
     @Test
@@ -148,7 +148,7 @@ class WebClientLuxTest {
         AccountDto result = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .filter(ExchangeFilterFunctions
-                        .basicAuthentication(FLUX_EDITOR.name(), PASSWORD)).build()
+                        .basicAuthentication(FLUX_USER_ADVANCE.name(), PASSWORD)).build()
                 .post()
                 .uri("http://localhost:" + port + APP_PATH + BASE_ACCOUNT_FLUX_URL + "create") // or builder if queryParam
                 .contentType(MediaType.APPLICATION_JSON)

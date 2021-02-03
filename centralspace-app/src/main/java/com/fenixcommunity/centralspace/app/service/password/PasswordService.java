@@ -1,31 +1,52 @@
 package com.fenixcommunity.centralspace.app.service.password;
 
-import static java.util.Collections.unmodifiableList;
-import static lombok.AccessLevel.PACKAGE;
+import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.PASSWORD_CUSTOM;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 
+import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
+import com.fenixcommunity.centralspace.domain.model.permanent.password.PasswordType;
 import com.fenixcommunity.centralspace.domain.repository.permanent.PasswordRepository;
-import lombok.AllArgsConstructor;
+import com.fenixcommunity.centralspace.utilities.validator.Validator;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorType;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Log4j2
 @Service
-@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
+@Log4j2
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PasswordService {
-
     private final PasswordRepository passwordRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final Validator validator;
 
-    public Password save(@NonNull final Password password) {
+    public PasswordService(PasswordRepository passwordRepository, PasswordEncoder passwordEncoder, ValidatorFactory validator) {
+        this.passwordRepository = passwordRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.validator = validator.getInstance(PASSWORD_CUSTOM);
+    }
+
+    public Password generatePassword(@NonNull final String providedPassword,
+                                     @NonNull final Account account) {
+        if (!passwordIsValid(providedPassword)) {
+            return null;
+        }
+
+        final Password password = Password.builder()
+                .account(account)
+                .password(passwordEncoder.encode(providedPassword))
+                .passwordType(PasswordType.TO_CENTRALSPACE)
+                .build();
         return passwordRepository.save(password);
     }
 
-    public List<Password> findAll() {
-        return unmodifiableList(passwordRepository.findAll());
+    public boolean passwordIsValid(final String providedPassword) {
+        return validator.isValid(providedPassword);
     }
 }

@@ -42,12 +42,10 @@ public class Password extends AbstractBaseEntity {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "accountId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
     @Column(name = "password", nullable = false)
-    //TODO to save password use PasswordEncoder bean
-    @ValidPassword
     private String password;
 
     @Column(name = "password_type", nullable = false)

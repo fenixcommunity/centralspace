@@ -1,17 +1,16 @@
 package com.fenixcommunity.centralspace.app.rest.dto.responseinfo;
 
-import static lombok.AccessLevel.PRIVATE;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fenixcommunity.centralspace.app.rest.dto.register.RegisterType;
 import lombok.Builder;
-import lombok.Value;
-import lombok.experimental.FieldDefaults;
+import lombok.Getter;
+import lombok.Setter;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Value @Builder @FieldDefaults(level = PRIVATE, makeFinal = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+// basic json response annotations
+@Getter @Setter @Builder
 public class RestRegisterResponse {
-    private final String infoMessage;
-    private final String redirectionLink;
-    private final RegisterType registerType;
+    public String infoMessage;
+    public String redirectionLink;
+    public RegisterType registerType;
 }

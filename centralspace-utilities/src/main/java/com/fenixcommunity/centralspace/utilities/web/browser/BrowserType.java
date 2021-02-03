@@ -1,5 +1,8 @@
 package com.fenixcommunity.centralspace.utilities.web.browser;
 
+import lombok.Getter;
+
+@Getter
 public enum BrowserType {
     FIREFOX("firefox"),
     FIREFOX_PROXY("firefoxproxy"),

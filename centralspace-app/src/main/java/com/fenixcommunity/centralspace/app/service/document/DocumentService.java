@@ -17,7 +17,7 @@ import com.fenixcommunity.centralspace.app.configuration.restcaller.RestCallerSt
 import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.service.document.converter.jsonconverter.FromJsonConverter;
 import com.fenixcommunity.centralspace.app.service.document.converter.jsonconverter.ToJsonConverter;
-import com.fenixcommunity.centralspace.app.service.security.SecurityService;
+import com.fenixcommunity.centralspace.app.service.security.helper.SecurityHelperService;
 import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.BasicPdfConverter;
 import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategy;
 import com.fenixcommunity.centralspace.app.service.document.converter.pdfconverter.HtmlPdfConverterStrategyType;
@@ -45,7 +45,7 @@ public class DocumentService {
 
     private final InternalResourceLoader resourceTool;
     private final TemplateEngine templateEngine;
-    private final SecurityService securityService;
+    private final SecurityHelperService securityHelperService;
 
     private final RestCallerStrategy restCallerStrategy;
 
@@ -61,7 +61,7 @@ public class DocumentService {
 
     public void convertImageToPdfAsAdminByWebClientAndRestTemplate(final String imageFileName, @NonNull  final FileFormat fileFormat) {
         final IPdfConverter converter = new BasicPdfConverter(imageFileName, resourceTool);
-        if (securityService.isValidSecurityRole()) {
+        if (securityHelperService.isValidSecurityRole()) {
             converter.convertImageToPdf(fileFormat, restCallerStrategy);
         }
     }

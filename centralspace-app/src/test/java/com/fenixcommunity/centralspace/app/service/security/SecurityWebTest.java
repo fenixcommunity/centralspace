@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.app.service.security;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.SWAGGER;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.ADMIN_USER;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.BASIC_USER;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.SWAGGER_USER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static com.fenixcommunity.centralspace.utilities.common.Var.WRONG_PASSWORD;
 import static java.lang.String.format;
@@ -68,7 +68,7 @@ class SecurityWebTest {
     @Test
     void whenSwaggerUserRequestsSwaggerPage_ThenSuccess()
             throws IllegalStateException, MalformedURLException {
-        restTemplate = new TestRestTemplate(SWAGGER.name(), PASSWORD);
+        restTemplate = new TestRestTemplate(SWAGGER_USER.name(), PASSWORD);
         baseUrl = new URL("http://localhost:" + port + "/app/swagger-ui.html");
 
         ResponseEntity<String> response
@@ -80,7 +80,7 @@ class SecurityWebTest {
     @Test
     void whenAdminUserRequestsApiPage_ThenSuccess()
             throws IllegalStateException, MalformedURLException {
-        restTemplate = new TestRestTemplate(ADMIN.name(), PASSWORD);
+        restTemplate = new TestRestTemplate(ADMIN_USER.name(), PASSWORD);
         baseUrl = new URL("http://localhost:" + port + "/app/api/account/all");
 
         ResponseEntity<String> response
@@ -93,7 +93,7 @@ class SecurityWebTest {
 
     @Test
     void whenUserWithWrongRight_thenUnauthorizedStatus() throws MalformedURLException {
-        restTemplate = new TestRestTemplate(SWAGGER.name(), PASSWORD);
+        restTemplate = new TestRestTemplate(SWAGGER_USER.name(), PASSWORD);
         baseUrl = new URL("http://localhost:" + port + "/app/api/account/all");
 
         ResponseEntity<String> response
@@ -105,7 +105,7 @@ class SecurityWebTest {
 
     @Test
     void whenUserWithWrongCredentials_thenUnauthorizedPage() throws MalformedURLException {
-        restTemplate = new TestRestTemplate(BASIC.name(), WRONG_PASSWORD);
+        restTemplate = new TestRestTemplate(BASIC_USER.name(), WRONG_PASSWORD);
         baseUrl = new URL("http://localhost:" + port + "/app/api/account/all");
 
         ResponseEntity<String> response

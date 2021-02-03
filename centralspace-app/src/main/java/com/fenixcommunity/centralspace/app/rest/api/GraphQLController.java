@@ -9,6 +9,7 @@ import graphql.ExecutionResult;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController @RequestMapping("/api/graphql")
+@PreAuthorize("hasAuthority('ROLE_GRAPHQL_MANAGE')")
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class GraphQLController {
     public static final String QUERY_PARAMETER = "query";

@@ -69,6 +69,10 @@ spring:
   jackson:
     time-zone: Europe/Dublin
     date-format: yyyy-MM-dd HH:mm:ss
+#HOT SWAP -> if standard changes CTR + SHIFT + F9, if method adding use hot swap
+  devtools:
+    restart:
+      enabled: true
 
 #Base paths
 path:

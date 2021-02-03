@@ -54,7 +54,7 @@ public class AccountFluxController {
     // @PreAuthorize("hasRole('ROLE_FLUX_EDITOR') or hasRole('ROLE_FLUX_GETTER')")
     // @RolesAllowed({ "ROLE_FLUX_EDITOR", "ROLE_FLUX_GETTER" })
     @PostAuthorize("returnObject.username.equals(authentication.principal.username)")
-    public SecuredUserDto getToCheckPreauthorize(@RequestParam(value = "securedUsername", defaultValue = "FLUX_GETTER") final String securedUsername) {
+    public SecuredUserDto getToCheckPreauthorize(@RequestParam(value = "securedUsername", defaultValue = "FLUX_USER_BASIC") final String securedUsername) {
         return new SecuredUserDto(securedUsername, null);
     }
 
@@ -66,7 +66,7 @@ public class AccountFluxController {
     public Mono<AccountDto> createFlux(@Valid @RequestBody final AccountDto accountDto) {
 //         Mono<Void> or Flux<AccountDto>
         final Account requestedAccount = accountHelper.mapFromDtoAndValidate(accountDto, LOW);
-        final Long generatedId = accountService.save(requestedAccount).getId();
+        final Long generatedId = accountService.createAccount(requestedAccount).getId();
         requestedAccount.setId(generatedId);
         return Mono.just(new AccountModelMapper(HIGH).mapToDto(requestedAccount))
                 .doOnNext(dto -> System.out.println(dto.getLogin()))
@@ -79,7 +79,7 @@ public class AccountFluxController {
     @PostMapping("/check-secured-user") @ResponseStatus(HttpStatus.OK)
     @Secured({"ROLE_FLUX_EDITOR"})
     @PreFilter(value = "filterObject == authentication.principal.username", filterTarget = "securedUserNames")
-    // after -> [FLUX_GETTER]
+    // after -> [FLUX_USER_BASIC]
     // Set instead List because .contains searching
     public Mono<SecuredUserDto> postToCheckSecuredUser(@NotNull @RequestParam(value = "securedUserNames") final Set<String> securedUserNames) {
         final SecurityContext securityContext = SecurityContextHolder.getContext();

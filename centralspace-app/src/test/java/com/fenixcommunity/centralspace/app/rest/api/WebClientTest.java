@@ -1,7 +1,7 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.ADMIN;
-import static com.fenixcommunity.centralspace.app.configuration.security.auto.SecurityRole.BASIC;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.ADMIN_USER;
+import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.BASIC_USER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -62,8 +62,8 @@ class WebClientTest {
 
     @BeforeEach
     public void init() {
-        this.basicClient = setOptions(BASIC.name());
-        this.adminClient = setOptions(ADMIN.name());
+        this.basicClient = setOptions(BASIC_USER.name());
+        this.adminClient = setOptions(ADMIN_USER.name());
     }
 
     private WebTestClient setOptions(String user) {

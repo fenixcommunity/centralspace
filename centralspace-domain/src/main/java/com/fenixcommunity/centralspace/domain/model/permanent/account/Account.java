@@ -4,6 +4,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -14,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,6 +26,7 @@ import com.fenixcommunity.centralspace.domain.converter.UppercaseConverter;
 import com.fenixcommunity.centralspace.domain.core.listener.AccountEntityListener;
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.permanent.password.Password;
+import com.fenixcommunity.centralspace.domain.model.permanent.role.RoleGroup;
 import com.googlecode.jmapper.annotations.JMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +36,8 @@ import lombok.NoArgsConstructor;
 import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OrderBy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.pl.NIP;
 import org.hibernate.validator.constraints.pl.PESEL;
@@ -72,12 +78,19 @@ public class Account extends AbstractBaseEntity {
     @Column(name = "nip")
     private String nip;
 
-    @Singular @ToString.Exclude
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    //todo Set<...  sort by ...
+    @Singular @ToString.Exclude
     private List<Password> passwords;
 
-//     TODO [!] TO Avoid lazyInitException:
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "account_to_role_group",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_group_id"))
+    @OrderBy("name")
+    @Singular
+    private Set<RoleGroup> roleGroups;
+
+//     TODO [!] TO Avoid LazyInitException:
 //    - @Transactional
 //    - spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true
 //    - " JOIN FETCH a.address " +
@@ -88,4 +101,9 @@ public class Account extends AbstractBaseEntity {
 
     @Column(name = "consent_expired_date")
     private ZonedDateTime dataBaseConsentExpiredDate;
+
+    @Column(name = "blocked", columnDefinition = "boolean default false")
+    @ColumnDefault("false")
+    private boolean blocked;
+
 }

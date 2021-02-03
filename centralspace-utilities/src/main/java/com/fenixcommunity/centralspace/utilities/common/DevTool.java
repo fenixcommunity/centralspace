@@ -1,25 +1,20 @@
 package com.fenixcommunity.centralspace.utilities.common;
 
-import static com.fenixcommunity.centralspace.utilities.common.Var.SPACE;
 import static java.util.stream.Collectors.toMap;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.FieldDefaults;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.SerializationUtils;
 import org.springframework.util.ClassUtils;
 
@@ -48,15 +43,15 @@ public class DevTool {
     }
 
     public static String[] listsTo1Array(final List<String>... lists) {
-        return mergeLists(lists).toArray(String[]::new);
+        return mergeListsWithUniqueElem(lists).toArray(String[]::new);
     }
 
     public static <T> List<T> listsTo1List(final List<T>... lists) {
         return Arrays.stream(lists).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
-    public static List<String> mergeLists(final List<String>... lists) {
-        final List<String> result = new ArrayList<>();
+    public static List<String> mergeListsWithUniqueElem(final List<String>... lists) {
+        final Set<String> result = new HashSet<>();
         Arrays.stream(lists).forEach(result::addAll);
         return List.copyOf(result); // or unmodifiableList
     }

@@ -6,6 +6,8 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.annotation.PreDestroy;
+
 import com.fenixcommunity.centralspace.metrics.config.exception.PrometheusMeterRegistryException;
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.HttpContext;
@@ -20,7 +22,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ComponentScan(value = {"com.fenixcommunity.centralspace.metrics"})
-//@ConditionalOnProperty(value="otpConfig", havingValue="test")
+//@ConditionalOnProperty(value="xxx", havingValue="test")
 public class MetricsConfig {
     //todo integrate Prometheus with Grafana by Docker -> https://technology.amis.nl/2018/11/01/monitoring-spring-boot-applications-with-prometheus-and-grafana/
 
@@ -65,6 +66,14 @@ public class MetricsConfig {
             return HttpServer.create(new InetSocketAddress(prometheusPort), 0);
         } catch (IOException e) {
             throw new PrometheusMeterRegistryException(e);
+        }
+    }
+
+    @PreDestroy
+    public void onDestroy() {
+        final HttpServer prometheusHttpServer = prometheusHttpServer();
+        if (prometheusHttpServer != null) {
+            prometheusHttpServer.stop(0);
         }
     }
 

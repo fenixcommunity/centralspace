@@ -11,8 +11,8 @@ import com.fenixcommunity.centralspace.app.configuration.caching.CachingConfig;
 import com.fenixcommunity.centralspace.app.configuration.customization.CustomizationConfig;
 import com.fenixcommunity.centralspace.app.configuration.features.FeaturesConfig;
 import com.fenixcommunity.centralspace.app.configuration.mail.MailGatewayConfig;
-import com.fenixcommunity.centralspace.app.configuration.security.auto.AutoSecurityConfig;
-import com.fenixcommunity.centralspace.app.configuration.security.auto.MethodAutoSecurityConfig;
+import com.fenixcommunity.centralspace.app.configuration.security.AutoSecurityConfig;
+import com.fenixcommunity.centralspace.app.configuration.security.MethodAutoSecurityConfig;
 import com.fenixcommunity.centralspace.app.configuration.sms.SmsConfig;
 import com.fenixcommunity.centralspace.app.configuration.swaggerdoc.SwaggerConfig;
 import com.fenixcommunity.centralspace.app.configuration.web.FilterApiConfig;
@@ -47,7 +47,6 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
         // security
         AutoSecurityConfig.class,
         MethodAutoSecurityConfig.class,
-//      ManualSecurityConfig.class,
         // web
         WebConfig.class,
         FilterApiConfig.class,

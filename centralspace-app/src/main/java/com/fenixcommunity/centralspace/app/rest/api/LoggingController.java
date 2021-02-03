@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import com.fenixcommunity.centralspace.app.configuration.annotation.MethodMonito
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerQueryDto;
 import com.fenixcommunity.centralspace.app.rest.dto.logger.LoggerResponseDto;
 import com.fenixcommunity.centralspace.app.rest.exception.ErrorDetails;
+import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
 import com.fenixcommunity.centralspace.app.service.appstatus.AppStatusService;
 import com.fenixcommunity.centralspace.app.service.serviceconnector.RemoteService;
 import com.fenixcommunity.centralspace.domain.core.redis.RedisService;
@@ -28,7 +30,9 @@ import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,7 +61,7 @@ public class LoggingController {
             @ApiResponse(code = 501, response = ErrorDetails.class, message = "Not implemented for given extraction type")
     })
     @GetMapping("/test")
-    public ResponseEntity<ErrorDetails> runLogsAndRegisterErrorDetails() {
+    public ResponseEntity<ErrorDetails> runLogsAndThrowExceptionToHandler() {
         log.trace("TRACE Message");
         if (log.isDebugEnabled()) {
             log.debug("DEBUG Message");
@@ -69,7 +73,12 @@ public class LoggingController {
         final ErrorDetails errorDetails = ErrorDetails.builder()
                 .message("error")
                 .details("details").build();
-        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorDetails);
+        if (true) {
+            final Exception exception = new HttpMediaTypeNotSupportedException(MediaType.APPLICATION_JSON, List.of(MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_STREAM_JSON));
+            throw new ServiceFailedException("Exception handler test", exception);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorDetails);
+        }
     }
 
     //todo from elastic search

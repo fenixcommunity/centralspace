@@ -1,8 +1,8 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.utilities.common.OperationLevel.HIGH;
-import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COOKIE_SESSION;
+import static com.fenixcommunity.centralspace.utilities.common.Var.DB_USER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.HEADER_SESSION;
 import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
@@ -51,7 +51,7 @@ import org.springframework.test.web.servlet.MockMvc;
         HeaderApiFilter.class, CacheCookieApiFilter.class
 })
 @WebMvcTest
-@AutoConfigureMockMvc @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
+@AutoConfigureMockMvc @WithMockUser(username = DB_USER, roles = {"ROLE_DB_MANAGE"}, password = PASSWORD)
 // 4 APPROACH https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/
 // another approach: Hoverfly - a simulation is by using a DSL. Looks faster
 class AccountControllerTest {
@@ -94,7 +94,7 @@ class AccountControllerTest {
     }
 
     @Test
-// we can add also in method level    @WithMockUser(username = ADMIN, roles = {ADMIN}, password = PASSWORD)
+// we can add also in method level    @WithMockUser(username = DB_USER, roles = {ROLE_DB_MANAGE}, password = PASSWORD)
     void shouldReturnResponse_ForAccountIdCall() throws Exception {
         var response = mvc.perform(get(BASE_ACCOUNT_URL + ID)
                 // when POST .content(jacksonTester.write(account).getJson())

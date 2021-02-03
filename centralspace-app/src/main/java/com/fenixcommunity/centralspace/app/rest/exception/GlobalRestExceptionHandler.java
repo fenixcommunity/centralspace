@@ -18,7 +18,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 
 @ControllerAdvice
 @Log4j2
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.ALL_VALUE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class GlobalRestExceptionHandler {
 

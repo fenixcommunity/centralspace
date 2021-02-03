@@ -56,7 +56,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "Account Management System", description = "Operations to manage lifecycle of Accounts")
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Validated
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_DB_MANAGE')")
 public class AccountController {
     //todo RepresentationModel when empty body and links, Resource when body and links,
     private final AccountService accountService;
@@ -118,7 +118,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BasicResponse> create(@Valid @RequestBody final AccountDto accountDto) {
         final Account requestedAccount = accountHelper.mapFromDtoAndValidate(accountDto, LOW);
-        accountService.save(requestedAccount);
+        accountService.createAccount(requestedAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok").status("PROCESSED").build();
         return ResponseEntity.created(getCurrentURI()).body(response);
     }
@@ -131,7 +131,7 @@ public class AccountController {
             throws ResourceNotFoundException {
         isRecordExistElseThrowEx(id);
         final Account requestedAccount = accountHelper.mapFromDtoAndValidate(accountDto, LOW);
-        final Account updatedAccount = accountService.save(requestedAccount);
+        final Account updatedAccount = accountService.createAccount(requestedAccount);
         final BasicResponse response = BasicResponse.builder().description("It's ok, accountID: " + updatedAccount.getId()).status("PROCESSED").build();
         return ResponseEntity.ok(response);
     }

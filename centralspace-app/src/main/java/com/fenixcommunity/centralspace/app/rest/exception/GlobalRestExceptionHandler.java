@@ -31,7 +31,6 @@ public class GlobalRestExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    //todo test
     @ExceptionHandler(ServiceFailedException.class)
     public ResponseEntity<?> internalServerException(ServiceFailedException ex, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails.builder()

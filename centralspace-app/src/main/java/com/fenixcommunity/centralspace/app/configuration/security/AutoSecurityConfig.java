@@ -48,7 +48,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 //@EnableWebFluxSecurity todo https://www.baeldung.com/spring-security-5-reactive
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-@PropertySource(value = {"classpath:domain.yml"}, factory = YamlFetcher.class)
+@PropertySource(value = {"classpath:security.yml"}, factory = YamlFetcher.class)
 public abstract class AutoSecurityConfig {
 /*  TODO   tokeny -> przychodzi token, przydzielamy token do usera ale takze weryfikujemy czy taki token wystawilismy
 *   TODO jwt cracker -> > 18 znaków zmieszanych
@@ -202,7 +202,7 @@ public abstract class AutoSecurityConfig {
                     .and()
                     .formLogin().permitAll()
                     .successHandler(appAuthenticationSuccessHandler(loginAttemptService(), passwordEncoder()))
-                    .failureHandler(appAuthenticationFailureHandler())
+                    .failureHandler(appAuthenticationFailureHandler(loginAttemptService()))
                     .and()
                     .logout().logoutUrl("/logout") //todo frontend handle
                     .logoutSuccessHandler(logoutSuccessHandler())
@@ -253,8 +253,8 @@ public abstract class AutoSecurityConfig {
         }
 
         @Bean
-        AuthenticationFailureHandler appAuthenticationFailureHandler() {
-            return new AppAuthenticationFailureHandler();
+        AuthenticationFailureHandler appAuthenticationFailureHandler(final LoginAttemptService loginAttemptService) {
+            return new AppAuthenticationFailureHandler(loginAttemptService);
         }
 
         @Bean

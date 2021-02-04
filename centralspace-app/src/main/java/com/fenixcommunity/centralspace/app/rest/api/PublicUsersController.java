@@ -22,7 +22,8 @@ final class PublicUsersController {
     @NonNull
     private final AppAuthentication authentication;
 
-    //todo test it
+//
+//    todo test it
 
     @PostMapping("/login")
     public String login(@RequestBody final RequestedUserDto requestedUserDto) {

@@ -21,6 +21,8 @@ import org.springframework.util.Assert;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    public static final String USERNAME = "username";
+
     private final LoginAttemptService loginAttemptService;
     private final PasswordEncoder encoder;
     private final int sessionTimeout;
@@ -50,7 +52,7 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
         }
 
         final WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) authentication.getDetails();
-        loginAttemptService.loginSucceeded(webAuthenticationDetails.getRemoteAddress());
+        loginAttemptService.loginSucceeded(request.getParameter(USERNAME));
 
         final Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         request.getSession(false).setMaxInactiveInterval(sessionTimeout); // or server.servlet.session.timeout=30m

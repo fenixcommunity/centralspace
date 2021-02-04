@@ -58,7 +58,7 @@ public class RoleCreatorService {
         if (!SecurityUserGroup.getAllSecurityUserGroupNames().contains(name)) {
             throw new IllegalArgumentException("new role group not allowed");
         }
-        return roleGroupRepository.findByName(name).orElse(createNewRoleGroup(name, description, roles));
+        return roleGroupRepository.findByName(name).orElseGet(() -> createNewRoleGroup(name, description, roles));
 
     }
 

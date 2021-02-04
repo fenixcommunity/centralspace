@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fenixcommunity.centralspace.app.service.security.helper.LoginAttemptService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -17,8 +18,14 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AppAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    public static final String USERNAME = "username";
 
+    private final LoginAttemptService loginAttemptService;
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public AppAuthenticationFailureHandler(LoginAttemptService loginAttemptService) {
+        this.loginAttemptService = loginAttemptService;
+    }
 
     @Override
     public void onAuthenticationFailure(
@@ -26,7 +33,8 @@ public class AppAuthenticationFailureHandler implements AuthenticationFailureHan
             final HttpServletResponse response,
             final AuthenticationException exception) throws IOException {
 
-        // todo AuthenticationFailureBadCredentialsEvent and to LoginAttemptService by IP
+        //todo isBlocked implementation
+        loginAttemptService.loginFailed(request.getParameter(USERNAME));
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         //todo change date format
         final Map<String, Object> data = new HashMap<>();

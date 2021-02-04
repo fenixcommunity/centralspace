@@ -46,7 +46,6 @@ public class SecuredUserCreator {
             || userDetailsManager.userExists(createUserData.getUsername())) {
             return;
         }
-        sprawdz
 
         final Address address = addressService.createAddress(createUserData.getCountry());
         final RoleGroup roleGroup = getRoleGroup(createUserData, createUserData.getSecurityUserGroup());
@@ -59,16 +58,16 @@ public class SecuredUserCreator {
                 .password(password.getPassword())
                 .roles(roleGroup.getRoles().stream().map(Role::getName).collect(toList()))
                 .build();
-sprawdz
+
         final Authentication authentication = new UsernamePasswordAuthenticationToken(securedUser, null, securedUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private RoleGroup getRoleGroup(final CreateUserData createUserData, final SecurityUserGroup securityUserGroup) {
         if (securityUserGroup != null) {
-            return roleCreatorService.findRoleGroup(securityUserGroup.name()).orElse(findOrCreateBasicRoleGroup());
+            return roleCreatorService.findRoleGroup(securityUserGroup.name()).orElseGet(this::findOrCreateBasicRoleGroup);
         } else if (createUserData.getRoleGroupId() != null) {
-            return roleCreatorService.findRoleGroup(createUserData.getRoleGroupId()).orElse(findOrCreateBasicRoleGroup());
+            return roleCreatorService.findRoleGroup(createUserData.getRoleGroupId()).orElseGet(this::findOrCreateBasicRoleGroup);
         } else {
             return findOrCreateBasicRoleGroup();
         }

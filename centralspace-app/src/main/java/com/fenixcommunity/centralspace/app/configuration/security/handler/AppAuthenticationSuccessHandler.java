@@ -21,7 +21,7 @@ import org.springframework.util.Assert;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    public static final String USERNAME = "username";
+    private static final String USERNAME = "username";
 
     private final LoginAttemptService loginAttemptService;
     private final PasswordEncoder encoder;

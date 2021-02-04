@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AppAuthenticationFailureHandler implements AuthenticationFailureHandler {
-    public static final String USERNAME = "username";
+    private static final String USERNAME = "username";
 
     private final LoginAttemptService loginAttemptService;
     private final ObjectMapper objectMapper = new ObjectMapper();

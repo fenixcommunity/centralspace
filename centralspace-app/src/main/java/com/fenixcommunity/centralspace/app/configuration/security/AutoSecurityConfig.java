@@ -25,6 +25,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -165,6 +166,12 @@ public abstract class AutoSecurityConfig {
         }
 
         @Override
+        @Bean
+        public AuthenticationManager authenticationManagerBean() throws Exception {
+            return super.authenticationManagerBean();
+        }
+
+        @Override
         protected void configure(final HttpSecurity http) throws Exception {
             http
                     .exceptionHandling()
@@ -201,10 +208,15 @@ public abstract class AutoSecurityConfig {
                     .frameOptions().sameOrigin()
                     .and()
                     .formLogin().permitAll()
+//                   .loginPage("/login") TODO will be provided by React
+//                   .failureUrl("/login-error") TODO will be provided by React
+                    .usernameParameter("username").passwordParameter("password")
+                    .loginProcessingUrl("/public/users/signin") // custom post request url in React form
+                    .usernameParameter("username").passwordParameter("password")
                     .successHandler(appAuthenticationSuccessHandler(loginAttemptService(), passwordEncoder()))
                     .failureHandler(appAuthenticationFailureHandler(loginAttemptService()))
                     .and()
-                    .logout().logoutUrl("/logout") //todo frontend handle
+                    .logout().logoutUrl("/public/users/signout") //TODO will be provided by React
                     .logoutSuccessHandler(logoutSuccessHandler())
                     .invalidateHttpSession(true)
                     .deleteCookies(REMEMBER_ME_COOKIE)
@@ -221,11 +233,6 @@ public abstract class AutoSecurityConfig {
                  /*
                  .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
                  .deleteCookies("JSESSIONID");
-                 .loginPage("/login")
-                 .failureUrl("/login-error")
-                 .loginProcessingUrl("/security_check")
-                 .usernameParameter("username").passwordParameter("password")
-                 .permitAll();
                   */
         }
 

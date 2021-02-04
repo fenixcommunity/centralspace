@@ -2,6 +2,8 @@ package com.fenixcommunity.centralspace.app.service.security.authentication;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import com.fenixcommunity.centralspace.app.service.security.SecuredUser;
 
 public interface AppAuthentication {
@@ -15,13 +17,9 @@ public interface AppAuthentication {
      */
     Optional<String> login(String username, String password);
 
+    void logout(HttpSession httpSession);
+
     Optional<SecuredUser> findByToken(String token);
 
-    /**
-     * Logs out the given input {@code user}.
-     *
-     * @param user the user to logout
-     */
-    void logout(SecuredUser user);
 }
 

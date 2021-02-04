@@ -1,38 +1,39 @@
 package com.fenixcommunity.centralspace.app.rest.api;
 
 
-import static java.lang.String.format;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
-import com.fenixcommunity.centralspace.app.rest.dto.security.RequestedUserDto;
-import com.fenixcommunity.centralspace.app.rest.exception.ServiceFailedException;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
+
 import com.fenixcommunity.centralspace.app.service.security.authentication.AppAuthentication;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController @RequestMapping("/public/users")
-@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
-final class PublicUsersController {
+@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true) final class PublicUsersController {
     @NonNull
-    private final AppAuthentication authentication;
+    private final AppAuthentication appAuthentication;
 
-//
-//    todo test it
+    @PostMapping("/login-call")
+    public ResponseEntity<String> login(@RequestParam(value = "username", defaultValue = "max3112") final String username,
+                                        @RequestParam(value = "password", defaultValue = "password1212@oqBB") final String password) {
+        final Optional<String> loginRequest = appAuthentication.login(username, password);
+        return ResponseEntity.ok(loginRequest.orElseGet(() -> "Failed"));
+    }
 
-    @PostMapping("/login")
-    public String login(@RequestBody final RequestedUserDto requestedUserDto) {
-        final String username = requestedUserDto.getUsername();
-        final String password = requestedUserDto.getPassword();
-        return authentication
-                .login(username, password)
-                .orElseThrow(() -> {
-                    throw new ServiceFailedException(format("requested username:%s not exist", username));
-                });
+    @PostMapping("/logout-call")
+    public ResponseEntity<Boolean> logout(@ApiIgnore HttpSession httpSession) {
+        appAuthentication.logout(httpSession);
+        return ResponseEntity.ok(true);
     }
 }

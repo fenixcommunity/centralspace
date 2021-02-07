@@ -3,7 +3,6 @@ package com.fenixcommunity.centralspace.metrics.config;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.annotation.PreDestroy;
@@ -60,7 +59,6 @@ public class MetricsConfig {
 
     @Bean
     @Qualifier("prometheusHttpServer")
-    @Profile("!test")
     public HttpServer prometheusHttpServer() {
         try {
             return HttpServer.create(new InetSocketAddress(prometheusPort), 0);

@@ -24,9 +24,10 @@ class SchedulerServiceBeanTest {
 
     @Test
     void mailReminderTest() {
+//      for @Scheduled(fixedDelay = 1000, initialDelay = 1000)
         await()
                 .given().ignoreException(IllegalArgumentException.class)
-                .atLeast(Duration.ofSeconds(10))
+                .atLeast(Duration.ofSeconds(9))
                 .atMost(Duration.ofSeconds(11))
                 .untilAsserted(() -> verify(schedulerServiceBean, atLeast(10)).mailReminder());
     }

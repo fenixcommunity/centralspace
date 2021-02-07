@@ -11,8 +11,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-@Log4j2
 @Service
+@Log4j2
 @AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class RedisService {
     public static final String SPRING_SESSION_PATTERN = "spring.*";

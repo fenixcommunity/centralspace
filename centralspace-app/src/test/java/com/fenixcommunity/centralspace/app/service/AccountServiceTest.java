@@ -3,6 +3,7 @@ package com.fenixcommunity.centralspace.app.service;
 import static com.fenixcommunity.centralspace.utilities.common.Var.anyLong;
 import static com.fenixcommunity.centralspace.utilities.common.Var.anyString;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -61,8 +63,9 @@ class AccountServiceTest {
         account2.setPasswords(List.of(getPassword(account2)));
 
         accounts = List.of(account1, account2);
-        when(accountRepository.findAll()).thenReturn(accounts);
+        when(accountRepository.findAll(any(Sort.class))).thenReturn(accounts);
     }
+
     @Test
     void loadedJsonTest() {
         assertThat(loadedAccountMappings).isNotBlank();

@@ -22,8 +22,8 @@ jwt:
 #restcaller
 restcaller:
   credentials:
-    password: password
-    username: BASIC_USER
+    password: password1212@oqBB
+    username: ADMIN_TEST
 
 #jdbc security queries
 authorizationQuery:

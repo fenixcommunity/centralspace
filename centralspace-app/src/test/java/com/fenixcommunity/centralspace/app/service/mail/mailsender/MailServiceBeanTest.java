@@ -109,7 +109,7 @@ class MailServiceBeanTest {
         setUpResourceProperties();
         setUpBasicMailTemplate();
         setUpRegistrationMailTemplate();
-        ReflectionTestUtils.setField(mailServiceBean, "resourceLoaderTool", internalResourceLoader);
+        ReflectionTestUtils.setField(mailServiceBean, "internalResourceLoader", internalResourceLoader);
         ReflectionTestUtils.setField(mailServiceBean, "documentService", documentService);
         ReflectionTestUtils.setField(mailServiceBean, "basicMailMessage", basicMailMessage);
         ReflectionTestUtils.setField(mailServiceBean, "registrationMailMessage", registrationMailMessage);

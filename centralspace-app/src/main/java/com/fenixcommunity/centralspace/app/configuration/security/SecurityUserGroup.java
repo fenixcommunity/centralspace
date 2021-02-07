@@ -26,11 +26,16 @@ public enum SecurityUserGroup {
             List.of("ROLE_DB_MANAGE, ROLE_GRAPHQL_MANAGE, ROLE_CREATE_ACCOUNT"),
             BASIC_USER.authorities,
             SWAGGER_USER.authorities)),
+    REST_CALLER_USER("to local app calls", mergeListsWithUniqueElem(
+            List.of("ROLE_REST_CALLER"),
+            DB_USER.authorities,
+            SWAGGER_USER.authorities)),
     ADMIN_USER("admin user", mergeListsWithUniqueElem(
             List.of("ROLE_ADMIN", "ROLE_MANAGE_ROLE"),
             BASIC_USER.authorities,
             SWAGGER_USER.authorities,
-            DB_USER.authorities));
+            DB_USER.authorities,
+            REST_CALLER_USER.authorities));
 
     private final String description;
     private final List<String> authorities;

@@ -18,7 +18,7 @@ public class Var {
 
     public static final String LOGIN = "login123";
     public static final String LOGIN_UPPER = "LOGIN123";
-    public static final String PASSWORD_HIGH = "Password1&23";
+    public static final String PASSWORD_HIGH = "password1212@oqBB";
     public static final String PASSWORD_LOW = "password1";
     public static final String PASSWORD = "password";
     public static final String PASSWORD_GUEST = "welcome";
@@ -26,8 +26,8 @@ public class Var {
     public static final String PESEL = "91201045021";
     public static final String NIP = "682-114-39-79";
     public static final String USER = "user";
-    public static final String ADMIN_USER = "admin_user";
-    public static final String DB_USER = "db_user";
+    public static final String ADMIN_USER = "ADMIN_USER";
+    public static final String DB_USER = "DB_USER";
 
     public static final String HEADER_SESSION = "CENTRALSPACE-APP-HEADER-SESSION";
     public static final String COOKIE_SESSION = "CENTRALSPACE-APP-COOKIE-SESSION";

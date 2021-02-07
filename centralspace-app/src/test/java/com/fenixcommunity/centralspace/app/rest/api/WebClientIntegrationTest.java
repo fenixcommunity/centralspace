@@ -2,10 +2,14 @@ package com.fenixcommunity.centralspace.app.rest.api;
 
 import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.ADMIN_USER;
 import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.BASIC_USER;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.app.rest.api.WebClientLuxIntegrationTest.ADMIN_TEST;
+import static com.fenixcommunity.centralspace.app.rest.api.WebClientLuxIntegrationTest.BASIC_USER_TEST;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD_HIGH;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.DEFAULT;
 import static org.springframework.util.Assert.isInstanceOf;
 import static org.springframework.util.Assert.isTrue;
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
@@ -29,6 +33,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -39,8 +46,13 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = {CentralspaceApplicationConfig.class})
 //todo replace from CentralspaceApplicationConfig to CentralspaceApplicationConfigTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class WebClientTest {
-
+@SqlGroup({
+        @Sql(scripts = {"classpath:/script/schema_integration_test.sql"},
+                executionPhase = BEFORE_TEST_METHOD,
+                config = @SqlConfig(encoding = "utf-8", transactionMode = DEFAULT)
+        )
+})
+class WebClientIntegrationTest {
     private static final String BASE_ACCOUNT_URL = "/api/account/";
     private static final String BASE_LOGGER_URL = "/api/logger/";
     private static final String APP_PATH = "/app";
@@ -62,15 +74,15 @@ class WebClientTest {
 
     @BeforeEach
     public void init() {
-        this.basicClient = setOptions(BASIC_USER.name());
-        this.adminClient = setOptions(ADMIN_USER.name());
+        this.basicClient = setOptions(BASIC_USER_TEST);
+        this.adminClient = setOptions(ADMIN_TEST);
     }
 
     private WebTestClient setOptions(String user) {
         WebTestClient webTestClient = WebTestClient
                 .bindToServer().baseUrl("http://localhost:" + port + APP_PATH)
 //              .bindToController(new TestController()) -> custom controller
-                .filter(basicAuthentication(user, PASSWORD))
+                .filter(basicAuthentication(user, PASSWORD_HIGH))
                 .build();
         webTestClient.options()
                 .accept(MediaType.ALL)
@@ -94,11 +106,11 @@ class WebClientTest {
     @Test
     void testLoggerAsBasic() {
         basicClient.get()
-                .uri(BASE_LOGGER_URL + "run")
+                .uri(BASE_LOGGER_URL + "test")
                 .exchange()
-                .expectStatus().isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value())
-                .expectBody()
-                .jsonPath("$.message").isEqualTo("error"); // if array [0].message
+                .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+//                .expectBody()
+//                .jsonPath("$.message").isEqualTo("error"); // if array [0].message
     }
 
     /*      @Test(expected = WebClientResponseException.class)
@@ -109,7 +121,7 @@ class WebClientTest {
             WebClient.create()
                     .get()
                     .uri("http://localhost:" + port + APP_PATH + BASE_ACCOUNT_URL + "all")
-                    .headers(httpHeaders -> httpHeaders.setBearerAuth(PASSWORD))
+                    .headers(httpHeaders -> httpHeaders.setBearerAuth(PASSWORD_HIGH))
                     .retrieve()
                     .bodyToMono(Account.class)
                     .block();

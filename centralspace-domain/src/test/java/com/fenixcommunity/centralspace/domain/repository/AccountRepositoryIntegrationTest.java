@@ -1,5 +1,6 @@
 package com.fenixcommunity.centralspace.domain.repository;
 
+import static com.fenixcommunity.centralspace.utilities.common.Var.ADMIN_USER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.CITY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.COUNTRY;
 import static com.fenixcommunity.centralspace.utilities.common.Var.DB_USER;
@@ -24,6 +25,7 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import com.fenixcommunity.centralspace.domain.configuration.DomainConfigForTest;
+import com.fenixcommunity.centralspace.domain.configuration.db.permanent.PostgresDomainConfig;
 import com.fenixcommunity.centralspace.domain.dto.AccountDataDto;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Address;
@@ -57,7 +59,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureTestEntityManager
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)*/
 @TestPropertySource(locations = {"classpath:domain-test.yml"})
-@ContextConfiguration(classes = DomainConfigForTest.class)
+@ContextConfiguration(classes = PostgresDomainConfig.class) // or custom DomainConfigForTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SqlGroup({
         @Sql(scripts = {"classpath:/script/schema-test.sql"},
@@ -66,9 +68,9 @@ import org.springframework.test.context.junit4.SpringRunner;
         )
 })
 @FieldDefaults(level = PRIVATE)
-@AutoConfigureMockMvc @WithMockUser(username = DB_USER, roles = {"ROLE_DB_MANAGE"}, password = PASSWORD)
-public class AccountRepositoryTest {
-
+@AutoConfigureMockMvc @WithMockUser(username = ADMIN_USER, authorities = {"ROLE_ADMIN"})
+public class AccountRepositoryIntegrationTest {
+// run always with flag spring.profiles.active=test
     private static final long ACCOUNT_ID_FROM_QUERY = 99L;
     private static final long ACCOUNT_ADMIN_ID_FROM_QUERY = 100L;
     public static final String ACCOUNT_LOGIN_FROM_QUERY = "LOGINQUERY";
@@ -141,14 +143,14 @@ public class AccountRepositoryTest {
         Page<Account> foundAllAccountsWithPagination = accountRepository.findAllWithPagination(secondPageWithTwoElements);
 
         assertNotNull(foundAllAccountsWithPagination);
-        assertThat(foundAllAccountsWithPagination.getTotalElements()).isEqualTo(6);
-        assertThat(foundAllAccountsWithPagination.getTotalPages()).isEqualTo(3);
+        assertThat(foundAllAccountsWithPagination.getTotalElements()).isEqualTo(18);
+        assertThat(foundAllAccountsWithPagination.getTotalPages()).isEqualTo(9);
         assertThat(foundAllAccountsWithPagination.getContent())
                 .hasSize(2)
                 .extracting("id", "login")
                 .containsExactly(
-                        tuple(991L, "LOGIN_OTHER_1"),
-                        tuple(992L, "LOGIN_OTHER_2")
+                        tuple(25L, "MAXLOGIN12321"),
+                        tuple(37L, "MAX2131LOGIN")
                 );
     }
 

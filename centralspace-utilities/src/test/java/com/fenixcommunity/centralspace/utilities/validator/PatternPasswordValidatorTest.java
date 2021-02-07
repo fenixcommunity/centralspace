@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.util.Assert.doesNotContain;
 import static org.springframework.util.Assert.hasLength;
@@ -158,8 +159,8 @@ class PatternPasswordValidatorTest {
 
     @Test
     public void givenExampleAndLambdaInvocation_thenDoNothing() {
-        doNothing().when(validatorFactorySpy).validateAllowedValidatorTypes(null);
-        assertThrows(IllegalArgumentException.class, () -> {
+        doNothing().when(validatorFactorySpy).validateAllowedValidatorTypes(any());
+        assertThrows(NullPointerException.class, () -> {
             validatorFactorySpy.getInstance(null);
         });
         // would work fine

@@ -1,4 +1,4 @@
 # WARNING - don't ever encrypt passwords when storing them at a database
 encryption:
   algorithm: AES
-  key: 3g#k*28FG9%d&88o
+  key: 2f#k*28FG9%d&829

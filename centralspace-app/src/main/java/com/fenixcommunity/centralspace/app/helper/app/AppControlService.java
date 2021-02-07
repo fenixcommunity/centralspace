@@ -13,8 +13,8 @@ import org.springframework.cloud.context.restart.RestartEndpoint;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Log4j2
+@AllArgsConstructor(access = PACKAGE) @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AppControlService {
     private final RestartEndpoint restartEndpoint;
     private final ContextRefresher contextRefresher;

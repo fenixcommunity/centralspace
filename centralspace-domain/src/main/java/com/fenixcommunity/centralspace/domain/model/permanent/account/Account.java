@@ -86,7 +86,7 @@ public class Account extends AbstractBaseEntity {
     @JoinTable(name = "account_to_role_group",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "role_group_id"))
-    @OrderBy(clause = "name DESC")
+    @OrderBy(clause = "name DESC") // what if null or empty?
     @Singular
     private Set<RoleGroup> roleGroups;
 

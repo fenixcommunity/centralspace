@@ -43,6 +43,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @EnableWebSecurity // (debug = true)
@@ -53,7 +54,26 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 public abstract class AutoSecurityConfig {
 /*  TODO   tokeny -> przychodzi token, przydzielamy token do usera ale takze weryfikujemy czy taki token wystawilismy
 *   TODO jwt cracker -> > 18 znaków zmieszanych
-*   TODO  httpOnly w cookie ustaw!
+*    SECURITY TRICKS:
+- XXE (XML EXTERNAL ENTITIES) -> if you use xml parsing tool (newest spring-xml-integration)
+- Check Your Dependencies with Snyk
+- https in production
+- upgrade To Latest Releases
+- enable CSRF Protection
+- use a Content Security Policy to Prevent XSS Attacks and lifter all scripts and html-tags (front and backend side)
+- use OAuth 2.0 with OpenId (for example Okta)
+- all secrets to Spring Vault
+- test Your App with OWASP’s ZAP
+- remove important and sensitive info in loggs, rest, error messages
+- do not show names of components outside
+- remove sensitive data in URL - Get methods
+- frameOptions only for the same origin
+- cookies http only and secure
+- X-XSS-Protection
+- Strict-Transport-Security
+- SQL INJECTION -> Hibernate and setParameter(x, x). No native queries and concatenation
+- LFI/RFI (LOCAL/REMOTE FILE INCLUSION) com?file=xxx , com?file=../../etc/password
+- all sensitive, secure places „deny by default"
 * */
 
     private static final String API_PATH = "/api";
@@ -174,12 +194,16 @@ public abstract class AutoSecurityConfig {
         @Override
         protected void configure(final HttpSecurity http) throws Exception {
             http
+//                   HTTPS in Production
+//                   .requiresChannel().anyRequest().requiresSecure()
+//                   .and()
                     .exceptionHandling()
 //                  .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
                     .and()
                     //API
 //                  .antMatcher(API_PATH + "/**").authorizeRequests()
                     .authorizeRequests()
+//                  TODO all sensitive, secure places „deny by default"
                     .antMatchers(BASIC_API_AUTH_LIST).hasAuthority("ROLE_BASIC")
                     .antMatchers(ADMIN_API_AUTH_LIST).hasAuthority("ROLE_ADMIN")
                     .antMatchers(FLUX_API_AUTH_LIST).hasAuthority("ROLE_FLUX_GETTER")
@@ -194,9 +218,10 @@ public abstract class AutoSecurityConfig {
                     .and()
                     .cors()//.configurationSource(corsConfigurationSource())
                     .and()
-                    .csrf().disable()
-//                    .csrf()
-//                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                    .csrf().disable()
+                    .csrf()
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    .and()
 //                    .ignoringRequestMatchers(
 //                            new AntPathRequestMatcher(this.adminServer.path("/instances"), HttpMethod.POST.toString()),
 //                            new AntPathRequestMatcher(this.adminServer.path("/instances/*"), HttpMethod.DELETE.toString()),
@@ -205,8 +230,20 @@ public abstract class AutoSecurityConfig {
                     .httpBasic()
                     .and()
                     .headers()
+                    .contentSecurityPolicy("script-src default-src 'self'")
+                    .and()
+//                  avoiding Cross-Site Scripting attacks
+                    .xssProtection()
+                    .xssProtectionEnabled(true)
+                    .and()
+//                  enable only HSTS headers
+//                  .httpStrictTransportSecurity()
+//                  .includeSubDomains(true)
+//                  .maxAgeInSeconds(xxx)
+//                  .and()
                     .frameOptions().sameOrigin()
                     .and()
+//                  FORM
                     .formLogin().permitAll()
 //                   .loginPage("/login") TODO will be provided by React
 //                   .failureUrl("/login-error") TODO will be provided by React
@@ -226,7 +263,7 @@ public abstract class AutoSecurityConfig {
                     .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
                     .tokenRepository(tokenRepository())
                     .and()
-                    // and also application.yml -> session -> cookie
+                    // and also application.yml -> session -> cookie (http only = true -> safe)
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // NEVER - if full stateless app
                     .maximumSessions(2)

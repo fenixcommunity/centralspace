@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CrossOriginController {
-
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/centralspace-view-test")

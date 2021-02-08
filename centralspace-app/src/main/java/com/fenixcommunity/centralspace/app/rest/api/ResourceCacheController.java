@@ -57,6 +57,7 @@ public class ResourceCacheController {
         this.restPath = restPath;
     }
 
+//TODO    - LFI/RFI (LOCAL/REMOTE FILE INCLUSION) com?file=xxx , com?file=../../etc/password
     @GetMapping("/**")
     @ApiOperation(value = "Get resource: example path http://localhost:8088/app/api/resource-cache/static/img/Top.png")
     public @ResponseBody byte[] getFileByPath(final HttpServletRequest request) throws IOException {

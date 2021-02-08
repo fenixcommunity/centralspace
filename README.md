@@ -1,6 +1,29 @@
 # centralspace
 
 ~~~~~~~~~~~~~~~~
+
+----------------
+SECURITY TRICKS:
+- XXE (XML EXTERNAL ENTITIES) -> if you use xml parsing tool (newest spring-xml-integration)
+- Check Your Dependencies with Snyk
+- https in production 
+- upgrade To Latest Releases
+- enable CSRF Protection
+- use a Content Security Policy to Prevent XSS Attacks and lifter all scripts and html-tags (front and backend side)
+- use OAuth 2.0 with OpenId (for example Okta)
+- all secrets to Spring Vault
+- test Your App with OWASP’s ZAP
+- remove important and sensitive info in loggs, rest, error messages
+- do not show names of components outside
+- remove sensitive data in URL - Get methods
+- frameOptions only for the same origin 
+- cookies http only and secure
+- X-XSS-Protection
+- Strict-Transport-Security
+- SQL INJECTION -> Hibernate and setParameter(x, x). No native queries and concatenation
+- LFI/RFI (LOCAL/REMOTE FILE INCLUSION) com?file=xxx , com?file=../../etc/password
+- all sensitive, secure places „deny by default"
+
 PLUGINS 
 ~~~~~~~~~~~~~~~~
 CodeStream

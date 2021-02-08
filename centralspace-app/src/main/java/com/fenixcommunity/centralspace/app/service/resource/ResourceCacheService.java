@@ -57,6 +57,7 @@ public class ResourceCacheService {
     @Cacheable(key = "#a0", unless = "#result.exists() != true") // sync = true not works, I think that should be selected @EnableCaching(proxyTargetClass = true)
     @Transactional(readOnly = true)
     public Resource getInternalResource(@NonNull final String extractedPath) {
+        //TODO    - LFI/RFI (LOCAL/REMOTE FILE INCLUSION) com?file=xxx , com?file=../../etc/password
         return internalResourceLoader.loadResourceByPath(extractedPath);
     }
 

@@ -27,13 +27,13 @@ public class WebTool {
     }
 
     public static String extractUriPath(final HttpServletRequest request) {
-        String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-        String matchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+        final String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+        final String matchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         return new AntPathMatcher().extractPathWithinPattern(matchPattern, path);
     }
 
     public static HttpHeaders prepareResponseHeaders(final Map<String, String> headers) {
-        HttpHeaders responseHeaders = new HttpHeaders();
+        final HttpHeaders responseHeaders = new HttpHeaders();
         headers.forEach(responseHeaders::add);
         return responseHeaders;
     }

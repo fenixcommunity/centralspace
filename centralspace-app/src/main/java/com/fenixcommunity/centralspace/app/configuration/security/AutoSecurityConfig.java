@@ -226,6 +226,7 @@ public abstract class AutoSecurityConfig {
                     .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
                     .tokenRepository(tokenRepository())
                     .and()
+                    // and also application.yml -> session -> cookie
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // NEVER - if full stateless app
                     .maximumSessions(2)

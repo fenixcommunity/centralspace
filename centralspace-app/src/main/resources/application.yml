@@ -24,8 +24,11 @@ server:
     session:
       trackingModes: COOKIE
       cookie:
+        name: contralspace-app
         http-only: true
-        secure: true
+#       domain: www.centralspace.com
+#       secure: true
+        maxAge:  259200  #3 days -> 3*24*60*60
   host: http://localhost:${server.port}
   error:
     whitelabel:

@@ -30,8 +30,9 @@ public class WebConfig extends AbstractHttpSessionApplicationInitializer {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(final CorsRegistry registry) {
+                //TODO reduce/remove in real app!
                 registry.addMapping("/**")
-                        .allowedOrigins(appViewOrigin, "http://localhost:9000")
+                        .allowedOrigins(/* appViewOrigin -> we use proxy in React */ "http://localhost:9000" /* to test */ )
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(true);

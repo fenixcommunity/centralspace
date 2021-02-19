@@ -38,7 +38,7 @@ server:
     include-stacktrace: always
 
 centralspace-view:
-  port: 7773
+  port: 7777
   origin: http://localhost:${centralspace-view.port}
 
 #Spring
@@ -75,9 +75,9 @@ spring:
 #HOT SWAP -> if standard changes CTR + SHIFT + F9, if method adding use hot swap
   devtools:
     restart:
-      enabled: true
-
-#Base paths
+      enabled: false
+  thymeleaf:
+    enabled: false
 path:
   app: ${server.servlet.context-path}
   api: /api

@@ -25,8 +25,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
         <spring-plugin.version>1.2.0.RELEASE</spring-plugin.version>
         <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
+        <frontend-maven-plugin.version>1.9.1</frontend-maven-plugin.version>
+        <node.version>v8.9.4</node.version>
+        <npm.version>5.6.0</npm.version>
         <!-- SPRING DEPENDENCIES -->
         <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
         <spring-boot-web.version>2.2.5.RELEASE</spring-boot-web.version>

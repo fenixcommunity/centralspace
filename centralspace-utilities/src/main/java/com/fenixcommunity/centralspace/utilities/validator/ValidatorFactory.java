@@ -24,6 +24,8 @@ public class ValidatorFactory {
         Validator validator = null;
         if (type == ValidatorType.NOT_NULL) {
             validator = new NotNullValidator();
+        } else if (type == ValidatorType.NOT_EMPTY) {
+            validator = new NotEmptyValidator();
         } else if (type == ValidatorType.PASSWORD_CUSTOM) {
             validator = new CustomPasswordValidator();
         } else if (type == ValidatorType.PASSWORD_LOW) {

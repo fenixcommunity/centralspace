@@ -3,10 +3,13 @@ package com.fenixcommunity.centralspace.app.configuration.security;
 import static com.fenixcommunity.centralspace.app.configuration.security.SecurityUserGroup.GUEST_USER;
 import static com.fenixcommunity.centralspace.utilities.common.CollectionTool.mergeStringArrays;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD_GUEST;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SEMICOLON;
+import static com.fenixcommunity.centralspace.utilities.common.Var.SPACE;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 import javax.sql.DataSource;
 
 import com.fenixcommunity.centralspace.app.configuration.security.handler.AppAuthenticationFailureHandler;
@@ -20,6 +23,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -51,6 +55,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @ComponentScan({"com.fenixcommunity.centralspace.app.service.security"})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @PropertySource(value = {"classpath:security.yml"}, factory = YamlFetcher.class)
+@EnableConfigurationProperties(ContentSecurityPolicyProperties.class)
 public abstract class AutoSecurityConfig {
 /*  TODO   tokeny -> przychodzi token, przydzielamy token do usera ale takze weryfikujemy czy taki token wystawilismy
 *   TODO jwt cracker -> > 18 znaków zmieszanych
@@ -175,14 +180,17 @@ public abstract class AutoSecurityConfig {
         private final AdminServerProperties adminServer;
         private final DataSource postgresDataSource;
         private final DataSource h2DataSource;
+        private final ContentSecurityPolicyProperties contentSecurityPolicy;
 
         @Autowired
         public FormLoginWebSecurityConfigurerAdapter(final AdminServerProperties adminServer,
                                                      final @Qualifier("postgresDataSource") DataSource postgresDataSource,
-                                                     final @Qualifier("h2DataSource") DataSource h2DataSource) {
+                                                     final @Qualifier("h2DataSource") DataSource h2DataSource,
+                                                     final ContentSecurityPolicyProperties contentSecurityPolicy) {
             this.adminServer = adminServer;
             this.postgresDataSource = postgresDataSource;
             this.h2DataSource = h2DataSource;
+            this.contentSecurityPolicy = contentSecurityPolicy;
         }
 
         @Override
@@ -194,9 +202,9 @@ public abstract class AutoSecurityConfig {
         @Override
         protected void configure(final HttpSecurity http) throws Exception {
             http
-//                   HTTPS in Production
-//                   .requiresChannel().anyRequest().requiresSecure()
-//                   .and()
+//                  HTTPS on Production
+//                  .requiresChannel().anyRequest().requiresSecure()
+//                  .and()
                     .exceptionHandling()
 //                  .authenticationEntryPoint(appBasicAuthenticationEntryPoint())
                     .and()
@@ -209,28 +217,36 @@ public abstract class AutoSecurityConfig {
                     .antMatchers(FLUX_API_AUTH_LIST).hasAuthority("ROLE_FLUX_GETTER")
                     .antMatchers(this.adminServer.path("/assets/**")).permitAll()
                     .antMatchers(this.adminServer.path("/login")).permitAll()
-                    .antMatchers(NO_AUTH_API_LIST).permitAll()
+ todo                    .antMatchers("/").permitAll() // TO GUEST?
                     //FORM
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasAuthority("ROLE_SWAGGER")
                     .antMatchers(mergeStringArrays(ADMIN_FORM_AUTH_LIST)).hasAuthority("ROLE_ADMIN")
                     .antMatchers(NO_AUTH_FORM_LIST).permitAll()
-                    .anyRequest().hasAuthority("ROLE_SWAGGER")
+                    .anyRequest().hasAuthority("ROLE_GUEST")
                     .and()
                     .cors()//.configurationSource(corsConfigurationSource())
                     .and()
-//                    .csrf().disable()
+//                  .csrf().disable()
                     .csrf()
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     .and()
-//                    .ignoringRequestMatchers(
-//                            new AntPathRequestMatcher(this.adminServer.path("/instances"), HttpMethod.POST.toString()),
-//                            new AntPathRequestMatcher(this.adminServer.path("/instances/*"), HttpMethod.DELETE.toString()),
-//                            new AntPathRequestMatcher(this.adminServer.path("/actuator/**")))
-//                    .and()
+//                  .ignoringRequestMatchers(
+//                          new AntPathRequestMatcher(this.adminServer.path("/instances"), HttpMethod.POST.toString()),
+//                          new AntPathRequestMatcher(this.adminServer.path("/instances/*"), HttpMethod.DELETE.toString()),
+//                          new AntPathRequestMatcher(this.adminServer.path("/actuator/**")))
+//                  .and()
                     .httpBasic()
                     .and()
                     .headers()
-                    .contentSecurityPolicy("script-src default-src 'self'")
+                    .contentSecurityPolicy(
+                            new StringJoiner(SEMICOLON + SPACE)
+                                    .add(contentSecurityPolicy.getDefaultJsSrc())
+                                    .add(contentSecurityPolicy.getFrameSrc())
+                                    .add(contentSecurityPolicy.getImgSrc())
+                                    .add(contentSecurityPolicy.getMediaSrc())
+                                    .add(contentSecurityPolicy.getStyleSrc())
+                                    .add(contentSecurityPolicy.getFrontSrc())
+                                    .toString())
                     .and()
 //                  avoiding Cross-Site Scripting attacks
                     .xssProtection()
@@ -245,8 +261,8 @@ public abstract class AutoSecurityConfig {
                     .and()
 //                  FORM
                     .formLogin().permitAll()
-//                   .loginPage("/login") TODO will be provided by React
-//                   .failureUrl("/login-error") TODO will be provided by React
+                    .loginPage("/") // TODO will be provided by React
+//                  .failureUrl("/login-error") TODO will be provided by React
                     .usernameParameter("username").passwordParameter("password")
                     .loginProcessingUrl("/public/users/signin") // custom post request url in React form
                     .usernameParameter("username").passwordParameter("password")
@@ -268,10 +284,10 @@ public abstract class AutoSecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // NEVER - if full stateless app
                     .maximumSessions(2)
                     .expiredUrl("/login?expired");
-                 /*
-                 .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
-                 .deleteCookies("JSESSIONID");
-                  */
+                    /*
+                    .portMapper().http(9090).mapsTo(9443).http(80).mapsTo(443);
+                    .deleteCookies("JSESSIONID");
+                    */
         }
 
         @Bean

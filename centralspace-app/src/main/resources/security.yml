@@ -49,3 +49,13 @@ authorizationQuery:
     where a.login = upper(?)
   getUserExistsQuery:
     select login as username from account where login = upper(?)
+
+# Content Security Policy
+content-security-policy:
+  defaultJsSrc: "default-src 'self' code.jquery.com *.gstatic.com *.googleapis.com *.googletagmanager.com *.google-analytics.com"
+  frameSrc: "frame-src 'self' www.youtube.com"
+  imgSrc: "img-src 'self' data: *.tile.osm.org *.imgix.net websetnet.net *.wikimedia.org"
+  mediaSrc: "media-src 'self' data:"
+  styleSrc: "style-src 'self' 'unsafe-inline' fonts.googleapis.com *.fontawesome.com *.cloudflare.com"
+  frontSrc: "font-src 'self' fonts.googleapis.com *.gstatic.com *.fontawesome.com *.cloudflare.com"
+

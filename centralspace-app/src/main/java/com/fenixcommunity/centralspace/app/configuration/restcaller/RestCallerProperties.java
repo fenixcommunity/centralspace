@@ -1,8 +1,10 @@
 package com.fenixcommunity.centralspace.app.configuration.restcaller;
 
+import static com.fenixcommunity.centralspace.utilities.validator.ValidatorType.NOT_EMPTY;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.fenixcommunity.centralspace.utilities.common.YamlFetcher;
+import com.fenixcommunity.centralspace.utilities.validator.ValidatorFactory;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,7 +19,9 @@ class RestCallerProperties {
     private String password;
 
     @ConstructorBinding
-    RestCallerProperties(String username, String password) {
+    RestCallerProperties(final String username, final String password) {
+        var validator = new ValidatorFactory().getInstance(NOT_EMPTY);
+        validator.validateAllWithException(username, password);
         this.username = username;
         this.password = password;
     }

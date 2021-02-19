@@ -35,6 +35,7 @@ public class Var {
     public static final String DOMAIN_URL = "www.fenixcommunity.pl";
 
     public static final String DOT = ".";
+    public static final String SEMICOLON = ";";
     public static final String UNDERSCORE = "_";
     public static final String SLASH = "/";
     public static final String LINE = "-";

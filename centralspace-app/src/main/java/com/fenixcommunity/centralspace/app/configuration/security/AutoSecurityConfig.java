@@ -113,7 +113,8 @@ public abstract class AutoSecurityConfig {
     };
     private static final String[] NO_AUTH_API_LIST = {
             API_PATH + "/logger/basic-info",
-            API_PATH + "/cross/**"
+            API_PATH + "/cross/**",
+            API_PATH + "/logger/test"
     };
     //FORM
     private static final String[] ADMIN_FORM_AUTH_LIST = {
@@ -123,8 +124,12 @@ public abstract class AutoSecurityConfig {
             "/graphiql/**"
     };
     private static final String[] NO_AUTH_FORM_LIST = {
-            API_PATH + "/logger/test",
-            "/public/**"
+            "/",
+            "/public/**",
+            "/static/js/**",
+            "/static/css/**",
+            "/static/media/**",
+            "/beautypage/js/**",
     };
     private static final String[] SWAGGER_AUTH_LIST = {
             "/swagger",
@@ -213,11 +218,11 @@ public abstract class AutoSecurityConfig {
                     .authorizeRequests()
 //                  TODO all sensitive, secure places „deny by default"
                     .antMatchers(BASIC_API_AUTH_LIST).hasAuthority("ROLE_BASIC")
-                    .antMatchers(ADMIN_API_AUTH_LIST).hasAuthority("ROLE_ADMIN")
                     .antMatchers(FLUX_API_AUTH_LIST).hasAuthority("ROLE_FLUX_GETTER")
-                    .antMatchers(this.adminServer.path("/assets/**")).permitAll()
-                    .antMatchers(this.adminServer.path("/login")).permitAll()
- todo                    .antMatchers("/").permitAll() // TO GUEST?
+                    .antMatchers(ADMIN_API_AUTH_LIST).hasAuthority("ROLE_ADMIN")
+                    .antMatchers(this.adminServer.path("/assets/**")).hasAuthority("ROLE_ADMIN")
+                    .antMatchers(this.adminServer.path("/login")).hasAuthority("ROLE_ADMIN")
+                    .antMatchers(NO_AUTH_API_LIST).permitAll() // TO GUEST?
                     //FORM
                     .antMatchers(mergeStringArrays(SWAGGER_AUTH_LIST)).hasAuthority("ROLE_SWAGGER")
                     .antMatchers(mergeStringArrays(ADMIN_FORM_AUTH_LIST)).hasAuthority("ROLE_ADMIN")

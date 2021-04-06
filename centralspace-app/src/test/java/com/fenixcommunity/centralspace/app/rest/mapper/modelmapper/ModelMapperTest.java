@@ -38,7 +38,7 @@ import org.modelmapper.convention.NameTokenizers;
 
 public class ModelMapperTest {
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private ZonedDateTime dateTime;
 
     private ModelMapper modelMapperBasic;

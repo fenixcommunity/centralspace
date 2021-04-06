@@ -43,7 +43,7 @@ class AccountDtoToTest {
 
     private PasswordType passwordType;
     private ContactDetailsDto contactDetailsDto;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") // 2016-06-23 09:07:21.205-07:00
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX") // 2016-06-23 09:07:21.205-07:00
     private ZonedDateTime dataBaseConsentExpiredDate;
 
     @JsonCreator

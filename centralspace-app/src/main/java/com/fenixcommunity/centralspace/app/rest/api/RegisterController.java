@@ -31,13 +31,27 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController @RequestMapping(value = "/api/register")
 @Validated
 @Log4j2
 @AllArgsConstructor @FieldDefaults(level = PRIVATE, makeFinal = true)
 class RegisterController {
     private final RegisterService registerService;
+
+
+
+
+
+
+//    fileNameCreators.sort(comparing(FileNamerNew::getTarget, nullsLast(comparing(Target::getId))).thenComparing(FileNamerNew::getFormat, nullsLast(comparing(Format::getId))));
+
+
+
+
+
+
+
+
 
     @PostMapping(value = "/submit", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE, MediaType.TEXT_PLAIN_VALUE})

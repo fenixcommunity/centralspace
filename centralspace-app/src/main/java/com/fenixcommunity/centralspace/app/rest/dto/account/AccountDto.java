@@ -43,7 +43,7 @@ public class AccountDto {
     private PasswordType passwordType;
     private ContactDetailsDto contactDetailsDto;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") // 2021-01-13T17:09:12.658+0100
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.Z") // 2021-04-02T11:57:28.694Z
     // or  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Zagreb")
     private ZonedDateTime dataBaseConsentExpiredDate;
 

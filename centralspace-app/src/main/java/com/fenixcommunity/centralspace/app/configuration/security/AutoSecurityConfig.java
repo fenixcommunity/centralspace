@@ -94,7 +94,6 @@ public abstract class AutoSecurityConfig {
             API_PATH + "/doc/**",
             API_PATH + "/mail/**",
             API_PATH + "/password/**",
-            API_PATH + "/register/**",
             API_PATH + "/role-creator/**",
             API_PATH + "/metrics/**",
             API_PATH + "/async/**",
@@ -114,7 +113,9 @@ public abstract class AutoSecurityConfig {
     private static final String[] NO_AUTH_API_LIST = {
             API_PATH + "/logger/basic-info",
             API_PATH + "/cross/**",
-            API_PATH + "/logger/test"
+            API_PATH + "/logger/test",
+            API_PATH + "/register/**",
+            "/public/**",
     };
     //FORM
     private static final String[] ADMIN_FORM_AUTH_LIST = {
@@ -266,11 +267,16 @@ public abstract class AutoSecurityConfig {
                     .and()
 //                  FORM
                     .formLogin().permitAll()
-                    .loginPage("/") // TODO will be provided by React
+
+
+//     TODO TODO        https://www.baeldung.com/spring-security-track-logged-in-users
+//            https://stackoverflow.com/questions/12371770/spring-mvc-checking-if-user-is-already-logged-in-via-spring-security
+
+
+//                    .loginPage("/") // TODO will be provided by React
 //                  .failureUrl("/login-error") TODO will be provided by React
                     .usernameParameter("username").passwordParameter("password")
                     .loginProcessingUrl("/public/users/signin") // custom post request url in React form
-                    .usernameParameter("username").passwordParameter("password")
                     .successHandler(appAuthenticationSuccessHandler(loginAttemptService(), passwordEncoder()))
                     .failureHandler(appAuthenticationFailureHandler(loginAttemptService()))
                     .and()

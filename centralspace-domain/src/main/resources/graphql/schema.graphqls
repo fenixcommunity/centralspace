@@ -72,7 +72,7 @@ enum PasswordType {
 #            identifier: "123-456-78-19",
 #            mail: "max3112@o2.pl",
 #            passwordType: "TO_CENTRALSPACE",
-#            dataBaseConsentExpiredDate: "2021-01-13T17:09:12.658+0100"
+#            dataBaseConsentExpiredDate: "2021-04-02T11:57:28.694Z"
 #        }
 #    ) {
 #        id,

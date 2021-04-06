@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class ZonedDateTimeScalar extends GraphQLScalarType {
 
     public ZonedDateTimeScalar() {
-        super("ZonedDateTime", "ZonedDateTime Scalar. Example: 2021-01-13T17:09:12.658+0100", new Coercing<ZonedDateTime, String>() {
+        super("ZonedDateTime", "ZonedDateTime Scalar. Example: 2021-04-02T11:57:28.694Z", new Coercing<ZonedDateTime, String>() {
             public String serialize(final Object input) throws CoercingSerializeException {
                 final ZonedDateTime zonedDateTime;
                 if (input instanceof ZonedDateTime) {

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.Test;
@@ -33,10 +34,14 @@ class TimeToolTest {
                 .isEqualTo("2018-03-25T03:05+02:00[Europe/Rome]");
 
         Long deltaBetweenDatesInMinutes = ChronoUnit.MINUTES
-                .between(zonedDateTimeBeforeDST,zonedDateTimeAfterDST);
+                .between(zonedDateTimeBeforeDST, zonedDateTimeAfterDST);
 
         assertThat(deltaBetweenDatesInMinutes)
                 .isEqualTo(10);
+
+        ZonedDateTime zonedDateTimeBe = ZonedDateTime.parse("2021-04-02T11:57:28.694Z", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"));
+        assertThat(zonedDateTimeBe.toString())
+                .isEqualTo("2021-04-02T11:57:28.694Z");
     }
 
 }

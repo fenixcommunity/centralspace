@@ -51,8 +51,8 @@ public class RestFilledRegisterForm {
     @ApiModelProperty(example = "www.o2.pl")
     public String registerURL;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @JsonProperty
-    @ApiModelProperty(example = "2021-01-13T17:09:12.658+0100")
+    @ApiModelProperty(example = "2021-04-02T11:57:28.694Z")
     public ZonedDateTime dateOfRequest;
 }

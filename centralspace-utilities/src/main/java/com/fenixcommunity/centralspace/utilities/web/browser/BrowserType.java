@@ -1,5 +1,7 @@
 package com.fenixcommunity.centralspace.utilities.web.browser;
 
+import static org.apache.logging.log4j.util.Strings.isBlank;
+
 import lombok.Getter;
 
 @Getter
@@ -35,9 +37,14 @@ public enum BrowserType {
 
     //todo browserInfo searching
     public static BrowserType identifyBrowser(String browserInfo) {
-        switch (browserInfo) {
+        if (isBlank(browserInfo)) {
+            return UNKNOWN;
+        }
+        switch (browserInfo.toLowerCase()) {
             case "firefox":
                 return FIREFOX;
+            case "chrome":
+                return CHROME;
             default:
                 return UNKNOWN;
         }

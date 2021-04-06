@@ -42,7 +42,7 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
     @Override
     public void onAuthenticationSuccess(final HttpServletRequest request,
                                         final HttpServletResponse response,
-                                        final Authentication authentication) throws IOException {
+                                        final Authentication authentication) {
 
         if (authentication instanceof UsernamePasswordAuthenticationToken && authentication.getCredentials() != null) {
             final CharSequence clearTextPass = (CharSequence) authentication.getCredentials();
@@ -56,11 +56,10 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
         final Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         request.getSession(false).setMaxInactiveInterval(sessionTimeout); // or server.servlet.session.timeout=30m
-        if (roles.contains("ROLE_ADMIN")) {
-            response.sendRedirect(forwardUrl);
-//          response.sendRedirect("/admin.html");
-        } else {
-            response.sendRedirect(getPreviousPageByRequest(request).orElse(forwardUrl));
-        }
+//        if (roles.contains("ROLE_ADMIN")) {
+//            response.sendRedirect(forwardUrl); handled by front app
+//        } else {
+//            response.sendRedirect(getPreviousPageByRequest(request).orElse(forwardUrl));
+//        }
     }
 }

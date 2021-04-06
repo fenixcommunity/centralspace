@@ -41,7 +41,7 @@ public class AccountGraphQLDto {
     private String identifier;
     private PasswordType passwordType;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") // 2021-01-13T17:09:12.658+0100
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.Z") // 2021-04-02T11:57:28.694Z
     // or  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Zagreb")
     @JMap
     private ZonedDateTime dataBaseConsentExpiredDate;
@@ -57,6 +57,6 @@ public class AccountGraphQLDto {
         this.login = login;
         this.mail = mail;
         this.passwordType = passwordType;
-        this.dataBaseConsentExpiredDate = ZonedDateTime.parse(dataBaseConsentExpiredDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
+        this.dataBaseConsentExpiredDate = ZonedDateTime.parse(dataBaseConsentExpiredDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.Z"));
     }
 }

@@ -1,4 +1,5 @@
-# centralspace
+# The main goal of the project is to collect all the knowledge about Java/Spring(and related topics) and organize it in a logical way.
+# The current project is part of backend-frontend communication
 
 ~~~~~~~~~~~~~~~~
 

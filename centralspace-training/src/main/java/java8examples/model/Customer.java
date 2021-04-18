@@ -14,6 +14,7 @@ public class Customer {
     private String designation;
     private List<Integer> numbers;
     private List<Address> address;
+    private Address selectedAddress;
 
     public Customer(int i, String n, long s, String d) {
         this.id = i;
@@ -73,6 +74,14 @@ public class Customer {
 
     public void setAddress(List<Address> address) {
         this.address = address;
+    }
+
+    public Address getSelectedAddress() {
+        return selectedAddress;
+    }
+
+    public void setSelectedAddress(Address selectedAddress) {
+        this.selectedAddress = selectedAddress;
     }
 
     public static List<Customer> getAllEmps() {

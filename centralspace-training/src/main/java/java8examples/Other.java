@@ -32,7 +32,10 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.lang.System.out;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsLast;
 
+import java8examples.model.Address;
 import java8examples.model.Customer;
 
 public class Other {
@@ -93,7 +96,9 @@ public class Other {
 
         list.stream().sorted((c1, c2) -> c1.getName().compareTo(c2.getName())).findFirst().ifPresent(out::println);
         //albo
-        list.stream().sorted(Comparator.comparing(Customer::getName)).findFirst().ifPresent(out::println);
+        list.stream().sorted(comparing(Customer::getName)).findFirst().ifPresent(out::println);
+        //albo
+        list.sort(comparing(Customer::getSelectedAddress, nullsLast(comparing(Address::getCity))).thenComparing(Customer::getSalary));
 
         boolean allEven = list.stream().allMatch(i -> i.getSalary() > 2);
         boolean oneEven = list.stream().anyMatch(i -> i.getSalary() > 2);
@@ -252,7 +257,7 @@ public class Other {
         out.println(sum);
 
         list.stream().sorted(Comparator.comparingLong(Customer::getId).reversed()).forEach(out::println);
-        list.stream().sorted(Comparator.comparing(c1 -> c1.getName())).forEach(out::println);
+        list.stream().sorted(comparing(c1 -> c1.getName())).forEach(out::println);
         // lub Customer::getName
     }
 

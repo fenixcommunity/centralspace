@@ -6,6 +6,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
 import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD_CHAR_ARRAY;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -61,7 +62,7 @@ public class ModelMapperTest {
                 .login(LOGIN)
                 .mail(MAIL)
                 .build();
-        List<Password> passwords = singletonList(new Password(ID, initAccount, PASSWORD, PasswordType.TO_CENTRALSPACE));
+        List<Password> passwords = singletonList(new Password(ID, initAccount, PASSWORD_CHAR_ARRAY, PasswordType.TO_CENTRALSPACE));
         initAccount.setPasswords(passwords);
         Address address = new Address(ID, COUNTRY, CITY, singletonList(initAccount));
         initAccount.setAddress(address);

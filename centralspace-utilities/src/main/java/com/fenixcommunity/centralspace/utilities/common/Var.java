@@ -21,6 +21,7 @@ public class Var {
     public static final String PASSWORD_HIGH = "password1212@oqBB";
     public static final String PASSWORD_LOW = "password1";
     public static final String PASSWORD = "password";
+    public static final char[] PASSWORD_CHAR_ARRAY = PASSWORD.toCharArray();
     public static final String PASSWORD_GUEST = "welcome";
     public static final String WRONG_PASSWORD = "wrongpassword";
     public static final String PESEL = "91201045021";

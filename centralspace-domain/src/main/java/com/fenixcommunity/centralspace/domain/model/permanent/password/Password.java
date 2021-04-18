@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fenixcommunity.centralspace.domain.converter.PasswordConverter;
 import com.fenixcommunity.centralspace.domain.model.permanent.AbstractBaseEntity;
 import com.fenixcommunity.centralspace.domain.model.permanent.account.Account;
 import com.fenixcommunity.centralspace.utilities.adnotation.ValidPassword;
@@ -46,7 +47,8 @@ public class Password extends AbstractBaseEntity {
     private Account account;
 
     @Column(name = "password", nullable = false)
-    private String password;
+    @Convert(converter = PasswordConverter.class)
+    private char[] password;
 
     @Column(name = "password_type", nullable = false)
     @Enumerated(EnumType.STRING)

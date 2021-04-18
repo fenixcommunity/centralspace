@@ -8,7 +8,7 @@ import static com.fenixcommunity.centralspace.utilities.common.Var.ID;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN;
 import static com.fenixcommunity.centralspace.utilities.common.Var.LOGIN_UPPER;
 import static com.fenixcommunity.centralspace.utilities.common.Var.MAIL;
-import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD;
+import static com.fenixcommunity.centralspace.utilities.common.Var.PASSWORD_CHAR_ARRAY;
 import static java.util.Collections.singletonList;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.tuple;
@@ -89,7 +89,7 @@ public class AccountRepositoryIntegrationTest {
     @Before
     public void init() {
         // magic, we don't need class var in Before method
-        createAccount(LOGIN, MAIL, PASSWORD);
+        createAccount(LOGIN, MAIL, PASSWORD_CHAR_ARRAY);
     }
 
     @Test
@@ -204,7 +204,7 @@ public class AccountRepositoryIntegrationTest {
 
     }
 
-    private void createAccount(String login, String mail, String providedPassword) {
+    private void createAccount(String login, String mail, char[] providedPassword) {
         Address address = Address.builder()
                 .country(COUNTRY)
                 .city(CITY)

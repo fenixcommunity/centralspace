@@ -25,20 +25,31 @@ public class SecuredUser implements UserDetails {
     private final String id;
     private final String username;
     private final String mail;
-    private final String password;
+    private final char[] password;
     private final Collection<GrantedAuthority> authorities;
 
     @JsonCreator
     SecuredUser(@JsonProperty("id") final String id,
                 @JsonProperty("username") final String username,
                 @JsonProperty("mail") final String mail,
-                @JsonProperty("password") final String password,
+                @JsonProperty("password") final char[] password,
                 @JsonProperty("authorities") final Collection<GrantedAuthority> authorities) {
         this.id = id;
         this.username = requireNonNull(username);
         this.mail = mail;
         this.password = requireNonNull(password);
         this.authorities = authorities;
+    }
+
+    @JsonIgnore
+    public char[] getSecuredPassword() {
+        return password;
+    }
+
+    @JsonIgnore
+    @Deprecated
+    public String getPassword() {
+        return new String(password);
     }
 
     @JsonIgnore
@@ -74,7 +85,7 @@ public class SecuredUser implements UserDetails {
         private String id;
         private String username;
         private String mail;
-        private String password;
+        private char[] password;
         private Collection<GrantedAuthority> authorities;
 
         public SecuredUserBuilder id(String id) {
@@ -92,7 +103,7 @@ public class SecuredUser implements UserDetails {
             return this;
         }
 
-        public SecuredUserBuilder password(String password) {
+        public SecuredUserBuilder password(char[] password) {
             this.password = password;
             return this;
         }

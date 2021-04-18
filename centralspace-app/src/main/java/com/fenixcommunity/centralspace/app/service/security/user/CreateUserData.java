@@ -11,7 +11,7 @@ public class CreateUserData {
     private final String mail;
 
     @ValidPassword
-    private final String password;
+    private final char[] password;
     private final SecurityUserGroup securityUserGroup;
     private final Long roleGroupId;
 

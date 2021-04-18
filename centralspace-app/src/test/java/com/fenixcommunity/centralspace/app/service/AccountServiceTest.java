@@ -105,7 +105,7 @@ class AccountServiceTest {
     private Password getPassword(Account account) {
         return Password.builder()
                 .id(anyLong())
-                .password(anyString())
+                .password(any())
                 .account(account)
                 .passwordType(PasswordType.TO_CENTRALSPACE)
                 .build();

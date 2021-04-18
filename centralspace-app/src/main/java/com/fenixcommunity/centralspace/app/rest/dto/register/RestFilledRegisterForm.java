@@ -38,7 +38,7 @@ public class RestFilledRegisterForm {
 
     @ValidPassword
     @ApiModelProperty(example = "password1212@oqBB")
-    public String password;
+    public char[] password;
 
     @ApiModelProperty(example = "2")
     public Long roleGroupId;

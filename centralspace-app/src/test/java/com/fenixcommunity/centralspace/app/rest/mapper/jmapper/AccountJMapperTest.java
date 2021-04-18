@@ -63,7 +63,7 @@ class AccountJMapperTest {
         account.setId(1L);
 
         Password password = Password.builder()
-                .password("dfdf")
+                .password("dfdf".toCharArray())
                 .account(account)
                 .passwordType(PasswordType.TO_CENTRALSPACE)
                 .build();

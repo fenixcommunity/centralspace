@@ -35,7 +35,7 @@ class CustomPasswordValidator implements Validator {
 
     @Override
     public boolean isValid(final Object obj) {
-        if (obj instanceof String) {
+        if (obj instanceof char[]) {
             return getValidationResult(obj).isValid();
         }
         return false;
@@ -62,8 +62,8 @@ class CustomPasswordValidator implements Validator {
     }
 
     RuleResult getValidationResult(final Object arg) {
-        if (arg instanceof String) {
-            return validator.validate(new PasswordData((String) arg));
+        if (arg instanceof char[]) {
+            return validator.validate(new PasswordData(new String((char[]) arg)));
         }
         return new RuleResult(false);
     }

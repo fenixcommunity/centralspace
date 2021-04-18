@@ -32,7 +32,7 @@ public class PasswordService {
         this.validator = validator.getInstance(PASSWORD_CUSTOM);
     }
 
-    public Password generatePassword(@NonNull final String providedPassword,
+    public Password generatePassword(final char[] providedPassword,
                                      @NonNull final Account account) {
         if (!passwordIsValid(providedPassword)) {
             return null;
@@ -40,13 +40,13 @@ public class PasswordService {
 
         final Password password = Password.builder()
                 .account(account)
-                .password(passwordEncoder.encode(providedPassword))
+                .password(passwordEncoder.encode(new String(providedPassword)).toCharArray())
                 .passwordType(PasswordType.TO_CENTRALSPACE)
                 .build();
         return passwordRepository.save(password);
     }
 
-    public boolean passwordIsValid(final String providedPassword) {
+    public boolean passwordIsValid(final char[] providedPassword) {
         return validator.isValid(providedPassword);
     }
 }

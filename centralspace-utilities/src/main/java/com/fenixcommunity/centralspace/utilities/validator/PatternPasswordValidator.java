@@ -40,8 +40,8 @@ class PatternPasswordValidator implements Validator {
 
     @Override
     public boolean isValid(final Object obj) {
-        if (obj instanceof String) {
-            return isValid((String) obj);
+        if (obj instanceof char[]) {
+            return isValid(new String((char[]) obj));
         }
         return false;
     }

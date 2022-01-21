@@ -59,7 +59,7 @@
         <!--<springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>-->
         <!-- PERSISTENCE DEPENDENCIES -->
         <postgresql.version>42.2.8</postgresql.version>
-        <h2database.version>1.4.199</h2database.version>
+        <h2database.version>2.1.210</h2database.version>
         <jedis.version>3.1.0</jedis.version>
         <hikariCP.version>2.6.1</hikariCP.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>

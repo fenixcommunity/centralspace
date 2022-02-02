@@ -58,7 +58,7 @@
         <!--<springfox-swagger-webmvc.version>3.0.0-SNAPSHOT</springfox-swagger-webmvc.version>-->
         <!--<springfox-validators.version>3.0.0-SNAPSHOT</springfox-validators.version>-->
         <!-- PERSISTENCE DEPENDENCIES -->
-        <postgresql.version>42.2.8</postgresql.version>
+        <postgresql.version>42.2.25</postgresql.version>
         <h2database.version>1.4.199</h2database.version>
         <jedis.version>3.1.0</jedis.version>
         <hikariCP.version>2.6.1</hikariCP.version>

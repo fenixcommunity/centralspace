@@ -33,7 +33,7 @@
         <npm.version>5.6.0</npm.version>
         <!-- SPRING DEPENDENCIES -->
         <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
-        <spring-boot-web.version>2.2.5.RELEASE</spring-boot-web.version>
+        <spring-boot-web.version>2.5.12</spring-boot-web.version>
         <spring-boot-webflux.version>2.2.5.RELEASE</spring-boot-webflux.version>
         <spring-boot-data.version>2.2.5.RELEASE</spring-boot-data.version>
         <spring-security-data.version>5.2.5.RELEASE</spring-security-data.version>

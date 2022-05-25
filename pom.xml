@@ -47,7 +47,7 @@
         <spring-boot-admin-starter-client.version>2.2.2</spring-boot-admin-starter-client.version>
         <spring-boot-admin-server-ui.version>2.2.2</spring-boot-admin-server-ui.version>
         <spring-context-support.version>5.2.4.RELEASE</spring-context-support.version>
-        <spring-core.version>5.2.4.RELEASE</spring-core.version>
+        <spring-core.version>5.2.22.RELEASE</spring-core.version>
         <spring-batch-core.version>4.2.4.RELEASE</spring-batch-core.version>
         <spring-boot-starter-actuator.version>2.2.5.RELEASE</spring-boot-starter-actuator.version>
         <spring-log4j2.version>2.2.5.RELEASE</spring-log4j2.version>
